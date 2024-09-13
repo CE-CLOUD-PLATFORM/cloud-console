@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
+import React, { ReactElement } from "react";
 import { Button, MenuItem, Select, Stack, TextField } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { json } from "stream/consumers";
 import axios from "axios";
+import LoginLayout from "./layout";
 type Inputs = {
   username: string;
   password: string;
@@ -50,12 +51,7 @@ const page = () => {
           control={control}
           defaultValue=""
           render={({ field }) => (
-            <Select
-              label="domain"
-              id="domain"
-              variant="outlined"
-              {...field}
-            >
+            <Select label="domain" id="domain" variant="outlined" {...field}>
               <MenuItem value={"Default"}>Default</MenuItem>
             </Select>
           )}
@@ -69,5 +65,7 @@ const page = () => {
     </div>
   );
 };
-
+page.getLayout = function getLayout(page: ReactElement): ReactElement {
+  return <LoginLayout>{page}</LoginLayout>;
+};
 export default page;
