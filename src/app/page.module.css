@@ -1,8 +1,6 @@
 @tailwind components;
 @layer components {
   .main {
-    display: flex;
-    padding: 6rem;
-    @apply bg-slate-500 h-main
+    @apply h-main w-full 
   }
 }

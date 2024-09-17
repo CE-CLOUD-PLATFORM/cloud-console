@@ -4,16 +4,7 @@ import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div
-        onClick={(event: React.MouseEvent<HTMLDivElement>) => {
-          event.stopPropagation();
-          console.log(555);
-          
-        }}
-      >
-        555
-      </div>
+    <main className="h-full bg-red-100 w-full">
     </main>
   );
 }

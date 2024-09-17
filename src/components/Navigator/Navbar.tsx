@@ -1,7 +1,11 @@
 "use client";
+import Link from "next/link";
 import React from "react";
+import { useUserContext } from "@/contexts/UserContext";
+import { UserContextType } from "@/interfaces/UserContextType";
 
 const Navbar = () => {
+  let {user} = useUserContext() as UserContextType 
   const handleClick = () => {
     if (
       document.getElementById("sidebar-cover")!.classList.contains("hidden")
@@ -28,7 +32,7 @@ const Navbar = () => {
     }
   };
   return (
-    <div className="z-999 w-full h-nav flex justify-between">
+    <div className="z-999 w-full h-nav flex justify-between border-b-gray-100">
       <div className="flex items-center px-2 gap-5">
         <button className="w-[30px]" onClick={handleClick}>
           <img src="/assets/navbar/more.png" alt="" />
@@ -44,11 +48,11 @@ const Navbar = () => {
           <button
             id="dropdownHoverButton"
             data-dropdown-toggle="dropdownHover"
-            data-dropdown-trigger="hover"
+            data-dropdown-trigger="click"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             type="button"
           >
-            Dropdown hover
+            Project
             <svg
               className="w-2.5 h-2.5 ms-3"
               aria-hidden="true"
@@ -74,36 +78,12 @@ const Navbar = () => {
               aria-labelledby="dropdownHoverButton"
             >
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/subjects"
                   className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                  Dashboard
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Settings
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Earnings
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Sign out
-                </a>
+                  All Subject
+                </Link>
               </li>
             </ul>
           </div>

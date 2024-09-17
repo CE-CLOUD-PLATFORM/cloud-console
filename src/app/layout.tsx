@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navigator/Navbar";
-import Sidebar from "./components/Navigator/Sidebar";
+import Navbar from "../components/Navigator/Navbar";
+import Sidebar from "../components/Navigator/Sidebar";
+import styles from "./page.module.css";
+import UserProvider from "@/contexts/UserContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,9 +24,11 @@ export default function RootLayout({
         <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
       </head>
       <body className={inter.className}>
-        <Navbar />
-        <Sidebar />
-        {children}
+        <UserProvider>
+          <Navbar />
+          <Sidebar />
+          <div className={styles.main}>{children}</div>
+        </UserProvider>
       </body>
     </html>
   );
