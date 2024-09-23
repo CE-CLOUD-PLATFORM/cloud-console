@@ -3,43 +3,20 @@ import Link from "next/link";
 import React from "react";
 import { useUserContext } from "@/contexts/UserContext";
 import { UserContextType } from "@/interfaces/UserContextType";
+import { handleClick } from "./Sidebar";
 
 const Navbar = () => {
   let {user} = useUserContext() as UserContextType 
-  const handleClick = () => {
-    if (
-      document.getElementById("sidebar-cover")!.classList.contains("hidden")
-    ) {
-      document.getElementById("sidebar-cover")!.classList.toggle("hidden");
-      setTimeout(() => {
-        document
-          .getElementById("sidebar-cover")!
-          .classList.toggle("sidebar-cover-active");
-        document
-          .getElementById("sidebar-menu")!
-          .classList.toggle("sidebar-menu-active");
-      }, 100);
-    } else {
-      document
-        .getElementById("sidebar-cover")!
-        .classList.toggle("sidebar-cover-active");
-      document
-        .getElementById("sidebar-menu")!
-        .classList.toggle("sidebar-menu-active");
-      setTimeout(() => {
-        document.getElementById("sidebar-cover")!.classList.toggle("hidden");
-      }, 200);
-    }
-  };
+  
   return (
-    <div className="z-999 w-full h-nav flex justify-between border-b-gray-100">
+    <div className="z-[1000] w-full h-nav flex justify-between border-b-gray-100 border-b-2 shadow">
       <div className="flex items-center px-2 gap-5">
         <button className="w-[30px]" onClick={handleClick}>
           <img src="/assets/navbar/more.png" alt="" />
         </button>
-        <button className="w-[30px]">
+        <Link href={"/"} className="w-[30px]">
           <img src="\assets\navbar\logo.png" alt="" />
-        </button>
+        </Link>
         <h1 className="text-[28px]">Title</h1>
       </div>
       <div className="flex items-center ">

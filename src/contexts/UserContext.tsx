@@ -18,11 +18,11 @@ let UserProvider = ({ children }: { children: ReactNode }) => {
   const getUserSubjects = (): SubjectList => {
     return {
       subjects: [
-        { name: "Default" },
-        { name: "Project1" },
-        { name: "Project2" },
-        { name: "Project3" },
-        { name: "Project4" },
+        { id: "1", name: "Default" },
+        { id: "2", name: "Project1" },
+        { id: "3", name: "Project2" },
+        { id: "4", name: "Project4" },
+        { id: "5", name: "Project4" },
       ],
     };
   };
@@ -30,7 +30,7 @@ let UserProvider = ({ children }: { children: ReactNode }) => {
     user,
     login,
     logout,
-    getUserSubjects
+    getUserSubjects,
   };
   return (
     <UserContext.Provider value={userStore}> {children} </UserContext.Provider>

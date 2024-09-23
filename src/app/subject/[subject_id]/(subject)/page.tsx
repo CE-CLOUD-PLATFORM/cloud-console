@@ -9,7 +9,7 @@ interface PageProps {
 
 const Page: React.FC<PageProps> = ({ params }) => {
   return (
-    <div className="flex h-full flex-col">
+    <div className="main">
       <div>
         <h1>Subject:{params.subject_id}</h1>
         <div className="flex justify-between">

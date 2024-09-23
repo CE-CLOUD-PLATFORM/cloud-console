@@ -1,6 +1,6 @@
 .sidebar-cover-active{
-    @apply !block !bg-opacity-30
+    @apply !block !bg-opacity-30 z-[999]
 }
 .sidebar-menu-active{
-    @apply !translate-x-0
+    @apply !translate-x-0 z-[999]
 }

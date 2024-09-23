@@ -1,3 +1,8 @@
+"use client";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+import NProgress from "nprogress";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -8,7 +13,7 @@ import UserProvider from "@/contexts/UserContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
+ const metadata: Metadata = {
   title: "CE Cloud Console",
   description: "",
 };
@@ -18,6 +23,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    NProgress.start();
+    NProgress.done(); 
+
+    return () => {
+      NProgress.done(); 
+    };
+  }, [pathname]);
   return (
     <html lang="en">
       <head>

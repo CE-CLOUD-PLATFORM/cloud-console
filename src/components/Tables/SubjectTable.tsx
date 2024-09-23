@@ -6,6 +6,7 @@ import Link from "next/link";
 
 export interface Instance {
   id: string;
+  subject_id: string;
   name: string;
   status: string;
   image: string;
@@ -19,11 +20,9 @@ const columns: GridColDef<Instance>[] = [
     headerName: "Name",
     flex: 1,
     renderCell: (params) => (
-      <Link
-      href={`/instance/${params.value}`}
-
-      >
+      <Link href={`/subject/${params.row.subject_id}/${params.row.id}`}>
         {params.value}
+        {params.row.id}
       </Link>
     ),
   },
@@ -63,7 +62,8 @@ const columns: GridColDef<Instance>[] = [
 
 const rows: Instance[] = [
   {
-    id: " 1",
+    subject_id: "1",
+    id: "1",
     name: "test",
     create_at: "1/1/1",
     create_by: "test",
@@ -72,7 +72,8 @@ const rows: Instance[] = [
     status: "Active",
   },
   {
-    id: " 2",
+    subject_id: "1",
+    id: "2",
     name: "test",
     create_at: "1/1/1",
     create_by: "test",
@@ -81,7 +82,8 @@ const rows: Instance[] = [
     status: "Active",
   },
   {
-    id: " 3",
+    subject_id: "1",
+    id: "3",
     name: "test",
     create_at: "1/1/1",
     create_by: "test",
@@ -90,7 +92,8 @@ const rows: Instance[] = [
     status: "Active",
   },
   {
-    id: " 4",
+    subject_id: "1",
+    id: "4",
     name: "test",
     create_at: "1/1/1",
     create_by: "test",
@@ -99,7 +102,8 @@ const rows: Instance[] = [
     status: "Active",
   },
   {
-    id: " 5",
+    subject_id: "1",
+    id: "5",
     name: "test2",
     create_at: "1/1/1",
     create_by: "test",
@@ -108,7 +112,8 @@ const rows: Instance[] = [
     status: "Active",
   },
   {
-    id: " 6",
+    subject_id: "1",
+    id: "6",
     name: "test1",
     create_at: "1/1/1",
     create_by: "test",

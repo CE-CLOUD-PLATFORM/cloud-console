@@ -1,17 +1,12 @@
-import React, { ReactNode } from "react";
+import React, { ReactElement, ReactNode } from "react";
+import InstanceLayout from "./layout";
+import page from "@/app/auth/login/page";
 
-
-const Page = ( ) => {
+const Page = () => {
   return (
-    <div className="flex h-full flex-col">
-      <div>
-        <h1>Your Subject2</h1>
-      </div>
-      <div className="flex flex-1 flex-wrap justify-center gap-3 content-start">
-
-      </div>
+    <div className="main pl-[250px]">
+      <h1>Create VMs</h1>
     </div>
   );
 };
-
 export default Page;
