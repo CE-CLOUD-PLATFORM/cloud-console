@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import React, { ReactElement, ReactNode } from "react";
 const Page = () => {
-  redirect('/Public key'); 
+  redirect('settings/keys'); 
   return null;
   // return (
   //   <div className="main">
