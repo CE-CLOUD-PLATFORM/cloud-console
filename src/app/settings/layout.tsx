@@ -9,6 +9,7 @@ export default function InstanceLayout({
     <div className="w-full flex">
       <SettingsMenu />
       {children}
+      <div className="side-menu"></div>
     </div>
   );
 }

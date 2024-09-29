@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from "react";
 import "./style.css";
 import Link from "next/link";
 
-const Menu = [{ label: "Settings", path: "settings" }];
+const Menu = [{ label: "Settings", path: "settings", position: "bot" }];
 
 export const handleClick = () => {
   if (document.getElementById("sidebar-cover")!.classList.contains("hidden")) {
@@ -36,16 +36,22 @@ const Sidebar = () => {
     >
       <div
         id="sidebar-menu"
-        className="h-full duration-200 relative translate-x-[-100%] w-[220px] bg-white flex flex-col justify-between"
+        className="h-full duration-200 relative translate-x-[-100%] w-[220px] bg-white flex flex-col justify-between px-4 py-6"
       >
         <div className="sidebar-top">
-          {Menu.map((item) => (
+          {Menu.filter((item) => item.position === "top").map((item) => (
             <Link key={item.label} href={`/${item.path}`}>
               {item.label}
             </Link>
           ))}
         </div>
-        <div className="sidebar-bot">1</div>
+        <div className="sidebar-bot">
+          {Menu.filter((item) => item.position === "bot").map((item) => (
+            <Link key={item.label} href={`/${item.path}`}>
+              {item.label}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

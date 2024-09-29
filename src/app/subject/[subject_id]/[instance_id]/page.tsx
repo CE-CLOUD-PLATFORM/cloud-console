@@ -11,7 +11,7 @@ const Page = () => {
         <p>spec:</p>
       </div>
       <div className="flex flex-1 flex-wrap justify-center gap-3 content-start">
-    <button>
+    <button className="bg-blue-500 text-white rounded w-full py-2"> 
       Open VNC
     </button>
       </div>

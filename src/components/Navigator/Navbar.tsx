@@ -5,9 +5,14 @@ import { useUserContext } from "@/contexts/UserContext";
 import { UserContextType } from "@/interfaces/UserContextType";
 import { handleClick } from "./Sidebar";
 
+const pageLink = {
+  settings: "/settings",
+  login: "/auth/login",
+}
+
 const Navbar = () => {
-  let {user} = useUserContext() as UserContextType 
-  
+  let { user } = useUserContext() as UserContextType;
+
   return (
     <div className="z-[1000] w-full h-nav flex justify-between border-b-gray-100 border-b-2 shadow">
       <div className="flex items-center px-2 gap-5">
@@ -17,7 +22,7 @@ const Navbar = () => {
         <Link href={"/"} className="w-[30px]">
           <img src="\assets\navbar\logo.png" alt="" />
         </Link>
-        <h1 className="text-[28px]">Title</h1>
+        {/* <h1 className="text-[28px]">Title</h1> */}
       </div>
       <div className="flex items-center ">
         <div>
@@ -65,12 +70,20 @@ const Navbar = () => {
             </ul>
           </div>
         </div>
-        <div>
+        <div className="group nav-profile">
           <img
             className="w-[35px]"
             src=" \assets\navbar\profile-user.png"
             alt=""
           />
+          <div className="group-hover:flex absolute hidden right-0 flex-col
+           p-2 min-w-[250px] bg-white border rounded-md">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <Link href={pageLink.login}>Login</Link>
+            <Link href={pageLink.settings}>Settings</Link>
+          </div>
         </div>
       </div>
     </div>

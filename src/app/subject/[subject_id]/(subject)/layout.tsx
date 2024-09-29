@@ -9,6 +9,7 @@ export default function SubjectLayout({
     <div className="w-full flex">
       <SubjectMenu />
       {children}
+      <div className="side-menu"></div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import InstanceMenu from "@/components/Sidemenu/InstanceMenu";
+"use client;"
 export default function SettingLayout({
   children,
 }: {
@@ -6,7 +6,7 @@ export default function SettingLayout({
 }) {
   return (
     <div className="w-full flex">
-      <InstanceMenu />
+      <div className="side-menu"></div>
       {children}
       <div className="side-menu"></div>
     </div>

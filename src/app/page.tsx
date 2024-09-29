@@ -6,9 +6,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className={styles.main}>
-      <Link href={"/auth/login"} replace={true}>
-        Login
-      </Link>
+      may be dashboard or some other page here
     </main>
   );
 }
