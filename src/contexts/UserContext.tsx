@@ -1,5 +1,5 @@
 "use client";
-import { SubjectList } from "@/interfaces/Subject";
+import { SubjectList } from "@/interfaces/subject";
 import { User, UserContextType } from "@/interfaces/UserContextType";
 import { createContext, ReactNode, useContext, useState } from "react";
 

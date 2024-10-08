@@ -1,6 +1,6 @@
 "use client";
 import { useUserContext } from "@/contexts/UserContext";
-import { SubjectList } from "@/interfaces/Subject";
+import { SubjectList } from "@/interfaces/subject";
 import { UserContextType } from "@/interfaces/UserContextType";
 import Link from "next/link";
 import React, { ReactNode, useEffect, useState } from "react";
@@ -22,7 +22,7 @@ const Page = () => {
         {data?.subjects.map((data: any): ReactNode => {
           return (
             <Link
-              href={{pathname:"/subject/"+data.id}}
+              href={{ pathname: "/subject/" + data.id }}
               id={data.name}
               className=" flex-[30%] h-[20%] border flex-grow-0 flex justify-center items-center"
             >

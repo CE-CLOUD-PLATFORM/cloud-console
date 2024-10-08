@@ -1,7 +1,17 @@
 export interface SubjectList {
-    subjects:Subject[]
+    subjects: Subject[]
 }
-export interface Subject{
-    id:string,
-    name:string
+export interface Subject {
+    id: string,
+    name: string
 }
+
+export interface NewSubjectRequest {
+    subject: NewSubjectInputs
+}
+
+export interface NewSubjectInputs {
+    description: string
+    name: string
+}
+

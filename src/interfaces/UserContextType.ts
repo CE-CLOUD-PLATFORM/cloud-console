@@ -1,4 +1,4 @@
-import { SubjectList } from "./Subject";
+import { SubjectList } from "./subject";
 
 export interface User {
     token: string
