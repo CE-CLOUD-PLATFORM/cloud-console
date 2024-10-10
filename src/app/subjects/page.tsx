@@ -1,25 +1,28 @@
 "use client";
 import { useUserContext } from "@/contexts/UserContext";
-import { SubjectList } from "@/interfaces/subject";
-import { UserContextType } from "@/interfaces/UserContextType";
+import { UserContextType } from "@/interfaces/userContextType";
 import Link from "next/link";
 import React, { ReactNode, useEffect, useState } from "react";
+import { useQuerySubjects } from "../API/subject/subjeacts";
+import { useCookies } from "react-cookie";
 
 const Page = () => {
-  let { user, getUserSubjects } = useUserContext() as UserContextType;
-  const [data, setdata] = useState<SubjectList>();
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
+  let [{ data, loading, error }, refetch] = useQuerySubjects(
+    cookies.token
+  );
   useEffect(() => {
-    if (!data) {
-      setdata(getUserSubjects());
+    if (data) {
+      console.log(data);
     }
-  }, []);
+  }, [data]);
   return (
     <div className="flex h-full w-full flex-col">
       <div>
         <h1>Your Subject</h1>
       </div>
       <div className="flex flex-1 flex-wrap justify-center gap-3 content-start">
-        {data?.subjects.map((data: any): ReactNode => {
+        {data?.subjects?.map((data: any): ReactNode => {
           return (
             <Link
               href={{ pathname: "/subject/" + data.id }}

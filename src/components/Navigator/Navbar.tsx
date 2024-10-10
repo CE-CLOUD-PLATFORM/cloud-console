@@ -2,13 +2,13 @@
 import Link from "next/link";
 import React from "react";
 import { useUserContext } from "@/contexts/UserContext";
-import { UserContextType } from "@/interfaces/UserContextType";
+import { UserContextType } from "@/interfaces/userContextType";
 import { handleClick } from "./Sidebar";
 
 const pageLink = {
   settings: "/settings",
   login: "/auth/login",
-}
+};
 
 const Navbar = () => {
   let { user } = useUserContext() as UserContextType;
@@ -76,9 +76,11 @@ const Navbar = () => {
             src=" \assets\navbar\profile-user.png"
             alt=""
           />
-          <div className="group-hover:flex absolute hidden right-0 flex-col
-           p-2 min-w-[250px] bg-white border rounded-md">
-            <button>1</button>
+          <div
+            className="group-hover:flex absolute hidden right-0 flex-col
+           p-2 min-w-[250px] bg-white border rounded-md"
+          >
+            <button>{user?.token}</button>
             <button>2</button>
             <button>3</button>
             <Link href={pageLink.login}>Login</Link>

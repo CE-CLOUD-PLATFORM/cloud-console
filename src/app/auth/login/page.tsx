@@ -1,15 +1,13 @@
 "use client";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { Button, MenuItem, Select, Stack, TextField } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { json } from "stream/consumers";
-import axios from "axios";
 import LoginLayout from "./layout";
-type Inputs = {
-  username: string;
-  password: string;
-  domain: string;
-};
+import { ILoginReq } from "@/interfaces/auth";
+import { useLogin } from "@/app/API/auth/login";
+import { useUserContext } from "@/contexts/UserContext";
+import { UserContextType } from "@/interfaces/userContextType";
+
 const page = () => {
   const {
     register,
@@ -18,10 +16,17 @@ const page = () => {
     control,
     formState: { errors },
     setValue,
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    let res = await axios.post("http://localhost:5000/api/v1/auth/login", data);
+  } = useForm<ILoginReq>();
+  const [{ data, loading, error }, execute] = useLogin();
+  let { user, login } = useUserContext() as UserContextType;
+  const onSubmit: SubmitHandler<ILoginReq> = (value) => {
+    execute({ data: value });
   };
+  useEffect(() => {
+    if (!data?.error) {
+      login({ token: data?.token as string });
+    }
+  }, [data]);
   return (
     <div className="">
       <Stack
@@ -64,8 +69,5 @@ const page = () => {
       </Stack>
     </div>
   );
-};
-page.getLayout = function getLayout(page: ReactElement): ReactElement {
-  return <LoginLayout>{page}</LoginLayout>;
 };
 export default page;
