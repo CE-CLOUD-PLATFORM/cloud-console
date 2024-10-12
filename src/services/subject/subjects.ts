@@ -7,12 +7,9 @@ const path = {
   },
 };
 
-export const useQuerySubjects = (token: string) => {
+export const useQuerySubjects = () => {
   return useAxios<ISubjectsRes>({
     url: path.login.url,
     method: path.login.method,
-    headers: {
-      "X-Auth-Token": token,
-    },
   });
 };

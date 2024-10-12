@@ -3,19 +3,21 @@ import { useUserContext } from "@/contexts/UserContext";
 import { UserContextType } from "@/interfaces/userContextType";
 import Link from "next/link";
 import React, { ReactNode, useEffect, useState } from "react";
-import { useQuerySubjects } from "../API/subject/subjeacts";
+import { useQuerySubjects } from "@/services/subject/subjects";
 import { useCookies } from "react-cookie";
-
+import { useSession } from "next-auth/react";
 const Page = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
-  let [{ data, loading, error }, refetch] = useQuerySubjects(
-    cookies.token
-  );
+  let [{ data, loading, error }, refetch] = useQuerySubjects();
+  const { data: session, status } = useSession();
+
   useEffect(() => {
     if (data) {
       console.log(data);
     }
   }, [data]);
+  useEffect(() => {
+    console.log(session);
+  }, [session]);
   return (
     <div className="flex h-full w-full flex-col">
       <div>

@@ -4,10 +4,11 @@ import { Button, MenuItem, Select, Stack, TextField } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import LoginLayout from "./layout";
 import { ILoginReq } from "@/interfaces/auth";
-import { useLogin } from "@/app/API/auth/login";
+import { useLogin } from "@/services/auth/login";
 import { useUserContext } from "@/contexts/UserContext";
 import { UserContextType } from "@/interfaces/userContextType";
-
+import { signIn } from "next-auth/react";
+import { useSession } from "next-auth/react"
 const page = () => {
   const {
     register,
@@ -17,16 +18,25 @@ const page = () => {
     formState: { errors },
     setValue,
   } = useForm<ILoginReq>();
-  const [{ data, loading, error }, execute] = useLogin();
+  // const [{ data, loading, error }, execute] = useLogin();
   let { user, login } = useUserContext() as UserContextType;
-  const onSubmit: SubmitHandler<ILoginReq> = (value) => {
-    execute({ data: value });
+  const { data: session, status } = useSession()
+  const onSubmit: SubmitHandler<ILoginReq> = async (value) => {
+    // execute({ data: value });
+
+    let res = await signIn("credentials", {
+      ...value,
+      redirect: false, 
+    });
   };
+
   useEffect(() => {
-    if (!data?.error) {
-      login({ token: data?.token as string });
-    }
-  }, [data]);
+    // if (!data?.error) {
+    //   login({ token: data?.token as string });
+    // }
+    console.log(1,session);
+    login({ token: session?.user?.accessToken as string });
+  }, [session]);
   return (
     <div className="">
       <Stack

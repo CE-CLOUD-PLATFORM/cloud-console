@@ -11,10 +11,11 @@ interface PageProps {
 const pageLink = { newInstance: "instance/new" };
 
 const Page: React.FC<PageProps> = ({ params }) => {
+  
   return (
     <div className="main">
       <div>
-        <h1>Subject:{params.subject_id}</h1>
+        <h1>Subject:</h1>
         <div className="flex justify-between">
           <h1>Your Vm</h1>
           <Link

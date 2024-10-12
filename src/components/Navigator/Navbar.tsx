@@ -7,7 +7,7 @@ import { handleClick } from "./Sidebar";
 
 const pageLink = {
   settings: "/settings",
-  login: "/auth/login",
+  login: "/auth/signin",
 };
 
 const Navbar = () => {

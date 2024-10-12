@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from "react";
 import InstanceLayout from "./layout";
-import page from "@/app/auth/login/page";
+import page from "@/app/auth/signin/page";
 
 const Page = () => {
   return (
@@ -11,9 +11,9 @@ const Page = () => {
         <p>spec:</p>
       </div>
       <div className="flex flex-1 flex-wrap justify-center gap-3 content-start">
-    <button className="bg-blue-500 text-white rounded w-full py-2"> 
-      Open VNC
-    </button>
+        <button className="bg-blue-500 text-white rounded w-full py-2">
+          Open VNC
+        </button>
       </div>
     </div>
   );

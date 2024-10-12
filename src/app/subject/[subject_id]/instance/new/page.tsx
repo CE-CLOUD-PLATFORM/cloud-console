@@ -1,7 +1,7 @@
 "use client";
 import React, { ReactElement, ReactNode } from "react";
 import InstanceLayout from "./layout";
-import page from "@/app/auth/login/page";
+import page from "@/app/auth/signin/page";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { NewInstanceInputs } from "@/interfaces/Instance";
 import { Button, MenuItem, Select, Stack, TextField } from "@mui/material";
@@ -71,7 +71,10 @@ const Page = () => {
             />
             {errors.flavors && <span>This field is required</span>}
           </div>
-          <Link className="text-nowrap bg-gray-200 p-2 rounded-md" href={pageLink.manageKey}>
+          <Link
+            className="text-nowrap bg-gray-200 p-2 rounded-md"
+            href={pageLink.manageKey}
+          >
             Manage Key
           </Link>
         </div>

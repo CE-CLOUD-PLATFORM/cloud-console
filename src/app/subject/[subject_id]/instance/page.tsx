@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from "react";
 import InstanceLayout from "./layout";
-import page from "@/app/auth/login/page";
+import page from "@/app/auth/signin/page";
 
 const Page = () => {
   return (
