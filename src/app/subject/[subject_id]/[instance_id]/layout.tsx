@@ -1,5 +1,5 @@
 import InstanceMenu from "@/components/Sidemenu/InstanceMenu";
-export default function SettingLayout({
+export default function InstanceLayout({
   children,
 }: {
   children: React.ReactNode;

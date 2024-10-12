@@ -24,13 +24,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let [session, setSession] = useState<Session | null>(null);
   const pathname = usePathname();
-  useEffect(() => {
-    getSession().then((session) => {
-      setSession(session);
-    });
-  }, []);
   useEffect(() => {
     NProgress.start();
     NProgress.done();
@@ -45,13 +39,11 @@ export default function RootLayout({
         <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
       </head>
       <body className={inter.className}>
-        <SessionProvider session={session}>
           <UserProvider>
             <Navbar />
             <Sidebar />
             <div className={styles.main}>{children}</div>
           </UserProvider>
-        </SessionProvider>
       </body>
     </html>
   );

@@ -18,25 +18,17 @@ const page = () => {
     formState: { errors },
     setValue,
   } = useForm<ILoginReq>();
-  // const [{ data, loading, error }, execute] = useLogin();
+  const [{ data, loading, error }, execute] = useLogin({manual:true});
   let { user, login } = useUserContext() as UserContextType;
-  const { data: session, status } = useSession()
   const onSubmit: SubmitHandler<ILoginReq> = async (value) => {
-    // execute({ data: value });
-
-    let res = await signIn("credentials", {
-      ...value,
-      redirect: false, 
-    });
+    execute({ data: value });
   };
 
   useEffect(() => {
-    // if (!data?.error) {
-    //   login({ token: data?.token as string });
-    // }
-    console.log(1,session);
-    login({ token: session?.user?.accessToken as string });
-  }, [session]);
+    if (!data?.error) {
+      login({ token: data?.token as string });
+    }
+  }, [data]);
   return (
     <div className="">
       <Stack

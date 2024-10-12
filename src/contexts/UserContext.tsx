@@ -12,7 +12,7 @@ let UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const login = (user: User) => {
     setUser(user);
-    setCookie("token", user.token, { expires: new Date(Date.now() + 900000) });
+    setCookie("token", user.token, { expires: new Date(Date.now() + 10800000) });//ms
     
   };
   const logout = () => {

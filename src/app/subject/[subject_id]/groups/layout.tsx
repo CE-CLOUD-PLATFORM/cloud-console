@@ -1,7 +1,7 @@
 import InstanceMenu from "@/components/Sidemenu/InstanceMenu";
 import SettingMenu from "@/components/Sidemenu/SettingMenu";
 
-export default function SettingLayout({
+export default function GroupsLayout({
   children,
 }: {
   children: React.ReactNode;

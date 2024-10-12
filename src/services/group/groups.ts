@@ -1,6 +1,7 @@
 
 import { IGroupList } from "@/interfaces/group";
 import useAxios from "../API";
+import { Options } from "axios-hooks";
 const path = {
   login: {
     url: "/api/v1/subject/groups",
@@ -8,12 +9,9 @@ const path = {
   },
 };
 
-export const useQuerySubjects = (project_id: string,token :string) => {
+export const useQueryGroups = (project_id: string,option?:Options) => {
   return useAxios<IGroupList>({
     url: path.login.url+`/${project_id}`,
     method: path.login.method,
-    headers: {
-      "X-Auth-Token": token,
-    },
-  });
+  },option);
 };

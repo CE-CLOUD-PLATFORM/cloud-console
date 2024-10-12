@@ -1,17 +1,34 @@
+"use client";
 import React from "react";
 import Link from "next/link";
+import { useQueryGroups } from "@/services/group/groups";
 const pageLink = {
   newGroup: "groups/new",
 };
-
-const Page = () => {
-
+interface PageProps {
+  params: {
+    subject_id: string;
+  };
+}
+const Page: React.FC<PageProps> = ({ params }) => {
+  
+const [{data,loading,error},refetch] = useQueryGroups(params.subject_id)
   return (
     <div className="main pl-[250px]">
       <h1>Groups</h1>
+      
       <Link href={pageLink.newGroup} replace={false}>
         Create
       </Link>
+      <div className="flex flex-col">
+        {data?.groups?.map((group: any) => {
+          return (
+            <Link  href={`/subject/${params.subject_id}/group/${group.id}`} replace={false}>
+              {group.name}
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 };

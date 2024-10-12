@@ -18,7 +18,7 @@ export interface GroupQuotaSet {
     ram: number
 }
 
-export interface Group {
+export interface IGroup {
     is_domain: boolean
     description: string
     domain_id: string
@@ -27,8 +27,10 @@ export interface Group {
     name: string
     parent_id: string
     tags: string[]
-}
+  }
 
 export interface IGroupList extends IResponse {
-    groups: Group[]
+    groups: IGroup[]
 }
+
+  
