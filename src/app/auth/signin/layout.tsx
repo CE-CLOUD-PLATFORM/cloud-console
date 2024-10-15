@@ -1,14 +1,9 @@
-// components/LoginLayout.js
-const LoginLayout = ({
+const SigninLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return (
-      <div>
-        <main>{children}</main>
-      </div>
-  );
+  return <main>{children}</main>;
 };
 
-export default LoginLayout;
+export default SigninLayout;

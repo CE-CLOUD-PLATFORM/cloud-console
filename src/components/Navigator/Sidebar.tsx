@@ -1,3 +1,4 @@
+"use client";
 import React, { MouseEventHandler } from "react";
 import "./style.css";
 import Link from "next/link";

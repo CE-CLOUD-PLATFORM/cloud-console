@@ -12,6 +12,7 @@ import styles from "./page.module.css";
 import UserProvider from "@/contexts/UserContext";
 import { getSession, SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
+import SubjectSelectModal from "@/components/Modal/SubjectSelectmodal";
 const inter = Inter({ subsets: ["latin"] });
 
 const metadata: Metadata = {
@@ -36,12 +37,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
       </head>
       <body className={inter.className}>
           <UserProvider>
             <Navbar />
             <Sidebar />
+            <SubjectSelectModal/>
             <div className={styles.main}>{children}</div>
           </UserProvider>
       </body>

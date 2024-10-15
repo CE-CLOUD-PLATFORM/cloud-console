@@ -1,0 +1,6 @@
+.subject-select-modal-cover-active{
+    @apply !flex !bg-opacity-30 z-[999]
+}
+.subject-select-modal-menu-active{
+    @apply !translate-x-0 z-[999] !opacity-100
+}
