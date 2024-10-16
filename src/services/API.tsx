@@ -1,7 +1,8 @@
-"use client";
+
 import axios from "axios";
 import { makeUseAxios } from "axios-hooks";
-function getCookie(cname:string) {
+export function getCookie(cname:string) {
+  if (typeof window === "undefined") return "";
   let name = cname + "=";
   let ca = document.cookie.split(';');
   for(let i = 0; i < ca.length; i++) {

@@ -1,15 +1,14 @@
-"use client";
-import React, { ReactElement, useEffect } from "react";
+"use client"
+import React from "react";
 import { Button, MenuItem, Select, Stack, TextField } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import SigninLayout from "./layout";
 import { ILoginReq } from "@/interfaces/auth";
 import { useLogin } from "@/services/auth/login";
 import { useUserContext } from "@/contexts/UserContext";
 import { UserContextType } from "@/interfaces/userContextType";
-import { signIn } from "next-auth/react";
-import { useSession } from "next-auth/react"
-const page = () => {
+
+import { useRouter } from 'next/navigation';
+const Page = () => {
   const {
     register,
     handleSubmit,
@@ -18,17 +17,17 @@ const page = () => {
     formState: { errors },
     setValue,
   } = useForm<ILoginReq>();
-  const [{ data, loading, error }, execute] = useLogin({manual:true});
+  const router = useRouter();
+  const [, execute] = useLogin({ manual: true });
   let { user, login } = useUserContext() as UserContextType;
   const onSubmit: SubmitHandler<ILoginReq> = async (value) => {
-    execute({ data: value });
+    let { data, status } = await execute({ data: value });
+    if (status === 200) {
+      login({ token: data?.token as string });
+      router.push('/');
+    }
   };
 
-  useEffect(() => {
-    if (!data?.error) {
-      login({ token: data?.token as string });
-    }
-  }, [data]);
   return (
     <div className="">
       <Stack
@@ -72,4 +71,4 @@ const page = () => {
     </div>
   );
 };
-export default page;
+export default Page;

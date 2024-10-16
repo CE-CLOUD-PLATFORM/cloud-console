@@ -6,6 +6,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { useQuerySubjects } from "@/services/subject/subjects";
 import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
+import { ISubjectRes, Subject } from "@/interfaces/subject";
 const Page = () => {
   let [{ data, loading, error }, refetch] = useQuerySubjects();
 
@@ -20,9 +21,10 @@ const Page = () => {
         <h1>Your Subject</h1>
       </div>
       <div className="flex flex-1 flex-wrap justify-center gap-3 content-start">
-        {data?.subjects?.map((data: any): ReactNode => {
+        {data?.subjects?.map((data: Subject): ReactNode => {
           return (
             <Link
+              key={data.id}
               href={{ pathname: "/subject/" + data.id }}
               id={data.name}
               className=" flex-[30%] h-[20%] border flex-grow-0 flex justify-center items-center"

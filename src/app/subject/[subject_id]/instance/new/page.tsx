@@ -1,7 +1,5 @@
 "use client";
 import React, { ReactElement, ReactNode } from "react";
-import InstanceLayout from "./layout";
-import page from "@/app/auth/signin/page";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { NewInstanceInputs } from "@/interfaces/Instance";
 import { Button, MenuItem, Select, Stack, TextField } from "@mui/material";

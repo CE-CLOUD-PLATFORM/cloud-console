@@ -1,5 +1,5 @@
 import { IResponse } from "./api"
-
+import { Instance } from "./Instance"
 export interface Subject {
     is_domain: boolean
     description: string
@@ -34,31 +34,6 @@ export interface SubjectReqParam {
 export interface ISubjectRes extends IResponse {
     instances: Instance[]
     subject: Subject
-}
-
-export interface Instance {
-    id: string
-    tenant_id: string
-    user_id: string
-    name: string
-    updated: string
-    created: string
-    hostid: string
-    status: string
-    progress: number
-    accessIPv4: string
-    accessIPv6: string
-    flavor: Flavor
-    addresses: Addresses
-    metadata: any
-    links: Link2[]
-    key_name: string
-    adminPass: string
-    security_groups: SecurityGroup[]
-    "os-extended-volumes:volumes_attached": OsExtendedVolumesVolumesAttached[]
-    fault: Fault
-    tags: any
-    server_groups: any
 }
 
 export interface Flavor {

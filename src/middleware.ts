@@ -1,21 +1,34 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
-  // const url = request.nextUrl.clone();
+const protectedPaths = ['/'];
+const authPaths = ['/auth/signin'];
 
-  // if (url.pathname.startsWith('/auth') || url.pathname.startsWith('/public')) {
-  //   console.log("ok");
-  //   return NextResponse.next();
-  // }
-  // const isLoggedIn = false;
-  // if (!isLoggedIn) {
-  //   url.pathname = '/auth/signin';
-  //   return NextResponse.redirect(url);
-  // }
+export function middleware(request: NextRequest) {
+
+  const token = request.cookies.get('token')?.value;
+
+  const shouldProtect = protectedPaths.some(path => request.nextUrl.pathname.startsWith(path));
+  const pathname = request.nextUrl.pathname;
+
+
+  const isAuthPath = authPaths.some(path => request.nextUrl.pathname.startsWith(path));
+  if (isAuthPath && token) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
+  if (pathname === '/auth/signin') {
+    return NextResponse.next();
+  }
+  if (shouldProtect && !token) {
+    return NextResponse.redirect(new URL('/auth/signin', request.url));
+  }
+
+
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/:path*'],
+  // matcher: ['/:path*'],
+  matcher: ['/((?!api|_next/static|_next/|asset|favicon.ico).*)'],
 };

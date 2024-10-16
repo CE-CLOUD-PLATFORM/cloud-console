@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { useQueryGroups } from "@/services/group/groups";
+import { Subject } from "@/interfaces/subject";
 const pageLink = {
   newGroup: "groups/new",
 };
@@ -21,9 +22,9 @@ const [{data,loading,error},refetch] = useQueryGroups(params.subject_id)
         Create
       </Link>
       <div className="flex flex-col">
-        {data?.groups?.map((group: any) => {
+        {data?.groups?.map((group: Subject) => {
           return (
-            <Link  href={`/subject/${params.subject_id}/group/${group.id}`} replace={false}>
+            <Link  key={group.id} href={`/subject/${params.subject_id}/group/${group.id}`} replace={false}>
               {group.name}
             </Link>
           );

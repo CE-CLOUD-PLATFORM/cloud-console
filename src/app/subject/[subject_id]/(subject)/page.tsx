@@ -1,7 +1,6 @@
 "use client";
-import SubjectTable from "@/components/Tables/SubjectTable";
+import InstanceTable from "@/components/Tables/InstanceTable";
 import { useQuerySubject } from "@/services/subject/subject";
-import { Button } from "@mui/material";
 import Link from "next/link";
 import React, { ReactNode, useEffect } from "react";
 interface PageProps {
@@ -31,7 +30,7 @@ const Page: React.FC<PageProps> = ({ params }) => {
             +Instance
           </Link>
         </div>
-        <SubjectTable />
+        <InstanceTable params={params} data={data?.instances}/>
       </div>
     </div>
   );
