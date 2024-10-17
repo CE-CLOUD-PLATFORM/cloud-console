@@ -2,7 +2,7 @@ import { IResponse } from './api';
 export interface NewInstanceInputs {
     name: string;
     flavors: string;
-    public_hey: string[];
+    public_key: string[];
 };
 export interface InstanceQueryParam {
     instance_id: string

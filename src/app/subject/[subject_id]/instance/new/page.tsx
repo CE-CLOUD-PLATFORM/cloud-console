@@ -1,74 +1,120 @@
 "use client";
-import React, { ReactElement, ReactNode } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { NewInstanceInputs } from "@/interfaces/Instance";
-import { Button, MenuItem, Select, Stack, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Button,
+  Chip,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+} from "@mui/material";
 import Link from "next/link";
 
 const pageLink = {
   manageKey: "/settings/keys",
 };
-
+const top100Tags = [
+  { title: "Tag1" },
+  { title: "Tag2" },
+  { title: "Tag3" },
+  { title: "Tag4" },
+  { title: "Tag5" },
+];
 const Page = () => {
   const {
     register,
     handleSubmit,
-    watch,
+
     control,
     formState: { errors },
-    setValue,
   } = useForm<NewInstanceInputs>();
   const onSubmit: SubmitHandler<NewInstanceInputs> = async (data) => {
     console.log(data);
   };
+
   return (
     <div className="main">
       <h1>Create VMs</h1>
       <Stack
         component="form"
-        sx={{ "& > :not(style)": { m: 1, width: "25ch" } }}
-        noValidate
         autoComplete="off"
+        className="w-[70%] p-4 gap-3"
         onSubmit={handleSubmit(onSubmit)}
       >
         <TextField
           id="username"
           variant="outlined"
-          label="username"
+          label="Name"
           {...register("name", { required: true })}
         />
         {errors.name && <span>This field is required</span>}
-        <Controller
-          name="flavors"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <Select label="flavors" id="flavors" variant="outlined" {...field}>
-              <MenuItem value={"Default"}>Default</MenuItem>
-            </Select>
-          )}
-        />
-        {errors.flavors && <span>This field is required</span>}
+        <FormControl fullWidth>
+          <InputLabel id="flavors-label">Flavors</InputLabel>
+          <Controller
+            name="flavors"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Select
+                labelId="flavors-label"
+                id="flavors"
+                label="Flavors"
+                variant="outlined"
+                {...field}
+              >
+                <MenuItem value={"Default"}>Default</MenuItem>
+              </Select>
+            )}
+          />
+          {errors.flavors && <span>This field is required</span>}
+        </FormControl>
         <div className="flex w-full items-center gap-x-2">
-          <div className="flex-1">
+          <div className=" w-full">
             <Controller
-              name="flavors"
+              name="public_key"
               control={control}
-              defaultValue=""
+              defaultValue={[]}
+              rules={{ required: "This field is required" }}
               render={({ field }) => (
-                <Select
-                  className="w-full min-w-[250px]"
-                  label="flavors"
-                  id="flavors"
-                  variant="outlined"
-                  {...field}
-                >
-                  <MenuItem value={"Default"}>Default</MenuItem>
-                </Select>
+                <Autocomplete
+                  multiple
+                  className="w-full"
+                  id="tags-filled"
+                  options={top100Tags
+                    .filter((option) => !field.value?.includes(option.title))
+                    .map((option) => option.title)}
+                  freeSolo
+                  value={field.value}
+                  onChange={(event, newValue) => {
+                    field.onChange(newValue); 
+                  }}
+                  renderTags={(value, getTagProps) =>
+                    value.map((option, index) => (
+                      <Chip
+                        variant="outlined"
+                        label={option}
+                        {...getTagProps({ index })}
+                      />
+                    ))
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Public Key"
+                    />
+                  )}
+                />
               )}
             />
-            {errors.flavors && <span>This field is required</span>}
+            {errors.public_key && <span>{errors.public_key.message}</span>}
           </div>
+
           <Link
             className="text-nowrap bg-gray-200 p-2 rounded-md"
             href={pageLink.manageKey}
