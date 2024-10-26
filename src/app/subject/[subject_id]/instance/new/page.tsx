@@ -48,7 +48,7 @@ const Page = ({ params }: PageProps) => {
   let [{ loading, data, error }] = useQueryInstanceOption({
     subject_id: params.subject_id,
   });
-  let [{ loading: t, data: tda, error: terr }, execute] = usePostInstance(
+  let [{ loading: loadingCreateResult, data: dataCreateResult, error: errCreateResult }, execute] = usePostInstance(
     undefined,
     { manual: true }
   );
