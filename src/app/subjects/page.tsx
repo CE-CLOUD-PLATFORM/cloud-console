@@ -8,7 +8,10 @@ import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
 import { ISubjectRes, Subject } from "@/interfaces/subject";
 const Page = () => {
-  let [{ data, loading, error }, refetch] = useQuerySubjects();
+  let { user } = useUserContext() as UserContextType;
+  let [{ data, loading, error }, refetch] = useQuerySubjects({
+    user_id: user?.info?.id as string,
+  });
 
   useEffect(() => {
     if (data) {

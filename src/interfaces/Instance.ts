@@ -1,15 +1,29 @@
 import { IResponse } from './api';
-export interface NewInstanceInputs {
+export interface InstanceReq {
     name: string;
-    flavors: string;
+    subject_id: string;
+    flavor_id: string;
+    image_id: string;
+    volume_size: number;
     public_key: string[];
-};
+    username: string;
+    password: string;
+}
+
 export interface InstanceQueryParam {
     instance_id: string
     subject_id: string
 }
+export interface InstanceQueryOptionParam {
+    subject_id: string
+}
+
 export interface InstanceRes extends IResponse {
     instance: Instance;
+}
+export interface InstanceOptionRes extends IResponse {
+    flavors: Flavor[]
+    images: Image[]
 }
 export interface Instance {
     id: string
@@ -53,7 +67,14 @@ export interface Instance {
 
 export interface Flavor {
     id: string
-    links: Link[]
+    disk?: number
+    ram?: number
+    name?: string
+    rxtx_factor?: number
+    vcpus?: number
+    description?: string
+    extra_specs?: any
+    links?: Link[]
 }
 
 export interface Link {
@@ -93,3 +114,25 @@ export interface Fault {
     details: string
     message: string
 }
+export interface Image {
+    id: string
+    name: string
+    status: string
+    tags: any[]
+    container_format: string
+    disk_format: string
+    min_disk: number
+    min_ram: number
+    owner: string
+    protected: boolean
+    visibility: string
+    os_hidden: boolean
+    checksum: string
+    metadata: any
+    // Properties: Properties
+    created_at: string
+    updated_at: string
+    file: string
+    schema: string
+    virtual_size: number
+  }

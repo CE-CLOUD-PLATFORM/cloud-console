@@ -3,7 +3,7 @@ import useAxios from "../API";
 import { Options } from "axios-hooks";
 const path = {
   get: {
-    url: "/api/v1/subject/",
+    url: "/subject/",
     method: "GET",
   },
 };

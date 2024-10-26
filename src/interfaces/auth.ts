@@ -5,6 +5,18 @@ export interface ILoginReq {
     password: string
     domain: string
 }
+
+export interface UserInfo {
+    domain: Domain
+    id: string
+    name: string
+  }
+  
+  export interface Domain {
+    id: string
+    name: string
+  }
 export interface ILoginRes extends IResponse {
     token: string
+    user: UserInfo
 }

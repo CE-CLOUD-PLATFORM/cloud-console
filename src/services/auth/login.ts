@@ -3,11 +3,11 @@ import useAxios from "../API";
 import { ILoginReq, ILoginRes } from "@/interfaces/auth";
 const path = {
   login: {
-    url: "/api/v1/auth/login",
+    url: "/auth/login",
     method: "POST",
   },
   logout: {
-    url: "/api/v1/auth/logout",
+    url: "/auth/logout",
     method: "POST",
   },
 };

@@ -1,26 +1,30 @@
 "use client";
 import useAxios from "../API";
 import { Options } from "axios-hooks";
-import { InstanceQueryParam, InstanceRes } from "@/interfaces/Instance";
+import { InstanceOptionRes, InstanceQueryOptionParam, InstanceQueryParam, InstanceReq, InstanceRes } from "@/interfaces/Instance";
 const path = {
-  get: {
-    url: "/api/v1/server/",
+  base: "/server",
+  option:'/options'
+};
+
+export const useQueryInstance = (params: InstanceQueryParam, option?: Options) => {
+  return useAxios<InstanceRes>({
+    url: path.base,
     method: "GET",
-  },
-};
-
-export const useQueryInstance = (params:InstanceQueryParam,option?:Options) => {
-  return useAxios<InstanceRes>({
-    url: path.get.url,
-    method: path.get.method,
     params
-  },option);
+  }, option);
 };
-
-export const usePostInstance = (params:InstanceQueryParam,option?:Options) => {
-  return useAxios<InstanceRes>({
-    url: path.get.url,
-    method: path.get.method,
+export const useQueryInstanceOption = (params: InstanceQueryOptionParam, option?: Options) => {
+  return useAxios<InstanceOptionRes>({
+    url: path.base+path.option,
+    method: "GET",
     params
-  },option);
+  }, option);
+};
+export const usePostInstance = (data?: InstanceReq, option?: Options) => {
+  return useAxios({
+    url: path.base,
+    method: "POST",
+    data
+  }, option);
 };

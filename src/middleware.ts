@@ -8,7 +8,6 @@ export function middleware(request: NextRequest) {
 
   const token = request.cookies.get('token')?.value;
 
-
   const shouldProtect = protectedPaths.some(path => request.nextUrl.pathname.startsWith(path));
   const pathname = request.nextUrl.pathname;
   const isTokenExpire = (!token || token === "undefined")

@@ -1,6 +1,12 @@
 "use client";
 import { User, UserContextType } from "@/interfaces/userContextType";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useCookies } from "react-cookie";
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -8,7 +14,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export let useUserContext = () => useContext(UserContext);
 
 let UserProvider = ({ children }: { children: ReactNode }) => {
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["token", "user"]);
 
   const [user, setUser] = useState<User | null>(null);
   const login = (user: User) => {
@@ -17,11 +23,23 @@ let UserProvider = ({ children }: { children: ReactNode }) => {
       path: "/",
       expires: new Date(Date.now() + 3600000),
     }); //ms
+    console.log(JSON.stringify(user.info));
+
+    setCookie("user", user.info, {
+      path: "/",
+      expires: new Date(Date.now() + 3600000),
+    }); //ms
   };
   useEffect(() => {
-    if (cookies.token !== "undefined") {
-      console.log(cookies.token);
-      login({ token: cookies.token });
+    if (
+      cookies.token !== "undefined" &&
+      cookies.user !== "undefined" &&
+      cookies.token &&
+      cookies.user
+    ) {
+      console.log(cookies.user);
+
+      login({ token: cookies.token, info: cookies.user });
     }
   }, []);
 

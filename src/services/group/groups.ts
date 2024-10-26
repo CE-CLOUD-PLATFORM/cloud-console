@@ -4,7 +4,7 @@ import useAxios from "../API";
 import { Options } from "axios-hooks";
 const path = {
   login: {
-    url: "/api/v1/subject/groups",
+    url: "/subject/groups",
     method: "GET",
   },
 };

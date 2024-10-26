@@ -30,7 +30,9 @@ export interface SubjectReqParam {
     subject_id: string
 }
 
-
+export interface SubjectListReqParam {
+    user_id: string
+}
 export interface ISubjectRes extends IResponse {
     instances: Instance[]
     subject: Subject

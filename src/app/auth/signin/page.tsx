@@ -1,13 +1,21 @@
-"use client"
+"use client";
 import React from "react";
-import { Button, MenuItem, Select, Stack, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { ILoginReq } from "@/interfaces/auth";
 import { useLogin } from "@/services/auth/login";
 import { useUserContext } from "@/contexts/UserContext";
 import { UserContextType } from "@/interfaces/userContextType";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 const Page = () => {
   const {
     register,
@@ -23,8 +31,8 @@ const Page = () => {
   const onSubmit: SubmitHandler<ILoginReq> = async (value) => {
     let { data, status } = await execute({ data: value });
     if (status === 200) {
-      login({ token: data?.token as string });
-      router.push('/');
+      login({ token: data?.token as string,info: data?.user});
+      router.push("/");
     }
   };
 
@@ -52,18 +60,26 @@ const Page = () => {
           {...register("password", { required: true })}
         />
         {errors.password && <span>This field is required</span>}
-        <Controller
-          name="domain"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <Select label="domain" id="domain" variant="outlined" {...field}>
-              <MenuItem value={"Default"}>Default</MenuItem>
-            </Select>
-          )}
-        />
-        {errors.domain && <span>This field is required</span>}
-
+        <FormControl fullWidth>
+          <InputLabel id="domains-label">Domain</InputLabel>
+          <Controller
+            name="domain"
+            control={control}
+            defaultValue="Default"
+            render={({ field }) => (
+              <Select
+                labelId="domains-label"
+                id="domains"
+                label="Domain"
+                variant="outlined"
+                {...field}
+              >
+                <MenuItem value={"Default"}>Default</MenuItem>
+              </Select>
+            )}
+          />
+          {errors.domain && <span>This field is required</span>}
+        </FormControl>
         <Button variant="contained" type="submit">
           Contained
         </Button>
