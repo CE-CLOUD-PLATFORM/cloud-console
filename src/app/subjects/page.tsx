@@ -19,9 +19,16 @@ const Page = () => {
     }
   }, [data]);
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex h-full w-full flex-col main">
       <div>
         <h1>Your Subject</h1>
+        <Link
+          href={"/subjects/new"}
+          replace={false}
+          className="bg-orange-200 p-1 rounded-md"
+        >
+          +Subject
+        </Link>
       </div>
       <div className="flex flex-1 flex-wrap justify-center gap-3 content-start">
         {data?.subjects?.map((data: Subject): ReactNode => {

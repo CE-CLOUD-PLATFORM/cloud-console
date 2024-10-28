@@ -23,8 +23,6 @@ let UserProvider = ({ children }: { children: ReactNode }) => {
       path: "/",
       expires: new Date(Date.now() + 3600000),
     }); //ms
-    console.log(JSON.stringify(user.info));
-
     setCookie("user", user.info, {
       path: "/",
       expires: new Date(Date.now() + 3600000),
