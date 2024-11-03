@@ -20,10 +20,8 @@ const Page = () => {
   const {
     register,
     handleSubmit,
-    watch,
     control,
     formState: { errors },
-    setValue,
   } = useForm<ILoginReq>();
   const router = useRouter();
   const [, execute] = useLogin({ manual: true });
@@ -37,8 +35,11 @@ const Page = () => {
   };
 
   return (
-    <div className="">
-      <Stack
+    <div className="min-h-screen min-w-full flex">
+      <div className="flex w-full flex-col items-center justify-center bg-red-300 p-3  text-2xl font-semibold md:w-2/3"></div>
+      <div className="flex w-full flex-col items-center justify-center bg-slate-300 p-3  text-2xl font-semibold md:w-1/3">
+        <h1 className="text-center text-lg md:text-2xl">CE CLOUD PLATFORM</h1>
+        {/* <Stack
         component="form"
         sx={{ "& > :not(style)": { m: 1, width: "25ch" } }}
         noValidate
@@ -83,7 +84,8 @@ const Page = () => {
         <Button variant="contained" type="submit">
           Contained
         </Button>
-      </Stack>
+      </Stack> */}
+      </div>
     </div>
   );
 };

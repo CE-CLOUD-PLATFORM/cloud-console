@@ -5,7 +5,7 @@ import NProgress from "nprogress";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/app/globals.css"
 import Navbar from "../../components/Navigator/Navbar";
 import Sidebar from "../../components/Navigator/Sidebar";
 import styles from "./page.module.css";

@@ -1,16 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-
-    // Or if using `src` directory:
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/**/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/**/**/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       colors: {
@@ -18,8 +8,8 @@ module.exports = {
         "secondary-color": "var(--secondary-color)",
       },
       height: {
-        "nav": "var(--nav-h)",
-        "main": "var(--main-h)",
+        nav: "var(--nav-h)",
+        main: "var(--main-h)",
       },
     },
     plugins: [],
