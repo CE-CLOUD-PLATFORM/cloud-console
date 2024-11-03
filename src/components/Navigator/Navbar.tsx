@@ -47,17 +47,12 @@ const Navbar = () => {
             alt=""
           />
         </Link>
-        {/* <h1 className="text-[28px]">Title</h1> */}
       </div>
-      <div className="flex items-center ">
-        <Button
-          variant="contained"
-          // onClick={OpenSubjectSelectModal}
-        >
-          {/* Subjects */}
+      <div className="flex items-center space-x-2">
+        <div>
           <Link href={pageLink.subjects}>Subjects</Link>
-        </Button>
-        <div className="group nav-profile">
+        </div>
+        <div className="group nav-profile p-5">
           <Image
             className="w-[35px]"
             src="/assets/navbar/profile-user.png"
@@ -66,16 +61,15 @@ const Navbar = () => {
             height={40}
           />
           <div
-            className="group-hover:flex absolute hidden right-0 flex-col
-           p-2 min-w-[250px] bg-white border rounded-md"
+            className="group-hover:flex absolute hidden right-5 top-[45px] flex-col
+           p-2 bg-white border rounded-md text-center"
           >
             <Link href={pageLink.settings}>Settings</Link>
             {user?.token ? (
-              <button type="button" onClick={handleLogout}>
+              <h1 className="cursor-pointer" onClick={handleLogout}>
                 Logout
-              </button>
+              </h1>
             ) : (
-              // <Link href={pageLink.logout}>Logout</Link>
               <Link href={pageLink.login}>Login</Link>
             )}
           </div>

@@ -4,21 +4,26 @@ import { usePathname } from "next/navigation";
 import NProgress from "nprogress";
 
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "@/app/globals.css"
-import Navbar from "../../components/Navigator/Navbar";
-import Sidebar from "../../components/Navigator/Sidebar";
+import { Prompt } from "next/font/google";
+import "@/app/globals.css";
+import Navbar from "@/components/Navigator/Navbar";
+import Sidebar from "@/components/Navigator/Sidebar";
 import styles from "./page.module.css";
 import UserProvider from "@/contexts/UserContext";
 import { getSession, SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 import SubjectSelectModal from "@/components/Modal/SubjectSelectmodal";
-const inter = Inter({ subsets: ["latin"] });
 
 const metadata: Metadata = {
   title: "CE Cloud Console",
   description: "",
 };
+
+const inter = Prompt({
+  subsets: ["latin"],
+  display: "swap",
+  weight: "400",
+});
 
 export default function RootLayout({
   children,

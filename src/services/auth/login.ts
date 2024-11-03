@@ -1,5 +1,5 @@
 import { Options } from "axios-hooks";
-import useAxios from "../API";
+import useAxios from "@/services/API";
 import { ILoginReq, ILoginRes } from "@/interfaces/auth";
 const path = {
   login: {
@@ -12,6 +12,9 @@ const path = {
   },
 };
 
-export const useLogin = (option?:Options) => {
-  return useAxios<ILoginRes,ILoginReq>({ url: path.login.url, method: path.login.method },option);
+export const useLogin = (option?: Options) => {
+  return useAxios<ILoginRes, ILoginReq>(
+    { url: path.login.url, method: path.login.method },
+    option
+  );
 };

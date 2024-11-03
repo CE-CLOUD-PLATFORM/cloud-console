@@ -31,9 +31,9 @@ export default function DataTable({ data, params }: PageProps) {
       flex: 1,
       renderCell: (params) => (
         <span
-          className="bg-green-200 p-2 border-green-500 border rounded"
+          className="bg-green-200 p-2 rounded"
           style={{
-            color: params.value === "Active" ? "green" : "red",
+            color: params.value === "Active" ? "green" : "black",
             fontWeight: "bold",
           }}
         >
