@@ -9,7 +9,7 @@ const Page = () => {
   useEffect(() => {
     removeCookie("token", { path: "/" });
     router.push("/");
-  }, []);
+  });
   return <div className="">a</div>;
 };
 export default Page;

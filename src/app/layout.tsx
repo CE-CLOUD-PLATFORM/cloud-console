@@ -36,15 +36,14 @@ export default function RootLayout({
   }, [pathname]);
   return (
     <html lang="en">
-      <head>
-      </head>
+      <head></head>
       <body className={inter.className}>
-          <UserProvider>
-            <Navbar />
-            <Sidebar />
-            <SubjectSelectModal/>
-            <div className={styles.main}>{children}</div>
-          </UserProvider>
+        <UserProvider>
+          {/* <Navbar /> */}
+          <Sidebar />
+          <SubjectSelectModal />
+          <div className={styles.main}>{children}</div>
+        </UserProvider>
       </body>
     </html>
   );

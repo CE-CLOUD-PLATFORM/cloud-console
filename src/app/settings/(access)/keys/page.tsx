@@ -60,7 +60,7 @@ const Page = () => {
       <h1>Your key</h1>
       <div>
         {data?.keys.map((e) => (
-          <div>{e.name}</div>
+          <div key={e.id}>{e.name}</div>
         ))}
       </div>
     </div>

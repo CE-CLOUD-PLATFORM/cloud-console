@@ -1,5 +1,4 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { InstanceReq } from "@/interfaces/Instance";
 import {
@@ -14,6 +13,7 @@ import {
   TextField,
 } from "@mui/material";
 import Link from "next/link";
+import Image from "next/image";
 import {
   usePostInstance,
   useQueryInstanceOption,
@@ -127,12 +127,13 @@ const Page = ({ params }: PageProps) => {
                     className="flex gap-x-2"
                     value={image.id}
                   >
-                    <img
+                    <Image
                       width={24}
                       height={24}
                       src={
                         image.Properties?.logo_url || "/assets/navbar/os.png"
                       }
+                      alt=""
                     />
                     {image.name}
                   </MenuItem>
@@ -154,7 +155,8 @@ const Page = ({ params }: PageProps) => {
                   className="w-full"
                   id="tags-filled"
                   options={
-                    keyData?.keys?.filter((option) => !field.value?.includes(option.id))
+                    keyData?.keys
+                      ?.filter((option) => !field.value?.includes(option.id))
                       .map((option) => option) as PublicKey[]
                   }
                   getOptionLabel={(option) => (option as PublicKey).name}
@@ -170,11 +172,13 @@ const Page = ({ params }: PageProps) => {
                       }
                   )}
                   onChange={(event, newValue) => {
-
-                    field.onChange(newValue.map((key) => (key as PublicKey).id));
+                    field.onChange(
+                      newValue.map((key) => (key as PublicKey).id)
+                    );
                   }}
                   renderTags={(value, getTagProps) =>
                     value.map((option, index) => (
+                      // eslint-disable-next-line react/jsx-key
                       <Chip
                         variant="outlined"
                         label={option.name}

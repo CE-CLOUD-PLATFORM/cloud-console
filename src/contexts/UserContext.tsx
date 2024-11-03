@@ -39,7 +39,7 @@ let UserProvider = ({ children }: { children: ReactNode }) => {
 
       login({ token: cookies.token, info: cookies.user });
     }
-  }, []);
+  });
 
   const logout = () => {
     setUser(null);

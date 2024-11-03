@@ -1,12 +1,11 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import React from "react";
 import { useUserContext } from "@/contexts/UserContext";
 import { UserContextType } from "@/interfaces/UserContextType";
 import { handleClick } from "./Sidebar";
-import { handleClick as OpenSubjectSelectModal } from "../Modal/SubjectSelectmodal";
 import { Button } from "@mui/material";
-import Image from "next/image";
 
 const pageLink = {
   settings: "/settings",
@@ -50,9 +49,9 @@ const Navbar = () => {
           <Link href={pageLink.subjects}>Subjects</Link>
         </Button>
         <div className="group nav-profile">
-          <img
+          <Image
             className="w-[35px]"
-            src=" \assets\navbar\profile-user.png"
+            src="/assets/navbar/profile-user.png"
             alt=""
           />
           <div
