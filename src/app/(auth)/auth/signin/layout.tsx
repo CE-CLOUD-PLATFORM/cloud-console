@@ -3,7 +3,7 @@ const SigninLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return <main>{children}</main>;
+  return <main className="bg-white">{children}</main>;
 };
 
 export default SigninLayout;

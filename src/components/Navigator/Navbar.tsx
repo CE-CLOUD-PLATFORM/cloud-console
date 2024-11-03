@@ -6,6 +6,7 @@ import { useUserContext } from "@/contexts/UserContext";
 import { UserContextType } from "@/interfaces/UserContextType";
 import { handleClick } from "./Sidebar";
 import { Button } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 const pageLink = {
   settings: "/settings",
@@ -16,7 +17,15 @@ const pageLink = {
 
 const Navbar = () => {
   let { user } = useUserContext() as UserContextType;
-  console.log(user);
+  const router = useRouter();
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/logout", { method: "GET" });
+      router.push("/auth/signin");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
   return (
     <div className="z-[1000] w-full h-nav flex justify-between border-b-gray-100 border-b-2 shadow">
       <div className="flex items-center px-2 gap-5">
@@ -62,8 +71,11 @@ const Navbar = () => {
           >
             <Link href={pageLink.settings}>Settings</Link>
             {user?.token ? (
-              <Link href={pageLink.logout}>Logout</Link>
+              <button type="button" onClick={handleLogout}>
+                Logout
+              </button>
             ) : (
+              // <Link href={pageLink.logout}>Logout</Link>
               <Link href={pageLink.login}>Login</Link>
             )}
           </div>
