@@ -127,7 +127,7 @@ const Page = ({ params }: PageProps) => {
                     className="flex gap-x-2"
                     value={image.id}
                   >
-                    <Image
+                    <img
                       width={24}
                       height={24}
                       src={

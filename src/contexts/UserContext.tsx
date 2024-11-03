@@ -35,13 +35,13 @@ let UserProvider = ({ children }: { children: ReactNode }) => {
       cookies.token &&
       cookies.user
     ) {
-      console.log(cookies.user);
-
       login({ token: cookies.token, info: cookies.user });
     }
   }, []);
 
   const logout = () => {
+    removeCookie("token");
+    removeCookie("user");
     setUser(null);
   };
 
