@@ -53,6 +53,8 @@ const Navbar = () => {
             className="w-[35px]"
             src="/assets/navbar/profile-user.png"
             alt=""
+            width={40}
+            height={40}
           />
           <div
             className="group-hover:flex absolute hidden right-0 flex-col
