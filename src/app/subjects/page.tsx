@@ -1,12 +1,12 @@
 "use client";
 import { useUserContext } from "@/contexts/UserContext";
-import { UserContextType } from "@/interfaces/userContextType";
+import { UserContextType } from "@/interfaces/UserContextType";
 import Link from "next/link";
 import React, { ReactNode, useEffect, useState } from "react";
 import { useQuerySubjects } from "@/services/subject/subjects";
 import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
-import { ISubjectRes, Subject } from "@/interfaces/subject";
+import { ISubjectRes, Subject } from "@/interfaces/Subject";
 const Page = () => {
   let { user } = useUserContext() as UserContextType;
   let [{ data, loading, error }, refetch] = useQuerySubjects({

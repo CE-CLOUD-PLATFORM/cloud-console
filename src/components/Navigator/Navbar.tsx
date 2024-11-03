@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import { useUserContext } from "@/contexts/UserContext";
-import { UserContextType } from "@/interfaces/userContextType";
+import { UserContextType } from "@/interfaces/UserContextType";
 import { handleClick } from "./Sidebar";
 import { handleClick as OpenSubjectSelectModal } from "../Modal/SubjectSelectmodal";
 import { Button } from "@mui/material";
@@ -17,7 +17,7 @@ const pageLink = {
 
 const Navbar = () => {
   let { user } = useUserContext() as UserContextType;
-console.log(user);
+  console.log(user);
   return (
     <div className="z-[1000] w-full h-nav flex justify-between border-b-gray-100 border-b-2 shadow">
       <div className="flex items-center px-2 gap-5">

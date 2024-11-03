@@ -1,5 +1,5 @@
 "use client";
-import { User, UserContextType } from "@/interfaces/userContextType";
+import { User, UserContextType } from "@/interfaces/UserContextType";
 import {
   createContext,
   ReactNode,

@@ -13,7 +13,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { ILoginReq } from "@/interfaces/auth";
 import { useLogin } from "@/services/auth/login";
 import { useUserContext } from "@/contexts/UserContext";
-import { UserContextType } from "@/interfaces/userContextType";
+import { UserContextType } from "@/interfaces/UserContextType";
 
 import { useRouter } from "next/navigation";
 const Page = () => {
@@ -31,7 +31,7 @@ const Page = () => {
   const onSubmit: SubmitHandler<ILoginReq> = async (value) => {
     let { data, status } = await execute({ data: value });
     if (status === 200) {
-      login({ token: data?.token as string,info: data?.user});
+      login({ token: data?.token as string, info: data?.user });
       router.push("/");
     }
   };
