@@ -6,8 +6,8 @@ import NProgress from "nprogress";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "../components/Navigator/Navbar";
-import Sidebar from "../components/Navigator/Sidebar";
+import Navbar from "../../components/Navigator/Navbar";
+import Sidebar from "../../components/Navigator/Sidebar";
 import styles from "./page.module.css";
 import UserProvider from "@/contexts/UserContext";
 import { getSession, SessionProvider } from "next-auth/react";
@@ -39,7 +39,7 @@ export default function RootLayout({
       <head></head>
       <body className={inter.className}>
         <UserProvider>
-          {/* <Navbar /> */}
+          <Navbar />
           <Sidebar />
           <SubjectSelectModal />
           <div className={styles.main}>{children}</div>
