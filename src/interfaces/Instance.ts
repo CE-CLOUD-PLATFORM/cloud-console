@@ -129,10 +129,16 @@ export interface Image {
     os_hidden: boolean
     checksum: string
     metadata: any
-    // Properties: Properties
+    Properties: ImageProperties
     created_at: string
     updated_at: string
     file: string
     schema: string
     virtual_size: number
+  }
+  export interface ImageProperties {
+    logo_url: string
+    os_hash_algo: string
+    os_hash_value: string
+    stores: string
   }

@@ -5,7 +5,10 @@ import "./style.css";
 import Link from "next/link";
 import { PageProps } from "../../../.next/types/app/layout";
 
-let menu = [{ label: "Groups", path: "groups" }];
+let menu = [
+  { label: "Instances", path: "subject" },
+  { label: "Groups", path: "groups" },
+];
 const SubjectMenu = () => {
   return (
     <div className="side-menu">

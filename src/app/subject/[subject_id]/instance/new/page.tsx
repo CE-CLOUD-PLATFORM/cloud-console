@@ -18,6 +18,8 @@ import {
   usePostInstance,
   useQueryInstanceOption,
 } from "@/services/instance/instance";
+import { useQueryPublicKeys } from "@/services/setting/key";
+import { PublicKey } from "@/interfaces/keys";
 interface PageProps {
   params: {
     subject_id: string;
@@ -26,13 +28,7 @@ interface PageProps {
 const pageLink = {
   manageKey: "/settings/keys",
 };
-const top100Tags = [
-  { title: "Tag1" },
-  { title: "Tag2" },
-  { title: "Tag3" },
-  { title: "Tag4" },
-  { title: "Tag5" },
-];
+
 const Page = ({ params }: PageProps) => {
   const {
     register,
@@ -48,10 +44,15 @@ const Page = ({ params }: PageProps) => {
   let [{ loading, data, error }] = useQueryInstanceOption({
     subject_id: params.subject_id,
   });
-  let [{ loading: loadingCreateResult, data: dataCreateResult, error: errCreateResult }, execute] = usePostInstance(
-    undefined,
-    { manual: true }
-  );
+  let [{ data: keyData }] = useQueryPublicKeys({ user_id: "1" });
+  let [
+    {
+      loading: loadingCreateResult,
+      data: dataCreateResult,
+      error: errCreateResult,
+    },
+    execute,
+  ] = usePostInstance(undefined, { manual: true });
   // name: string;
   // subject_id: string;
   // flavor_id: string;
@@ -113,9 +114,26 @@ const Page = ({ params }: PageProps) => {
                 label="Images"
                 variant="outlined"
                 {...field}
+                sx={{
+                  "& .MuiSelect-select": {
+                    display: "flex",
+                    gap: "10px",
+                  },
+                }}
               >
                 {data?.images.map((image) => (
-                  <MenuItem key={image.id} value={image.id}>
+                  <MenuItem
+                    key={image.id}
+                    className="flex gap-x-2"
+                    value={image.id}
+                  >
+                    <img
+                      width={24}
+                      height={24}
+                      src={
+                        image.Properties?.logo_url || "/assets/navbar/os.png"
+                      }
+                    />
                     {image.name}
                   </MenuItem>
                 ))}
@@ -129,26 +147,37 @@ const Page = ({ params }: PageProps) => {
             <Controller
               name="public_key"
               control={control}
-              defaultValue={[]}
               rules={{ required: "This field is required" }}
               render={({ field }) => (
                 <Autocomplete
                   multiple
                   className="w-full"
                   id="tags-filled"
-                  options={top100Tags
-                    .filter((option) => !field.value?.includes(option.title))
-                    .map((option) => option.title)}
+                  options={
+                    keyData?.keys?.filter((option) => !field.value?.includes(option.id))
+                      .map((option) => option) as PublicKey[]
+                  }
+                  getOptionLabel={(option) => (option as PublicKey).name}
+                  isOptionEqualToValue={(option, value) =>
+                    option.key === value.key
+                  }
                   freeSolo
-                  value={field.value}
+                  value={(field.value as string[])?.map(
+                    (key) =>
+                      keyData?.keys.find((option) => option.key === key) || {
+                        key,
+                        name: key,
+                      }
+                  )}
                   onChange={(event, newValue) => {
-                    field.onChange(newValue);
+
+                    field.onChange(newValue.map((key) => (key as PublicKey).id));
                   }}
                   renderTags={(value, getTagProps) =>
                     value.map((option, index) => (
                       <Chip
                         variant="outlined"
-                        label={option}
+                        label={option.name}
                         {...getTagProps({ index })}
                       />
                     ))
@@ -183,6 +212,7 @@ const Page = ({ params }: PageProps) => {
         <TextField
           id="password"
           variant="outlined"
+          type="password"
           label="Password"
           {...register("password", { required: true })}
         />

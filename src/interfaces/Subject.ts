@@ -11,14 +11,13 @@ export interface Subject {
     tags: string[]
 }
 
-export interface NewSubjectRequest {
-    subject: NewSubjectInputs
-}
+
 
 export interface NewSubjectInputs {
     description: string
     name: string
 }
+
 
 
 
