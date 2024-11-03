@@ -42,6 +42,8 @@ let UserProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const logout = () => {
+    removeCookie("token");
+    removeCookie("user");
     setUser(null);
   };
 
