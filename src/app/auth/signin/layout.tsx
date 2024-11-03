@@ -3,7 +3,7 @@ const SigninLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return <main>Hello World {children}</main>;
+  return <main>{children}</main>;
 };
 
 export default SigninLayout;
