@@ -48,11 +48,6 @@ export default function DataTable({ data, params }: PageProps) {
       flex: 1,
     },
     {
-      field: "create_at",
-      headerName: "Create At",
-      flex: 1,
-    },
-    {
       field: "create_by",
       headerName: "Create By",
       flex: 1,

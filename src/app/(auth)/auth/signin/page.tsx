@@ -14,8 +14,9 @@ import { ILoginReq } from "@/interfaces/auth";
 import { useLogin } from "@/services/auth/login";
 import { useUserContext } from "@/contexts/UserContext";
 import { UserContextType } from "@/interfaces/UserContextType";
-
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
 const Page = () => {
   const {
     register,
@@ -27,7 +28,13 @@ const Page = () => {
   const [, execute] = useLogin({ manual: true });
   let { user, login } = useUserContext() as UserContextType;
   const onSubmit: SubmitHandler<ILoginReq> = async (value) => {
-    let { data, status } = await execute({ data: value });
+    const loginPromise = execute({ data: value });
+    toast.promise(loginPromise, {
+      loading: "Loading",
+      success: "Login Successfully",
+      error: "Login Failed",
+    });
+    const { data, status } = await loginPromise;
     if (status === 200) {
       login({ token: data?.token as string, info: data?.user });
       router.push("/");

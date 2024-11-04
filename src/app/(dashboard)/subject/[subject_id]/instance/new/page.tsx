@@ -66,7 +66,7 @@ const Page = ({ params }: PageProps) => {
       <div className="flex items-center">
         <h1 className="text-2xl font-semibold">Create Instance</h1>
       </div>
-      <div className="w-[70%]">
+      <div className="w-3/4 mx-auto">
         <Stack
           component="form"
           autoComplete="off"

@@ -15,9 +15,6 @@ const pageLink = { newInstance: "instance/new" };
 
 const Page: React.FC<PageProps> = ({ params }) => {
   let [{ data, loading, error }, refetch] = useQuerySubject(params);
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
   return (
     <div className="flex min-h-screen w-full flex-col p-6 space-y-5">
       <div>
