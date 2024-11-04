@@ -17,7 +17,7 @@ const Page = () => {
     <div className="flex min-h-screen w-full flex-col p-6 space-y-5">
       <div className="flex items-center w-full justify-between">
         <div className="flex items-center">
-          <h1 className="text-2xl font-semibold">
+          <h1 className="text-2xl font-semibold text-gray-700">
             <SubjectIcon /> Subjects
           </h1>
         </div>
@@ -27,11 +27,11 @@ const Page = () => {
             replace={false}
             className="bg-green-300 p-2 text-sm rounded-md flex items-center transition-all border hover:shadow-sm"
           >
-            <AddBoxIcon /> create
+            <AddBoxIcon /> Create
           </Link>
         </div>
       </div>
-      <hr className="border border-black" />
+      <hr className="border border-gray-400" />
       <div className={`${loading ? "w-full" : "grid md:grid-cols-3 gap-4"}`}>
         {loading && (
           <div className="text-center px-3 py-10 rounded-md border shadow-md cursor-pointer hover:border-slate-400 transition-all">

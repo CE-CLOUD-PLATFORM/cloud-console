@@ -16,6 +16,7 @@ body {
 }
 *{
   box-sizing: border-box;
+  color: #374151;
 }
 body {
   color: rgb(var(--foreground-rgb));
