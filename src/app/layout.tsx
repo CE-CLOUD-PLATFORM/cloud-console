@@ -1,4 +1,5 @@
 import "@/app/globals.css";
+import { Toaster } from "react-hot-toast";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -7,7 +8,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head></head>
-      <body>{children}</body>
+      <body>
+        <Toaster />
+        {children}
+      </body>
     </html>
   );
 }

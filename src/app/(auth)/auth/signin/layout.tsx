@@ -7,7 +7,6 @@ const SigninLayout = ({
 }>) => {
   return (
     <>
-      <Toaster position="top-right" />
       <main className="bg-white">{children}</main>
     </>
   );

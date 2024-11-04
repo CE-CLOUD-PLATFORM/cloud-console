@@ -20,6 +20,8 @@ import {
 } from "@/services/instance/instance";
 import { useQueryPublicKeys } from "@/services/setting/key";
 import { PublicKey } from "@/interfaces/keys";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 interface PageProps {
   params: {
     subject_id: string;
@@ -37,22 +39,26 @@ const Page = ({ params }: PageProps) => {
     control,
     formState: { errors },
   } = useForm<InstanceReq>();
+  let router = useRouter();
   const onSubmit: SubmitHandler<InstanceReq> = async (data) => {
-    console.log({ ...data, subject_id: params.subject_id });
-    execute({ data: { ...data, subject_id: params.subject_id } });
+    toast.promise(
+      createInstance({ data: { ...data, subject_id: params.subject_id } }),
+      {
+        loading: "Creating Instance",
+        success: () => {
+          return "Login Successfully";
+        },
+        error: "Login Failed",
+      }
+    );
+
+    router.push(`/subject/${params.subject_id}`);
   };
   let [{ loading, data, error }] = useQueryInstanceOption({
     subject_id: params.subject_id,
   });
   let [{ data: keyData }] = useQueryPublicKeys({ user_id: "1" });
-  let [
-    {
-      loading: loadingCreateResult,
-      data: dataCreateResult,
-      error: errCreateResult,
-    },
-    execute,
-  ] = usePostInstance(undefined, { manual: true });
+  let [, createInstance] = usePostInstance(undefined, { manual: true });
   // name: string;
   // subject_id: string;
   // flavor_id: string;
@@ -151,6 +157,7 @@ const Page = ({ params }: PageProps) => {
               <Controller
                 name="public_key"
                 control={control}
+                defaultValue={[]}
                 rules={{ required: "This field is required" }}
                 render={({ field }) => (
                   <Autocomplete
@@ -158,9 +165,9 @@ const Page = ({ params }: PageProps) => {
                     className="w-full"
                     id="tags-filled"
                     options={
-                      keyData?.keys
+                      (keyData?.keys
                         ?.filter((option) => !field.value?.includes(option.id))
-                        .map((option) => option) as PublicKey[]
+                        .map((option) => option) as PublicKey[]) || []
                     }
                     getOptionLabel={(option) => (option as PublicKey).name}
                     isOptionEqualToValue={(option, value) =>
@@ -176,7 +183,7 @@ const Page = ({ params }: PageProps) => {
                     )}
                     onChange={(event, newValue) => {
                       field.onChange(
-                        newValue.map((key) => (key as PublicKey).id)
+                        newValue.map((key) => (key as PublicKey).key)
                       );
                     }}
                     renderTags={(value, getTagProps) =>
