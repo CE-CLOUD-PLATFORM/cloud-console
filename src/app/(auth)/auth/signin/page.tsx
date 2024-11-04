@@ -42,8 +42,9 @@ const Page = () => {
         <hr />
         <Stack
           component="form"
-          sx={{ "& > :not(style)": { m: 1, width: "25ch" } }}
+          sx={{ "& > :not(style)": { m: 1, width: "100%" } }}
           noValidate
+          className="w-full"
           autoComplete="off"
           onSubmit={handleSubmit(onSubmit)}
         >
@@ -84,7 +85,7 @@ const Page = () => {
           </FormControl>
           <div className="w-full">
             <button
-              className="bg-orange-400 w-full p-3 text-sm  rounded-md"
+              className="bg-orange-400 w-full p-3 text-sm text-white rounded-md"
               type="submit"
             >
               Login
