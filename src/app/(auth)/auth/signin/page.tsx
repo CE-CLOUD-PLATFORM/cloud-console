@@ -43,7 +43,6 @@ const Page = () => {
 
   return (
     <div className="min-h-screen min-w-full flex">
-      <div className="hidden md:flex w-full flex-col items-center justify-center bg-orange-300 p-3  text-2xl font-semibold md:w-2/3 "></div>
       <div className="flex w-full flex-col items-center justify-center bg-white p-5 text-2xl font-semibold md:w-1/3">
         <h1 className="text-center text-lg md:text-2xl">CE CLOUD PLATFORM</h1>
         <hr />
@@ -91,7 +90,7 @@ const Page = () => {
           </FormControl>
           <div className="w-full">
             <button
-              className="bg-orange-400 w-full p-3 text-sm text-white rounded-md"
+              className="bg-orange-600 w-full p-3 text-sm text-white rounded-md"
               type="submit"
             >
               Login
@@ -99,6 +98,7 @@ const Page = () => {
           </div>
         </Stack>
       </div>
+      <div className="hidden md:flex w-full flex-col items-center justify-center bg-orange-500 p-3  text-2xl font-semibold md:w-2/3 "></div>
     </div>
   );
 };
