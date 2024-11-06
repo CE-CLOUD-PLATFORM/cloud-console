@@ -1,6 +1,7 @@
-"use client";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { ILoginReq } from "@/shared/interfaces/login";
+'use client';
+import type { SubmitHandler} from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import type { ILoginReq } from '@/shared/interfaces/login';
 import {
   FormControl,
   InputLabel,
@@ -8,26 +9,56 @@ import {
   Select,
   Stack,
   TextField,
-} from "@mui/material";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/modules/auth/hook";
-import { setCookie } from "cookies-next";
+} from '@mui/material';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/modules/auth/hook';
+import type { User } from '@/modules/auth/types/user';
+import { setSession } from '@/shared/utils';
+import toast from 'react-hot-toast';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup
+  .object({
+    username: yup.string().required(),
+    password: yup.string().required(),
+    domain: yup.string().required(),
+  })
+  .required();
 
 export default function LoginPage() {
   const router = useRouter();
-  const { mutateAsync: Authtentication } = useAuth();
+  const { mutateAsync: authtentication } = useAuth();
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<ILoginReq>();
+  } = useForm<ILoginReq>({
+    resolver: yupResolver(schema),
+  });
 
-  const onSubmit: SubmitHandler<ILoginReq> = async (value: ILoginReq) => {};
+  const onSubmit: SubmitHandler<ILoginReq> = async (
+    loginRequest: ILoginReq,
+  ) => {
+    try {
+      const loginPromise = authtentication(loginRequest);
+      toast.promise(loginPromise, {
+        loading: 'Loading',
+        success: 'Login Successfully',
+        error: 'Login Failed',
+      });
+      const { user, token } = await loginPromise;
+      const userData: User = { info: user, token: token };
+      setSession(userData);
+      router.push('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
-      {" "}
-      <div className="min-h-screen min-w-full flex">
+      <div className="flex min-h-screen min-w-full">
         <div className="flex w-full flex-col items-center justify-center bg-white p-5 text-2xl font-semibold md:w-1/3">
           <h1 className="text-center text-lg md:text-2xl">CE CLOUD PLATFORM</h1>
           <hr />
@@ -39,20 +70,21 @@ export default function LoginPage() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <TextField
+              error={errors.username ? true : false}
               id="username"
               variant="outlined"
               label="username"
-              {...register("username", { required: true })}
+              {...register('username', { required: true })}
             />
-            {errors.username && <span>This field is required</span>}
             <TextField
+              error={errors.password ? true : false}
               id="password"
               variant="outlined"
               label="password"
               type="password"
-              {...register("password", { required: true })}
+              {...register('password', { required: true })}
             />
-            {errors.password && <span>This field is required</span>}
+
             <FormControl fullWidth>
               <InputLabel id="domains-label">Domain</InputLabel>
               <Controller
@@ -61,21 +93,21 @@ export default function LoginPage() {
                 defaultValue="Default"
                 render={({ field }) => (
                   <Select
+                    error={errors.domain ? true : false}
                     labelId="domains-label"
                     id="domains"
                     label="Domain"
                     variant="outlined"
                     {...field}
                   >
-                    <MenuItem value={"Default"}>Default</MenuItem>
+                    <MenuItem value={'Default'}>Default</MenuItem>
                   </Select>
                 )}
               />
-              {errors.domain && <span>This field is required</span>}
             </FormControl>
             <div className="w-full">
               <button
-                className="bg-orange-600 w-full p-3 text-sm text-white rounded-md"
+                className="w-full rounded-md bg-orange-600 p-3 text-sm text-white"
                 type="submit"
               >
                 Login
@@ -83,7 +115,7 @@ export default function LoginPage() {
             </div>
           </Stack>
         </div>
-        <div className="hidden md:flex w-full flex-col items-center justify-center bg-orange-500 p-3  text-2xl font-semibold md:w-2/3 "></div>
+        <div className="hidden w-full flex-col items-center justify-center bg-orange-500 p-3 text-2xl font-semibold md:flex md:w-2/3"></div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { User } from "@/modules/auth/types/user";
+import type { User } from "@/modules/auth/types/user";
 
 type UserState = {
   user: User | null;

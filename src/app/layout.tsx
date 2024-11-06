@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import "@/shared/styles/globals.css";
-import { ReactQueryProvider } from "@/shared/react-query/react-query-provider";
+import type { Metadata } from 'next';
+import '@/shared/styles/globals.css';
+import { ReactQueryProvider } from '@/shared/react-query/react-query-provider';
 
 export const metadata: Metadata = {
-  title: "CE CLOUD CONSOLE",
-  description: "",
+  title: 'CE CLOUD CONSOLE',
+  description: '',
 };
 
 export default function RootLayout({

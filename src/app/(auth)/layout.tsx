@@ -1,11 +1,14 @@
-import { Suspense, type PropsWithChildren } from "react";
-import { Toaster } from "react-hot-toast";
+import { Suspense, type PropsWithChildren } from 'react';
+import { Toaster } from 'react-hot-toast';
+import { AlreadyAuthenticatedGuard } from '@/modules/auth/guard/auth-guard';
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
     <Suspense>
-      <Toaster />
-      {children}
+      <AlreadyAuthenticatedGuard>
+        <Toaster />
+        {children}
+      </AlreadyAuthenticatedGuard>
     </Suspense>
   );
 }

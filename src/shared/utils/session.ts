@@ -1,4 +1,4 @@
-import { User } from "@/modules/auth/types/user";
+import type { User } from "@/modules/auth/types/user";
 import { setCookie, deleteCookie } from "cookies-next";
 export const setSession = (user: User) => {
   try {
