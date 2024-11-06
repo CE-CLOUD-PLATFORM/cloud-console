@@ -1,6 +1,0 @@
-@tailwind components;
-@layer components {
-  .side-menu {
-    @apply h-main w-[250px] border flex flex-col py-5
-  }
-}

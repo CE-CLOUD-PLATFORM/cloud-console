@@ -1,6 +1,0 @@
-@tailwind components;
-@layer components {
-  .main {
-    @apply h-main flex w-full
-  }
-}
