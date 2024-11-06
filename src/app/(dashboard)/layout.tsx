@@ -10,8 +10,6 @@ import Navbar from "@/components/Navigator/Navbar";
 import Sidebar from "@/components/Navigator/Sidebar";
 import styles from "./page.module.css";
 import UserProvider from "@/contexts/UserContext";
-import { getSession, SessionProvider } from "next-auth/react";
-import { Session } from "next-auth";
 import SubjectSelectModal from "@/components/Modal/SubjectSelectmodal";
 
 const metadata: Metadata = {
