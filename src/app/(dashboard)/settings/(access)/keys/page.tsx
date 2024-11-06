@@ -59,7 +59,7 @@ const Page = () => {
       </Stack>
       <h1>Your key</h1>
       <div>
-        {data?.keys.map((e) => (
+        {data?.keys?.map((e) => (
           <div key={e.id}>{e.name}</div>
         ))}
       </div>

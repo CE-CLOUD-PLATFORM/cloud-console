@@ -1,4 +1,5 @@
 import SubjectMenu from "@/components/Sidemenu/SubjectMenu";
+import { Toaster } from "react-hot-toast";
 
 export default function SubjectLayout({
   children,
@@ -9,7 +10,8 @@ export default function SubjectLayout({
 }) {
   return (
     <div className="w-full flex">
-      <SubjectMenu subject_id={params.subject_id}/>
+      <Toaster />
+      <SubjectMenu subject_id={params.subject_id} />
       {children}
       <div className="side-menu"></div>
     </div>

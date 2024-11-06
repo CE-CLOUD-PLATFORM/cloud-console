@@ -40,25 +40,30 @@ const Page = ({ params }: PageProps) => {
     formState: { errors },
   } = useForm<InstanceReq>();
   let router = useRouter();
-  const onSubmit: SubmitHandler<InstanceReq> = async (data) => {
-    toast.promise(
-      createInstance({ data: { ...data, subject_id: params.subject_id } }),
-      {
-        loading: "Creating Instance",
-        success: () => {
-          return "Login Successfully";
-        },
-        error: "Login Failed",
-      }
-    );
 
-    router.push(`/subject/${params.subject_id}`);
-  };
   let [{ loading, data, error }] = useQueryInstanceOption({
     subject_id: params.subject_id,
   });
   let [{ data: keyData }] = useQueryPublicKeys({ user_id: "1" });
   let [, createInstance] = usePostInstance(undefined, { manual: true });
+
+  const onSubmit: SubmitHandler<InstanceReq> = async (data) => {
+    const createInstancePromise = createInstance({
+      data: { ...data, subject_id: params.subject_id },
+    });
+    toast.promise(createInstancePromise, {
+      loading: "Creating Instance",
+      success: "Created",
+      error: "Failed",
+    });
+
+    const instance = await createInstancePromise;
+
+    console.log(instance);
+
+    router.push(`/subject/${params.subject_id}`);
+  };
+
   // name: string;
   // subject_id: string;
   // flavor_id: string;
