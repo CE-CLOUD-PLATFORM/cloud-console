@@ -1,4 +1,3 @@
-
 import SubjectsMenu from "@/components/Sidemenu/SubjectsMenu";
 
 export default function InstanceLayout({

@@ -4,45 +4,53 @@ import { UserContextType } from "@/interfaces/UserContextType";
 import Link from "next/link";
 import React, { ReactNode, useEffect, useState } from "react";
 import { useQuerySubjects } from "@/services/subject/subjects";
-import { useCookies } from "react-cookie";
-import { useSession } from "next-auth/react";
-import { ISubjectRes, Subject } from "@/interfaces/Subject";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import SubjectIcon from "@mui/icons-material/Subject";
+import { Subject } from "@/interfaces/Subject";
 const Page = () => {
   let { user } = useUserContext() as UserContextType;
   let [{ data, loading, error }, refetch] = useQuerySubjects({
     user_id: user?.info?.id as string,
   });
-
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
+  console.log(loading);
   return (
-    <div className="flex h-full w-full flex-col main">
-      <div>
-        <h1>Your Subject</h1>
-        <Link
-          href={"/subjects/new"}
-          replace={false}
-          className="bg-orange-200 p-1 rounded-md"
-        >
-          +Subject
-        </Link>
+    <div className="flex min-h-screen w-full flex-col p-6 space-y-5">
+      <div className="flex items-center w-full justify-between">
+        <div className="flex items-center">
+          <h1 className="text-2xl font-semibold text-gray-700">
+            <SubjectIcon /> Subjects
+          </h1>
+        </div>
+        <div>
+          <Link
+            href={"/subjects/new"}
+            replace={false}
+            className="bg-green-300 p-2 text-sm rounded-md flex items-center transition-all border hover:shadow-sm"
+          >
+            <AddBoxIcon /> Create
+          </Link>
+        </div>
       </div>
-      <div className="flex flex-1 flex-wrap justify-center gap-3 content-start">
-        {data?.subjects?.map((data: Subject): ReactNode => {
-          return (
-            <Link
-              key={data.id}
-              href={{ pathname: "/subject/" + data.id }}
-              id={data.name}
-              className=" flex-[30%] h-[20%] border flex-grow-0 flex justify-center items-center"
-            >
-              {data.name}
-            </Link>
-          );
-        })}
+      <hr className="border border-gray-400" />
+      <div className={`${loading ? "w-full" : "grid md:grid-cols-3 gap-4"}`}>
+        {loading && (
+          <div className="text-center px-3 py-10 rounded-md border shadow-md cursor-pointer hover:border-slate-400 transition-all">
+            Loading
+          </div>
+        )}
+        {!loading &&
+          data?.subjects?.map((data: Subject): ReactNode => {
+            return (
+              <Link
+                key={data.id}
+                className="text-center px-3 py-10 rounded-md border shadow-md cursor-pointer hover:border-slate-400 transition-all"
+                href={{ pathname: "/subject/" + data.id }}
+                id={data.name}
+              >
+                {data.name}
+              </Link>
+            );
+          })}
       </div>
     </div>
   );

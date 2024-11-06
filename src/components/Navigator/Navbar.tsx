@@ -6,6 +6,7 @@ import { useUserContext } from "@/contexts/UserContext";
 import { UserContextType } from "@/interfaces/UserContextType";
 import { handleClick } from "./Sidebar";
 import { Button } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 const pageLink = {
   settings: "/settings",
@@ -16,7 +17,15 @@ const pageLink = {
 
 const Navbar = () => {
   let { user } = useUserContext() as UserContextType;
-  console.log(user);
+  const router = useRouter();
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/logout", { method: "GET" });
+      router.push("/auth/signin");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
   return (
     <div className="z-[1000] w-full h-nav flex justify-between border-b-gray-100 border-b-2 shadow">
       <div className="flex items-center px-2 gap-5">
@@ -38,17 +47,12 @@ const Navbar = () => {
             alt=""
           />
         </Link>
-        {/* <h1 className="text-[28px]">Title</h1> */}
       </div>
-      <div className="flex items-center ">
-        <Button
-          variant="contained"
-          // onClick={OpenSubjectSelectModal}
-        >
-          {/* Subjects */}
+      <div className="flex items-center space-x-2">
+        <div>
           <Link href={pageLink.subjects}>Subjects</Link>
-        </Button>
-        <div className="group nav-profile">
+        </div>
+        <div className="group nav-profile p-5">
           <Image
             className="w-[35px]"
             src="/assets/navbar/profile-user.png"
@@ -57,12 +61,14 @@ const Navbar = () => {
             height={40}
           />
           <div
-            className="group-hover:flex absolute hidden right-0 flex-col
-           p-2 min-w-[250px] bg-white border rounded-md"
+            className="group-hover:flex absolute hidden right-5 top-[45px] flex-col
+           p-2 bg-white border rounded-md text-center"
           >
             <Link href={pageLink.settings}>Settings</Link>
             {user?.token ? (
-              <Link href={pageLink.logout}>Logout</Link>
+              <h1 className="cursor-pointer" onClick={handleLogout}>
+                Logout
+              </h1>
             ) : (
               <Link href={pageLink.login}>Login</Link>
             )}

@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
   --nav-h: 50px;
   --main-h: calc(100svh - var(--nav-h));
@@ -15,6 +16,7 @@ body {
 }
 *{
   box-sizing: border-box;
+  color: #374151;
 }
 body {
   color: rgb(var(--foreground-rgb));
