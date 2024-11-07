@@ -17,6 +17,8 @@ export function AuthGuard({ children }: PropsWithChildren) {
     if (!user) {
       router.replace('/auth/signin');
       return;
+    } else {
+      router.replace('/subject_management');
     }
   }, [loading, user, router]);
 

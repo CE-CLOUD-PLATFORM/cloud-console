@@ -13,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" suppressHydrationWarning>
+      <body className="bg-slate-100">
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>

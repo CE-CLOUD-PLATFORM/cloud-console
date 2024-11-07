@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  @apply transition-all;
+}
+
+.subjects-box {
+  @apply flex min-h-40 cursor-pointer flex-col items-center justify-center rounded-md border p-10 text-sm font-semibold hover:border-black;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+}

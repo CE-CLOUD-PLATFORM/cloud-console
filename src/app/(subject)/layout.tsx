@@ -1,5 +1,6 @@
 import { AuthGuard } from '@/modules/auth/guard/auth-guard';
 import Navbar from '@/shared/components/Navbar';
+import Sidebar from '@/shared/components/Sidebar';
 import { Suspense, type PropsWithChildren } from 'react';
 export default function Layout({
   children,
@@ -10,7 +11,10 @@ export default function Layout({
     <Suspense>
       <AuthGuard>
         <Navbar />
-        {children}
+        <div className="flex">
+          <Sidebar />
+          <div className="w-full">{children}</div>
+        </div>
       </AuthGuard>
     </Suspense>
   );

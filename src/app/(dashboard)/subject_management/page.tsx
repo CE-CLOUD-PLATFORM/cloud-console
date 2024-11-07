@@ -1,14 +1,66 @@
 'use client';
+
+import { useState, useEffect } from 'react';
 import { getCookie } from 'cookies-next';
 import { useGetSubjects } from '@/modules/subject/hook/use-get-subjects';
-import { UserInfo } from '@/modules/auth/types/user';
+import type { UserInfo } from '@/modules/auth/types/user';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import Link from 'next/link';
 
-export default function SubjectManagementPage() {
-  const userCookie = getCookie('user');
-  const user: UserInfo = userCookie != undefined && JSON.parse(userCookie);
-  const { data, isLoading } = useGetSubjects({ user_id: user.id });
-  if (!isLoading) {
-    console.log(data);
-  }
-  return <div></div>;
+export default function Page() {
+  const [user, setUser] = useState<UserInfo | null>(null);
+  const [isUserLoading, setIsUserLoading] = useState(true);
+
+  useEffect(() => {
+    const userCookie = getCookie('user');
+    if (userCookie) {
+      setUser(JSON.parse(userCookie));
+    }
+    setIsUserLoading(false);
+  }, []);
+
+  const { data, isLoading: isSubjectsLoading } = useGetSubjects({
+    user_id: user?.id,
+  });
+
+  return (
+    <div className="md:p-10">
+      <div className="mx-auto min-h-screen max-w-6xl space-y-8 rounded-md bg-white p-10 md:min-h-52">
+        <div className="flex justify-between">
+          <div>
+            <h1 className="text-xl font-semibold">Subject</h1>
+          </div>
+          <div>
+            <Button variant="outlined">
+              <AddBoxIcon />
+              Create
+            </Button>
+          </div>
+        </div>
+        <hr className="border border-slate-300" />
+        {isUserLoading || isSubjectsLoading ? (
+          <div className="flex w-full items-center justify-center space-x-5">
+            <div>
+              <CircularProgress />
+            </div>
+            <div className="text-2xl">Loading</div>
+          </div>
+        ) : (
+          <div className="grid gap-10 md:grid-cols-3 md:gap-4">
+            {data?.subjects.map((subject) => (
+              <Link
+                href={`/subject/${subject.id}`}
+                key={subject.id}
+                className="subjects-box"
+              >
+                {subject.name}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
