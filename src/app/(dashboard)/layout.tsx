@@ -1,13 +1,14 @@
 import { AuthGuard } from '@/modules/auth/guard/auth-guard';
 import Navbar from '@/shared/components/Navbar';
 import { Suspense, type PropsWithChildren } from 'react';
+import Loading from './loading';
 export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <Suspense>
+    <Suspense fallback={<Loading />}>
       <AuthGuard>
         <Navbar />
         {children}

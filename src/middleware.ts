@@ -1,24 +1,15 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const protectedPaths = ['/'];
-const authPaths = ['/auth/signin'];
-
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
 
-  const shouldProtect = protectedPaths.some((path) =>
-    request.nextUrl.pathname.startsWith(path),
-  );
-  const pathname = request.nextUrl.pathname;
+  const { pathname } = request.nextUrl;
   const isTokenExpire = !token || token === 'undefined';
 
-  const isAuthPath = authPaths.some((path) =>
-    request.nextUrl.pathname.startsWith(path),
-  );
   if (pathname === '/auth/signin') {
     if (!isTokenExpire) {
-      return NextResponse.redirect(new URL('/subject_management', request.url));
+      return NextResponse.redirect(new URL('/management/subject', request.url));
     }
     return NextResponse.next();
   } else {
@@ -31,6 +22,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // matcher: ['/:path*'],
   matcher: ['/((?!api|_next/static|_next/|asset|favicon.ico).*)'],
 };

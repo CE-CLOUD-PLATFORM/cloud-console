@@ -41,19 +41,19 @@ export default function Page() {
         </div>
         <hr className="border border-slate-300" />
         {isUserLoading || isSubjectsLoading ? (
-          <div className="flex w-full items-center justify-center space-x-5">
+          <div className="flex w-full items-center justify-center space-x-5 text-center">
             <div>
               <CircularProgress />
             </div>
-            <div className="text-2xl">Loading</div>
+            <div className="md:text-2xl">Loading</div>
           </div>
         ) : (
           <div className="grid gap-10 md:grid-cols-3 md:gap-4">
             {data?.subjects.map((subject) => (
               <Link
-                href={`/subject/${subject.id}`}
+                href={`/management/subject/${subject.id}/overview`}
                 key={subject.id}
-                className="subjects-box"
+                className="subjects-box text-center"
               >
                 {subject.name}
               </Link>

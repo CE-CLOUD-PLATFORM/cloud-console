@@ -1,14 +1,14 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { UserInfo } from '@/modules/auth/types/user';
+import type { UserInfo } from '@/modules/auth/types/user';
 import { getCookie } from 'cookies-next';
 import { useGetSubjects } from '@/modules/subject/hook/use-get-subjects';
 import Loading from '@/shared/components/Loading';
-import { useUserStore } from '@/modules/auth/store/auth';
 
 export default function SubjectId() {
   const { subject_id } = useParams<{ subject_id: string }>();
+  console.log(subject_id);
   const [user, setUser] = useState<UserInfo | null>(null);
   const [isUserLoading, setIsUserLoading] = useState(true);
 
@@ -24,12 +24,11 @@ export default function SubjectId() {
     user_id: user?.id,
   });
 
-  if (isUserLoading || isSubjectsLoading) return <Loading />;
   return (
     <div className="min-h-screen w-full">
-      <div className="space-y-5 p-5 md:p-10">
+      <div className="space-y-5">
         <div>
-          <h1 className="text-2xl font-semibold">Instance</h1>
+          <h1 className="text-xl font-semibold">Instance</h1>
         </div>
         <hr className="border border-slate-400" />
       </div>

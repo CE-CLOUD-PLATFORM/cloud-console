@@ -7,36 +7,37 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
+import StorageIcon from '@mui/icons-material/Storage';
+import GroupsIcon from '@mui/icons-material/Groups';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Link from 'next/link';
 
 export default function Sidebar() {
-  const [open, setOpen] = useState(false);
-
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
+  const menus = [
+    { name: 'Overview', icon: <SpaceDashboardIcon />, link: 'overview' },
+    { name: 'Instances', icon: <StorageIcon />, link: 'instance' },
+    { name: 'Group', icon: <GroupsIcon />, link: 'group' },
+  ];
 
   return (
     <Box
       className="hidden min-h-screen bg-white md:block md:min-w-56"
       role="presentation"
-      onClick={toggleDrawer(false)}
     >
       <Divider />
       <List>
-        {['Overview', 'Instances', 'Group Member', 'Setting'].map(
-          (text, index) => (
-            <ListItem key={text} disablePadding>
+        {menus.map((menu) => (
+          <Link href={menu.link} key={menu.name}>
+            <ListItem disablePadding>
               <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemIcon>{menu.icon}</ListItemIcon>
+
+                <ListItemText primary={menu.name} />
               </ListItemButton>
             </ListItem>
-          ),
-        )}
+          </Link>
+        ))}
       </List>
     </Box>
   );
