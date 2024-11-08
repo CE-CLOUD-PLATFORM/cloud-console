@@ -21,7 +21,7 @@ export default function SubjectId() {
   }, []);
 
   const { data, isLoading: isSubjectsLoading } = useGetSubjects({
-    user_id: user?.id,
+    user_id: user?.id as string,
   });
 
   return (
