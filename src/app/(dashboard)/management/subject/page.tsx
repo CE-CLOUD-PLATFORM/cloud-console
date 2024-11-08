@@ -22,7 +22,7 @@ export default function Page() {
   }, []);
 
   const { data, isLoading: isSubjectsLoading } = useGetSubjects({
-    user_id: user?.id,
+    user_id: user?.id as string,
   });
 
   return (
