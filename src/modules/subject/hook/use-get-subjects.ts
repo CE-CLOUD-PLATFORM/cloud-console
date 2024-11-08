@@ -1,10 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getSubject, getSubjects } from '../service';
-import { ISubjectsReqParam, ISubjectReqParam } from '../types/subject';
-
-// type Props = {
-//   user_id?: string;
-// };
+import { ISubjectsReqParam } from '../types/subject';
 
 export const useGetSubjects = ({ user_id }: ISubjectsReqParam) =>
   useQuery({
@@ -13,11 +9,3 @@ export const useGetSubjects = ({ user_id }: ISubjectsReqParam) =>
     enabled: !!user_id,
   });
 
-
-  export const useGetSubject = ({ subject_id,domain_name }: ISubjectReqParam) =>
-    useQuery({
-      queryKey:  ['subject', subject_id,domain_name],
-      queryFn: getSubject,
-      // enabled: ,
-    });
-  

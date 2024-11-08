@@ -19,10 +19,11 @@ export default function Page() {
       setUser(JSON.parse(userCookie));
     }
     setIsUserLoading(false);
+    
   }, []);
 
   const { data, isLoading: isSubjectsLoading } = useGetSubjects({
-    user_id: user?.id,
+    user_id: user?.id as string,
   });
 
   return (
