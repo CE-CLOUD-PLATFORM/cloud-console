@@ -4,7 +4,6 @@ import { useParams } from 'next/navigation';
 import type { UserInfo } from '@/modules/auth/types/user';
 import { getCookie } from 'cookies-next';
 import { useGetSubjects } from '@/modules/subject/hook/use-get-subjects';
-import Loading from '@/shared/components/Loading';
 
 export default function SubjectId() {
   const { subject_id } = useParams<{ subject_id: string }>();

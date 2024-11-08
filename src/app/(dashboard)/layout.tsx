@@ -1,6 +1,6 @@
 import { AuthGuard } from '@/modules/auth/guard/auth-guard';
 import Navbar from '@/shared/components/Navbar';
-import { Suspense, type PropsWithChildren } from 'react';
+import { Suspense } from 'react';
 import Loading from './loading';
 export default function Layout({
   children,

@@ -14,14 +14,12 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { removeSession } from '@/shared/utils/';
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/modules/auth/store/auth';
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material';
+import type { SelectChangeEvent } from '@mui/material';
+import { FormControl, InputLabel, Select } from '@mui/material';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
+  const pathname = usePathname();
   const { setUser } = useUserStore((state) => state.actions);
   const router = useRouter();
 
@@ -48,6 +46,7 @@ export default function Navbar() {
   };
 
   const settings = [{ name: 'Logout', action: logout }];
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -89,24 +88,27 @@ export default function Navbar() {
           >
             LOGOs
           </Typography>
-          <Box sx={{ flexGrow: 0 }}>
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-helper-label">
-                Subject
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-helper-label"
-                id="demo-simple-select-helper"
-                value={subject}
-                label="Subject"
-                onChange={handleChange}
-              >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
+          {pathname !== '/management/subject' && (
+            <Box sx={{ flexGrow: 0 }}>
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-helper-label">
+                  Subject
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  value={subject}
+                  label="Subject"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          )}
+
           <Box sx={{ flexGrow: 0 }} className="ml-auto">
             <Tooltip title="settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -10,7 +10,6 @@ import ListItemText from '@mui/material/ListItemText';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import StorageIcon from '@mui/icons-material/Storage';
 import GroupsIcon from '@mui/icons-material/Groups';
-import SettingsIcon from '@mui/icons-material/Settings';
 import Link from 'next/link';
 
 export default function Sidebar() {
