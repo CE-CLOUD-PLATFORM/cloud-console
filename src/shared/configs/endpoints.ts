@@ -9,6 +9,7 @@ export const endpoints = {
   },
   subject: {
     getAll: `${ROOTS.SUBJECT}s`,
+    get: `${ROOTS.SUBJECT}s`,
   },
 };
 
