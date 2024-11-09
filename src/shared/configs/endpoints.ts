@@ -9,7 +9,11 @@ export const endpoints = {
   },
   subject: {
     getAll: `${ROOTS.SUBJECT}s`,
-    get: `${ROOTS.SUBJECT}s`,
+    get: `${ROOTS.SUBJECT}`,
+  },
+  group: {
+    getAll: `${ROOTS.SUBJECT}/groups`,
+    get: `${ROOTS.SUBJECT}/group`,
   },
 };
 
@@ -39,14 +43,6 @@ export const endpoints = {
 //   },
 //   setting: {
 //     publicKey: `${ROOTS.CONFIG}/public-key`,
-//   },
-//   camera: {
-//     list: `${ROOTS.CAMERA}/list`,
-//     details: (cameraId: number) => `${ROOTS.CAMERA}/${cameraId}`,
-//     create: ROOTS.CAMERA,
-//     update: ROOTS.CAMERA,
-//     activate: (cameraId: number) => `${ROOTS.CAMERA}/${cameraId}/active`,
-//     deactivate: (cameraId: number) => `${ROOTS.CAMERA}/${cameraId}/inactive`,
 //   },
 //   group: {
 //     list: ROOTS.GROUP,

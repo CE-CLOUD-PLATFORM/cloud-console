@@ -1,6 +1,17 @@
+"use client";
+import { useUserStore } from '@/modules/auth/store/auth';
+import { useGetGroups } from '@/modules/group/hook/use-get-groups';
+import { useParams } from 'next/navigation';
 import React from 'react';
 
 export default function GroupPage() {
+  let { subject_id } = useParams();
+  let { user } = useUserStore();
+  const { data, isLoading: isSubjectsLoading } = useGetGroups({
+    user_id: user?.info.id as string,
+    subject_id: subject_id as string,
+    domain_name: user?.info.domain.name as string,
+  });
   return (
     <div className="min-h-screen w-full">
       <div className="space-y-5">
