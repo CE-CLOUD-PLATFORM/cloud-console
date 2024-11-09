@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IResponse } from '@/shared/interfaces/api';
 
 export interface ISubjectReqParam {
@@ -89,7 +90,7 @@ export interface Private {
   version: number
 }
 
-export interface Metadata {}
+export type Metadata = object
 
 export interface Link2 {
   href: string

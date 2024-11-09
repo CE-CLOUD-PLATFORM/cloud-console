@@ -11,8 +11,8 @@ interface PageProps {
   };
 }
 export default function OverviewPage() {
-  let { subject_id } = useParams();
-  let { user } = useUserStore();
+  const { subject_id } = useParams();
+  const { user } = useUserStore();
   const { data, isLoading: isSubjectsLoading } = useGetSubject({
     subject_id: subject_id as string,
     domain_name: user?.info.domain.name as string,
