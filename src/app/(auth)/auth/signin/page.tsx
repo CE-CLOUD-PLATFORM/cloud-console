@@ -15,16 +15,10 @@ import { useAuth } from '@/modules/auth/hook';
 import type { User } from '@/modules/auth/types/user';
 import { setSession } from '@/shared/utils';
 import toast from 'react-hot-toast';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { userLoginResolver } from '@/modules/auth/validations/user-login';
 
-const schema = yup
-  .object({
-    username: yup.string().required(),
-    password: yup.string().required(),
-    domain: yup.string().required(),
-  })
-  .required();
+
+
 
 export default function LoginPage() {
   const router = useRouter();
@@ -35,7 +29,7 @@ export default function LoginPage() {
     control,
     formState: { errors },
   } = useForm<ILoginReq>({
-    resolver: yupResolver(schema),
+    resolver: userLoginResolver,
   });
 
   const onSubmit: SubmitHandler<ILoginReq> = async (

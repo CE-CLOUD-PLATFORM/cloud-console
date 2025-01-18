@@ -1,3 +1,4 @@
+import { UserInfo } from "@/modules/auth/types/user";
 import type { IResponse } from "@/shared/interfaces/api";
 
 export interface ILoginReq {
@@ -6,16 +7,7 @@ export interface ILoginReq {
   domain: string;
 }
 
-export interface UserInfo {
-  domain: Domain;
-  id: string;
-  name: string;
-}
 
-export interface Domain {
-  id: string;
-  name: string;
-}
 export interface ILoginRes extends IResponse {
   token: string;
   user: UserInfo;
