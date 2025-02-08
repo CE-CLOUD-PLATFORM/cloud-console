@@ -1,7 +1,7 @@
-import { AuthGuard } from '@/modules/auth/guard/auth-guard';
-import Navbar from '@/shared/components/Navbar';
+
 import { Suspense } from 'react';
 import Loading from '@/shared/components/Loading/CircleLoading';
+import { Layout as DashboaedLayout } from '@/shared/layouts/dashboard/index';
 export default function Layout({
   children,
 }: Readonly<{
@@ -9,10 +9,7 @@ export default function Layout({
 }>) {
   return (
     <Suspense fallback={<Loading />}>
-      <AuthGuard>
-        <Navbar />
-        {children}
-      </AuthGuard>
+      <DashboaedLayout>{children}</DashboaedLayout>
     </Suspense>
   );
 }

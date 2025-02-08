@@ -1,6 +1,11 @@
+
+const version ={
+  V1:"/api/v1"
+}
+
 const ROOTS = {
-  AUTH: '/auth',
-  SUBJECT: '/subject',
+  AUTH: `${version.V1}/auth`,
+  SUBJECT: `${version.V1}/subject`,
 };
 
 export const endpoints = {
