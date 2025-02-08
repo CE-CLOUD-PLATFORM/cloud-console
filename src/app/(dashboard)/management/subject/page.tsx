@@ -1,67 +1,118 @@
 'use client';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import Upload01Icon from '@untitled-ui/icons-react/build/esm/Upload01';
+import {
+  Box,
+  Button,
+  Container,
+  Stack,
+  SvgIcon,
+  Typography,
+  Grid2 as Grid,
+} from '@mui/material';
+import { Seo } from '@/shared/components/seo';
+import { useDialog } from '@/shared/hooks/use-dialog';
+import { useMounted } from '@/shared/hooks/use-mounted';
+import { usePageView } from '@/shared/hooks/use-page-view';
+import { useSettings } from '@/shared/hooks/use-settings';
 
-import { useState, useEffect } from 'react';
-import { getCookie } from 'cookies-next';
-import { useGetSubjects } from '@/modules/subject/hook/use-get-subjects';
-import type { UserInfo } from '@/modules/auth/types/user';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
-import Link from 'next/link';
+import { ItemList } from '@/shared/components/subject-list/item-list';
+import { ItemSearch } from '@/shared/components/subject-list/item-search';
+import { Subject } from '@/modules/subject/types/subject';
+import { useCurrentItem, useItemsSearch, useItemsStore } from '@/modules/subject/store';
+import { View } from '@/shared/types/view';
 
-export default function Page() {
-  const [user, setUser] = useState<UserInfo | null>(null);
-  const [isUserLoading, setIsUserLoading] = useState(true);
 
-  useEffect(() => {
-    const userCookie = getCookie('user');
-    if (userCookie) {
-      setUser(JSON.parse(userCookie));
-    }
-    setIsUserLoading(false);
-    
-  }, []);
 
-  const { data, isLoading: isSubjectsLoading } = useGetSubjects({
-    user_id: user?.id as string,
-  });
+export default function Page () {
+  const settings = useSettings();
+  const itemsSearch = useItemsSearch();
+  const itemsStore = useItemsStore(itemsSearch.state);
+  const [view, setView] = useState<View>('grid');
+  const uploadDialog = useDialog();
+  const detailsDialog = useDialog<string>();
+  const currentItem = useCurrentItem(itemsStore.items, detailsDialog.data);
+
+  usePageView();
+
+  const handleDelete = useCallback(
+    (itemId: string): void => {
+      // This can be triggered from multiple places, ensure drawer is closed.
+      detailsDialog.handleClose();
+      itemsStore.handleDelete(itemId);
+    },
+    [detailsDialog, itemsStore],
+  );
 
   return (
-    <div className="md:p-10">
-      <div className="mx-auto min-h-screen max-w-6xl space-y-8 rounded-md bg-white p-10 md:min-h-52">
-        <div className="flex justify-between">
-          <div>
-            <h1 className="text-xl font-semibold">Subject</h1>
-          </div>
-          <div>
-            <Button variant="outlined">
-              <AddBoxIcon />
-              Create
-            </Button>
-          </div>
-        </div>
-        <hr className="border border-slate-300" />
-        {isUserLoading || isSubjectsLoading ? (
-          <div className="flex w-full items-center justify-center space-x-5 text-center">
-            <div>
-              <CircularProgress />
-            </div>
-            <div className="md:text-2xl">Loading</div>
-          </div>
-        ) : (
-          <div className="grid gap-10 md:grid-cols-3 md:gap-4">
-            {data?.subjects?.map((subject) => (
-              <Link
-                href={`/management/subject/${subject.id}/overview`}
-                key={subject.id}
-                className="subjects-box text-center"
+    <>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          py: 8,
+        }}
+      >
+        <Container>
+          <Grid
+            container
+            spacing={{
+              xs: 3,
+              lg: 4,
+            }}
+          >
+            <Grid size={12}>
+              <Stack direction="row" justifyContent="space-between" spacing={4}>
+                <div>
+                  <Typography variant="h4">Your Subjects</Typography>
+                </div>
+                <Stack alignItems="center" direction="row" spacing={2}>
+                  <Button
+                    onClick={uploadDialog.handleOpen}
+                    startIcon={
+                      <SvgIcon>
+                        <Upload01Icon />
+                      </SvgIcon>
+                    }
+                    variant="contained"
+                  >
+                    Upload
+                  </Button>
+                </Stack>
+              </Stack>
+            </Grid>
+            <Grid size={12}>
+              <Stack
+                spacing={{
+                  xs: 3,
+                  lg: 4,
+                }}
               >
-                {subject.name}
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
+                <ItemSearch
+                  onFiltersChange={itemsSearch.handleFiltersChange}
+                  onSortChange={itemsSearch.handleSortChange}
+                  onViewChange={setView}
+                  sortBy={itemsSearch.state.sortBy}
+                  sortDir={itemsSearch.state.sortDir}
+                  view={view}
+                />
+                <ItemList
+                  count={itemsStore.itemsCount}
+                  items={itemsStore.items}
+                  onDelete={handleDelete}
+                  onFavorite={itemsStore.handleFavorite}
+                  onOpen={detailsDialog.handleOpen}
+                  onPageChange={itemsSearch.handlePageChange}
+                  onRowsPerPageChange={itemsSearch.handleRowsPerPageChange}
+                  page={itemsSearch.state.page}
+                  rowsPerPage={itemsSearch.state.rowsPerPage}
+                  view={view}
+                />
+              </Stack>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+    </>
   );
-}
+};
