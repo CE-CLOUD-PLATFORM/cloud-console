@@ -4,6 +4,7 @@ import type {
   ISubjectsRes,
   ISubjectsReqParam,
   ISubjectReqParam,
+  ISubjectCreate,
 } from '@/modules/subject/types/subject';
 import { endpoints } from '@/shared/configs';
 
@@ -11,12 +12,11 @@ type Params = {
   queryKey: string[];
 };
 
-// recommend inline type definitions of queryKey, many service many xxxParams ,it make to confuse
 export const getSubjects = async ({
   queryKey,
 }: Params): Promise<ISubjectsRes> => {
   const [_, user_id] = queryKey;
-  
+
   const params: ISubjectsReqParam = {
     user_id,
   };
@@ -37,14 +37,17 @@ export const getSubject = async ({
     subject_id,
     domain_name,
   };
-  // const response = await axiosInstance.get<ISubjectRes,any,ISubjectReqParam>(
-  //   `${endpoints.subject.get}`,
-  //   { params }
-  // );
-  // ท่านี้ควรจะเวิร์ค แต่มันไม่ detect param ตอนส่งผิด เลย validate ตอนสร้างตัวแปร params เอา
   const response = await axiosInstance.get<ISubjectRes>(
     `${endpoints.subject.get}`,
     { params },
   );
   return response.data;
 };
+
+export const postSubject = async (data: ISubjectCreate) => {
+  return (await axiosInstance.post<
+    any,
+    any,
+    ISubjectCreate
+  >(`${endpoints.subject.create}`, data)).data
+}

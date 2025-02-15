@@ -103,7 +103,6 @@ export default function Page() {
                   count={itemsStore.itemsCount}
                   items={itemsStore.items}
                   onDelete={handleDelete}
-                  onFavorite={itemsStore.handleFavorite}
                   onOpen={detailsDialog.handleOpen}
                   onPageChange={itemsSearch.handlePageChange}
                   onRowsPerPageChange={itemsSearch.handleRowsPerPageChange}

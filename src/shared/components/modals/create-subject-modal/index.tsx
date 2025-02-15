@@ -10,21 +10,41 @@ import {
   Typography,
 } from '@mui/material';
 import '../index.css';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { Subject } from '@/modules/subject/types/subject';
 import { useUserStore } from '@/modules/auth/store/auth';
 import { FormProps } from '@/shared/interfaces/modal';
+import { useCreateSubject } from '@/modules/subject/hook/use-create-subjects';
+import toast from 'react-hot-toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 const ModalSubjectCreate = (props: FormProps) => {
   const { isOpen, handleClose } = props;
   const { user } = useUserStore();
-  const { register, handleSubmit, reset, setValue } = useForm<Subject>({
-    defaultValues: {
-      name: 'untitled',
-      description: '',
-      domain_id: user?.info.domain.id,
+  const queryClient = useQueryClient();
+  const createProject = useCreateSubject({
+    onSuccess: () => {
+      toast.success('Project created successfully');
+      queryClient.invalidateQueries({ queryKey: ['subjects'] });
+      reset();
+      handleClose();
+    },
+    onError: () => {
+      toast.error('Fail to create Subject.');
+    },
+    onMutate: () => {
+      toast.loading('Creating...');
     },
   });
+  const { register, handleSubmit, reset, setValue, control } = useForm<Subject>(
+    {
+      defaultValues: {
+        name: 'untitled',
+        description: '',
+        domain_id: user?.info.domain.id,
+      },
+    },
+  );
   useEffect(() => {
     if (user) {
       setValue('domain_id', user?.info.domain.id);
@@ -32,7 +52,11 @@ const ModalSubjectCreate = (props: FormProps) => {
   }, [user]);
 
   const onSubmit = async (data: Subject) => {
-    console.log(data);
+    try {
+      createProject.mutate(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -49,17 +73,20 @@ const ModalSubjectCreate = (props: FormProps) => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <Stack spacing={3}>
-            <TextField
-              {...register('name')}
-              fullWidth
-              label="Title"
-              name="title"
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <TextField {...field} fullWidth label="Title" />
+              )}
             />
-            <TextField
-              {...register('description')}
-              fullWidth
-              label="Description"
+
+            <Controller
               name="description"
+              control={control}
+              render={({ field }) => (
+                <TextField {...field} fullWidth label="Description" />
+              )}
             />
           </Stack>
 
@@ -73,7 +100,12 @@ const ModalSubjectCreate = (props: FormProps) => {
             <Button color="inherit" onClick={() => handleClose()}>
               Cancel
             </Button>
-            <Button sx={{ ml: 1 }} type="submit" variant="contained">
+            <Button
+              sx={{ ml: 1 }}
+              type="submit"
+              variant="contained"
+              form="subject-create-form"
+            >
               Confirm
             </Button>
           </Box>

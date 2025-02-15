@@ -9,6 +9,11 @@ export interface ISubjectReqParam {
 export interface ISubjectsReqParam {
   user_id: string
 }
+export interface ISubjectCreate {
+  description: string;
+  domain_id: string;
+  name: string;
+}
 export interface Subject {
   is_domain: boolean;
   description: string;
@@ -24,7 +29,7 @@ export interface ISubjectsRes extends IResponse {
   subjects: Subject[];
 }
 
-export interface ISubjectRes extends IResponse{
+export interface ISubjectRes extends IResponse {
   instances: Instance[]
   subject: Subject
 }

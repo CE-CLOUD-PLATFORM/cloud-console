@@ -48,7 +48,7 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
       <Card
         key={item.id}
         sx={{
-          backgroundColor: 'transparent',
+          // backgroundColor: 'transparent',
           boxShadow: 0,
           transition: (theme) =>
             theme.transitions.create(['background-color, box-shadow'], {

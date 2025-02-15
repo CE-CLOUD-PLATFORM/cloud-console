@@ -92,11 +92,11 @@ export const useItemsStore = (searchState: ItemsSearchState) => {
         await refetch()
         if (isMounted()) {
             setState({
-              items: data?.subjects as Subject[],
-              itemsCount: data?.subjects?.length as number
+                items: data?.subjects as Subject[],
+                itemsCount: data?.subjects?.length as number
             });
-          }
-     }, [searchState, isMounted]);
+        }
+    }, [searchState, isMounted]);
 
     useEffect(
         () => {
@@ -104,7 +104,15 @@ export const useItemsStore = (searchState: ItemsSearchState) => {
         },
         [searchState],
     );
-
+    useEffect(
+        () => {
+            setState({
+                items: data?.subjects as Subject[],
+                itemsCount: data?.subjects?.length as number
+            });
+        },
+        [data],
+    );
     const handleDelete = useCallback((itemId: string): void => {
         setState((prevState) => {
             return {
@@ -114,27 +122,9 @@ export const useItemsStore = (searchState: ItemsSearchState) => {
         });
     }, []);
 
-    const handleFavorite = useCallback((itemId: string, value: boolean): void => {
-        setState((prevState) => {
-            return {
-                ...prevState,
-                items: prevState.items.map((item) => {
-                    if (item.id === itemId) {
-                        return {
-                            ...item,
-                            isFavorite: value,
-                        };
-                    }
-
-                    return item;
-                }),
-            };
-        });
-    }, []);
 
     return {
         handleDelete,
-        handleFavorite,
         ...state,
     };
 };

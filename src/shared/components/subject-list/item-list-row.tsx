@@ -54,7 +54,7 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
       <TableRow
         key={item.id}
         sx={{
-          backgroundColor: 'transparent',
+          backgroundColor: 'white',
           borderRadius: 1.5,
           boxShadow: 0,
           transition: (theme) => theme.transitions.create(

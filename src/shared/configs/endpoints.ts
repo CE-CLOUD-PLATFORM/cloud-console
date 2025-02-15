@@ -15,6 +15,7 @@ export const endpoints = {
   subject: {
     getAll: `${ROOTS.SUBJECT}s`,
     get: `${ROOTS.SUBJECT}`,
+    create: `${ROOTS.SUBJECT}`,
   },
   group: {
     getAll: `${ROOTS.SUBJECT}/groups`,

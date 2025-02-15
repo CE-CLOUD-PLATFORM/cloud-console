@@ -15,14 +15,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="bg-slate-100">
         <AppRouterCacheProvider>
           <ReactQueryProvider>
-            <ThemeProvider >
-              <Toaster />
+            <ThemeProvider>
+              <Toaster
+                position="top-center"
+                reverseOrder={false}
+                toastOptions={{
+                  className: 'mt-5',
+                  duration: 1800,
+                }}
+              />
               {children}
             </ThemeProvider>
           </ReactQueryProvider>
