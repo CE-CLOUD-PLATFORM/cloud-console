@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import Upload01Icon from '@untitled-ui/icons-react/build/esm/Upload01';
 import {
   Box,
@@ -10,26 +10,26 @@ import {
   Typography,
   Grid2 as Grid,
 } from '@mui/material';
-import { Seo } from '@/shared/components/seo';
 import { useDialog } from '@/shared/hooks/use-dialog';
-import { useMounted } from '@/shared/hooks/use-mounted';
 import { usePageView } from '@/shared/hooks/use-page-view';
 import { useSettings } from '@/shared/hooks/use-settings';
 
 import { ItemList } from '@/shared/components/subject-list/item-list';
 import { ItemSearch } from '@/shared/components/subject-list/item-search';
-import { Subject } from '@/modules/subject/types/subject';
-import { useCurrentItem, useItemsSearch, useItemsStore } from '@/modules/subject/store';
+import {
+  useCurrentItem,
+  useItemsSearch,
+  useItemsStore,
+} from '@/modules/subject/store';
 import { View } from '@/shared/types/view';
+import ModalProjectCreate from '@/shared/components/modals/create-subject-modal';
 
-
-
-export default function Page () {
-  const settings = useSettings();
+export default function Page() {
   const itemsSearch = useItemsSearch();
   const itemsStore = useItemsStore(itemsSearch.state);
   const [view, setView] = useState<View>('grid');
   const uploadDialog = useDialog();
+  const modalCreateProject = useDialog();
   const detailsDialog = useDialog<string>();
   const currentItem = useCurrentItem(itemsStore.items, detailsDialog.data);
 
@@ -37,7 +37,6 @@ export default function Page () {
 
   const handleDelete = useCallback(
     (itemId: string): void => {
-      // This can be triggered from multiple places, ensure drawer is closed.
       detailsDialog.handleClose();
       itemsStore.handleDelete(itemId);
     },
@@ -46,6 +45,10 @@ export default function Page () {
 
   return (
     <>
+      <ModalProjectCreate 
+      isOpen={modalCreateProject.open} 
+      handleClose={modalCreateProject.handleClose}
+      />
       <Box
         component="main"
         sx={{
@@ -68,7 +71,7 @@ export default function Page () {
                 </div>
                 <Stack alignItems="center" direction="row" spacing={2}>
                   <Button
-                    onClick={uploadDialog.handleOpen}
+                    onClick={modalCreateProject.handleOpen}
                     startIcon={
                       <SvgIcon>
                         <Upload01Icon />
@@ -76,7 +79,7 @@ export default function Page () {
                     }
                     variant="contained"
                   >
-                    Upload
+                    New
                   </Button>
                 </Stack>
               </Stack>
@@ -115,4 +118,4 @@ export default function Page () {
       </Box>
     </>
   );
-};
+}

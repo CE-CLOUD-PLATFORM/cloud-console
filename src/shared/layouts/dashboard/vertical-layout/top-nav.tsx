@@ -69,9 +69,6 @@ export const TopNav: FC<TopNavProps> = (props) => {
           direction="row"
           spacing={2}
         >
-          <LanguageSwitch />
-          <NotificationsButton />
-          <ContactsButton />
           <AccountButton />
         </Stack>
       </Stack>

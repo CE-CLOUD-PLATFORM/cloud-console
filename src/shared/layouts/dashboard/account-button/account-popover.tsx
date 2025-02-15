@@ -20,6 +20,8 @@ import { RouterLink } from '@/shared/components/router-link';
 import { useAuth } from '@/modules/auth/hook';
 import { useRouter } from '@/shared/hooks/use-router';
 import { paths } from '@/paths';
+import { useUserStore } from '@/modules/auth/store/auth';
+import { useLogout } from '@/modules/auth/hook/use-logout';
 
 interface AccountPopoverProps {
   anchorEl: null | Element;
@@ -30,24 +32,18 @@ interface AccountPopoverProps {
 export const AccountPopover: FC<AccountPopoverProps> = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
   const router = useRouter();
-  const auth = useAuth();
+  const { user } = useUserStore((state) => state);
 
   const handleLogout = useCallback(async (): Promise<void> => {
     try {
       onClose?.();
-
-      switch (auth) {
-        default: {
-          console.warn('Using an unknown Auth Issuer, did not log out');
-        }
-      }
-
-      router.push(paths.index);
+      useLogout()
+      router.replace(paths.auth.signIn.index);
     } catch (err) {
       console.error(err);
       toast.error('Something went wrong!');
     }
-  }, [auth, router, onClose]);
+  }, [user,router, onClose]);
 
   return (
     <Popover
@@ -63,7 +59,7 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
       {...other}
     >
       <Box sx={{ p: 2 }}>
-        <Typography variant="body1">{"user.name"}</Typography>
+        <Typography variant="body1">{'user.name'}</Typography>
         <Typography color="text.secondary" variant="body2">
           demo@devias.io
         </Typography>

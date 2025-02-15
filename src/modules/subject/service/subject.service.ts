@@ -16,15 +16,12 @@ export const getSubjects = async ({
   queryKey,
 }: Params): Promise<ISubjectsRes> => {
   const [_, user_id] = queryKey;
-  // const response = await axiosInstance.get<ISubjectsRes>(
-  //   `${endpoints.subject.getAll}/?user_id=${user_id}`,
-  // );
+  
   const params: ISubjectsReqParam = {
     user_id,
   };
   const response = await axiosInstance.get<
     ISubjectsRes,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
     ISubjectsReqParam
   >(`${endpoints.subject.getAll}`, { params });

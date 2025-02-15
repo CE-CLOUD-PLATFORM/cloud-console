@@ -5,12 +5,15 @@ import { useCallback, useEffect, type PropsWithChildren } from 'react';
 import { useUserStore } from '@/modules/auth/store/auth';
 
 export function AuthGuard({ children }: PropsWithChildren) {
-  const router = useRouter();
 
+  const router = useRouter();
+  const initializeUser = useUserStore((state) => state.actions.initializeUser)
   const user = useUserStore((state) => state.user);
   const loading = useUserStore((state) => state.loading);
   const validateAuthentication = useCallback(() => {
+
     if (loading) {
+      initializeUser()
       return;
     }
 
@@ -25,6 +28,9 @@ export function AuthGuard({ children }: PropsWithChildren) {
   useEffect(() => {
     validateAuthentication();
   }, [validateAuthentication]);
+  // useEffect(() => {
+  //   initializeUser();
+  // }, []);
 
   return children;
 }
@@ -34,7 +40,6 @@ export function AlreadyAuthenticatedGuard({ children }: PropsWithChildren) {
 
   const user = useUserStore((state) => state.user);
   const loading = useUserStore((state) => state.loading);
-
   const checkAlreadyAuthenticated = useCallback(() => {
     if (loading) {
       return;
@@ -47,6 +52,7 @@ export function AlreadyAuthenticatedGuard({ children }: PropsWithChildren) {
   }, [loading, user, router]);
 
   useEffect(() => {
+
     checkAlreadyAuthenticated();
   }, [checkAlreadyAuthenticated]);
 

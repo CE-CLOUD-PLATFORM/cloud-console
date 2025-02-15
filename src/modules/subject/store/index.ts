@@ -1,9 +1,11 @@
-import {  useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Subject } from "../types/subject";
 import { useMounted } from "@/shared/hooks/use-mounted";
 import type { ChangeEvent, MouseEvent } from 'react';
 import { SortDir } from "@/shared/types/sort";
-
+import { create } from 'zustand'
+import { useGetSubjects } from "../hook/use-get-subjects";
+import { useUserStore } from "@/modules/auth/store/auth";
 
 interface Filters {
     query?: string;
@@ -78,24 +80,32 @@ interface ItemsStoreState {
 }
 
 export const useItemsStore = (searchState: ItemsSearchState) => {
+    const { user } = useUserStore()
+    const { data, isLoading, refetch, error } = useGetSubjects({ user_id: user?.info.id as string })
     const isMounted = useMounted();
     const [state, setState] = useState<ItemsStoreState>({
         items: [],
         itemsCount: 0,
     });
 
-    const handleItemsGet = useCallback(async () => { }, [searchState, isMounted]);
+    const handleItemsGet = useCallback(async () => {
+        await refetch()
+        if (isMounted()) {
+            setState({
+              items: data?.subjects as Subject[],
+              itemsCount: data?.subjects?.length as number
+            });
+          }
+     }, [searchState, isMounted]);
 
     useEffect(
         () => {
             handleItemsGet();
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         [searchState],
     );
 
     const handleDelete = useCallback((itemId: string): void => {
-        // api call should be made here, then get the list again
         setState((prevState) => {
             return {
                 ...prevState,
