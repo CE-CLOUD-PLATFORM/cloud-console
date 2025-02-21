@@ -1,12 +1,10 @@
 import { axiosInstance } from '@/shared/utils';
 import type {
-  ISubjectRes,
   ISubjectsRes,
   ISubjectsReqParam,
-  ISubjectReqParam,
-  ISubjectCreate,
 } from '@/modules/subject/types/subject';
 import { endpoints } from '@/shared/configs';
+import { InstanceRes, InstancesQueryParams } from '../types/instance';
 
 type Params = {
   queryKey: string[];
@@ -14,16 +12,16 @@ type Params = {
 
 export const getInstances = async ({
   queryKey,
-}: Params): Promise<ISubjectsRes> => {
-  const [_, user_id] = queryKey;
+}: Params): Promise<InstanceRes> => {
+  const [_, subject_id] = queryKey;
 
-  const params: ISubjectsReqParam = {
-    user_id,
+  const params: InstancesQueryParams = {
+    subject_id,
   };
   const response = await axiosInstance.get<
-    ISubjectsRes,
+    InstanceRes,
     any,
-    ISubjectsReqParam
-  >(`${endpoints.subject.getAll}`, { params });
+    InstancesQueryParams
+  >(`${endpoints.instance.list}`, { params });
   return response.data;
 };

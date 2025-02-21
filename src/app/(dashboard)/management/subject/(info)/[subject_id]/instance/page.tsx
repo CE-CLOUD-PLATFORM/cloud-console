@@ -4,22 +4,12 @@ import { useParams } from 'next/navigation';
 import type { UserInfo } from '@/modules/auth/types/user';
 import { getCookie } from 'cookies-next';
 import { useGetSubjects } from '@/modules/subject/hook/use-get-subjects';
+import { useGetInstances } from '@/modules/instance/hook/use-get-instances';
 
 export default function SubjectId() {
   const { subject_id } = useParams<{ subject_id: string }>();
-  const [user, setUser] = useState<UserInfo | null>(null);
-  const [isUserLoading, setIsUserLoading] = useState(true);
-
-  useEffect(() => {
-    const userCookie = getCookie('user');
-    if (userCookie) {
-      setUser(JSON.parse(userCookie));
-    }
-    setIsUserLoading(false);
-  }, []);
-
-  const { data, isLoading: isSubjectsLoading } = useGetSubjects({
-    user_id: user?.id as string,
+  const s = useGetInstances({
+    subject_id,
   });
 
   return (

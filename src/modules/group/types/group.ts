@@ -6,15 +6,18 @@ export interface IGroupsReqParams {
     domain_name: string
 }
 
-export interface NewGroupRequest extends NewGroupInputs {
-    domain_id: string
-    quota_set: GroupQuotaSet
+export interface IGroupCreate {
+    name: string
+    project_id: string
+    domain_name: string
+    admin_id: string
+    description?: string
 }
 
-export interface NewGroupInputs {
+export interface IGroupInputs {
     name: string
-    description: string
-    cores: number
+    description?: string
+    cores?: number
     instances: number
     ram: number
 }

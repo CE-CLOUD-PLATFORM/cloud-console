@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import ModalCover from '..';
+import ModalCover from '../index';
 import {
   Box,
   Button,
@@ -14,46 +14,49 @@ import { Controller, useForm } from 'react-hook-form';
 import { Subject } from '@/modules/subject/types/subject';
 import { useUserStore } from '@/modules/auth/store/auth';
 import { FormProps } from '@/shared/interfaces/modal';
-import { useCreateSubject } from '@/modules/subject/hook/use-create-subjects';
 import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
+import { useCreateGroup } from '@/modules/group/hook/use-create-group';
+import { IGroupCreate } from '@/modules/group/types/group';
+import { useParams } from 'next/navigation';
 
-const ModalSubjectCreate = (props: FormProps) => {
+const groupFormId = 'group-create-form';
+const ModalGroupCreate = (props: FormProps) => {
   const { isOpen, handleClose } = props;
+  const { subject_id } = useParams();
   const { user } = useUserStore();
   const queryClient = useQueryClient();
-  const createProject = useCreateSubject({
+  const createGroup = useCreateGroup({
     onSuccess: () => {
-      toast.success('Project created successfully');
-      queryClient.invalidateQueries({ queryKey: ['subjects'] });
+      toast.success('Group created successfully');
+      queryClient.invalidateQueries({ queryKey: ['subjects', 'groups'] });
       reset();
       handleClose();
     },
     onError: () => {
-      toast.error('Fail to create Subject.');
+      toast.error('Fail to create Group.');
     },
     onMutate: () => {
       toast.loading('Creating...');
     },
   });
-  const { register, handleSubmit, reset, setValue, control } = useForm<Subject>(
-    {
+  const { register, handleSubmit, reset, setValue, control } =
+    useForm<IGroupCreate>({
       defaultValues: {
         name: 'untitled',
         description: '',
-        domain_id: user?.info.domain.id,
+        domain_name: user?.info.domain.id,
+        admin_id: user?.info.id,
+        project_id: subject_id as string,
       },
-    },
-  );
-  useEffect(() => {
-    if (user) {
-      setValue('domain_id', user?.info.domain.id);
-    }
-  }, [user]);
+    });
 
-  const onSubmit = async (data: Subject) => {
+  const onSubmit = async (data: IGroupCreate) => {
     try {
-      createProject.mutate(data);
+      setValue('domain_name', user?.info.domain.id as string);
+      setValue('admin_id', user?.info.id as string);
+
+      createGroup.mutate(data);
     } catch (error) {
       console.error(error);
     }
@@ -62,10 +65,10 @@ const ModalSubjectCreate = (props: FormProps) => {
   return (
     <ModalCover isOpen={isOpen}>
       <Box className="modal-box" gap={5}>
-        <Typography variant="h5">New Subject</Typography>
+        <Typography variant="h5">New Group</Typography>
         <Box
           component="form"
-          id="subject-create-form"
+          id={groupFormId}
           display="flex"
           flexDirection="column"
           justifyContent="space-between"
@@ -104,7 +107,7 @@ const ModalSubjectCreate = (props: FormProps) => {
               sx={{ ml: 1 }}
               type="submit"
               variant="contained"
-              form="subject-create-form"
+              form={groupFormId}
             >
               Confirm
             </Button>
@@ -115,4 +118,4 @@ const ModalSubjectCreate = (props: FormProps) => {
   );
 };
 
-export default ModalSubjectCreate;
+export default ModalGroupCreate;

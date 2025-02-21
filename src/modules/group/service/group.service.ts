@@ -1,8 +1,8 @@
 import { axiosInstance } from '@/shared/utils';
 
 import { endpoints } from '@/shared/configs';
-import { getCookie } from 'cookies-next';
-import { IGroupsReqParams, IGroupsRes } from '../types/group';
+import { IGroupCreate, IGroupsReqParams, IGroupsRes } from '../types/group';
+import { IResponse } from '@/shared/interfaces/api';
 
 type Params = {
   queryKey: string[];
@@ -25,20 +25,9 @@ export const getGroups = async ({ queryKey }: Params): Promise<IGroupsRes> => {
   return response.data;
 };
 
-// export const getGroup = async ({
-//   queryKey,
-// }: Params): Promise<IGroupsRes> => {
-//   const [_, user_id, subject_id, domain_name] = queryKey;
-
-//   let params: IGroupsReq = {
-//     user_id,
-//     subject_id,
-//     domain_name,
-//   }
-//   const response = await axiosInstance.get<IGroupsRes>(
-//     `${endpoints.group.getAll}`, {
-//     params
-//   }
-//   );
-//   return response.data;
-// };
+export const postGroup = async (data: IGroupCreate): Promise<IResponse> => {
+  const response = await axiosInstance.post(
+    `${endpoints.group.post}`, data
+  );
+  return response.data;
+};

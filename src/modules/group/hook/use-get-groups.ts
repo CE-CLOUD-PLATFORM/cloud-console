@@ -11,6 +11,7 @@ export const useGetGroups = ({ user_id, subject_id, domain_name }: IGroupsReqPar
   useQuery({
     queryKey: ['groups', user_id, subject_id, domain_name],
     queryFn: getGroups,
-    // enabled: !!user_id,
+    enabled: !!user_id && !!subject_id && !!domain_name,
+    staleTime: 1000 * 60 * 5
   });
 

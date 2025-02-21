@@ -9,8 +9,10 @@ export interface InstanceReq {
     username: string;
     password: string;
 }
-
-export interface InstanceQueryParam {
+export interface InstancesQueryParams {
+    subject_id: string;
+}
+export interface InstanceQueryParams {
     instance_id: string
     subject_id: string
 }

@@ -6,6 +6,8 @@ const version ={
 const ROOTS = {
   AUTH: `${version.V1}/auth`,
   SUBJECT: `${version.V1}/subject`,
+  GROUP: `${version.V1}/group`,
+  SERVER: `${version.V1}/server`,
 };
 
 export const endpoints = {
@@ -20,6 +22,10 @@ export const endpoints = {
   group: {
     getAll: `${ROOTS.SUBJECT}/groups`,
     get: `${ROOTS.SUBJECT}/group`,
+    post:`${ROOTS.GROUP}`
+  },
+  instance: {
+    list: `${ROOTS.SERVER}s`,
   },
 };
 

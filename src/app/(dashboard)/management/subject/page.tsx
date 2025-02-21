@@ -1,6 +1,6 @@
 'use client';
 import { useCallback, useState } from 'react';
-import Upload01Icon from '@untitled-ui/icons-react/build/esm/Upload01';
+
 import {
   Box,
   Button,
@@ -22,14 +22,16 @@ import {
   useItemsStore,
 } from '@/modules/subject/store/use-projects-store';
 import { View } from '@/shared/types/view';
-import ModalProjectCreate from '@/shared/components/modals/create-subject-modal';
+import ModalProjectCreate from '@/shared/components/modals/subject/create-subject-modal';
+import Plus from '@untitled-ui/icons-react/build/esm/Plus';
+import ModalSubjectCreate from '@/shared/components/modals/subject/create-subject-modal';
 
 export default function Page() {
   const itemsSearch = useItemsSearch();
   const itemsStore = useItemsStore(itemsSearch.state);
   const [view, setView] = useState<View>('grid');
   const uploadDialog = useDialog();
-  const modalCreateProject = useDialog();
+  const modalCreateSubject = useDialog();
   const detailsDialog = useDialog<string>();
   const currentItem = useCurrentItem(itemsStore.items, detailsDialog.data);
 
@@ -45,9 +47,9 @@ export default function Page() {
 
   return (
     <>
-      <ModalProjectCreate 
-      isOpen={modalCreateProject.open} 
-      handleClose={modalCreateProject.handleClose}
+      <ModalSubjectCreate
+        isOpen={modalCreateSubject.open}
+        handleClose={modalCreateSubject.handleClose}
       />
       <Box
         component="main"
@@ -71,10 +73,10 @@ export default function Page() {
                 </div>
                 <Stack alignItems="center" direction="row" spacing={2}>
                   <Button
-                    onClick={modalCreateProject.handleOpen}
+                    onClick={modalCreateSubject.handleOpen}
                     startIcon={
                       <SvgIcon>
-                        <Upload01Icon />
+                        <Plus />
                       </SvgIcon>
                     }
                     variant="contained"
