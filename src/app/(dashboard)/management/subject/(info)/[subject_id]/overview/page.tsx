@@ -2,8 +2,8 @@
 import { useGetSubject } from '@/modules/subject/hook/use-get-subject';
 import React from 'react';
 import { useParams } from 'next/navigation';
-import { string } from 'yup';
 import { useUserStore } from '@/modules/auth/store/auth';
+
 
 interface PageProps {
   params: {

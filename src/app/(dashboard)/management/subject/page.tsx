@@ -20,7 +20,7 @@ import {
   useCurrentItem,
   useItemsSearch,
   useItemsStore,
-} from '@/modules/subject/store';
+} from '@/modules/subject/store/use-projects-store';
 import { View } from '@/shared/types/view';
 import ModalProjectCreate from '@/shared/components/modals/create-subject-modal';
 

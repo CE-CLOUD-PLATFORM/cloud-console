@@ -6,11 +6,9 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthGuard>
       <div className="flex">
         <Sidebar />
         <div className="w-full p-10">{children}</div>
       </div>
-    </AuthGuard>
   );
 }

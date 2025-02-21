@@ -29,6 +29,7 @@ export const useUserStore = create<UserState>()(
         const token = getCookie("token");
 
         if (user && token) {
+          
           set({
             user: {
               token,
@@ -36,8 +37,9 @@ export const useUserStore = create<UserState>()(
             }, loading: false
           });
         } else {
-          set({ user: null, loading: false });
+          
           removeSession()
+          set({ user: null, loading: false });
         }
       }
     },

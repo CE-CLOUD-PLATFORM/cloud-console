@@ -7,7 +7,6 @@ import { useGetSubjects } from '@/modules/subject/hook/use-get-subjects';
 
 export default function SubjectId() {
   const { subject_id } = useParams<{ subject_id: string }>();
-  console.log(subject_id);
   const [user, setUser] = useState<UserInfo | null>(null);
   const [isUserLoading, setIsUserLoading] = useState(true);
 

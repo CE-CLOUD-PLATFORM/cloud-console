@@ -16,13 +16,15 @@ import {
   tableCellClasses,
   TableRow,
   Tooltip,
-  Typography
+  Typography,
 } from '@mui/material';
 import { usePopover } from '@/shared/hooks/use-popover';
 import { bytesToSize } from '@/shared/utils/bytes-to-size';
 import { ItemIcon } from './item-icon';
 import { ItemMenu } from './item-menu';
 import { Subject } from '@/modules/subject/types/subject';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface ItemListRowProps {
   item: Subject;
@@ -34,20 +36,16 @@ interface ItemListRowProps {
 export const ItemListRow: FC<ItemListRowProps> = (props) => {
   const { item, onDelete, onFavorite, onOpen } = props;
   const popover = usePopover<HTMLButtonElement>();
+  const pathname = usePathname();
 
-  const handleDelete = useCallback(
-    (): void => {
-      popover.handleClose();
-      onDelete?.(item.id);
-    },
-    [item, popover, onDelete]
-  );
+  const handleDelete = useCallback((): void => {
+    popover.handleClose();
+    onDelete?.(item.id);
+  }, [item, popover, onDelete]);
 
-  let size ='1';
+  let size = '1';
 
- 
-
-  const createdAt = '1213'
+  const createdAt = '1213';
 
   return (
     <>
@@ -57,16 +55,14 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
           backgroundColor: 'white',
           borderRadius: 1.5,
           boxShadow: 0,
-          transition: (theme) => theme.transitions.create(
-            ['background-color', 'box-shadow'],
-            {
+          transition: (theme) =>
+            theme.transitions.create(['background-color', 'box-shadow'], {
               easing: theme.transitions.easing.easeInOut,
-              duration: 200
-            }
-          ),
+              duration: 200,
+            }),
           '&:hover': {
             backgroundColor: 'background.paper',
-            boxShadow: 16
+            boxShadow: 16,
           },
           [`& .${tableCellClasses.root}`]: {
             borderBottomWidth: 1,
@@ -80,79 +76,55 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
               borderBottomLeftRadius: (theme) => theme.shape.borderRadius * 1.5,
               borderLeftWidth: 1,
               borderLeftColor: 'divider',
-              borderLeftStyle: 'solid'
+              borderLeftStyle: 'solid',
             },
             '&:last-of-type': {
               borderTopRightRadius: (theme) => theme.shape.borderRadius * 1.5,
-              borderBottomRightRadius: (theme) => theme.shape.borderRadius * 1.5,
+              borderBottomRightRadius: (theme) =>
+                theme.shape.borderRadius * 1.5,
               borderRightWidth: 1,
               borderRightColor: 'divider',
-              borderRightStyle: 'solid'
-            }
-          }
+              borderRightStyle: 'solid',
+            },
+          },
         }}
       >
         <TableCell>
-          <Stack
-            alignItems="center"
-            direction="row"
-            spacing={2}
-          >
-            <Box
-              onClick={() => onOpen?.(item.id)}
-              sx={{ cursor: 'pointer' }}
-            >
-              <ItemIcon
-                
-              />
-            </Box>
-            <div>
-              <Typography
-                noWrap
-                onClick={() => onOpen?.(item.id)}
-                sx={{ cursor: 'pointer' }}
-                variant="subtitle2"
-              >
-                {item.name}
-              </Typography>
-              <Typography
-                color="text.secondary"
-                noWrap
-                variant="body2"
-              >
-                {size}
-              </Typography>
-            </div>
-          </Stack>
+          <Link href={`${pathname}/${item.id}/overview`}>
+            <Stack alignItems="center" direction="row" spacing={2}>
+              <Box onClick={() => onOpen?.(item.id)} sx={{ cursor: 'pointer' }}>
+                <ItemIcon />
+              </Box>
+              <div>
+                <Typography
+                  noWrap
+                  onClick={() => onOpen?.(item.id)}
+                  sx={{ cursor: 'pointer' }}
+                  variant="subtitle2"
+                >
+                  {item.name}
+                </Typography>
+                <Typography color="text.secondary" noWrap variant="body2">
+                  {size}
+                </Typography>
+              </div>
+            </Stack>
+          </Link>
         </TableCell>
         <TableCell>
-          <Typography
-            noWrap
-            variant="subtitle2"
-          >
+          <Typography noWrap variant="subtitle2">
             Created at
           </Typography>
-          <Typography
-            color="text.secondary"
-            noWrap
-            variant="body2"
-          >
+          <Typography color="text.secondary" noWrap variant="body2">
             {createdAt}
           </Typography>
         </TableCell>
         <TableCell>
-          <Box sx={{ display: 'flex' }}>
-            
-          </Box>
+          <Box sx={{ display: 'flex' }}></Box>
         </TableCell>
+        <TableCell align="right"></TableCell>
         <TableCell align="right">
-
-        </TableCell>
-        <TableCell align="right">
-          <IconButton
-            onClick={popover.handleOpen}
-            ref={popover.anchorRef}
-          >
+          <IconButton onClick={popover.handleOpen} ref={popover.anchorRef}>
             <SvgIcon fontSize="small">
               <DotsVerticalIcon />
             </SvgIcon>
@@ -174,5 +146,5 @@ ItemListRow.propTypes = {
   item: PropTypes.object.isRequired,
   onDelete: PropTypes.func,
   onFavorite: PropTypes.func,
-  onOpen: PropTypes.func
+  onOpen: PropTypes.func,
 };

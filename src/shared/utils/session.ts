@@ -19,9 +19,11 @@ export const removeSession = () => {
   try {
     const user = getCookie('user');
     const token = getCookie('token');
-    if (user && token) {
-      deleteCookie('token');
+    if (user) {
       deleteCookie('user');
+    }
+    if (token) {
+      deleteCookie('token');
     }
   } catch (err) {
     throw err;

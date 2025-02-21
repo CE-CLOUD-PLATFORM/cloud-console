@@ -57,14 +57,14 @@ export const ItemList: FC<ItemListProps> = (props) => {
   } else {
     // Negative margin is a fix for the box shadow. The virtual scrollbar cuts it.
     content = (
-      <Box sx={{ m: -3 }}>
+      <Box sx={{ m: 1 }}>
         <Scrollbar>
-          <Box sx={{ p: 3 }}>
+          <Box sx={{ p: 1 }}>
             <Table
               sx={{
                 minWidth: 600,
                 borderCollapse: 'separate',
-                borderSpacing: '0 8px'
+                // borderSpacing: '0 8px'
               }}
             >
               <TableBody>

@@ -11,26 +11,21 @@ export function AuthGuard({ children }: PropsWithChildren) {
   const user = useUserStore((state) => state.user);
   const loading = useUserStore((state) => state.loading);
   const validateAuthentication = useCallback(() => {
-
     if (loading) {
       initializeUser()
       return;
     }
 
     if (!user) {
+      
       router.replace('/auth/signin');
       return;
-    } else {
-      router.replace('/management/subject');
     }
   }, [loading, user, router]);
 
   useEffect(() => {
     validateAuthentication();
   }, [validateAuthentication]);
-  // useEffect(() => {
-  //   initializeUser();
-  // }, []);
 
   return children;
 }
@@ -46,6 +41,7 @@ export function AlreadyAuthenticatedGuard({ children }: PropsWithChildren) {
     }
 
     if (user) {
+      
       router.replace('/');
       return;
     }

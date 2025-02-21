@@ -7,5 +7,6 @@ export const useGetSubjects = ({ user_id }: ISubjectsReqParam) =>
     queryKey: user_id ? ['subjects', user_id] : ['subjects'],
     queryFn: getSubjects,
     enabled: !!user_id,
+    staleTime: 1000 * 60 * 5
   });
 

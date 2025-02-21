@@ -22,6 +22,8 @@ import { bytesToSize } from '@/shared/utils/bytes-to-size';
 import { ItemIcon } from './item-icon';
 import { ItemMenu } from './item-menu';
 import { Subject } from '@/modules/subject/types/subject';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface ItemListCardProps {
   item: Subject;
@@ -33,7 +35,7 @@ interface ItemListCardProps {
 export const ItemListCard: FC<ItemListCardProps> = (props) => {
   const { item, onDelete, onFavorite, onOpen } = props;
   const popover = usePopover<HTMLButtonElement>();
-
+  const pathName = usePathname();
   const handleDelete = useCallback((): void => {
     popover.handleClose();
     onDelete?.(item.id);
@@ -48,7 +50,7 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
       <Card
         key={item.id}
         sx={{
-          // backgroundColor: 'transparent',
+          backgroundColor: 'transparent',
           boxShadow: 0,
           transition: (theme) =>
             theme.transitions.create(['background-color, box-shadow'], {
@@ -61,10 +63,12 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
           },
         }}
         variant="outlined"
+        className="relative"
       >
         <Stack
+          className="absolute top-0 z-50 right-0"
           alignItems="center"
-          direction="row"
+          direction="row-reverse"
           justifyContent="space-between"
           spacing={3}
           sx={{
@@ -78,30 +82,43 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
             </SvgIcon>
           </IconButton>
         </Stack>
-        <Box sx={{ p: 2 }}>
-          <Box
-            sx={{
-              display: 'flex',
-              mb: 1,
-            }}
-          >
+        <Box sx={{ p: 2, bgcolor: 'white' }}>
+          <Link href={`${pathName}/${item.id}/overview`} className='cursor-pointer'>
             <Box
-              onClick={() => onOpen?.(item.id)}
               sx={{
-                display: 'inline-flex',
-                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                mb: 1,
               }}
             >
-              <ItemIcon />
+              <Box
+                sx={{
+                  display: 'flex',
+                  mb: 1,
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'inline-flex',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <ItemIcon />
+                </Box>
+              </Box>
+              <Typography
+                sx={{
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                  color: 'black',
+                }}
+              >
+                {item.name}
+              </Typography>
             </Box>
-          </Box>
-          <Typography
-            onClick={() => onOpen?.(item.id)}
-            sx={{ cursor: 'pointer' }}
-            variant="subtitle2"
-          >
-            {item.name}
-          </Typography>
+          </Link>
+
           <Divider sx={{ my: 1 }} />
           <Stack
             alignItems="center"
@@ -111,7 +128,7 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
           >
             <div>
               <Typography color="text.secondary" variant="body2">
-                {size}
+                {item.description}
               </Typography>
             </div>
           </Stack>

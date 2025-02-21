@@ -17,7 +17,9 @@ export interface InstanceQueryParam {
 export interface InstanceQueryOptionParam {
     subject_id: string
 }
-
+export interface InstancesRes extends IResponse {
+    instances: Instance[];
+}
 export interface InstanceRes extends IResponse {
     instance: Instance;
 }
