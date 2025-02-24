@@ -1,4 +1,5 @@
 import { IResponse } from '@/shared/interfaces/api';
+export type InstanceStatus = "ACTIVE" | "BUILD" | "SHUTOFF" | "REBUILD" | any
 export interface InstanceReq {
     name: string;
     subject_id: string;
@@ -16,7 +17,7 @@ export interface InstanceQueryParams {
     instance_id: string
     subject_id: string
 }
-export interface InstanceQueryOptionParam {
+export interface InstanceOptionQueryParam {
     subject_id: string
 }
 export interface InstancesRes extends IResponse {
@@ -52,21 +53,7 @@ export interface Instance {
     fault: Fault
     tags: any
     server_groups: any
-    "OS-EXT-SRV-ATTR:host": string
-    "OS-EXT-SRV-ATTR:instance_name": string
-    "OS-EXT-SRV-ATTR:hypervisor_hostname": string
-    "OS-EXT-SRV-ATTR:reservation_id": any
-    "OS-EXT-SRV-ATTR:launch_index": any
-    "OS-EXT-SRV-ATTR:ramdisk_id": any
-    "OS-EXT-SRV-ATTR:kernel_id": any
-    "OS-EXT-SRV-ATTR:hostname": any
-    "OS-EXT-SRV-ATTR:root_device_name": any
-    "OS-EXT-SRV-ATTR:user_data": any
-    "OS-EXT-STS:task_state": string
-    "OS-EXT-STS:vm_state": string
-    "OS-EXT-STS:power_state": number
-    "OS-DCF:diskConfig": string
-    "OS-EXT-AZ:availability_zone": string
+
 }
 
 export interface Flavor {
@@ -97,7 +84,9 @@ export interface Shared {
     version: number
 }
 
-export interface Metadata { }
+export interface Metadata {
+    image_id:string
+ }
 
 export interface Link2 {
     href: string
@@ -132,17 +121,19 @@ export interface Image {
     visibility: string
     os_hidden: boolean
     checksum: string
-    metadata: any
+    metadata: {
+        logo_url :string
+    }
     Properties: ImageProperties
     created_at: string
     updated_at: string
     file: string
     schema: string
     virtual_size: number
-  }
-  export interface ImageProperties {
+}
+export interface ImageProperties {
     logo_url: string
     os_hash_algo: string
     os_hash_value: string
     stores: string
-  }
+}

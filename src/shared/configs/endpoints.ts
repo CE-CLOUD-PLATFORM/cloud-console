@@ -26,6 +26,7 @@ export const endpoints = {
   },
   instance: {
     list: `${ROOTS.SERVER}s`,
+    option:`${ROOTS.SERVER}/options`
   },
 };
 

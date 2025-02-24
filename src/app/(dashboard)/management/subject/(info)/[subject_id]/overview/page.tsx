@@ -1,22 +1,26 @@
 'use client';
 import { useGetSubject } from '@/modules/subject/hook/use-get-subject';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useUserStore } from '@/modules/auth/store/auth';
+import { useSubjectStore } from '@/modules/subject/store/use-subject-store';
 
-
-interface PageProps {
-  params: {
-    subject_id: string;
-  };
-}
 export default function OverviewPage() {
   const { subject_id } = useParams();
   const { user } = useUserStore();
-  const { data, isLoading: isSubjectsLoading } = useGetSubject({
+  const setSubjectData = useSubjectStore(
+    (state) => state.actions.setSubjectData,
+  );
+  const { data, isLoading: isSubjectLoading } = useGetSubject({
     subject_id: subject_id as string,
     domain_name: user?.info.domain.name as string,
+    user_id: user?.info.id as string,
   });
+  useEffect(() => {
+    if (data && !isSubjectLoading) {
+      setSubjectData(data);
+    }
+  }, [data, isSubjectLoading]);
   return (
     <div className="min-h-screen w-full">
       <div className="space-y-5">

@@ -20,7 +20,7 @@ import {
   useCurrentItem,
   useItemsSearch,
   useItemsStore,
-} from '@/modules/subject/store/use-projects-store';
+} from '@/modules/subject/store/use-subjects-store';
 import { View } from '@/shared/types/view';
 import ModalProjectCreate from '@/shared/components/modals/subject/create-subject-modal';
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';

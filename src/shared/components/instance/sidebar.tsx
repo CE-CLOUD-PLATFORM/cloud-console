@@ -12,7 +12,7 @@ import StorageIcon from '@mui/icons-material/Storage';
 import GroupsIcon from '@mui/icons-material/Groups';
 import Link from 'next/link';
 
-export default function Sidebar() {
+export default function SidebarInstance() {
   const menus = [
     { name: 'Overview', icon: <SpaceDashboardIcon />, link: 'overview' },
     { name: 'Instances', icon: <StorageIcon />, link: 'instance' },

@@ -31,11 +31,12 @@ export const getSubjects = async ({
 export const getSubject = async ({
   queryKey,
 }: Params): Promise<ISubjectRes> => {
-  const [_, subject_id, domain_name] = queryKey;
+  const [_, subject_id, domain_name,user_id] = queryKey;
 
   const params: ISubjectReqParam = {
     subject_id,
     domain_name,
+    user_id
   };
   const response = await axiosInstance.get<ISubjectRes>(
     `${endpoints.subject.get}`,

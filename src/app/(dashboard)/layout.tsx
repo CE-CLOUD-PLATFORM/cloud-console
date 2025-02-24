@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import Loading from '@/shared/components/Loading/CircleLoading';
-import { Layout as DashboaedLayout } from '@/shared/layouts/dashboard/index';
+import { Layout as DashboardLayout } from '@/shared/layouts/dashboard/index';
 import { AuthGuard } from '@/modules/auth/guard/auth-guard';
 export default function Layout({
   children,
@@ -10,7 +10,7 @@ export default function Layout({
   return (
     <AuthGuard>
       <Suspense fallback={<Loading />}>
-        <DashboaedLayout>{children}</DashboaedLayout>
+        <DashboardLayout>{children}</DashboardLayout>
       </Suspense>
     </AuthGuard>
   );

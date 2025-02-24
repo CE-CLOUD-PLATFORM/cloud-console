@@ -1,5 +1,4 @@
-import { AuthGuard } from '@/modules/auth/guard/auth-guard';
-import SidebarSubject from '@/shared/components/subject/sidebar';
+import SidebarGroup from '@/shared/components/group/sidebar';
 export default function Layout({
   children,
 }: Readonly<{
@@ -7,7 +6,7 @@ export default function Layout({
 }>) {
   return (
       <div  className="flex h-full">
-        <SidebarSubject />
+        <SidebarGroup />
         <div className="w-full h-full overflow-y-scroll">{children}</div>
       </div>
   );

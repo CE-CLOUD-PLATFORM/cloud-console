@@ -1,12 +1,8 @@
 'use client';
 import { useUserStore } from '@/modules/auth/store/auth';
 import { useGetGroups } from '@/modules/group/hook/use-get-groups';
-import { useGetInstances } from '@/modules/instance/hook/use-get-instances';
-import { useGetInstanceOption } from '@/modules/instance/hook/use-get-options';
-import { Instance, InstanceOptionRes } from '@/modules/instance/types/instance';
 import { useSubjectStore } from '@/modules/subject/store/use-subject-store';
 import { ItemList } from '@/shared/components/group-list/item-list';
-import { TableInstances } from '@/shared/components/instance/table/instance-table';
 import ModalGroupCreate from '@/shared/components/modals/group/create-group-modal';
 import { useDialog } from '@/shared/hooks/use-dialog';
 import {
@@ -22,25 +18,22 @@ import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 import { useParams } from 'next/navigation';
 import React, { useCallback } from 'react';
 
-export default function InstancesPage() {
+export default function GroupPage() {
   const { subject_id } = useParams();
   const { user } = useUserStore();
   const modalGroupCreate = useDialog();
   const detailsDialog = useDialog();
-  const { data: instancesData, isLoading } = useGetInstances({
+  const { data, isLoading: isSubjectsLoading } = useGetGroups({
+    user_id: user?.info.id as string,
     subject_id: subject_id as string,
+    domain_name: user?.info.domain.name as string,
   });
-  const { data: instanceOption, isLoading: isInstanceOptionLoading } =
-    useGetInstanceOption({
-      subject_id: subject_id as string,
-    });
-  // const instancesData = useSubjectStore();
-
+  // const data = useSubjectStore();
   const handleDelete = useCallback(
     (itemId: string): void => {
       detailsDialog.handleClose();
     },
-    [detailsDialog, instancesData],
+    [detailsDialog],
   );
 
   return (
@@ -67,7 +60,7 @@ export default function InstancesPage() {
             <Grid size={12}>
               <Stack direction="row" justifyContent="space-between" spacing={4}>
                 <div>
-                  <Typography variant="h5">Instances</Typography>
+                  <Typography variant="h5">Members</Typography>
                 </div>
                 <Stack alignItems="center" direction="row" spacing={2}>
                   <Button
@@ -91,10 +84,24 @@ export default function InstancesPage() {
                   lg: 4,
                 }}
               >
-                <TableInstances
-                  data={instancesData?.instances || []}
-                  flavors={instanceOption?.flavors || []}
-                  images={instanceOption?.images || []}
+                {/* <ItemSearch
+                onFiltersChange={itemsSearch.handleFiltersChange}
+                onSortChange={itemsSearch.handleSortChange}
+                onViewChange={setView}
+                sortBy={itemsSearch.state.sortBy}
+                sortDir={itemsSearch.state.sortDir}
+                view={view}
+              /> */}
+                <ItemList
+                  count={data?.groups?.length}
+                  items={data?.groups}
+                  onDelete={handleDelete}
+                  onOpen={detailsDialog.handleOpen}
+                  // onPageChange={}
+                  // onRowsPerPageChange={}
+                  page={5}
+                  rowsPerPage={5}
+                  // view={view}
                 />
               </Stack>
             </Grid>

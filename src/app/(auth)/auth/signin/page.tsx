@@ -17,9 +17,6 @@ import { setSession } from '@/shared/utils';
 import toast from 'react-hot-toast';
 import { userLoginResolver } from '@/modules/auth/validations/user-login';
 
-
-
-
 export default function LoginPage() {
   const router = useRouter();
   const { mutateAsync: authtentication } = useAuth();
@@ -67,21 +64,23 @@ export default function LoginPage() {
             <TextField
               error={errors.username ? true : false}
               id="username"
-              variant="outlined"
+              variant="filled"
               label="username"
               {...register('username', { required: true })}
             />
             <TextField
               error={errors.password ? true : false}
               id="password"
-              variant="outlined"
+              variant="filled"
               label="password"
               type="password"
               {...register('password', { required: true })}
             />
 
             <FormControl fullWidth>
-              <InputLabel id="domains-label">Domain</InputLabel>
+              <InputLabel variant="filled" id="domains-label">
+                Domain
+              </InputLabel>
               <Controller
                 name="domain"
                 control={control}
@@ -92,7 +91,7 @@ export default function LoginPage() {
                     labelId="domains-label"
                     id="domains"
                     label="Domain"
-                    variant="outlined"
+                    variant="filled"
                     {...field}
                   >
                     <MenuItem value={'Default'}>Default</MenuItem>
