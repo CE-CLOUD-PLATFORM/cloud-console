@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Group } from '@/modules/group/types/group';
+import { Member } from '@/modules/user/types/user';
 import type { IResponse } from '@/shared/interfaces/api';
 
 export interface ISubjectReqParam {
   subject_id: string
   domain_name: string
-  user_id:string
+  user_id: string
 }
 
 export interface ISubjectsReqParam {
@@ -34,8 +35,10 @@ export interface ISubjectsRes extends IResponse {
 export interface ISubjectRes extends IResponse {
   instances: Instance[]
   subject: Subject
-  groups:Group[]
+  groups: Group[]
+  members: Member[]
 }
+
 
 export interface Instance {
   id: string

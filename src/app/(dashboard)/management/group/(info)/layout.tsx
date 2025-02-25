@@ -1,4 +1,4 @@
-import SidebarGroup from '@/shared/components/group/sidebar';
+import SidebarGroup from '@/shared/components/sidebar/groups-sidebar';
 export default function Layout({
   children,
 }: Readonly<{

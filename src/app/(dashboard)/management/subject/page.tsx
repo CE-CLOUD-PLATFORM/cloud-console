@@ -14,8 +14,8 @@ import { useDialog } from '@/shared/hooks/use-dialog';
 import { usePageView } from '@/shared/hooks/use-page-view';
 import { useSettings } from '@/shared/hooks/use-settings';
 
-import { ItemList } from '@/shared/components/subject-list/item-list';
-import { ItemSearch } from '@/shared/components/subject-list/item-search';
+import { ItemList } from '@/shared/components/item-list/subject-list/item-list';
+import { ItemSearch } from '@/shared/components/item-list/subject-list/item-search';
 import {
   useCurrentItem,
   useItemsSearch,

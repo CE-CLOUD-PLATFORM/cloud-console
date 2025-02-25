@@ -7,6 +7,7 @@ import type {
   ISubjectCreate,
 } from '@/modules/subject/types/subject';
 import { endpoints } from '@/shared/configs';
+import { IMemberReqParams, IMemberRes } from '@/modules/user/types/user';
 
 type Params = {
   queryKey: string[];
@@ -44,7 +45,20 @@ export const getSubject = async ({
   );
   return response.data;
 };
+export const getSubjectMembers = async ({
+  queryKey,
+}: Params): Promise<IMemberRes> => {
+  const [_, subject_id] = queryKey;
 
+  const params: IMemberReqParams = {
+    subject_id,
+  };
+  const response = await axiosInstance.get<IMemberRes>(
+    `${endpoints.subject.listMember}`,
+    { params },
+  );
+  return response.data;
+};
 export const postSubject = async (data: ISubjectCreate) => {
   return (await axiosInstance.post<
     any,

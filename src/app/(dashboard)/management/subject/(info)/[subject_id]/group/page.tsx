@@ -2,7 +2,7 @@
 import { useUserStore } from '@/modules/auth/store/auth';
 import { useGetGroups } from '@/modules/group/hook/use-get-groups';
 import { useSubjectStore } from '@/modules/subject/store/use-subject-store';
-import { ItemList } from '@/shared/components/group-list/item-list';
+import { ItemList } from '@/shared/components/item-list/group-list/item-list';
 import ModalGroupCreate from '@/shared/components/modals/group/create-group-modal';
 import { useDialog } from '@/shared/hooks/use-dialog';
 import {

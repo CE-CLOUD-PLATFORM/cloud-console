@@ -1,9 +1,7 @@
 'use client';
-import { useUserStore } from '@/modules/auth/store/auth';
-import { useGetGroups } from '@/modules/group/hook/use-get-groups';
-import { useSubjectStore } from '@/modules/subject/store/use-subject-store';
-import { ItemList } from '@/shared/components/group-list/item-list';
+import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
 import ModalGroupCreate from '@/shared/components/modals/group/create-group-modal';
+import { TableMembers } from '@/shared/components/table/member-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
 import {
   Box,
@@ -20,13 +18,10 @@ import React, { useCallback } from 'react';
 
 export default function GroupPage() {
   const { subject_id } = useParams();
-  const { user } = useUserStore();
   const modalGroupCreate = useDialog();
   const detailsDialog = useDialog();
-  const { data, isLoading: isSubjectsLoading } = useGetGroups({
-    user_id: user?.info.id as string,
+  const { data, isLoading: isSubjectsLoading } = useGetSubjectMembers({
     subject_id: subject_id as string,
-    domain_name: user?.info.domain.name as string,
   });
   // const data = useSubjectStore();
   const handleDelete = useCallback(
@@ -72,7 +67,7 @@ export default function GroupPage() {
                     }
                     variant="contained"
                   >
-                    New
+                    Add
                   </Button>
                 </Stack>
               </Stack>
@@ -84,25 +79,7 @@ export default function GroupPage() {
                   lg: 4,
                 }}
               >
-                {/* <ItemSearch
-                onFiltersChange={itemsSearch.handleFiltersChange}
-                onSortChange={itemsSearch.handleSortChange}
-                onViewChange={setView}
-                sortBy={itemsSearch.state.sortBy}
-                sortDir={itemsSearch.state.sortDir}
-                view={view}
-              /> */}
-                <ItemList
-                  count={data?.groups?.length}
-                  items={data?.groups}
-                  onDelete={handleDelete}
-                  onOpen={detailsDialog.handleOpen}
-                  // onPageChange={}
-                  // onRowsPerPageChange={}
-                  page={5}
-                  rowsPerPage={5}
-                  // view={view}
-                />
+                <TableMembers members={data?.members || []} />
               </Stack>
             </Grid>
           </Grid>

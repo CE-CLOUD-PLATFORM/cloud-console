@@ -18,6 +18,7 @@ export const endpoints = {
     getAll: `${ROOTS.SUBJECT}s`,
     get: `${ROOTS.SUBJECT}`,
     create: `${ROOTS.SUBJECT}`,
+    listMember:`${ROOTS.SUBJECT}/members`
   },
   group: {
     getAll: `${ROOTS.SUBJECT}/groups`,
