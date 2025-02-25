@@ -1,5 +1,5 @@
 .modal-cover{
-    @apply z-[2042] backdrop-blur-sm h-screen w-screen absolute top-0 bottom-0 right-0 left-0 flex justify-center items-center
+    @apply z-[1200] backdrop-blur-sm h-screen w-screen absolute top-0 bottom-0 right-0 left-0 flex justify-center items-center
 }
 .modal-box{
     @apply w-[40%] min-h-[30%] bg-white rounded-lg shadow px-8 py-5 flex flex-col gap-2 

@@ -28,15 +28,15 @@ export interface GroupQuotaSet {
 }
 
 export interface Group {
-    is_domain: boolean
-    description: string
+    name: string
+    project_id: string
     domain_id: string
+    admin_id: string
+    description: string
     enabled: boolean
     id: string
-    name: string
-    parent_id: string
-    tags: string[]
-}
+    member_count: number
+  }
 
 export interface IGroupsRes extends IResponse {
     groups: Group[]

@@ -18,11 +18,12 @@ import {
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 import { useParams } from 'next/navigation';
 import React, { useCallback } from 'react';
+import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
 
 export default function InstancesPage() {
   const { subject_id } = useParams();
   const { user } = useUserStore();
-  const modalGroupCreate = useDialog();
+  const modalCreateInstance = useDialog();
   const detailsDialog = useDialog();
   const { data: instancesData, isLoading } = useGetInstances({
     subject_id: subject_id as string,
@@ -42,9 +43,9 @@ export default function InstancesPage() {
 
   return (
     <>
-      <ModalGroupCreate
-        isOpen={modalGroupCreate.open}
-        handleClose={modalGroupCreate.handleClose}
+      <ModalCreateInstance
+        isOpen={modalCreateInstance.open}
+        handleClose={modalCreateInstance.handleClose}
       />
       <Box
         component="main"
@@ -68,7 +69,7 @@ export default function InstancesPage() {
                 </div>
                 <Stack alignItems="center" direction="row" spacing={2}>
                   <Button
-                    onClick={modalGroupCreate.handleOpen}
+                    onClick={modalCreateInstance.handleOpen}
                     startIcon={
                       <SvgIcon>
                         <Plus />

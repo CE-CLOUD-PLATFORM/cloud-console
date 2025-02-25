@@ -26,6 +26,7 @@ import { Subject } from '@/modules/subject/types/subject';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Group } from '@/modules/group/types/group';
+import { getDateddMMYYYYHHmmss } from '@/shared/utils/date-locale';
 
 interface ItemListRowProps {
   item: Group;
@@ -43,9 +44,6 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
     onDelete?.(item.id);
   }, [item, popover, onDelete]);
 
-  let size = '1';
-
-  const createdAt = '1213';
 
   return (
     <>
@@ -105,7 +103,6 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
                   {item.name}
                 </Typography>
                 <Typography color="text.secondary" noWrap variant="body2">
-                  {size}
                 </Typography>
               </div>
             </Stack>
@@ -113,10 +110,10 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
         </TableCell>
         <TableCell>
           <Typography noWrap variant="subtitle2">
-            Created at
+            Member
           </Typography>
           <Typography color="text.secondary" noWrap variant="body2">
-            {createdAt}
+            {item.member_count}
           </Typography>
         </TableCell>
         <TableCell>

@@ -8,6 +8,7 @@ const ROOTS = {
   SUBJECT: `${version.V1}/subject`,
   GROUP: `${version.V1}/group`,
   SERVER: `${version.V1}/server`,
+  CONFIG: `${version.V1}/config`,
 };
 
 export const endpoints = {
@@ -29,6 +30,9 @@ export const endpoints = {
     list: `${ROOTS.SERVER}s`,
     option:`${ROOTS.SERVER}/options`
   },
+  config:{
+    publicKey:`${ROOTS.CONFIG}/public-key`
+  }
 };
 
 //from chat

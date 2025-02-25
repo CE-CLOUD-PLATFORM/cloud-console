@@ -68,7 +68,7 @@ const ModalSubjectCreate = (props: FormProps) => {
           className="flex-1"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Stack spacing={3}>
+          <Stack spacing={1}>
             <Controller
               name="name"
               control={control}
@@ -90,6 +90,7 @@ const ModalSubjectCreate = (props: FormProps) => {
             sx={{
               alignItems: 'center',
               display: 'flex',
+              marginTop:2
             }}
           >
             <Box sx={{ flexGrow: 1 }} />
