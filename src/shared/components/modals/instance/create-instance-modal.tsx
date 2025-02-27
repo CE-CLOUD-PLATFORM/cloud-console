@@ -24,10 +24,11 @@ import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCreateGroup } from '@/modules/group/hook/use-create-group';
 import { useParams } from 'next/navigation';
-import { InstanceReq } from '@/modules/instance/types/instance';
+import { InstanceCreate } from '@/modules/instance/types/instance';
 import { useGetInstanceOption } from '@/modules/instance/hook/use-get-options';
 import { useGetUserPublicKeys } from '@/modules/config/hook/use-get-user-public-key';
 import { PublicKey } from '@/modules/config/types/public-key';
+import { useCreateInstance } from '@/modules/instance/hook/use-create-instance';
 
 const groupFormId = 'instance-create-form';
 const ModalCreateInstance = (props: FormProps) => {
@@ -41,15 +42,15 @@ const ModalCreateInstance = (props: FormProps) => {
   const { data: keysData } = useGetUserPublicKeys({
     user_id: user?.info.id as string,
   });
-  const createGroup = useCreateGroup({
+  const createInstance = useCreateInstance({
     onSuccess: () => {
-      toast.success('Group created successfully');
-      queryClient.invalidateQueries({ queryKey: ['subjects', 'groups'] });
+      toast.success('Instance created successfully');
+      queryClient.invalidateQueries({ queryKey: ['instances'] });
       reset();
       handleClose();
     },
     onError: () => {
-      toast.error('Fail to create Group.');
+      toast.error('Fail to create Instance.');
     },
     onMutate: () => {
       toast.loading('Creating...');
@@ -62,15 +63,18 @@ const ModalCreateInstance = (props: FormProps) => {
     setValue,
     control,
     formState: { errors },
-  } = useForm<InstanceReq>({
+  } = useForm<InstanceCreate>({
     defaultValues: {
       name: 'untitled',
-      volume_size: 25,
+      volume_size: 30,
+      subject_id: subject_id as string,
     },
   });
 
-  const onSubmit = async (data: InstanceReq) => {
-    console.log(data);
+  const onSubmit = async (data: InstanceCreate) => {
+    try {
+      createInstance.mutate(data);
+    } catch (error) {}
   };
 
   return (
@@ -95,13 +99,13 @@ const ModalCreateInstance = (props: FormProps) => {
             />
             {errors.name && <span>This field is required</span>}
             <FormControl fullWidth>
-              <InputLabel variant="filled" id="flavors-label">Flavors</InputLabel>
+              <InputLabel variant="filled" id="flavors-label">
+                Flavors
+              </InputLabel>
               <Controller
                 name="flavor_id"
                 control={control}
                 defaultValue=""
-               
-
                 render={({ field }) => (
                   <Select
                     labelId="flavors-label"
@@ -121,7 +125,9 @@ const ModalCreateInstance = (props: FormProps) => {
               {errors.flavor_id && <span>This field is required</span>}
             </FormControl>
             <FormControl fullWidth>
-              <InputLabel variant="filled"  id="images-label">Images</InputLabel>
+              <InputLabel variant="filled" id="images-label">
+                Images
+              </InputLabel>
               <Controller
                 name="image_id"
                 control={control}
@@ -146,7 +152,7 @@ const ModalCreateInstance = (props: FormProps) => {
                         className="flex gap-x-2"
                         value={image.id}
                       >
-                        <Image
+                        <img
                           width={24}
                           height={24}
                           src={image.Properties?.logo_url || '/assets/os.png'}
@@ -202,9 +208,10 @@ const ModalCreateInstance = (props: FormProps) => {
                         value.map((option, index) => (
                           // eslint-disable-next-line react/jsx-key
                           <Chip
-                            variant="filled"
-                            label={option.name}
-                            {...getTagProps({ index })}
+                          variant="filled"
+                          label={option.name}
+                          {...getTagProps({ index })}
+                          key={index}
                           />
                         ))
                       }
@@ -249,8 +256,7 @@ const ModalCreateInstance = (props: FormProps) => {
             sx={{
               alignItems: 'center',
               display: 'flex',
-              marginTop:2
-
+              marginTop: 2,
             }}
           >
             <Box sx={{ flexGrow: 1 }} />

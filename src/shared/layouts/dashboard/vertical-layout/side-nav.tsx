@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import File04Icon from '@untitled-ui/icons-react/build/esm/File04';
-import { Box, Button, Drawer, Stack, SvgIcon, Typography } from '@mui/material';
+import { Box, Button, Divider, Drawer, Stack, SvgIcon, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Logo } from '@/shared/components/logo';
 import { RouterLink } from '@/shared/components/router-link';
@@ -11,10 +11,9 @@ import { usePathname } from '@/shared/hooks/use-pathname';
 import { paths } from '@/paths';
 import type { NavColor } from '@/shared/types/settings';
 import type { Section } from '../config';
-import { TenantSwitch } from '../tenant-switch';
 import { SideNavSection } from './side-nav-section';
 
-const SIDE_NAV_WIDTH: number = 280;
+const SIDE_NAV_WIDTH: number = 240;
 
 const useCssVars = (color: NavColor): Record<string, string> => {
   const theme = useTheme();
@@ -150,10 +149,11 @@ const useCssVars = (color: NavColor): Record<string, string> => {
 interface SideNavProps {
   color?: NavColor;
   sections?: Section[];
+  sizeNav:number
 }
 
 export const SideNav: FC<SideNavProps> = (props) => {
-  const { color = 'evident', sections = [] } = props;
+  const { color = 'blend-in', sections = [] ,sizeNav} = props;
   const pathname = usePathname();
   const cssVars = useCssVars(color);
 
@@ -169,7 +169,7 @@ export const SideNav: FC<SideNavProps> = (props) => {
           borderRightStyle: 'solid',
           borderRightWidth: 1,
           color: 'var(--nav-color)',
-          width: SIDE_NAV_WIDTH
+          width: sizeNav
         }
       }}
       variant="permanent"
@@ -206,16 +206,22 @@ export const SideNav: FC<SideNavProps> = (props) => {
                 width: 40
               }}
             >
-              <Logo />
-            </Box>
-            <TenantSwitch sx={{ flexGrow: 1 }} />
+              <img src='/assets/ce-logo.png'/>
+            </Box> 
+            <Typography color='' variant='h6'>CE CLOUD</Typography>
           </Stack>
+          <Divider variant='middle'  sx={{
+            "&":{
+              borderBottomWidth:"2px"
+            }
+          }}/>
           <Stack
             component="nav"
-            spacing={2}
+            spacing={3}
             sx={{
               flexGrow: 1,
-              px: 2
+              px: 2,
+              py:3
             }}
           >
             {sections.map((section, index) => (
@@ -227,32 +233,6 @@ export const SideNav: FC<SideNavProps> = (props) => {
               />
             ))}
           </Stack>
-          <Box sx={{ p: 3 }}>
-            <Typography variant="subtitle1">
-              Need help?
-            </Typography>
-            <Typography
-              color="neutral.400"
-              sx={{ mb: 2 }}
-              variant="body2"
-            >
-              Please check our docs.
-            </Typography>
-            <Button
-              component="a"
-              fullWidth
-              href={paths.docs}
-              startIcon={(
-                <SvgIcon>
-                  <File04Icon />
-                </SvgIcon>
-              )}
-              target="_blank"
-              variant="contained"
-            >
-              Documentation
-            </Button>
-          </Box>
         </Stack>
       </Scrollbar>
     </Drawer>

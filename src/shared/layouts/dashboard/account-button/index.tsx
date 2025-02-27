@@ -24,17 +24,17 @@ export const AccountButton: FC = () => {
           borderRadius: '50%'
         }}
       >
-        {/* <Avatar
+        <Avatar
           sx={{
             height: 32,
             width: 32
           }}
-          src={user.avatar}
+          // src={user.avatar}
         >
           <SvgIcon>
             <User01Icon />
           </SvgIcon>
-        </Avatar> */}
+        </Avatar>
       </Box>
       <AccountPopover
         anchorEl={popover.anchorRef.current}

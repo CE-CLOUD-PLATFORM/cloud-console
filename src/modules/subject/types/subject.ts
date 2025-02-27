@@ -12,11 +12,26 @@ export interface ISubjectReqParam {
 export interface ISubjectsReqParam {
   user_id: string
 }
+
 export interface ISubjectCreate {
+  name: string;
   description: string;
   domain_id: string;
-  name: string;
+  user_id: string;
+  req_resource: SubjectResource;
+  academic_year: string;
+  set_resource: boolean
 }
+export interface SubjectResource {
+  id?: string;
+  cores?: number;
+  memory?: number;
+  max_instance?: number;
+}
+export interface ISubjectResourceRes extends IResponse {
+  resource: SubjectResource
+}
+
 export interface Subject {
   is_domain: boolean;
   description: string;

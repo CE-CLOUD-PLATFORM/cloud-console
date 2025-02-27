@@ -1,15 +1,15 @@
 import { IResponse } from "@/shared/interfaces/api"
-
-export interface Member {
+export interface User {
     id: string
-    role: string
     name: string
-    enabled: string
+    description?: string
+    domain_id?: string
+    enabled?: string
 }
 
-export interface IMemberRes extends IResponse {
-    members: Member[]
+export interface IDomainUsersReqParam  {
+    domain_id:string
 }
-export interface IMemberReqParams  {
-    subject_id:string
+export interface IDomainUsersRes extends IResponse {
+    users: User[]
 }

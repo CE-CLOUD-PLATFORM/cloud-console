@@ -105,20 +105,20 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
                   {item.name}
                 </Typography>
                 <Typography color="text.secondary" noWrap variant="body2">
-                  {size}
+                  {item.description}
                 </Typography>
               </div>
             </Stack>
           </Link>
         </TableCell>
-        <TableCell>
+        {/* <TableCell>
           <Typography noWrap variant="subtitle2">
             Created at
           </Typography>
           <Typography color="text.secondary" noWrap variant="body2">
             {createdAt}
           </Typography>
-        </TableCell>
+        </TableCell> */}
         <TableCell>
           <Box sx={{ display: 'flex' }}></Box>
         </TableCell>

@@ -1,6 +1,7 @@
 'use client';
 import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
-import ModalGroupCreate from '@/shared/components/modals/group/create-group-modal';
+import modalAddSubjectMember from '@/shared/components/modals/group/create-group-modal';
+import ModalAddSubjectMember from '@/shared/components/modals/member/add-subject-member-modal';
 import { TableMembers } from '@/shared/components/table/member-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
 import {
@@ -18,7 +19,7 @@ import React, { useCallback } from 'react';
 
 export default function GroupPage() {
   const { subject_id } = useParams();
-  const modalGroupCreate = useDialog();
+  const modalAddSubjectMember = useDialog();
   const detailsDialog = useDialog();
   const { data, isLoading: isSubjectsLoading } = useGetSubjectMembers({
     subject_id: subject_id as string,
@@ -33,9 +34,9 @@ export default function GroupPage() {
 
   return (
     <>
-      <ModalGroupCreate
-        isOpen={modalGroupCreate.open}
-        handleClose={modalGroupCreate.handleClose}
+      <ModalAddSubjectMember
+        isOpen={modalAddSubjectMember.open}
+        handleClose={modalAddSubjectMember.handleClose}
       />
       <Box
         component="main"
@@ -59,7 +60,7 @@ export default function GroupPage() {
                 </div>
                 <Stack alignItems="center" direction="row" spacing={2}>
                   <Button
-                    onClick={modalGroupCreate.handleOpen}
+                    onClick={modalAddSubjectMember.handleOpen}
                     startIcon={
                       <SvgIcon>
                         <Plus />

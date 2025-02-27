@@ -14,6 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
+import { useAppNavStore } from '@/modules/app/store/use-app-nav-store';
 
 export default function OverviewPage() {
   const { subject_id } = useParams();
@@ -21,6 +22,7 @@ export default function OverviewPage() {
   const setSubjectData = useSubjectStore(
     (state) => state.actions.setSubjectData,
   );
+  const setNavTitle = useAppNavStore(state => state.actions.setTitle)
   const { data, isLoading: isSubjectLoading } = useGetSubject({
     subject_id: subject_id as string,
     domain_name: user?.info.domain.name as string,
@@ -29,6 +31,7 @@ export default function OverviewPage() {
   useEffect(() => {
     if (data && !isSubjectLoading) {
       setSubjectData(data);
+      setNavTitle(data.subject.name)
     }
   }, [data, isSubjectLoading]);
   return (

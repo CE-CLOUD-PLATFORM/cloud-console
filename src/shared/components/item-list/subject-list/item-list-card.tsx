@@ -66,7 +66,7 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
         className="relative"
       >
         <Stack
-          className="absolute top-0 z-50 right-0"
+          className="absolute right-0 top-0 z-50"
           alignItems="center"
           direction="row-reverse"
           justifyContent="space-between"
@@ -83,7 +83,10 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
           </IconButton>
         </Stack>
         <Box sx={{ p: 2, bgcolor: 'white' }}>
-          <Link href={`${pathName}/${item.id}/overview`} className='cursor-pointer'>
+          <Link
+            href={`${pathName}/${item.id}/overview`}
+            className="cursor-pointer"
+          >
             <Box
               sx={{
                 display: 'flex',
@@ -112,6 +115,7 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
                   fontWeight: 'bold',
                   fontSize: '16px',
                   color: 'black',
+                  minHeight:"48px",
                 }}
               >
                 {item.name}
@@ -126,15 +130,13 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
             justifyContent="space-between"
             spacing={1}
           >
-            <div>
-              <Typography color="text.secondary" variant="body2">
-                {item.description}
-              </Typography>
-            </div>
+            <Typography className='h-[22px]' color="text.secondary" variant="body2">
+              {item.description || ''}
+            </Typography>
           </Stack>
-          <Typography color="text.secondary" variant="caption">
+          {/* <Typography color="text.secondary" variant="caption">
             Created at {createdAt}
-          </Typography>
+          </Typography> */}
         </Box>
       </Card>
       <ItemMenu

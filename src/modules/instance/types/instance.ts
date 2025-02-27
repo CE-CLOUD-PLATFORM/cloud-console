@@ -1,6 +1,6 @@
 import { IResponse } from '@/shared/interfaces/api';
 export type InstanceStatus = "ACTIVE" | "BUILD" | "SHUTOFF" | "REBUILD" | any
-export interface InstanceReq {
+export interface InstanceCreate {
     name: string;
     subject_id: string;
     flavor_id: string;

@@ -1,10 +1,8 @@
 'use client';
 import { useUserStore } from '@/modules/auth/store/auth';
-import { useGetGroups } from '@/modules/group/hook/use-get-groups';
 import { useGetInstances } from '@/modules/instance/hook/use-get-instances';
 import { useGetInstanceOption } from '@/modules/instance/hook/use-get-options';
 import { TableInstances } from '@/shared/components/table/instance-table';
-import ModalGroupCreate from '@/shared/components/modals/group/create-group-modal';
 import { useDialog } from '@/shared/hooks/use-dialog';
 import {
   Box,
@@ -16,9 +14,11 @@ import {
   Typography,
 } from '@mui/material';
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
+import FileDownload03 from '@untitled-ui/icons-react/build/esm/FileDownload03';
 import { useParams } from 'next/navigation';
 import React, { useCallback } from 'react';
 import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
+import toast, { useToaster } from 'react-hot-toast';
 
 export default function InstancesPage() {
   const { subject_id } = useParams();
@@ -40,7 +40,37 @@ export default function InstancesPage() {
     },
     [detailsDialog, instancesData],
   );
+  const handleDownloadVPN = async () => {
+    try {
+      const response = await fetch('/res/cloud.ovpn', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/octet-stream',
+        },
+      });
 
+      if (!response.ok) {
+        throw new Error('Failed to download file');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'ce-cloud-vpn.ovpn'; 
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      toast.success('Download completed!');
+    } catch (error) {
+      toast.error('Download failed. Please try again.');
+    } finally {
+      // setLoading(false);
+    }
+  };
   return (
     <>
       <ModalCreateInstance
@@ -68,6 +98,17 @@ export default function InstancesPage() {
                   <Typography variant="h5">Instances</Typography>
                 </div>
                 <Stack alignItems="center" direction="row" spacing={2}>
+                  <Button
+                    onClick={handleDownloadVPN}
+                    startIcon={
+                      <SvgIcon>
+                        <FileDownload03 />
+                      </SvgIcon>
+                    }
+                    variant="outlined"
+                  >
+                    VPN
+                  </Button>
                   <Button
                     onClick={modalCreateInstance.handleOpen}
                     startIcon={

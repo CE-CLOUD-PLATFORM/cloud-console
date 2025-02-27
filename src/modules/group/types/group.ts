@@ -9,7 +9,7 @@ export interface IGroupsReqParams {
 export interface IGroupCreate {
     name: string
     project_id: string
-    domain_name: string
+    domain_id: string
     admin_id: string
     description?: string
 }

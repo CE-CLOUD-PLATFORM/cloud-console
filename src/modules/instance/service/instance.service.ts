@@ -1,6 +1,6 @@
 import { axiosInstance } from '@/shared/utils';
 import { endpoints } from '@/shared/configs';
-import { InstanceOptionQueryParam, InstanceOptionRes, InstancesQueryParams, InstancesRes } from '../types/instance';
+import { InstanceCreate, InstanceOptionQueryParam, InstanceOptionRes, InstancesQueryParams, InstancesRes } from '../types/instance';
 
 type Params = {
   queryKey: string[];
@@ -33,3 +33,11 @@ export const getInstanceOptions = async ({
   const response = await axiosInstance.get(`${endpoints.instance.option}`, { params });
   return response.data;
 };
+
+export const postInstance = async (data: InstanceCreate) => {
+  return (await axiosInstance.post<
+    any,
+    any,
+    InstanceCreate
+  >(`${endpoints.instance.post}`, data)).data
+}

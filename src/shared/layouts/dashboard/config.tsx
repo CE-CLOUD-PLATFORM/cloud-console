@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import type { ReactNode } from 'react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,9 @@ import HomeSmileIcon from '@/shared/icons/untitled-ui/duocolor/home-smile';
 import LineChartUp04Icon from '@/shared/icons/untitled-ui/duocolor/line-chart-up-04';
 import { tokens } from '@/shared/locales/tokens';
 import { paths } from '@/paths';
+import Settings03 from '@untitled-ui/icons-react/build/esm/Settings03';
+import Server01 from '@untitled-ui/icons-react/build/esm/Server01';
+import Settings02 from '@untitled-ui/icons-react/build/esm/Settings02';
 
 export interface Item {
   disabled?: boolean;
@@ -33,7 +36,7 @@ export const useSections = () => {
       {
         items: [
           {
-            title: t(tokens.nav.overview),
+            title: 'Dashboard',
             path: paths.dashboard.index,
             icon: (
               <SvgIcon fontSize="small">
@@ -41,40 +44,40 @@ export const useSections = () => {
               </SvgIcon>
             ),
           },
+          // {
+          //   title: 'Instances',
+          //   path: paths.dashboard.analytics,
+          //   icon: (
+          //     <SvgIcon fontSize="small">
+          //       <Server01 />
+          //     </SvgIcon>
+          //   ),
+          // },
           {
-            title: t(tokens.nav.analytics),
-            path: paths.dashboard.analytics,
+            title: "Access",
+            path: paths.setting.access.index,
             icon: (
               <SvgIcon fontSize="small">
-                <BarChartSquare02Icon />
+                <Settings03 />
               </SvgIcon>
             ),
+            items: [
+              {
+                title: "Public keys",
+                path: paths.setting.access.public_key,
+              },
+              {
+                title:"VPN",
+                path: paths.setting.access.index,
+              },
+            ],
           },
           {
-            title: t(tokens.nav.ecommerce),
-            path: paths.dashboard.ecommerce,
+            title: 'Setting',
+            path: paths.setting.index,
             icon: (
               <SvgIcon fontSize="small">
-                <LineChartUp04Icon />
-              </SvgIcon>
-            ),
-          },
-          {
-            title: t(tokens.nav.crypto),
-            path: paths.dashboard.crypto,
-            icon: (
-              <SvgIcon fontSize="small">
-                <CurrencyBitcoinCircleIcon />
-              </SvgIcon>
-            ),
-            label: <Chip color="primary" label="New" size="small" />,
-          },
-          {
-            title: t(tokens.nav.account),
-            path: paths.dashboard.account,
-            icon: (
-              <SvgIcon fontSize="small">
-                <HomeSmileIcon />
+                <Settings02 />
               </SvgIcon>
             ),
           },

@@ -1,6 +1,6 @@
 
-const version ={
-  V1:"/api/v1"
+const version = {
+  V1: "/api/v1"
 }
 
 const ROOTS = {
@@ -9,6 +9,8 @@ const ROOTS = {
   GROUP: `${version.V1}/group`,
   SERVER: `${version.V1}/server`,
   CONFIG: `${version.V1}/config`,
+  FLAVOR: `${version.V1}/flavor`,
+  DOMAIN: `${version.V1}/domain`,
 };
 
 export const endpoints = {
@@ -19,19 +21,26 @@ export const endpoints = {
     getAll: `${ROOTS.SUBJECT}s`,
     get: `${ROOTS.SUBJECT}`,
     create: `${ROOTS.SUBJECT}`,
-    listMember:`${ROOTS.SUBJECT}/members`
+    listMember: `${ROOTS.SUBJECT}/members`
   },
   group: {
     getAll: `${ROOTS.SUBJECT}/groups`,
     get: `${ROOTS.SUBJECT}/group`,
-    post:`${ROOTS.GROUP}`
+    post: `${ROOTS.GROUP}`
   },
   instance: {
+    post: `${ROOTS.SERVER}`,
     list: `${ROOTS.SERVER}s`,
-    option:`${ROOTS.SERVER}/options`
+    option: `${ROOTS.SERVER}/options`
   },
-  config:{
-    publicKey:`${ROOTS.CONFIG}/public-key`
+  config: {
+    publicKey: `${ROOTS.CONFIG}/public-key`
+  },
+  flavor: {
+    list: `${ROOTS.FLAVOR}s`
+  },
+  domain:{
+    users:`${ROOTS.DOMAIN}/users`
   }
 };
 

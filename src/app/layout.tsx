@@ -16,8 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className='h-screen overflow-y-hidden' lang="en" suppressHydrationWarning>
-      <body className="bg-slate-100 h-full flex flex-col">
+    <html
+      className="h-screen overflow-y-hidden"
+      lang="en"
+      suppressHydrationWarning
+    >
+      <head></head>
+      <body className="flex h-full flex-col bg-slate-100">
         <AppRouterCacheProvider>
           <ReactQueryProvider>
             <ThemeProvider>
@@ -28,6 +33,8 @@ export default function RootLayout({
                   className: 'mt-5',
                   duration: 1800,
                 }}
+                key={"toast"}
+                
               />
               {children}
             </ThemeProvider>

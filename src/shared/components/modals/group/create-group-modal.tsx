@@ -5,6 +5,9 @@ import {
   Button,
   Divider,
   FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   TextField,
   Typography,
@@ -45,7 +48,7 @@ const ModalGroupCreate = (props: FormProps) => {
       defaultValues: {
         name: 'untitled',
         description: '',
-        domain_name: user?.info.domain.id,
+        domain_id: user?.info.domain.id,
         admin_id: user?.info.id,
         project_id: subject_id as string,
       },
@@ -53,7 +56,7 @@ const ModalGroupCreate = (props: FormProps) => {
 
   const onSubmit = async (data: IGroupCreate) => {
     try {
-      setValue('domain_name', user?.info.domain.id as string);
+      setValue('domain_id', user?.info.domain.id as string);
       setValue('admin_id', user?.info.id as string);
 
       createGroup.mutate(data);
@@ -91,14 +94,42 @@ const ModalGroupCreate = (props: FormProps) => {
                 <TextField {...field} fullWidth label="Description" />
               )}
             />
+
+            <InputLabel
+              sx={{
+                '&': {
+                  transform: 'translate(12px, 32px) scale(1) !important',
+                },
+              }}
+              variant="filled"
+              id="users-label"
+            >
+              User Admin
+            </InputLabel>
+            <Controller
+              name="name"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Select
+                  labelId="users-label"
+                  id="user_id"
+                  label="User Admin"
+                  variant="filled"
+                  {...field}
+                  value='admin-ce'
+                >
+                 <MenuItem  >admin-ce</MenuItem>
+                </Select>
+              )}
+            />
           </Stack>
 
           <Box
             sx={{
               alignItems: 'center',
               display: 'flex',
-              marginTop:2
-
+              marginTop: 2,
             }}
           >
             <Box sx={{ flexGrow: 1 }} />

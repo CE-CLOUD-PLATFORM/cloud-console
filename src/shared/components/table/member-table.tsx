@@ -25,18 +25,8 @@ import {
   Typography,
 } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
-import {
-  Flavor,
-  Image,
-  Instance,
-  InstanceStatus,
-} from '@/modules/instance/types/instance';
-import {
-  SeverityPill,
-  SeverityPillColor,
-} from '@/shared/components/severity-pill';
-import { getDateddMMYYYYHHmmss } from '@/shared/utils/date-locale';
-import { Member } from '@/modules/user/types/user';
+import { Member } from '@/modules/user/types/member';
+
 
 interface Option {
   label: string;

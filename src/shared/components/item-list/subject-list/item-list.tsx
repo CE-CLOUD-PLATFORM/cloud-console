@@ -44,7 +44,7 @@ export const ItemList: FC<ItemListProps> = (props) => {
           gridTemplateColumns: 'repeat(3, 1fr)'
         }}
       >
-        {items.map((item) => (
+        {items?.map((item) => (
           <ItemListCard
             key={item.id}
             item={item}
@@ -64,10 +64,10 @@ export const ItemList: FC<ItemListProps> = (props) => {
               sx={{
                 minWidth: 600,
                 borderCollapse: 'separate',
-                // borderSpacing: '0 8px'
+                borderSpacing: '0 4px'
               }}
             >
-              <TableBody>
+              <TableBody >
                 {items.map((item) => (
                   <ItemListRow
                     key={item.id}
@@ -85,7 +85,7 @@ export const ItemList: FC<ItemListProps> = (props) => {
   }
 
   return (
-    <Stack spacing={4}>
+    <Stack spacing={4} className='flex-grow'>
       {content}
       <TablePagination
         component="div"

@@ -10,7 +10,7 @@ import { SideNav } from './side-nav';
 import { TopNav } from './top-nav';
 import { useMobileNav } from './use-mobile-nav';
 
-const SIDE_NAV_WIDTH: number = 280;
+const SIDE_NAV_WIDTH: number = 240;
 
 const VerticalLayoutRoot = styled('div')(
   ({ theme }) => ({
@@ -44,10 +44,11 @@ export const VerticalLayout: FC<VerticalLayoutProps> = (props) => {
 
   return (
     <>
-      <TopNav onMobileNavOpen={mobileNav.handleOpen} />
+      <TopNav sizeNav={SIDE_NAV_WIDTH} onMobileNavOpen={mobileNav.handleOpen} />
       {lgUp && (
         <SideNav
           // color={navColor}
+          sizeNav={SIDE_NAV_WIDTH}
           sections={sections}
         />
       )}

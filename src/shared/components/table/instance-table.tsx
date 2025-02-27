@@ -80,8 +80,9 @@ export const TableInstances: FC<TableInstanceProps> = ({
     return flavorName;
   };
   const getImageLogo = (id: string) => {
+
     return (
-      images.find((image) => image.id === id)?.metadata?.logo_url ||
+      images.find((image) => image.id === id)?.Properties?.logo_url ||
       '/assets/os.png'
     );
   };
@@ -150,8 +151,12 @@ export const TableInstances: FC<TableInstanceProps> = ({
                     <TableCell padding="checkbox">
                       <Checkbox />
                     </TableCell>
-                    <TableCell>
-                      <Stack alignItems="center" direction="row" spacing={1}>
+                    <TableCell sx={{
+                      "&":{
+                        paddingLeft:"0px"
+                      }
+                    }}>
+                      <Stack alignItems="center" direction="row" spacing={2}>
                         <Avatar
                           src={getImageLogo(instance.metadata.image_id)}
                           sx={{

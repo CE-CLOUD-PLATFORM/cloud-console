@@ -10,7 +10,7 @@ export function ReactQueryProvider({ children }: PropsWithChildren) {
     <QueryClientProvider client={queryClient}>
       {children}
 
-      <ReactQueryDevtools />
+      {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );
 }
