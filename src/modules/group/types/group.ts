@@ -1,3 +1,4 @@
+import { SubjectResource } from '@/modules/subject/types/subject';
 import type { IResponse } from '@/shared/interfaces/api';
 
 export interface IGroupsReqParams {
@@ -10,8 +11,10 @@ export interface IGroupCreate {
     name: string
     project_id: string
     domain_id: string
-    admin_id: string
+    user_id: string
     description?: string
+    req_resource?:SubjectResource
+    set_resource:boolean
 }
 
 export interface IGroupInputs {

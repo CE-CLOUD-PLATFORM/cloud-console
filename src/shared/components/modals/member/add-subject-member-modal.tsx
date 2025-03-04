@@ -9,6 +9,8 @@ import {
   Checkbox,
   Divider,
   IconButton,
+  MenuItem,
+  Select,
   Stack,
   SvgIcon,
   Table,
@@ -33,6 +35,7 @@ import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
 import { IMemberSubjectAdd, Member } from '@/modules/user/types/member';
 import { User } from '@/modules/user/types/user';
 import AlignBottom01 from '@untitled-ui/icons-react/build/esm/AlignBottom01';
+import XClose from '@untitled-ui/icons-react/build/esm/X';
 import { Scrollbar } from '../../scrollbar';
 const groupFormId = 'subject-member-add-form';
 
@@ -88,79 +91,14 @@ const ModalAddSubjectMember = (props: FormProps) => {
       console.log('Selected User:', newValue);
       setValue('members', [
         {
-          id: '1',
-          name: '1564165',
-          role: '5',
+          id: '12',
+          name: 'test-student-1',
+          role: 'member',
         },
         {
-          id: '1',
-          name: '1564165',
-          role: '5',
-        },
-        {
-          id: '1',
-          name: '1564165',
-          role: '5',
-        },
-        {
-          id: '1',
-          name: '1564165',
-          role: '5',
-        },
-        {
-          id: '1',
-          name: '1564165',
-          role: '5',
-        },
-        {
-          id: '1',
-          name: '1564165',
-          role: '5',
-        },
-        {
-          id: '1',
-          name: '1564165',
-          role: '5',
-        },
-        {
-          id: '1',
-          name: '1564165',
-          role: '5',
-        },
-        {
-          id: '1',
-          name: '1564165',
-          role: '5',
-        },
-        {
-          id: '1',
-          name: '1564165',
-          role: '5',
-        },
-        {
-          id: '1',
-          name: '1564165',
-          role: '5',
-        },
-        {
-          id: '1',
-          name: '1564165',
-          role: '5',
-        },
-        {
-          id: '1',
-          name: '1564165',
-          role: '5',
-        },
-        {
-          id: '1',
-          name: '1564165',
-          role: '5',
-        },
-        {
-          id: '1',
-          name: '1564165',
-          role: '5',
+          id: '2',
+          name: 'test-student-2',
+          role: 'member',
         },
       ]);
     }
@@ -169,15 +107,15 @@ const ModalAddSubjectMember = (props: FormProps) => {
 
   return (
     <ModalCover isOpen={isOpen}>
-      <Box className="modal-box !h-[80%] md:!min-w-[75%] overflow-hidden" gap={2}>
+      <Box className="modal-box !h-[80%] overflow-hidden" gap={2}>
         <Typography variant="h5">Add Member</Typography>
         <Box
           component="form"
           id={groupFormId}
           display="flex"
           flexDirection="column"
-          justifyContent="space-between h-[30%]"
-          className="flex-1"
+          justifyContent="space-between"
+          className="flex-1 overflow-hidden"
           onSubmit={handleSubmit(onSubmit)}
         >
           <Stack spacing={1} display={'flex'} direction={'row'}>
@@ -205,13 +143,13 @@ const ModalAddSubjectMember = (props: FormProps) => {
             </Button>
           </Stack>
           <Box
-            className="mt-2 flex-1  h-[20%] "
+            className="mt-2 flex-1 overflow-y-scroll"
             sx={{
               backgroundColor: (theme) =>
                 theme.palette.mode === 'dark' ? 'neutral.800' : 'neutral.100',
             }}
           >
-            <Scrollbar className="flex-1   overflow-y-scroll">
+            <Scrollbar className="flex-1">
               <Table>
                 <TableHead>
                   <TableRow>
@@ -227,20 +165,23 @@ const ModalAddSubjectMember = (props: FormProps) => {
                       ROLE
                     </TableCell>
                     <TableCell
-                      align="right"
+                      align="center"
                       sx={{
                         whiteSpace: 'nowrap',
                         width: '1%',
                         paddingInline: '40px',
                       }}
-                    ></TableCell>
+                    >
+                      ACTIONS
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {(watch('members') as Member[])?.map((member) => (
                     <TableRow
                       sx={{
-                        height: '20px',
+                        height: 20,
+                        maxHeight: 20,
                       }}
                       hover
                       key={member.id}
@@ -255,17 +196,27 @@ const ModalAddSubjectMember = (props: FormProps) => {
                         align="right"
                         sx={{ whiteSpace: 'nowrap', width: '1%' }}
                       >
-                        {member.role}
+                        <Select
+                          sx={{
+                            height: 30,
+                          }}
+                          value={member.role}
+                        >
+                          <MenuItem value={member.role}>{member.role}</MenuItem>
+                        </Select>
                       </TableCell>
                       <TableCell
                         align="right"
                         sx={{ whiteSpace: 'nowrap', width: '1%' }}
                       >
-                        <IconButton>
-                          <SvgIcon>{/* <Edit02Icon /> */}</SvgIcon>
-                        </IconButton>
-                        <IconButton>
-                          <SvgIcon>{/* <ArrowRightIcon /> */}</SvgIcon>
+                        <IconButton
+                          sx={{
+                            p: 0,
+                          }}
+                        >
+                          <SvgIcon>
+                            <XClose />
+                          </SvgIcon>
                         </IconButton>
                       </TableCell>
                     </TableRow>
@@ -273,17 +224,24 @@ const ModalAddSubjectMember = (props: FormProps) => {
                 </TableBody>
               </Table>
             </Scrollbar>
+            <Divider />
           </Box>
           <Box
             sx={{
               alignItems: 'center',
               display: 'flex',
               marginTop: 2,
-              flexShrink:0,
+              flexShrink: 0,
             }}
           >
             <Box sx={{ flexGrow: 1 }} />
-            <Button color="inherit" onClick={() => handleClose()}>
+            <Button
+              color="inherit"
+              onClick={() => {
+                reset();
+                handleClose();
+              }}
+            >
               Cancel
             </Button>
             <Button

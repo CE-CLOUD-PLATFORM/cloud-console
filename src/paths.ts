@@ -1,6 +1,4 @@
-import { sign } from "crypto";
-import { access } from "fs";
-import index from "./app/(dashboard)/management/group/(info)/[group_id]/page";
+
 
 export const paths = {
   index: '/',
@@ -17,6 +15,11 @@ export const paths = {
     401: '/401',
     404: '/404',
     500: '/500'
+  },
+  resource:{
+    index:"/management/resource",
+    credit:"/management/resource/credit",
+    quota:"/management/resource/quota"
   },
   setting: {
     index: "/setting",

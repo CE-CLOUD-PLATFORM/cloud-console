@@ -2,16 +2,13 @@
 import type { ReactNode } from 'react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, SvgIcon } from '@mui/material';
-import BarChartSquare02Icon from '@/shared/icons/untitled-ui/duocolor/bar-chart-square-02';
-import CurrencyBitcoinCircleIcon from '@/shared/icons/untitled-ui/duocolor/currency-bitcoin-circle';
+import {  SvgIcon } from '@mui/material';
+
 import HomeSmileIcon from '@/shared/icons/untitled-ui/duocolor/home-smile';
-import LineChartUp04Icon from '@/shared/icons/untitled-ui/duocolor/line-chart-up-04';
-import { tokens } from '@/shared/locales/tokens';
 import { paths } from '@/paths';
 import Settings03 from '@untitled-ui/icons-react/build/esm/Settings03';
-import Server01 from '@untitled-ui/icons-react/build/esm/Server01';
 import Settings02 from '@untitled-ui/icons-react/build/esm/Settings02';
+import DataFlow01 from '@untitled-ui/icons-react/build/esm/DataFlow01';
 
 export interface Item {
   disabled?: boolean;
@@ -54,7 +51,7 @@ export const useSections = () => {
           //   ),
           // },
           {
-            title: "Access",
+            title: 'Access',
             path: paths.setting.access.index,
             icon: (
               <SvgIcon fontSize="small">
@@ -63,12 +60,32 @@ export const useSections = () => {
             ),
             items: [
               {
-                title: "Public keys",
+                title: 'Public keys',
                 path: paths.setting.access.public_key,
               },
               {
-                title:"VPN",
+                title: 'VPN',
                 path: paths.setting.access.index,
+              },
+            ],
+          },
+          {
+            title: 'Resource',
+            path: paths.resource.index,
+            icon: (
+              <SvgIcon fontSize="small">
+                <DataFlow01 />
+              </SvgIcon>
+            ),
+            items: [
+              {
+                title: 'Quota',
+                path: paths.resource.quota,
+              
+              },
+              {
+                title: 'Credit',
+                path: paths.resource.credit,
               },
             ],
           },

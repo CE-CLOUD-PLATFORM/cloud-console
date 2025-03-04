@@ -27,6 +27,8 @@ import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGetFlavors } from '@/modules/flavor/hook/use-get-flavors';
 import ModalSubjectCreateForm from './form/create-subject-form';
+import ModalQuotaRequestForm from './form/request-quota-form';
+import ModalCreditRequestForm from './form/request-credit-form';
 
 interface FlavorSpec {
   max_instance: number;
@@ -34,7 +36,7 @@ interface FlavorSpec {
 }
 const ModalSubjectCreate = (props: FormProps) => {
   const { isOpen, handleClose } = props;
-  const {user} = useUserStore()
+  const { user } = useUserStore();
 
   const { data: flavorsData } = useGetFlavors();
   const [formTab, setFormTab] = useState(0);
@@ -48,15 +50,28 @@ const ModalSubjectCreate = (props: FormProps) => {
               setFormTab(v);
             }}
           >
-            <Tab label="Subject" />
+            {/* <Tab label="Subject" /> */}
             <Tab label="Quota" />
             <Tab label="Credit" />
           </Tabs>
           <Divider></Divider>
         </Box>
 
-        {formTab === 0 && (
+        {/* {formTab === 0 && (
           <ModalSubjectCreateForm isOpen={isOpen} handleClose={handleClose} />
+        )}
+        {formTab === 1 && (
+          <ModalQuotaRequestForm isOpen={isOpen} handleClose={handleClose} />
+        )}
+        {formTab === 2 && (
+          <ModalQuotaRequestForm isOpen={isOpen} handleClose={handleClose} />
+        )} */}
+
+        {formTab === 0 && (
+          <ModalQuotaRequestForm isOpen={isOpen} handleClose={handleClose} />
+        )}
+        {formTab === 1 && (
+          <ModalCreditRequestForm isOpen={isOpen} handleClose={handleClose} />
         )}
       </Box>
     </ModalCover>
