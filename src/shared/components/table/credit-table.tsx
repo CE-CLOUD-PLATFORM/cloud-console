@@ -29,8 +29,8 @@ import {
   Typography,
 } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
-import { Member } from '@/modules/user/types/member';
-import { Quota } from '@/modules/subject/types/quota';
+import { Credit } from '@/modules/subject/types/credit';
+import { handleCreditDialogType } from '@/app/(dashboard)/management/resource/credit/page';
 
 interface Option {
   label: string;
@@ -55,10 +55,11 @@ const sortOptions: Option[] = [
     value: 'orders|asc',
   },
 ];
-interface TableQuotaProps {
-  quotas: Quota[];
+interface TablecreditProps {
+  credits: Credit[];
+  onOpen: (data: handleCreditDialogType) => void;
 }
-export const TableCredit: FC<TableQuotaProps> = ({ quotas }) => {
+export const TableCredit: FC<TablecreditProps> = ({ credits, onOpen }) => {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
   const handleToggle = (id: string) => {
@@ -114,7 +115,6 @@ export const TableCredit: FC<TableQuotaProps> = ({ quotas }) => {
                 <TableCell>Details</TableCell>
                 <TableCell>Request by</TableCell>
                 <TableCell>Request Date</TableCell>
-                <TableCell>Academic Year</TableCell>
                 <TableCell
                   align="right"
                   sx={{ whiteSpace: 'nowrap', width: '1%' }}
@@ -124,15 +124,31 @@ export const TableCredit: FC<TableQuotaProps> = ({ quotas }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {quotas?.map((quota) => (
-                <>
-                  <TableRow hover key={quota.id}>
+              {credits?.map((credit) => (
+                  <TableRow hover key={credit.id}>
                     <TableCell>
-                      <Typography className="text-nowrap pl-2" variant="body2">
+                      <Typography
+                        className="text-nowrap pl-2"
+                        variant="overline"
+                        style={{
+                          fontSize: 16,
+                        }}
+                      >
                         144
                       </Typography>
                     </TableCell>
                     <TableCell>
+                      <Stack display={'flex'} gap={1} direction={'row'}>
+                        <Typography
+                          className="text-nowrap pl-2 !text-[15px]"
+                          variant="caption"
+                        >
+                          Calculate for:
+                        </Typography>
+                        <Chip label={`Flavor: ${credit.resource.flavor_id}`} />
+                        <Chip label={`Instance: ${credit.resource.instance}`} />
+                        <Chip label={`Time Usage: ${credit.resource.time}`} />
+                      </Stack>
                       <Typography
                         variant="body2"
                         noWrap
@@ -141,19 +157,21 @@ export const TableCredit: FC<TableQuotaProps> = ({ quotas }) => {
                           overflow: 'hidden',
                           textOverflow: 'ellipsis',
                           whiteSpace: 'nowrap',
-                          display: expandedRow === quota.id ? 'none' : 'block',
+                          display: expandedRow === credit.id ? 'none' : 'block',
                         }}
                       >
-                        {quota.detail}
+                        {credit.resource.details}
                       </Typography>
-                      <Collapse in={expandedRow === quota.id}>
-                        <Typography variant="body2">{quota.detail}</Typography>
+                      <Collapse in={expandedRow === credit.id}>
+                        <Typography variant="body2">
+                          {credit.resource.details}
+                        </Typography>
                       </Collapse>
                       <IconButton
                         size="small"
-                        onClick={() => handleToggle(quota.id)}
+                        onClick={() => handleToggle(credit.id)}
                       >
-                        {expandedRow === quota.id ? (
+                        {expandedRow === credit.id ? (
                           <ChevronUp />
                         ) : (
                           <ChevronDown />
@@ -161,9 +179,9 @@ export const TableCredit: FC<TableQuotaProps> = ({ quotas }) => {
                       </IconButton>
                     </TableCell>
                     <TableCell className="text-nowrap">
-                      {quota.request_user_id}
+                      {credit.request_user_id}
                     </TableCell>
-                    <TableCell className='text-nowrap'>
+                    <TableCell className="text-nowrap">
                       {new Intl.DateTimeFormat('en-GB', {
                         day: '2-digit',
                         month: 'short',
@@ -171,30 +189,43 @@ export const TableCredit: FC<TableQuotaProps> = ({ quotas }) => {
                         hour: '2-digit',
                         minute: '2-digit',
                         hour12: false,
-                      }).format(new Date(quota.created_at))}
+                      }).format(new Date(credit.created_at))}
                     </TableCell>
-                    <TableCell>{quota.subject_academic_year}</TableCell>
+
                     <TableCell className="flex-nowrap text-nowrap">
-                      <IconButton>
+                      <IconButton
+                        onClick={() => {
+                          onOpen?.({
+                            item: credit,
+                            edit: true,
+                          });
+                        }}
+                      >
                         <SvgIcon>
                           <Edit02Icon />
                         </SvgIcon>
                       </IconButton>
-                      <IconButton>
+                      <IconButton
+                        onClick={() => {
+                          onOpen?.({
+                            item: credit,
+                            edit: false,
+                          });
+                        }}
+                      >
                         <SvgIcon>
                           <ArrowRightIcon />
                         </SvgIcon>
                       </IconButton>
                     </TableCell>
                   </TableRow>
-                </>
               ))}
             </TableBody>
           </Table>
         </Scrollbar>
         <TablePagination
           component="div"
-          count={quotas?.length || 0}
+          count={credits?.length || 0}
           onPageChange={() => {}}
           onRowsPerPageChange={() => {}}
           page={0}

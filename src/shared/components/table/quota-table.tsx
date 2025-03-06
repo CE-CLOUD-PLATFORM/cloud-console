@@ -31,6 +31,7 @@ import {
 import { Scrollbar } from '@/shared/components/scrollbar';
 import { Member } from '@/modules/user/types/member';
 import { Quota } from '@/modules/subject/types/quota';
+import { handleQuotaDialogType } from '@/app/(dashboard)/management/resource/quota/page';
 
 interface Option {
   label: string;
@@ -57,8 +58,9 @@ const sortOptions: Option[] = [
 ];
 interface TableQuotaProps {
   quotas: Quota[];
+  onOpen: (data: handleQuotaDialogType) => void;
 }
-export const TableQuota: FC<TableQuotaProps> = ({ quotas }) => {
+export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
   const handleToggle = (id: string) => {
@@ -125,78 +127,90 @@ export const TableQuota: FC<TableQuotaProps> = ({ quotas }) => {
             </TableHead>
             <TableBody>
               {quotas?.map((quota) => (
-                <>
-                  <TableRow hover key={quota.id}>
-                    <TableCell>
-                      <Typography className="text-nowrap pl-2" variant="body1">
-                        {quota.subject_name}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Stack display={'flex'} direction={'row'} spacing={1}>
-                        <Chip label={`CORES:${quota.subject_resource.cores}`} />
-                        <Chip
-                          label={`INSTANCE:${quota.subject_resource.max_instance}`}
-                        />
-                        <Chip
-                          label={`RAM:${(quota.subject_resource.memory as number) / 1024}GB`}
-                        />
-                      </Stack>
-                      <Typography
-                        variant="body2"
-                        noWrap
-                        sx={{
-                          maxWidth: '300px',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                          display: expandedRow === quota.id ? 'none' : 'block',
-                        }}
-                      >
-                        {quota.detail}
-                      </Typography>
-                      <Collapse in={expandedRow === quota.id}>
-                        <Typography variant="body2">{quota.detail}</Typography>
-                      </Collapse>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleToggle(quota.id)}
-                      >
-                        {expandedRow === quota.id ? (
-                          <ChevronUp />
-                        ) : (
-                          <ChevronDown />
-                        )}
-                      </IconButton>
-                    </TableCell>
-                    <TableCell className="text-nowrap">
-                      {quota.request_user_id}
-                    </TableCell>
-                    <TableCell className='text-nowrap'>
-                      {new Intl.DateTimeFormat('en-GB', {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: false,
-                      }).format(new Date(quota.created_at))}
-                    </TableCell>
-                    <TableCell>{quota.subject_academic_year}</TableCell>
-                    <TableCell className="flex-nowrap text-nowrap">
-                      <IconButton>
-                        <SvgIcon>
-                          <Edit02Icon />
-                        </SvgIcon>
-                      </IconButton>
-                      <IconButton>
-                        <SvgIcon>
-                          <ArrowRightIcon />
-                        </SvgIcon>
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                </>
+                <TableRow hover key={quota.id}>
+                  <TableCell>
+                    <Typography className="text-nowrap pl-2" variant="body1">
+                      {quota.subject_name}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Stack display={'flex'} direction={'row'} spacing={1}>
+                      <Chip label={`CORES: ${quota.subject_resource.cores}`} />
+                      <Chip
+                        label={`INSTANCE: ${quota.subject_resource.max_instance}`}
+                      />
+                      <Chip
+                        label={`RAM: ${(quota.subject_resource.memory as number) / 1024} GB`}
+                      />
+                    </Stack>
+                    <Typography
+                      variant="body2"
+                      noWrap
+                      sx={{
+                        maxWidth: '300px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        display: expandedRow === quota.id ? 'none' : 'block',
+                      }}
+                    >
+                      {quota.detail}
+                    </Typography>
+                    <Collapse in={expandedRow === quota.id}>
+                      <Typography variant="body2">{quota.detail}</Typography>
+                    </Collapse>
+                    <IconButton
+                      size="small"
+                      onClick={() => handleToggle(quota.id)}
+                    >
+                      {expandedRow === quota.id ? (
+                        <ChevronUp />
+                      ) : (
+                        <ChevronDown />
+                      )}
+                    </IconButton>
+                  </TableCell>
+                  <TableCell className="text-nowrap">
+                    {quota.request_user_id}
+                  </TableCell>
+                  <TableCell className="text-nowrap">
+                    {new Intl.DateTimeFormat('en-GB', {
+                      day: '2-digit',
+                      month: 'short',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: false,
+                    }).format(new Date(quota.created_at))}
+                  </TableCell>
+                  <TableCell>{quota.subject_academic_year}</TableCell>
+                  <TableCell className="flex-nowrap text-nowrap">
+                    <IconButton
+                      onClick={() => {
+                        onOpen?.({
+                          item: quota,
+                          edit: true,
+                        });
+                      }}
+                    >
+                      <SvgIcon>
+                        <Edit02Icon />
+                      </SvgIcon>
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        onOpen?.({
+                          item: quota,
+                          edit: false,
+                        });
+                      }}
+                    >
+                      <SvgIcon>
+                        <ArrowRightIcon />
+                      </SvgIcon>
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
               ))}
             </TableBody>
           </Table>

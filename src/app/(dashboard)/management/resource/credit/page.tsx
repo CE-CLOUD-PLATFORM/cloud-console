@@ -1,33 +1,77 @@
 'use client';
 import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
-import modalAddSubjectMember from '@/shared/components/modals/group/create-group-modal';
-import ModalAddSubjectMember from '@/shared/components/modals/member/add-subject-member-modal';
+import { Credit } from '@/modules/subject/types/credit';
+import { CreditDrawer } from '@/shared/components/item-drawer/credit-drawer';
 import ResourceCard from '@/shared/components/resource-card';
 import { TableCredit } from '@/shared/components/table/credit-table';
-import { TableMembers } from '@/shared/components/table/member-table';
-import { TableQuota } from '@/shared/components/table/quota-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
 import {
   Box,
-  Button,
   Container,
   Grid2 as Grid,
   Stack,
-  SvgIcon,
   Typography,
 } from '@mui/material';
-import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 import { useParams } from 'next/navigation';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
+
+const mockData: Credit[] = [
+  {
+    id: '1',
+    resource: {
+      flavor_id: 'small',
+      instance: 1,
+      details:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum',
+      time: '1d',
+    },
+    status: 'Pending',
+    request_user_id: 'test-student-1',
+    created_at: new Date(),
+    updated_at: new Date(),
+    amount: 144,
+    type: 'recieve',
+    subject_id: '12321231',
+  },
+  {
+    id: '2',
+    resource: {
+      flavor_id: 'small',
+      instance: 1,
+      details:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum',
+      time: '1d',
+    },
+    status: 'Pending',
+    request_user_id: 'test-student-1',
+    created_at: new Date(),
+    updated_at: new Date(),
+    amount: 144,
+    type: 'recieve',
+    subject_id: '12321231',
+  },
+];
+const useCurrentItem = (
+  items: Credit[],
+  itemId?: string,
+): Credit | undefined => {
+  return useMemo((): Credit | undefined => {
+    if (!itemId) {
+      return undefined;
+    }
+
+    return items.find((item) => item.id === itemId);
+  }, [items, itemId]);
+};
+export interface handleCreditDialogType {
+  item: Credit;
+  edit: boolean;
+}
 
 export default function CreditManagementPage() {
   const { subject_id } = useParams();
-  const modalAddSubjectMember = useDialog();
-  const detailsDialog = useDialog();
-  const { data, isLoading: isSubjectsLoading } = useGetSubjectMembers({
-    subject_id: subject_id as string,
-  });
-  // const data = useSubjectStore();
+  const detailsDialog = useDialog<handleCreditDialogType>();
+  const currentItem = useCurrentItem(mockData, detailsDialog.data?.item?.id);
   const handleDelete = useCallback(
     (itemId: string): void => {
       detailsDialog.handleClose();
@@ -60,7 +104,7 @@ export default function CreditManagementPage() {
               </Stack>
             </Grid>
             <Grid size={12}>
-              <ResourceCard/>
+              <ResourceCard />
             </Grid>
             <Grid size={12}>
               <Stack
@@ -69,51 +113,17 @@ export default function CreditManagementPage() {
                   lg: 4,
                 }}
               >
-                <TableCredit
-                  quotas={[
-                    {
-                      id: '1',
-                      detail:
-                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum',
-                      status: 'Pending',
-                      request_user_id: 'test-student-1',
-                      created_at: new Date(),
-                      subject_academic_year: '68',
-                      subject_description: '2',
-                      subject_domain_id: 'default',
-                      subject_name: 'demo-request-quota-1',
-                      subject_resource: {
-                        cores: 10,
-                        max_instance: 5,
-                        memory: 20480,
-                      },
-                      updated_at: new Date(),
-                    },
-                    {
-                      id: '2',
-                      detail:
-                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum',
-                      status: 'Pending',
-                      request_user_id: 'test-student-2',
-                      created_at: new Date(),
-                      subject_academic_year: '68',
-                      subject_description: '2',
-                      subject_domain_id: 'default',
-                      subject_name: 'demo-request-quota-2',
-                      subject_resource: {
-                        cores: 10,
-                        max_instance: 5,
-                        memory: 20480,
-                      },
-                      updated_at: new Date(),
-                    },
-                  ]}
-                />
+                <TableCredit credits={mockData} onOpen={detailsDialog.handleOpen}/>
               </Stack>
             </Grid>
           </Grid>
         </Container>
       </Box>
+      <CreditDrawer
+        item={currentItem}
+        open={detailsDialog.open}
+        onClose={detailsDialog.handleClose}
+      />
     </>
   );
 }
