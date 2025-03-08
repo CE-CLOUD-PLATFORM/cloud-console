@@ -53,17 +53,17 @@ export default function LoginPage() {
     }
   };
   return (
-    <div>
-      <div className="flex min-h-screen min-w-full">
-        <div className="hidden w-full flex-col items-center justify-center gap-4 bg-blue-500 p-3 text-2xl font-semibold md:flex md:w-2/3">
+    <div className="flex py-4 h-screen min-w-full overflow-y-scroll bg-blue-500 ">
+      <div className="hidden  w-full flex-col items-center justify-center gap-4 p-3 text-2xl font-semibold min-[1028px]:flex lg:w-2/3"></div>
+      <div className="flex w-full flex-col md:min-w-[450px] items-center justify-center bg-transparent p-5 md:h-full min-[1028px]:w-1/3 h-fit">
+        <div className="flex w-full max-w-[500px] flex-col items-center rounded-lg bg-white p-5 text-2xl font-semibold">
           <img src="/assets/ce-logo.png"></img>
-          <h1 className="text-center text-lg text-white md:text-4xl">
+          <h1 className="text-center text-lg text-black md:text-3xl">
             CE CLOUD PLATFORM
           </h1>
-        </div>
-        <div className="flex w-full flex-col items-center justify-center bg-white p-5 text-2xl font-semibold md:w-1/3">
-          <h1 className="text-center font-bold text-lg md:text-4xl">Login</h1>
-          <hr />
+          <h1 className="mt-3 text-center text-lg font-bold md:text-2xl">
+            Login
+          </h1>
           <Stack
             component="form"
             noValidate
@@ -94,7 +94,7 @@ export default function LoginPage() {
                 variant="filled"
                 label="password"
                 type="password"
-                className='w-full'
+                className="w-full"
                 {...register('password', { required: true })}
               />
             </Box>
