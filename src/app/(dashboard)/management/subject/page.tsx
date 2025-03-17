@@ -25,21 +25,36 @@ import { View } from '@/shared/types/view';
 import ModalProjectCreate from '@/shared/components/modals/subject/create-subject-modal';
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 import ModalSubjectCreate from '@/shared/components/modals/subject/create-subject-modal';
+import { useDeleteSubject } from '@/modules/subject/hook/use-delete-subject';
+import toast from 'react-hot-toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function Page() {
   const itemsSearch = useItemsSearch();
+  const queryClient = useQueryClient()
   const itemsStore = useItemsStore(itemsSearch.state);
   const [view, setView] = useState<View>('grid');
-  const uploadDialog = useDialog();
   const modalCreateSubject = useDialog();
   const detailsDialog = useDialog<string>();
   const currentItem = useCurrentItem(itemsStore.items, detailsDialog.data);
-
+  const deleteSubject = useDeleteSubject({
+    onSuccess: () => {
+      toast.success('Project created successfully');
+      // queryClient.invalidateQueries({ queryKey: ['subjects'] });
+    },
+    onError: () => {
+      toast.error('Fail to create Subject.');
+    },
+    onMutate: () => {
+      toast.loading('Creating...');
+    },
+  });
   usePageView();
 
   const handleDelete = useCallback(
     (itemId: string): void => {
       detailsDialog.handleClose();
+      deleteSubject.mutate(itemId)
       itemsStore.handleDelete(itemId);
     },
     [detailsDialog, itemsStore],

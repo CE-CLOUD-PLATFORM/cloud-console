@@ -43,9 +43,6 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
     onDelete?.(item.id);
   }, [item, popover, onDelete]);
 
-  let size = '1';
-
-  const createdAt = '1213';
 
   return (
     <>

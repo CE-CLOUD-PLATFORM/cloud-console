@@ -36,12 +36,12 @@ export const ItemMenu: FC<ItemMenuProps> = (props) => {
         vertical: 'top'
       }}
     >
-      <MenuItem onClick={onClose}>
+      {/* <MenuItem onClick={onClose}>
         <SvgIcon fontSize="small">
           <Link01Icon />
         </SvgIcon>
         Copy Link
-      </MenuItem>
+      </MenuItem> */}
       <MenuItem
         onClick={onDelete}
         sx={{ color: 'error.main' }}
