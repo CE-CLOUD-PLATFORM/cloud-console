@@ -16,6 +16,7 @@ const ROOTS = {
 export const endpoints = {
   auth: {
     login: `${ROOTS.AUTH}/login`,
+    recoveryPass: `https://iam-api.cloud.ce.kmitl.ac.th/api/password/reset-password`,
   },
   subject: {
     getAll: `${ROOTS.SUBJECT}s`,
