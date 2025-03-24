@@ -5,7 +5,6 @@ import { InstanceCreate, InstanceOptionQueryParam, InstanceOptionRes, InstancesQ
 type Params = {
   queryKey: string[];
 };
-2
 export const getInstances = async ({
   queryKey,
 }: Params): Promise<InstancesRes> => {

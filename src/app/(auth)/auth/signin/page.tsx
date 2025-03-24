@@ -1,7 +1,6 @@
 'use client';
 import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
-import type { ILoginReq } from '@/shared/interfaces/login';
 import {
   Box,
   Button,
@@ -21,7 +20,10 @@ import toast from 'react-hot-toast';
 import { userLoginResolver } from '@/modules/auth/validations/user-login';
 import ModalForgotPassword from '@/shared/components/modals/auth/forgot-password-modal';
 import { useDialog } from '@/shared/hooks/use-dialog';
+import { IAuthLogin } from '@/modules/auth/types/auth';
+import { useUserStore } from '@/modules/auth/store/auth';
 export default function LoginPage() {
+
   const router = useRouter();
   const { mutateAsync: authtentication } = useAuth();
   const {
@@ -29,13 +31,13 @@ export default function LoginPage() {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<ILoginReq>({
+  } = useForm<IAuthLogin>({
     resolver: userLoginResolver,
   });
   const forgotPassModal = useDialog();
 
-  const onSubmit: SubmitHandler<ILoginReq> = async (
-    loginRequest: ILoginReq,
+  const onSubmit: SubmitHandler<IAuthLogin> = async (
+    loginRequest: IAuthLogin,
   ) => {
     // const forgotPassModal = useDialog<boolean>()
     try {
@@ -140,14 +142,19 @@ export default function LoginPage() {
                   flexDirection={'row'}
                   justifyContent={'end'}
                 >
-                  <Button onClick={forgotPassModal.handleOpen}>Forget Password?</Button>
+                  <Button onClick={forgotPassModal.handleOpen}>
+                    Forget Password?
+                  </Button>
                 </Box>
               </div>
             </Stack>
           </div>
         </div>
       </div>
-      <ModalForgotPassword isOpen={forgotPassModal.open} handleClose={forgotPassModal.handleClose}/>
+      <ModalForgotPassword
+        isOpen={forgotPassModal.open}
+        handleClose={forgotPassModal.handleClose}
+      />
     </>
   );
 }

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, type PropsWithChildren } from 'react';
 import { useUserStore } from '@/modules/auth/store/auth';
+import { useValidateToken } from '../hook/use-validate-token';
 
 export function AuthGuard({ children }: PropsWithChildren) {
 
@@ -10,18 +11,31 @@ export function AuthGuard({ children }: PropsWithChildren) {
   const initializeUser = useUserStore((state) => state.actions.initializeUser)
   const user = useUserStore((state) => state.user);
   const loading = useUserStore((state) => state.loading);
-  const validateAuthentication = useCallback(() => {
+  const validator = useValidateToken({ token: user?.token })
+  const logoutUser = useUserStore((state) => state.actions.logoutUser)
+
+  const validateAuthentication = useCallback(async () => {
+
     if (loading) {
+
       initializeUser()
       return;
     }
+    if (validator.isLoading) {
+      return
+    }
+    console.log(validator.data);
 
+    if (!!validator.data && validator.data !== 200) {
+      logoutUser()
+      return
+    }
     if (!user) {
-      
+
       router.replace('/auth/signin');
       return;
     }
-  }, [loading, user, router]);
+  }, [loading, user, router, validator]);
 
   useEffect(() => {
     validateAuthentication();
@@ -41,7 +55,7 @@ export function AlreadyAuthenticatedGuard({ children }: PropsWithChildren) {
     }
 
     if (user) {
-      
+
       router.replace('/');
       return;
     }

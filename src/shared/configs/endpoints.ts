@@ -1,3 +1,4 @@
+import { validate } from "numeral";
 
 const version = {
   V1: "/api/v1"
@@ -11,12 +12,14 @@ const ROOTS = {
   CONFIG: `${version.V1}/config`,
   FLAVOR: `${version.V1}/flavor`,
   DOMAIN: `${version.V1}/domain`,
+  RESOURCE: `${version.V1}/resource`,
 };
 
 export const endpoints = {
   auth: {
     login: `${ROOTS.AUTH}/login`,
     recoveryPass: `https://iam-api.cloud.ce.kmitl.ac.th/api/password/reset-password`,
+    validate:`${ROOTS.AUTH}/validate`
   },
   subject: {
     getAll: `${ROOTS.SUBJECT}s`,
@@ -42,6 +45,10 @@ export const endpoints = {
   },
   domain:{
     users:`${ROOTS.DOMAIN}/users`
+  },
+  resource:{
+    quota:"quota",
+    credit:"credit",
   }
 };
 

@@ -21,7 +21,6 @@ import { useAuth } from '@/modules/auth/hook';
 import { useRouter } from '@/shared/hooks/use-router';
 import { paths } from '@/paths';
 import { useUserStore } from '@/modules/auth/store/auth';
-import { useLogout } from '@/modules/auth/hook/use-logout';
 
 interface AccountPopoverProps {
   anchorEl: null | Element;
@@ -33,12 +32,12 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
   const router = useRouter();
   const { user } = useUserStore((state) => state);
+  const logoutUser = useUserStore((state) => state.actions.logoutUser);
 
   const handleLogout = useCallback(async (): Promise<void> => {
     try {
       onClose?.();
-      useLogout()
-      router.replace(paths.auth.signIn.index);
+      logoutUser()
     } catch (err) {
       console.error(err);
       toast.error('Something went wrong!');

@@ -91,7 +91,7 @@ const ModalCreditRequestForm = (props: FormProps) => {
     );
     let { time_in_hour, time_in_day, max_instance } = data;
     if (flavor) {
-      if (time_in_hour > 25) {
+      if (time_in_hour > 24) {
         const additional_days = Math.floor(time_in_hour / 24);
         time_in_day = additional_days;
         time_in_hour = time_in_hour % 24;
