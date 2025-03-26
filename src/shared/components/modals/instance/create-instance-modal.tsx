@@ -78,7 +78,7 @@ const ModalCreateInstance = (props: FormProps) => {
   };
 
   return (
-    <ModalCover isOpen={isOpen}>
+    <ModalCover  handleOnClose={handleClose} isOpen={isOpen}>
       <Box className="modal-box" gap={5}>
         <Typography variant="h5">New Instance</Typography>
         <Box

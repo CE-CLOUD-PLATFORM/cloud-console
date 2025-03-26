@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { cookieParser } from './shared/utils/cookie-parser';
+
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
+  
   const response = NextResponse.next();
 
   const { pathname } = request.nextUrl;

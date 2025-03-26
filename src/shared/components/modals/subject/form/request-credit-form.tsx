@@ -110,7 +110,7 @@ const ModalCreditRequestForm = (props: FormProps) => {
   };
 
   return (
-    <Box className="hidden-scrollbar flex-1  overflow-y-auto">
+    <Box className="hidden-scrollbar flex-1  overflow-y-auto  space-y-3">
       <Typography variant="h5">Request Credit</Typography>
       <Box
         component="form"

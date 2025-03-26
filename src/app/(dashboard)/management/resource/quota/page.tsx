@@ -1,5 +1,6 @@
 'use client';
-import { Quota } from '@/modules/subject/types/quota';
+import { useGetQuotas } from '@/modules/resource/hook/use-get-quota-list';
+import { Quota } from '@/modules/resource/types/quota';
 import { QuotaDrawer } from '@/shared/components/item-drawer/quota-drawer';
 import ResourceCard from '@/shared/components/resource-card';
 import { TableQuota } from '@/shared/components/table/quota-table';
@@ -13,45 +14,6 @@ import {
 } from '@mui/material';
 import { useParams } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';
-
-const mockData: Quota[] = [
-  {
-    id: '1',
-    detail:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum',
-    status: 'Pending',
-    request_user_id: 'test-subject-admin',
-    created_at: new Date(),
-    subject_academic_year: '68',
-    subject_description: '2',
-    subject_domain_id: 'default',
-    subject_name: 'demo-request-quota-1',
-    subject_resource: {
-      cores: 10,
-      max_instance: 5,
-      memory: 20480,
-    },
-    updated_at: new Date(),
-  },
-  {
-    id: '2',
-    detail:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum',
-    status: 'Pending',
-    request_user_id: 'test-subject-admin',
-    created_at: new Date(),
-    subject_academic_year: '68',
-    subject_description: '2',
-    subject_domain_id: 'default',
-    subject_name: 'demo-request-quota-2',
-    subject_resource: {
-      cores: 10,
-      max_instance: 5,
-      memory: 20480,
-    },
-    updated_at: new Date(),
-  },
-];
 
 const useCurrentItem = (items: Quota[], itemId?: string): Quota | undefined => {
   return useMemo((): Quota | undefined => {
@@ -69,9 +31,13 @@ export interface handleQuotaDialogType {
 
 export default function QuotaManagementPage() {
   const { subject_id } = useParams();
+  const { data: quotaData } = useGetQuotas();
   const detailsDialog = useDialog<handleQuotaDialogType>();
-  const currentItem = useCurrentItem(mockData, detailsDialog.data?.item?.id);
-
+  const currentItem = useCurrentItem(
+    quotaData?.quotas as Quota[],
+    detailsDialog.data?.item?.id,
+  );
+  
   const handleDelete = useCallback(
     (itemId: string): void => {
       detailsDialog.handleClose();
@@ -81,6 +47,7 @@ export default function QuotaManagementPage() {
 
   return (
     <>
+    
       <Box
         component="main"
         sx={{
@@ -115,7 +82,7 @@ export default function QuotaManagementPage() {
               >
                 <TableQuota
                   onOpen={detailsDialog.handleOpen}
-                  quotas={mockData}
+                  quotas={quotaData?.quotas as Quota[]}
                 />
               </Stack>
             </Grid>

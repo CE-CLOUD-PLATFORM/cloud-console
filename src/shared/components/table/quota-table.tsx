@@ -30,8 +30,8 @@ import {
 } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
 import { Member } from '@/modules/user/types/member';
-import { Quota } from '@/modules/subject/types/quota';
 import { handleQuotaDialogType } from '@/app/(dashboard)/management/resource/quota/page';
+import { Quota } from '@/modules/resource/types/quota';
 
 interface Option {
   label: string;
@@ -135,12 +135,12 @@ export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
                   </TableCell>
                   <TableCell>
                     <Stack display={'flex'} direction={'row'} spacing={1}>
-                      <Chip label={`CORES: ${quota.subject_resource.cores}`} />
+                      <Chip label={`CORES: ${quota.req_resource.cores}`} />
                       <Chip
-                        label={`INSTANCE: ${quota.subject_resource.max_instance}`}
+                        label={`INSTANCE: ${quota.req_resource.max_instance}`}
                       />
                       <Chip
-                        label={`RAM: ${(quota.subject_resource.memory as number) / 1024} GB`}
+                        label={`RAM: ${(quota.req_resource.memory as number) / 1024} GB`}
                       />
                     </Stack>
                     <Typography

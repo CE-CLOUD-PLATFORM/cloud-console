@@ -2,7 +2,7 @@
 import type { ReactNode } from 'react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import {  SvgIcon } from '@mui/material';
+import { SvgIcon } from '@mui/material';
 
 import HomeSmileIcon from '@/shared/icons/untitled-ui/duocolor/home-smile';
 import { paths } from '@/paths';
@@ -51,6 +51,25 @@ export const useSections = () => {
           //   ),
           // },
           {
+            title: 'Resource',
+            path: paths.resource.index,
+            icon: (
+              <SvgIcon fontSize="small">
+                <DataFlow01 />
+              </SvgIcon>
+            ),
+            items: [
+              {
+                title: 'Quota',
+                path: paths.resource.quota,
+              },
+              {
+                title: 'Credit',
+                path: paths.resource.credit,
+              },
+            ],
+          },
+          {
             title: 'Access',
             path: paths.setting.access.index,
             icon: (
@@ -69,26 +88,7 @@ export const useSections = () => {
               },
             ],
           },
-          {
-            title: 'Resource',
-            path: paths.resource.index,
-            icon: (
-              <SvgIcon fontSize="small">
-                <DataFlow01 />
-              </SvgIcon>
-            ),
-            items: [
-              {
-                title: 'Quota',
-                path: paths.resource.quota,
-              
-              },
-              {
-                title: 'Credit',
-                path: paths.resource.credit,
-              },
-            ],
-          },
+
           {
             title: 'Setting',
             path: paths.setting.index,

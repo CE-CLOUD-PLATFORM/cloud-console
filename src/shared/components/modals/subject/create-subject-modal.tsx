@@ -1,34 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import ModalCover from '../index';
+import { useUserStore } from '@/modules/auth/store/auth';
+import { useGetFlavors } from '@/modules/flavor/hook/use-get-flavors';
+import { FormProps } from '@/shared/interfaces/modal';
 import {
   Box,
-  Button,
   Divider,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  Switch,
   Tab,
-  Tabs,
-  TextField,
-  ToggleButton,
-  Typography,
+  Tabs
 } from '@mui/material';
+import { useState } from 'react';
+import ModalCover from '../index';
 import '../index.css';
-import { Controller, useForm } from 'react-hook-form';
-import { ISubjectCreate, Subject } from '@/modules/subject/types/subject';
-import { useUserStore } from '@/modules/auth/store/auth';
-import { FormProps } from '@/shared/interfaces/modal';
-import { useCreateSubject } from '@/modules/subject/hook/use-create-subject';
-import toast from 'react-hot-toast';
-import { useQueryClient } from '@tanstack/react-query';
-import { useGetFlavors } from '@/modules/flavor/hook/use-get-flavors';
-import ModalSubjectCreateForm from './form/create-subject-form';
-import ModalQuotaRequestForm from './form/request-quota-form';
 import ModalCreditRequestForm from './form/request-credit-form';
+import ModalQuotaRequestForm from './form/request-quota-form';
 
 interface FlavorSpec {
   max_instance: number;
@@ -41,7 +24,7 @@ const ModalSubjectCreate = (props: FormProps) => {
   const { data: flavorsData } = useGetFlavors();
   const [formTab, setFormTab] = useState(0);
   return (
-    <ModalCover isOpen={isOpen}>
+    <ModalCover handleOnClose={handleClose} isOpen={isOpen}>
       <Box className="modal-box" gap={2}>
         <Box>
           <Tabs

@@ -20,13 +20,16 @@ import {
   Collapse,
   Button,
 } from '@mui/material';
-import { Quota } from '@/modules/subject/types/quota';
 import ChevronUp from '@untitled-ui/icons-react/build/esm/ChevronUp';
 import ChevronDown from '@untitled-ui/icons-react/build/esm/ChevronDown';
+import { Quota } from '@/modules/resource/types/quota';
+import { useApprovalQuota } from '@/modules/resource/hook/use-approval-quota';
+import { useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 interface QuotaDrawerProps {
   item?: Quota;
-  onClose?: () => void;
+  onClose: () => void;
   onDelete?: (itemId: string) => void;
   onFavorite?: (itemId: string, value: boolean) => void;
   onTagsChange?: (itemId: string, value: string[]) => void;
@@ -36,12 +39,37 @@ interface QuotaDrawerProps {
 export const QuotaDrawer: FC<QuotaDrawerProps> = (props) => {
   const { item, onClose, onDelete, open = false } = props;
   const [expandedRow, setExpandedRow] = useState<boolean>(false);
-
+  let queryClient = useQueryClient();
+  const approvalQuota = useApprovalQuota({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['quotas'] });
+      onClose();
+    },
+  });
   const handleToggle = () => {
     setExpandedRow((prev) => !prev);
   };
   let content: JSX.Element | null = null;
-
+  const handleApproveBtnClick = () => {
+    if (item?.id) {
+      approvalQuota.mutate({
+        quota_id: item.id,
+        status: 'accepted',
+      });
+    } else {
+      toast.error('Item not found.Try again.');
+    }
+  };
+  const handleRejectBtnClick = () => {
+    if (item?.id) {
+      approvalQuota.mutate({
+        quota_id: item.id,
+        status: 'rejected',
+      });
+    } else {
+      toast.error('Item not found.Try again.');
+    }
+  };
   if (item) {
     const createdAt =
       item.created_at && format(item.created_at, 'MMM dd, yyyy HH:mm');
@@ -156,12 +184,10 @@ export const QuotaDrawer: FC<QuotaDrawerProps> = (props) => {
               }}
             >
               <Stack display={'flex'} direction={'row'} spacing={1}>
-                <Chip label={`CORES: ${item.subject_resource.cores}`} />
+                <Chip label={`CORES: ${item.req_resource.cores}`} />
+                <Chip label={`INSTANCE: ${item.req_resource.max_instance}`} />
                 <Chip
-                  label={`INSTANCE: ${item.subject_resource.max_instance}`}
-                />
-                <Chip
-                  label={`RAM: ${(item.subject_resource.memory as number) / 1024} GB`}
+                  label={`RAM: ${(item.req_resource.memory as number) / 1024} GB`}
                 />
               </Stack>
             </Grid>
@@ -242,17 +268,21 @@ export const QuotaDrawer: FC<QuotaDrawerProps> = (props) => {
               }}
             ></Grid>
 
-            <Grid
-              size={12}
-            >
+            <Grid size={12}>
               <Typography color="text.secondary" variant="caption">
                 Actions
               </Typography>
             </Grid>
             <Grid size={12}>
               <Stack display="flex" direction="column" gap={1}>
-                <Button variant="contained">Approve</Button>
-                <Button variant="outlined" color="error">
+                <Button onClick={handleApproveBtnClick} variant="contained">
+                  Approve
+                </Button>
+                <Button
+                  onClick={handleRejectBtnClick}
+                  variant="outlined"
+                  color="error"
+                >
                   Reject
                 </Button>
                 <Button variant="text" color="warning">
@@ -290,12 +320,12 @@ export const QuotaDrawer: FC<QuotaDrawerProps> = (props) => {
   );
 };
 
-QuotaDrawer.propTypes = {
-  // @ts-ignore
-  item: PropTypes.object,
-  onClose: PropTypes.func,
-  onDelete: PropTypes.func,
-  onFavorite: PropTypes.func,
-  onTagsChange: PropTypes.func,
-  open: PropTypes.bool,
-};
+// QuotaDrawer.propTypes = {
+//   // @ts-ignore
+//   item: PropTypes.object,
+//   onClose: PropTypes.func,
+//   onDelete: PropTypes.func,
+//   onFavorite: PropTypes.func,
+//   onTagsChange: PropTypes.func,
+//   open: PropTypes.bool,
+// };

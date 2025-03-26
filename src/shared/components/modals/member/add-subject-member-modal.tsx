@@ -106,7 +106,7 @@ const ModalAddSubjectMember = (props: FormProps) => {
   };
 
   return (
-    <ModalCover isOpen={isOpen}>
+    <ModalCover handleOnClose={handleClose}  isOpen={isOpen}>
       <Box className="modal-box !h-[80%] overflow-hidden" gap={2}>
         <Typography variant="h5">Add Member</Typography>
         <Box

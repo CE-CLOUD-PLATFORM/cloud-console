@@ -123,7 +123,7 @@ const ModalSubjectCreateForm = (props: FormProps) => {
   };
 
   return (
-    <Box className="flex-1 overflow-y-auto hidden-scrollbar">
+    <Box className="flex-1 overflow-y-auto hidden-scrollbar space-y-3">
       <Typography variant="h5">New Subject</Typography>
       <Box
         component="form"

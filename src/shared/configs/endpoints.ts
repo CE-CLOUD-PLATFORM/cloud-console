@@ -19,7 +19,7 @@ export const endpoints = {
   auth: {
     login: `${ROOTS.AUTH}/login`,
     recoveryPass: `https://iam-api.cloud.ce.kmitl.ac.th/api/password/reset-password`,
-    validate:`${ROOTS.AUTH}/validate`
+    validate: `${ROOTS.AUTH}/validate`
   },
   subject: {
     getAll: `${ROOTS.SUBJECT}s`,
@@ -43,12 +43,13 @@ export const endpoints = {
   flavor: {
     list: `${ROOTS.FLAVOR}s`
   },
-  domain:{
-    users:`${ROOTS.DOMAIN}/users`
+  domain: {
+    users: `${ROOTS.DOMAIN}/users`
   },
-  resource:{
-    quota:"quota",
-    credit:"credit",
+  resource: {
+    quota: `${ROOTS.RESOURCE}/quota`,
+    quotaAll: `${ROOTS.RESOURCE}/quota/list`,
+    credit: `${ROOTS.RESOURCE}/credit`,
   }
 };
 

@@ -5,23 +5,28 @@
 * {
   @apply transition-all;
   user-select: none;
+  scrollbar-width: none;
 }
-#signin-bg{
-  background-image: url("/assets/bg.png");
-
+*::-webkit-scrollbar {
+  display: none;
+}
+#signin-bg {
+  background-image: url('/assets/bg.png');
 }
 .subjects-box {
   @apply flex min-h-40 cursor-pointer flex-col items-center justify-center rounded-md border p-10 text-sm font-semibold hover:border-black;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
 }
-.MuiPopper-root{
+.MuiPopper-root {
   transition-duration: 0ms !important;
 }
 
 .hidden-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
+.simplebar-placeholder {
+  display: none;
+}
 .hidden-scrollbar {
   scrollbar-width: none;
 }

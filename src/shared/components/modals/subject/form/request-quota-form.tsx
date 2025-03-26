@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useUserStore } from '@/modules/auth/store/auth';
+import { useGetFlavors } from '@/modules/flavor/hook/use-get-flavors';
+import { useCreateQuota } from '@/modules/resource/hook/use-create-quota';
+import { IQuotaCreate } from '@/modules/resource/types/quota';
+import { FormProps } from '@/shared/interfaces/modal';
 import {
   Box,
   Button,
   Divider,
-  FormControl,
-  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
@@ -13,19 +15,13 @@ import {
   Tab,
   Tabs,
   TextField,
-  ToggleButton,
   Typography,
 } from '@mui/material';
-import '../../index.css';
-import { Controller, useForm } from 'react-hook-form';
-import { ISubjectCreate, Subject } from '@/modules/subject/types/subject';
-import { useUserStore } from '@/modules/auth/store/auth';
-import { FormProps } from '@/shared/interfaces/modal';
-import { useCreateSubject } from '@/modules/subject/hook/use-create-subject';
-import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
-import { useGetFlavors } from '@/modules/flavor/hook/use-get-flavors';
-import { useGetDomainUsers } from '@/modules/user/hook/use-get-domain-users';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import '../../index.css';
 
 interface FlavorSpec {
   max_instance: number;
@@ -37,24 +33,20 @@ const ModalQuotaRequestForm = (props: FormProps) => {
   const { isOpen, handleClose } = props;
   const { user } = useUserStore();
   const queryClient = useQueryClient();
-  const createSubject = useCreateSubject({
+  const createSubject = useCreateQuota({
     onSuccess: () => {
-      toast.success('Project created successfully');
-      queryClient.invalidateQueries({ queryKey: ['subjects'] });
+      toast.success('Quota requested successfully');
       reset();
       handleClose();
     },
     onError: () => {
-      toast.error('Fail to create Subject.');
+      toast.error('Fail to request Quota.');
     },
     onMutate: () => {
-      toast.loading('Creating...');
+      toast.loading('Requesting Quota...');
     },
   });
   const { data: flavorsData } = useGetFlavors();
-  const { data: usersData } = useGetDomainUsers({
-    domain_id: user?.info.domain.id as string,
-  });
   const {
     handleSubmit,
     reset,
@@ -62,19 +54,18 @@ const ModalQuotaRequestForm = (props: FormProps) => {
     control,
     formState: { errors },
     watch,
-  } = useForm<ISubjectCreate>({
+  } = useForm<IQuotaCreate>({
     defaultValues: {
-      name: 'untitled',
-      description: '',
-      domain_id: user?.info.domain.id,
+      subject_name: 'untitled',
+      subject_description: '',
+      subject_domain_id: user?.info.domain.id,
       req_resource: {
         cores: flavorsData?.flavors?.[0].vcpus || 1,
         max_instance: 1,
         memory: flavorsData?.flavors?.[0].ram || 4096,
       },
-      user_id: user?.info.id,
-      academic_year: '',
-      set_resource: false,
+      request_user_id: user?.info.id,
+      subject_academic_year: '',
     },
   });
   const flavorSpecForm = useForm<FlavorSpec>({
@@ -86,21 +77,17 @@ const ModalQuotaRequestForm = (props: FormProps) => {
   const [resourceTab, setResourceTab] = useState(0);
   const [resourceChecked, setResourceChecked] = useState(false);
 
-  const onSubmit = async (data: ISubjectCreate) => {
+  const onSubmit = async (data: IQuotaCreate) => {
     try {
-      setValue('domain_id', user?.info.domain.id as string);
-      if (resourceChecked) {
-        data.set_resource = true;
-      } else {
-        data.set_resource = false;
+      setValue('subject_domain_id', user?.info.domain.id as string);
+      // data.req_resource = {
+      //   cores: Number(data.req_resource.cores),
+      //   max_instance: Number(data.req_resource.max_instance),
+      //   memory: Number(data.req_resource.memory),
+      // };
+      if (!resourceChecked) {
+        data.req_resource = undefined
       }
-
-      data.req_resource = {
-        cores: Number(data.req_resource.cores),
-        max_instance: Number(data.req_resource.max_instance),
-        memory: Number(data.req_resource.memory),
-      };
-
       createSubject.mutate(data);
     } catch (error) {
       console.error(error);
@@ -123,7 +110,7 @@ const ModalQuotaRequestForm = (props: FormProps) => {
   };
 
   return (
-    <Box className="flex-1 overflow-y-auto hidden-scrollbar">
+    <Box className="hidden-scrollbar flex-1 space-y-3 overflow-y-auto">
       <Typography variant="h5">Request Quota</Typography>
       <Box
         component="form"
@@ -131,12 +118,12 @@ const ModalQuotaRequestForm = (props: FormProps) => {
         display="flex"
         flexDirection="column"
         justifyContent="space-between"
-        className=" flex-1  p-1 "
+        className="flex-1 p-1"
         onSubmit={handleSubmit(onSubmit)}
       >
         <Stack spacing={1}>
           <Controller
-            name="name"
+            name="subject_name"
             control={control}
             render={({ field }) => (
               <TextField {...field} fullWidth label="Subject Name" />
@@ -144,14 +131,14 @@ const ModalQuotaRequestForm = (props: FormProps) => {
           />
 
           <Controller
-            name="description"
+            name="subject_description"
             control={control}
             render={({ field }) => (
               <TextField {...field} fullWidth label="Subject Description" />
             )}
           />
           <Controller
-            name="academic_year"
+            name="subject_academic_year"
             control={control}
             rules={{
               required: 'Academic year is required',

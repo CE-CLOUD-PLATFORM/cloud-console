@@ -107,7 +107,7 @@ const ModalGroupCreate = (props: FormProps) => {
   };
 
   return (
-    <ModalCover isOpen={isOpen}>
+    <ModalCover  handleOnClose={handleClose}  isOpen={isOpen}>
       <Box className="modal-box" gap={2}>
         <Box className="hidden-scrollbar flex-1 overflow-y-auto">
           <Typography variant="h5">New Group</Typography>

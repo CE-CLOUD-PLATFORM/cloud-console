@@ -49,7 +49,7 @@ const ModalRecoveryPasswordModal = (props: FormProps) => {
   };
 
   return (
-    <ModalCover isOpen={isOpen}>
+    <ModalCover  handleOnClose={handleClose} isOpen={isOpen}>
       <Box className="modal-box !min-h-[auto]" gap={3}>
         {formState === 0 && (
           <Box className="hidden-scrollbar flex-1 space-y-2 overflow-y-auto">
