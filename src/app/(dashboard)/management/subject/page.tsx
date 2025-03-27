@@ -1,37 +1,37 @@
 'use client';
 import { useCallback, useState } from 'react';
 
+import { useDialog } from '@/shared/hooks/use-dialog';
+import { usePageView } from '@/shared/hooks/use-page-view';
 import {
   Box,
   Button,
   Container,
+  Grid2 as Grid,
   Stack,
   SvgIcon,
   Typography,
-  Grid2 as Grid,
 } from '@mui/material';
-import { useDialog } from '@/shared/hooks/use-dialog';
-import { usePageView } from '@/shared/hooks/use-page-view';
-import { useSettings } from '@/shared/hooks/use-settings';
 
-import { ItemList } from '@/shared/components/item-list/subject-list/item-list';
-import { ItemSearch } from '@/shared/components/item-list/subject-list/item-search';
+import { useDeleteSubject } from '@/modules/subject/hook/use-delete-subject';
 import {
   useCurrentItem,
   useItemsSearch,
   useItemsStore,
 } from '@/modules/subject/store/use-subjects-store';
-import { View } from '@/shared/types/view';
-import ModalProjectCreate from '@/shared/components/modals/subject/create-subject-modal';
-import Plus from '@untitled-ui/icons-react/build/esm/Plus';
+import { ItemList } from '@/shared/components/item-list/subject-list/item-list';
+import { ItemSearch } from '@/shared/components/item-list/subject-list/item-search';
 import ModalSubjectCreate from '@/shared/components/modals/subject/create-subject-modal';
-import { useDeleteSubject } from '@/modules/subject/hook/use-delete-subject';
-import toast from 'react-hot-toast';
+import { View } from '@/shared/types/view';
 import { useQueryClient } from '@tanstack/react-query';
+import Plus from '@untitled-ui/icons-react/build/esm/Plus';
+import toast from 'react-hot-toast';
+import Loading from '@/shared/components/Loading';
+import CircleLoading from '@/shared/components/Loading/CircleLoading';
 
 export default function Page() {
   const itemsSearch = useItemsSearch();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const itemsStore = useItemsStore(itemsSearch.state);
   const [view, setView] = useState<View>('grid');
   const modalCreateSubject = useDialog();
@@ -40,7 +40,7 @@ export default function Page() {
   const deleteSubject = useDeleteSubject({
     onSuccess: () => {
       toast.success('Project created successfully');
-      // queryClient.invalidateQueries({ queryKey: ['subjects'] });
+      queryClient.invalidateQueries({ queryKey: ['subjects'] });
     },
     onError: () => {
       toast.error('Fail to create Subject.');
@@ -54,7 +54,7 @@ export default function Page() {
   const handleDelete = useCallback(
     (itemId: string): void => {
       detailsDialog.handleClose();
-      deleteSubject.mutate(itemId)
+      deleteSubject.mutate(itemId);
       itemsStore.handleDelete(itemId);
     },
     [detailsDialog, itemsStore],
@@ -116,7 +116,9 @@ export default function Page() {
                   sortDir={itemsSearch.state.sortDir}
                   view={view}
                 />
+                {itemsStore.itemLoading && <CircleLoading />}
                 <ItemList
+                  isLoading={itemsStore.itemLoading}
                   count={itemsStore.itemsCount}
                   items={itemsStore.items}
                   onDelete={handleDelete}

@@ -24,7 +24,6 @@ export function AuthGuard({ children }: PropsWithChildren) {
     if (validator.isLoading) {
       return
     }
-    console.log(validator.data);
 
     if (!!validator.data && validator.data !== 200) {
       logoutUser()

@@ -19,6 +19,7 @@ import { useParams } from 'next/navigation';
 import React, { useCallback } from 'react';
 import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
 import toast, { useToaster } from 'react-hot-toast';
+import CircleLoading from '@/shared/components/Loading/CircleLoading';
 
 export default function InstancesPage() {
   const { subject_id } = useParams();
@@ -134,6 +135,7 @@ export default function InstancesPage() {
                   data={instancesData?.instances || []}
                   flavors={instanceOption?.flavors || []}
                   images={instanceOption?.images || []}
+                  isLoading={isLoading}
                 />
               </Stack>
             </Grid>

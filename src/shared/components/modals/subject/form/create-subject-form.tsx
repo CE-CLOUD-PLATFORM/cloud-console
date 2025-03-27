@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Autocomplete,
   Box,
   Button,
   Divider,
@@ -123,7 +124,7 @@ const ModalSubjectCreateForm = (props: FormProps) => {
   };
 
   return (
-    <Box className="flex-1 overflow-y-auto hidden-scrollbar space-y-3">
+    <Box className="hidden-scrollbar flex-1 space-y-3 overflow-y-auto">
       <Typography variant="h5">New Subject</Typography>
       <Box
         component="form"
@@ -131,7 +132,7 @@ const ModalSubjectCreateForm = (props: FormProps) => {
         display="flex"
         flexDirection="column"
         justifyContent="space-between"
-        className=" flex-1  p-1 "
+        className="flex-1 p-1"
         onSubmit={handleSubmit(onSubmit)}
       >
         <Stack spacing={1}>
@@ -197,20 +198,21 @@ const ModalSubjectCreateForm = (props: FormProps) => {
             name="user_id"
             control={control}
             defaultValue=""
-            render={({ field }) => (
-              <Select
-                labelId="users-label"
-                id="user_id"
-                label="User Admin"
-                variant="filled"
-                {...field}
-              >
-                {usersData?.users.map((user) => (
-                  <MenuItem key={user.id} value={user.id}>
-                    {user.name}
-                  </MenuItem>
-                ))}
-              </Select>
+            render={({ field: { onChange, value } }) => (
+              <Autocomplete
+                options={usersData?.users || []}
+                getOptionLabel={(option) => option.name || ''}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                onChange={(event, newValue) =>
+                  onChange(newValue ? newValue.id : '')
+                }
+                value={
+                  usersData?.users.find((user) => user.id === value) || null
+                }
+                renderInput={(params) => (
+                  <TextField {...params} label="" variant="filled" />
+                )}
+              />
             )}
           />
           {/* {errors.user_id && <span>This field is required</span>} */}

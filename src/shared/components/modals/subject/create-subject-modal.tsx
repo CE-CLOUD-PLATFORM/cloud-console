@@ -1,17 +1,13 @@
 import { useUserStore } from '@/modules/auth/store/auth';
 import { useGetFlavors } from '@/modules/flavor/hook/use-get-flavors';
 import { FormProps } from '@/shared/interfaces/modal';
-import {
-  Box,
-  Divider,
-  Tab,
-  Tabs
-} from '@mui/material';
+import { Box, Divider, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 import ModalCover from '../index';
 import '../index.css';
 import ModalCreditRequestForm from './form/request-credit-form';
 import ModalQuotaRequestForm from './form/request-quota-form';
+import ModalSubjectCreateForm from './form/create-subject-form';
 
 interface FlavorSpec {
   max_instance: number;
@@ -33,29 +29,29 @@ const ModalSubjectCreate = (props: FormProps) => {
               setFormTab(v);
             }}
           >
-            {/* <Tab label="Subject" /> */}
+            <Tab label="Subject" />
             <Tab label="Quota" />
             <Tab label="Credit" />
           </Tabs>
           <Divider></Divider>
         </Box>
 
-        {/* {formTab === 0 && (
+        {formTab === 0 && (
           <ModalSubjectCreateForm isOpen={isOpen} handleClose={handleClose} />
         )}
         {formTab === 1 && (
           <ModalQuotaRequestForm isOpen={isOpen} handleClose={handleClose} />
         )}
         {formTab === 2 && (
-          <ModalQuotaRequestForm isOpen={isOpen} handleClose={handleClose} />
-        )} */}
+          <ModalCreditRequestForm isOpen={isOpen} handleClose={handleClose} />
+        )}
 
-        {formTab === 0 && (
+        {/* {formTab === 0 && (
           <ModalQuotaRequestForm isOpen={isOpen} handleClose={handleClose} />
         )}
         {formTab === 1 && (
           <ModalCreditRequestForm isOpen={isOpen} handleClose={handleClose} />
-        )}
+        )} */}
       </Box>
     </ModalCover>
   );

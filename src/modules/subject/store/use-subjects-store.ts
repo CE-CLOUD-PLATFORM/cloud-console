@@ -77,6 +77,7 @@ export const useItemsSearch = () => {
 interface ItemsStoreState {
     items: Subject[];
     itemsCount: number;
+
 }
 
 export const useItemsStore = (searchState: ItemsSearchState) => {
@@ -126,6 +127,7 @@ export const useItemsStore = (searchState: ItemsSearchState) => {
     return {
         handleDelete,
         ...state,
+        itemLoading: isLoading
     };
 };
 

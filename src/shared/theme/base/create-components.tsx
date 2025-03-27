@@ -248,7 +248,7 @@ export const createComponents = (): Components => {
           fontSize: 14,
           fontWeight: 500,
           [`&.${inputLabelClasses.filled}`]: {
-            transform: 'translate(12px, 18px) scale(1)'
+            transform: 'translate(12px, 16px) scale(1)'
           },
           [`&.${inputLabelClasses.shrink}`]: {
             [`&.${inputLabelClasses.standard}`]: {

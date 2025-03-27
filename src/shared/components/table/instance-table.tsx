@@ -3,6 +3,7 @@ import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import './style.css';
 import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+import Copy03 from '@untitled-ui/icons-react/build/esm/Copy03';
 import {
   Avatar,
   Box,
@@ -35,7 +36,10 @@ import {
   SeverityPill,
   SeverityPillColor,
 } from '@/shared/components/severity-pill';
-import { getDateddMMYYYYHHmmss } from '@/shared/utils/date-locale';
+import CircleLoading from '../Loading/CircleLoading';
+import { copyToClipboard } from '@/shared/utils/clipboard';
+import toast from 'react-hot-toast';
+import { useParams, useRouter } from 'next/navigation';
 
 interface Option {
   label: string;
@@ -69,18 +73,21 @@ interface TableInstanceProps {
   data: Instance[];
   flavors: Flavor[];
   images: Image[];
+  isLoading: boolean;
 }
 export const TableInstances: FC<TableInstanceProps> = ({
   data,
   flavors,
   images,
+  isLoading,
 }) => {
+  let { subject_id } = useParams();
+  const router = useRouter();
   const getFlavorName = (id: string) => {
     const flavorName = flavors.find((flavor) => flavor.id === id)?.name || '';
     return flavorName;
   };
   const getImageLogo = (id: string) => {
-
     return (
       images.find((image) => image.id === id)?.Properties?.logo_url ||
       '/assets/os.png'
@@ -88,6 +95,10 @@ export const TableInstances: FC<TableInstanceProps> = ({
   };
   const getImageName = (id: string) => {
     return images.find((image) => image.id === id)?.name || '';
+  };
+  const handleOnEdit = (id: string) => {};
+  const handleOnOpen = (id: string) => {
+    router.push(`/management/instance/${subject_id}/${id}/overview`);
   };
   return (
     <Box
@@ -139,8 +150,10 @@ export const TableInstances: FC<TableInstanceProps> = ({
                 <TableCell>Name</TableCell>
                 <TableCell>Status</TableCell>
                 <TableCell>flavor</TableCell>
-                <TableCell>created</TableCell>
-                <TableCell>updated</TableCell>
+                <TableCell>internal IP</TableCell>
+                <TableCell>domain</TableCell>
+                {/* <TableCell>created</TableCell>
+                <TableCell>updated</TableCell> */}
                 <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -151,11 +164,13 @@ export const TableInstances: FC<TableInstanceProps> = ({
                     <TableCell padding="checkbox">
                       <Checkbox />
                     </TableCell>
-                    <TableCell sx={{
-                      "&":{
-                        paddingLeft:"0px"
-                      }
-                    }}>
+                    <TableCell
+                      sx={{
+                        '&': {
+                          paddingLeft: '0px',
+                        },
+                      }}
+                    >
                       <Stack alignItems="center" direction="row" spacing={2}>
                         <Avatar
                           src={getImageLogo(instance.metadata.image_id)}
@@ -185,18 +200,68 @@ export const TableInstances: FC<TableInstanceProps> = ({
                     </TableCell>
                     <TableCell>{getFlavorName(instance.flavor.id)}</TableCell>
                     <TableCell>
+                      {instance.accessIPv4}
+                      <IconButton
+                        onClick={() => {
+                          copyToClipboard(
+                            instance.accessIPv4,
+                            () => {
+                              toast.success(
+                                'IP Copied to clipboard successfully!',
+                              );
+                            },
+                            () => {
+                              toast.error('Failed to copy IP to clipboard');
+                            },
+                          );
+                        }}
+                      >
+                        <SvgIcon fontSize="small">
+                          <Copy03 />
+                        </SvgIcon>
+                      </IconButton>
+                    </TableCell>
+                    <TableCell align="center">
+                      {instance.metadata.domain_name &&
+                      instance.metadata.domain_name !== ''
+                        ? instance.metadata.domain_name
+                        : '-'}
+                      {instance.metadata.domain_name &&
+                        instance.metadata.domain_name !== '' && (
+                          <IconButton
+                            onClick={() => {
+                              copyToClipboard(
+                                instance.accessIPv4,
+                                () => {
+                                  toast.success(
+                                    'IP Copied to clipboard successfully!',
+                                  );
+                                },
+                                () => {
+                                  toast.error('Failed to copy IP to clipboard');
+                                },
+                              );
+                            }}
+                          >
+                            <SvgIcon fontSize="small">
+                              <Copy03 />
+                            </SvgIcon>
+                          </IconButton>
+                        )}
+                    </TableCell>
+                    {/* <TableCell>
                       {getDateddMMYYYYHHmmss(instance.created)}
                     </TableCell>
                     <TableCell>
                       {getDateddMMYYYYHHmmss(instance.updated)}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell align="right">
-                      <IconButton>
+                      <IconButton onClick={() => handleOnEdit(instance.id)}>
                         <SvgIcon>
                           <Edit02Icon />
                         </SvgIcon>
                       </IconButton>
-                      <IconButton>
+                      <IconButton onClick={() => handleOnOpen(instance.id)}>
                         <SvgIcon>
                           <ArrowRightIcon />
                         </SvgIcon>
@@ -207,7 +272,16 @@ export const TableInstances: FC<TableInstanceProps> = ({
               })}
             </TableBody>
           </Table>
+          {data.length === 0 && !isLoading && (
+            <Box mt={3} display={'flex'} justifyContent={'center'}>
+              <Typography className="text-slate-500" variant="subtitle1">
+                No instances found.
+              </Typography>
+            </Box>
+          )}
+          {isLoading && <CircleLoading />}
         </Scrollbar>
+
         <TablePagination
           component="div"
           count={data?.length || 0}

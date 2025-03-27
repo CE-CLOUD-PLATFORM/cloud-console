@@ -17,17 +17,17 @@ const ModalCover: React.FC<ModalCoverProps> = ({
   return (
     <div
       className="modal-cover"
-      onClick={(e) => {
-        handleOnClose();
-      }}
+      // onClick={(e) => {
+      //   handleOnClose();
+      // }}
     >
-      <div
+      {/* <div
         onClick={(e) => {
           e.stopPropagation();
         }}
-      >
-        {children}
-      </div>
+      > */}
+      {children}
+      {/* </div> */}
     </div>
   );
 };

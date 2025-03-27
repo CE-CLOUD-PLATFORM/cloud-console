@@ -6,8 +6,10 @@ import {
   Autocomplete,
   Box,
   Button,
+  Checkbox,
   Chip,
   FormControl,
+  FormControlLabel,
   InputLabel,
   Link,
   MenuItem,
@@ -78,7 +80,7 @@ const ModalCreateInstance = (props: FormProps) => {
   };
 
   return (
-    <ModalCover  handleOnClose={handleClose} isOpen={isOpen}>
+    <ModalCover handleOnClose={handleClose} isOpen={isOpen}>
       <Box className="modal-box" gap={5}>
         <Typography variant="h5">New Instance</Typography>
         <Box
@@ -91,6 +93,7 @@ const ModalCreateInstance = (props: FormProps) => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <Stack spacing={1}>
+            <Typography variant="h6">Information</Typography>
             <TextField
               id="username"
               variant="filled"
@@ -98,6 +101,7 @@ const ModalCreateInstance = (props: FormProps) => {
               {...register('name', { required: true })}
             />
             {errors.name && <span>This field is required</span>}
+            <Typography variant="h6">Specification</Typography>
             <FormControl fullWidth>
               <InputLabel variant="filled" id="flavors-label">
                 Flavors
@@ -166,6 +170,7 @@ const ModalCreateInstance = (props: FormProps) => {
               />
               {errors.flavor_id && <span>This field is required</span>}
             </FormControl>
+            <Typography variant="h6">Authentication & Access</Typography>
             <div className="flex w-full items-center gap-x-2">
               <div className="w-full">
                 <Controller
@@ -208,10 +213,10 @@ const ModalCreateInstance = (props: FormProps) => {
                         value.map((option, index) => (
                           // eslint-disable-next-line react/jsx-key
                           <Chip
-                          variant="filled"
-                          label={option.name}
-                          {...getTagProps({ index })}
-                          key={index}
+                            variant="filled"
+                            label={option.name}
+                            {...getTagProps({ index })}
+                            key={index}
                           />
                         ))
                       }
@@ -250,6 +255,17 @@ const ModalCreateInstance = (props: FormProps) => {
               {...register('password', { required: true })}
             />
             {errors.password && <span>This field is required</span>}
+            {/* <Typography variant="h6">Network Accessibility</Typography>
+            <Controller
+              name="external_access"
+              control={control}
+              render={({ field }) => (
+                <FormControlLabel
+                  control={<Checkbox {...field} />}
+                  label="External Access (Allow Public DNS/Access)"
+                />
+              )}
+            /> */}
           </Stack>
 
           <Box

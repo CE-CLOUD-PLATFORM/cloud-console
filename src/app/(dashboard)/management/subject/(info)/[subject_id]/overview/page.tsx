@@ -6,14 +6,11 @@ import { useUserStore } from '@/modules/auth/store/auth';
 import { useSubjectStore } from '@/modules/subject/store/use-subject-store';
 import {
   Box,
-  Button,
   Container,
   Grid2 as Grid,
   Stack,
-  SvgIcon,
   Typography,
 } from '@mui/material';
-import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 import { useAppNavStore } from '@/modules/app/store/use-app-nav-store';
 
 export default function OverviewPage() {

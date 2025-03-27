@@ -14,8 +14,8 @@ export interface InstancesQueryParams {
     subject_id: string;
 }
 export interface InstanceQueryParams {
-    instance_id: string
-    subject_id: string
+    instance_id:string
+    subject_id: string;
 }
 export interface InstanceOptionQueryParam {
     subject_id: string
@@ -86,6 +86,7 @@ export interface Shared {
 
 export interface Metadata {
     image_id:string
+    domain_name:string
  }
 
 export interface Link2 {

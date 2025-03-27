@@ -62,8 +62,8 @@ export const TopNav: FC<TopNavProps> = (props) => {
               </SvgIcon>
             </IconButton>
           )}
-          <SearchButton />
-          <Typography variant='h6'>{title}</Typography>
+          {/* <SearchButton /> */}
+          {/* <Typography variant='h6'>{title}</Typography> */}
         </Stack>
         <Stack alignItems="center" direction="row" spacing={2}>
           <AccountButton />

@@ -33,7 +33,7 @@ export const endpoints = {
     post: `${ROOTS.GROUP}`
   },
   instance: {
-    post: `${ROOTS.SERVER}`,
+    index: `${ROOTS.SERVER}`,
     list: `${ROOTS.SERVER}s`,
     option: `${ROOTS.SERVER}/options`
   },

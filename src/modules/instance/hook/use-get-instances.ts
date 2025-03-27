@@ -8,7 +8,7 @@ export const useGetInstances = (params: InstancesQueryParams) => {
         queryKey: ['instances', subject_id],
         queryFn: getInstances,
         enabled: !!subject_id,
-        staleTime: 1000 * 60 * 5
+        refetchInterval: 1000 * 60 * 1,
     });
 }
 

@@ -1,6 +1,7 @@
+import { Instance } from './../../subject/types/subject';
 import { axiosInstance } from '@/shared/utils';
 import { endpoints } from '@/shared/configs';
-import { InstanceCreate, InstanceOptionQueryParam, InstanceOptionRes, InstancesQueryParams, InstancesRes } from '../types/instance';
+import { InstanceCreate, InstanceOptionQueryParam, InstanceOptionRes, InstanceQueryParams, InstanceRes, InstancesQueryParams, InstancesRes } from '../types/instance';
 
 type Params = {
   queryKey: string[];
@@ -20,7 +21,22 @@ export const getInstances = async ({
   >(`${endpoints.instance.list}`, { params });
   return response.data;
 };
+export const getInstance = async ({
+  queryKey,
+}: Params): Promise<InstancesRes> => {
+  const [_, subject_id, instance_id] = queryKey;
 
+  const params: InstanceQueryParams = {
+    subject_id,
+    instance_id
+  };
+  const response = await axiosInstance.get<
+    InstanceRes,
+    any,
+    InstanceQueryParams
+  >(`${endpoints.instance.index}`, { params });
+  return response.data;
+};
 export const getInstanceOptions = async ({
   queryKey,
 }: Params): Promise<InstanceOptionRes> => {
@@ -38,5 +54,5 @@ export const postInstance = async (data: InstanceCreate) => {
     any,
     any,
     InstanceCreate
-  >(`${endpoints.instance.post}`, data)).data
+  >(`${endpoints.instance.index}`, data)).data
 }

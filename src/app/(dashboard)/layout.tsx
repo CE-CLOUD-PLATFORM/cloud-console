@@ -9,9 +9,9 @@ export default function Layout({
 }>) {
   return (
     <AuthGuard>
-      <Suspense fallback={<Loading />}>
+      {/* <Suspense fallback={<Loading />}> */}
         <DashboardLayout>{children}</DashboardLayout>
-      </Suspense>
+      {/* </Suspense> */}
     </AuthGuard>
   );
 }
