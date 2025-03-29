@@ -1,5 +1,4 @@
 import type { FC, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { List } from '@mui/material';
 
 interface PropertyListProps {
@@ -14,8 +13,4 @@ export const PropertyList: FC<PropertyListProps> = (props) => {
       {children}
     </List>
   );
-};
-
-PropertyList.propTypes = {
-  children: PropTypes.node
 };

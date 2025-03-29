@@ -1,27 +1,24 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import type { FC } from 'react';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
-import Star01Icon from '@untitled-ui/icons-react/build/esm/Star01';
 import DotsVerticalIcon from '@untitled-ui/icons-react/build/esm/DotsVertical';
-import Globe01Icon from '@untitled-ui/icons-react/build/esm/Globe03';
 import {
-  Avatar,
-  AvatarGroup,
   Box,
   Card,
   Divider,
   IconButton,
   Stack,
   SvgIcon,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import { usePopover } from '@/shared/hooks/use-popover';
-import { bytesToSize } from '@/shared/utils/bytes-to-size';
 import { ItemIcon } from './item-icon';
 import { ItemMenu } from './item-menu';
-import { Subject } from '@/modules/subject/types/subject';
+import type { Subject } from '@/modules/subject/types/subject';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -41,7 +38,7 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
     onDelete?.(item.id);
   }, [item, popover, onDelete]);
 
-  let size = '1';
+  const size = '1';
 
   const createdAt = '123';
 

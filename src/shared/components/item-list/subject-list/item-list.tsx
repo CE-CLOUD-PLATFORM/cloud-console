@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import type { ChangeEvent, FC, MouseEvent } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -11,7 +12,7 @@ import {
 import { Scrollbar } from '@/shared/components/scrollbar';
 import { ItemListCard } from './item-list-card';
 import { ItemListRow } from './item-list-row';
-import { Subject } from '@/modules/subject/types/subject';
+import type { Subject } from '@/modules/subject/types/subject';
 
 type View = 'grid' | 'list';
 

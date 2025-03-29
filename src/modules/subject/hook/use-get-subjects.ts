@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { getSubject, getSubjects } from '../service';
-import { ISubjectsReqParam } from '../types/subject';
+import { getSubjects } from '../service';
+import type { ISubjectsReqParam } from '../types/subject';
 
 export const useGetSubjects = ({ user_id }: ISubjectsReqParam) =>
   useQuery({

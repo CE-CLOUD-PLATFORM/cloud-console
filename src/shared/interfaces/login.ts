@@ -1,5 +1,3 @@
-import { UserInfo } from "@/modules/auth/types/user";
-import type { IResponse } from "@/shared/interfaces/api";
 
 // export interface ILoginReq {
 //   username: string;

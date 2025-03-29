@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { IGroupsReqParams } from '../types/group';
+import type { IGroupsReqParams } from '../types/group';
 import { getGroups } from '../service';
 
 

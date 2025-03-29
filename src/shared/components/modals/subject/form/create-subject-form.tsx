@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
+import React, { useState } from 'react';
 import {
   Autocomplete,
   Box,
   Button,
   Divider,
-  FormControl,
-  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
@@ -14,14 +16,13 @@ import {
   Tab,
   Tabs,
   TextField,
-  ToggleButton,
   Typography,
 } from '@mui/material';
 import '../../index.css';
 import { Controller, useForm } from 'react-hook-form';
-import { ISubjectCreate, Subject } from '@/modules/subject/types/subject';
+import type { ISubjectCreate} from '@/modules/subject/types/subject';
 import { useUserStore } from '@/modules/auth/store/auth';
-import { FormProps } from '@/shared/interfaces/modal';
+import type { FormProps } from '@/shared/interfaces/modal';
 import { useCreateSubject } from '@/modules/subject/hook/use-create-subject';
 import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Group } from '@/modules/group/types/group';
-import { Member } from '@/modules/user/types/member';
+import type { Group } from '@/modules/group/types/group';
+import type { Member } from '@/modules/user/types/member';
 import type { IResponse } from '@/shared/interfaces/api';
 
 export interface ISubjectReqParam {

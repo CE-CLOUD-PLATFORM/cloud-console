@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-unused-vars */
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { Instance, ISubjectRes, Subject } from "../types/subject";
-import { Group } from "@/modules/group/types/group";
+import type { Instance, ISubjectRes, Subject } from "../types/subject";
+import type { Group } from "@/modules/group/types/group";
 
 type ProjectState = {
     subject: Subject;

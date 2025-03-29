@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import type { ChangeEvent, FC, FormEvent, MouseEvent } from 'react';
 import { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';

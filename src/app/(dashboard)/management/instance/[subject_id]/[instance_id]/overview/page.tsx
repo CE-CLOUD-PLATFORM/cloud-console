@@ -15,12 +15,7 @@ export default function Page() {
       subject_id: subject_id as string,
     },
   );
-  const {
-    data: vncData,
-    isLoading: isVncLoading,
-    error: vncErr,
-    refetch: refetchVNC,
-  } = useGetInstanceVNC({
+  const { data: vncData, refetch: refetchVNC } = useGetInstanceVNC({
     instance_id: instance_id as string,
     subject_id: subject_id as string,
   });
@@ -32,34 +27,32 @@ export default function Page() {
     );
   }
   return (
-    <>
-      <Stack className="h-full bg-red-200">
-        <div>Card</div>
-        <Stack
-          flexDirection={'row'}
-          justifyContent={'space-between'}
-          paddingX={15}
-        >
-          <Box>Instance: {instanceData?.instance.name}</Box>
-          <Box>
-            {' '}
-            <Button
-              onClick={() => {
-                refetchVNC();
-              }}
-              startIcon={
-                <SvgIcon>
-                  <AirStart />
-                </SvgIcon>
-              }
-              variant="contained"
-            >
-              VNC
-            </Button>
-          </Box>
-          {vncData && <iframe src={vncData.url}></iframe>}
-        </Stack>
+    <Stack className="h-full bg-red-200">
+      <div>Card</div>
+      <Stack
+        flexDirection={'row'}
+        justifyContent={'space-between'}
+        paddingX={15}
+      >
+        <Box>Instance: {instanceData?.instance.name}</Box>
+        <Box>
+          {' '}
+          <Button
+            onClick={() => {
+              refetchVNC();
+            }}
+            startIcon={
+              <SvgIcon>
+                <AirStart />
+              </SvgIcon>
+            }
+            variant="contained"
+          >
+            VNC
+          </Button>
+        </Box>
+        {vncData && <iframe src={vncData.url}></iframe>}
       </Stack>
-    </>
+    </Stack>
   );
 }

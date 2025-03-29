@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 import PropTypes from 'prop-types';
-import Link01Icon from '@untitled-ui/icons-react/build/esm/Link01';
 import Trash02Icon from '@untitled-ui/icons-react/build/esm/Trash02';
 import { Menu, MenuItem, menuItemClasses, SvgIcon } from '@mui/material';
 

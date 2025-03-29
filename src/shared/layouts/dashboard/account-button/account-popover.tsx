@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import type { FC } from 'react';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
@@ -17,7 +18,6 @@ import {
   Typography,
 } from '@mui/material';
 import { RouterLink } from '@/shared/components/router-link';
-import { useAuth } from '@/modules/auth/hook';
 import { useRouter } from '@/shared/hooks/use-router';
 import { paths } from '@/paths';
 import { useUserStore } from '@/modules/auth/store/auth';

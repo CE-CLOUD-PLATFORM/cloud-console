@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { InstanceOptionQueryParam } from '../types/instance';
+import type { InstanceOptionQueryParam } from '../types/instance';
 import { getInstanceOptions } from '../service';
 
 export const useGetInstanceOption = (params: InstanceOptionQueryParam) => {

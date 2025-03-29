@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable unused-imports/no-unused-vars */
 import { axiosInstance } from '@/shared/utils';
 import { endpoints } from '@/shared/configs';
 

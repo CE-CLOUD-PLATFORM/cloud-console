@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { validateToken } from "../service";
-import { IAuthValidateToken } from "../types/auth";
+import type { IAuthValidateToken } from "../types/auth";
 
 export const useValidateToken = (params: IAuthValidateToken) => {
     const { token } = params

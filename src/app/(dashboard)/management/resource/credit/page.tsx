@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
-import { Credit } from '@/modules/subject/types/credit';
+import type { Credit } from '@/modules/subject/types/credit';
 import { CreditDrawer } from '@/shared/components/item-drawer/credit-drawer';
 import ResourceCard from '@/shared/components/resource-card';
 import { TableCredit } from '@/shared/components/table/credit-table';
@@ -12,10 +12,9 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useParams } from 'next/navigation';
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
-const mockData: Credit[] = [
+const mockData: any[] = [
   {
     id: '1',
     resource: {
@@ -69,15 +68,15 @@ export interface handleCreditDialogType {
 }
 
 export default function CreditManagementPage() {
-  const { subject_id } = useParams();
+  // const { subject_id } = useParams();
   const detailsDialog = useDialog<handleCreditDialogType>();
   const currentItem = useCurrentItem(mockData, detailsDialog.data?.item?.id);
-  const handleDelete = useCallback(
-    (itemId: string): void => {
-      detailsDialog.handleClose();
-    },
-    [detailsDialog],
-  );
+  // const handleDelete = useCallback(
+  //   (itemId: string): void => {
+  //     detailsDialog.handleClose();
+  //   },
+  //   [detailsDialog],
+  // );
 
   return (
     <>

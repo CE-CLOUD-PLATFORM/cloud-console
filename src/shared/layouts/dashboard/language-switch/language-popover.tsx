@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import type { FC } from 'react';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
@@ -5,6 +6,7 @@ import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { Box, ListItemIcon, ListItemText, MenuItem, Popover, Typography } from '@mui/material';
 import { tokens } from '@/shared/locales/tokens';
+import Image from 'next/image';
 
 type Language = 'en';
 
@@ -76,7 +78,7 @@ export const LanguagePopover: FC<LanguagePopoverProps> = (props) => {
                   }
                 }}
               >
-                <img
+                <Image
                   alt={option.label}
                   src={option.icon}
                 />

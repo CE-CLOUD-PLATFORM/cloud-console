@@ -1,5 +1,5 @@
-import type { FC, ReactElement } from 'react';
-import { cloneElement, MouseEvent, useContext } from 'react';
+import type { FC, ReactElement , MouseEvent} from 'react';
+import { cloneElement, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { DropdownContext } from './dropdown-context';
 

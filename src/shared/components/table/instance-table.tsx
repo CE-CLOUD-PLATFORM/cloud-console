@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
 import type { FC } from 'react';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import './style.css';
@@ -26,15 +28,16 @@ import {
   Typography,
 } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
-import {
+import type {
   Flavor,
   Image,
   Instance,
   InstanceStatus,
 } from '@/modules/instance/types/instance';
+import type {
+  SeverityPillColor} from '@/shared/components/severity-pill';
 import {
-  SeverityPill,
-  SeverityPillColor,
+  SeverityPill
 } from '@/shared/components/severity-pill';
 import CircleLoading from '../Loading/CircleLoading';
 import { copyToClipboard } from '@/shared/utils/clipboard';
@@ -81,7 +84,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
   images,
   isLoading,
 }) => {
-  let { subject_id } = useParams();
+  const { subject_id } = useParams();
   const router = useRouter();
   const getFlavorName = (id: string) => {
     const flavorName = flavors.find((flavor) => flavor.id === id)?.name || '';

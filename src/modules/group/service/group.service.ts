@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { axiosInstance } from '@/shared/utils';
 
 import { endpoints } from '@/shared/configs';
-import { IGroupCreate, IGroupsReqParams, IGroupsRes } from '../types/group';
-import { IResponse } from '@/shared/interfaces/api';
+import type { IGroupCreate, IGroupsReqParams, IGroupsRes } from '../types/group';
+import type { IResponse } from '@/shared/interfaces/api';
 
 type Params = {
   queryKey: string[];

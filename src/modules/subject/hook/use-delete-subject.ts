@@ -1,6 +1,8 @@
-import { MutationOptions, useMutation, useQuery } from '@tanstack/react-query';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { MutationOptions} from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { deleteSubject } from '../service';
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
 
 export const useDeleteSubject = (options?:MutationOptions<any,AxiosError,string,unknown>) =>
   useMutation({

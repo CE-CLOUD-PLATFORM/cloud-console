@@ -2,7 +2,7 @@
 
 import { ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
 import { createTheme } from "./index";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export default function ThemeProvider({ children }: { children: ReactNode }) {
   const theme = createTheme({

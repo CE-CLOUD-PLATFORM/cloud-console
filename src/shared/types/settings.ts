@@ -1,5 +1,5 @@
 import type { Direction, PaletteMode } from '@mui/material';
-import type { ColorPreset, Contrast } from 'src/theme';
+import type { ColorPreset, Contrast } from '@/shared/theme';
 
 export type Layout = 'horizontal' | 'vertical';
 

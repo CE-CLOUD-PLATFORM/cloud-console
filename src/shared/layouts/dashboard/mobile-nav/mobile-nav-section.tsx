@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import type { FC, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Stack } from '@mui/material';

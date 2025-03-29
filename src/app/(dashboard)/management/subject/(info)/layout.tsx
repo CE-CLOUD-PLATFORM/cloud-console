@@ -1,4 +1,3 @@
-import { AuthGuard } from '@/modules/auth/guard/auth-guard';
 import SidebarSubject from '@/shared/components/sidebar/subject-sidebar';
 export default function Layout({
   children,

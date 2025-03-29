@@ -1,6 +1,5 @@
 'use client';
 import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
-import modalAddSubjectMember from '@/shared/components/modals/group/create-group-modal';
 import ModalAddSubjectMember from '@/shared/components/modals/member/add-subject-member-modal';
 import { TableMembers } from '@/shared/components/table/member-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
@@ -15,22 +14,22 @@ import {
 } from '@mui/material';
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 import { useParams } from 'next/navigation';
-import React, { useCallback } from 'react';
+import React from 'react';
 
 export default function GroupPage() {
   const { subject_id } = useParams();
   const modalAddSubjectMember = useDialog();
-  const detailsDialog = useDialog();
-  const { data, isLoading: isSubjectsLoading } = useGetSubjectMembers({
+  // const detailsDialog = useDialog();
+  const { data } = useGetSubjectMembers({
     subject_id: subject_id as string,
   });
   // const data = useSubjectStore();
-  const handleDelete = useCallback(
-    (itemId: string): void => {
-      detailsDialog.handleClose();
-    },
-    [detailsDialog],
-  );
+  // const handleDelete = useCallback(
+  //   (itemId: string): void => {
+  //     detailsDialog.handleClose();
+  //   },
+  //   [detailsDialog],
+  // );
 
   return (
     <>

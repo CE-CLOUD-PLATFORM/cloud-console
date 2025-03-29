@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import React, { useState } from 'react';
 import ModalCover from '../index';
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import '../index.css';
 import { Controller, useForm } from 'react-hook-form';
-import { FormProps } from '@/shared/interfaces/modal';
+import type { FormProps } from '@/shared/interfaces/modal';
 import { useRecoveryPassword } from '@/modules/auth/hook/use-recovery-pass';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validationSchema } from '@/modules/auth/validations/recovery-pass';
-import { IRecoveryPassword } from '@/modules/auth/types/account';
+import type { IRecoveryPassword } from '@/modules/auth/types/account';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 const form_id = 'forgot-password-form';
 const ModalRecoveryPasswordModal = (props: FormProps) => {
@@ -49,7 +51,7 @@ const ModalRecoveryPasswordModal = (props: FormProps) => {
   };
 
   return (
-    <ModalCover  handleOnClose={handleClose} isOpen={isOpen}>
+    <ModalCover handleOnClose={handleClose} isOpen={isOpen}>
       <Box className="modal-box !min-h-[auto]" gap={3}>
         {formState === 0 && (
           <Box className="hidden-scrollbar flex-1 space-y-2 overflow-y-auto">
@@ -123,7 +125,7 @@ const ModalRecoveryPasswordModal = (props: FormProps) => {
               <Typography fontSize={20} variant="overline">
                 Recovery email sent successfully.
               </Typography>
-              <img width={120} src="/assets/checked.png" />
+              <Image width={120} height={120} src="/assets/checked.png" alt="logo" />
               <Typography fontSize={16} variant="subtitle1">
                 Please check your email.
               </Typography>

@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable prefer-const */
+import React, { useState } from 'react';
 import {
   Box,
   Button,
@@ -13,16 +18,14 @@ import {
 } from '@mui/material';
 import '../../index.css';
 import { Controller, useForm } from 'react-hook-form';
-import { ISubjectCreate, Subject } from '@/modules/subject/types/subject';
 import { useUserStore } from '@/modules/auth/store/auth';
-import { FormProps } from '@/shared/interfaces/modal';
+import type { FormProps } from '@/shared/interfaces/modal';
 import { useCreateSubject } from '@/modules/subject/hook/use-create-subject';
 import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGetFlavors } from '@/modules/flavor/hook/use-get-flavors';
 import { useGetDomainUsers } from '@/modules/user/hook/use-get-domain-users';
-import { CreditDetail, ICreditCreate } from '@/modules/subject/types/credit';
-import { time } from 'console';
+import type { CreditDetail, ICreditCreate } from '@/modules/subject/types/credit';
 
 interface FlavorSpec {
   max_instance: number;

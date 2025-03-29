@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { InstancesQueryParams } from '../types/instance';
+import type { InstancesQueryParams } from '../types/instance';
 import { getInstances } from '../service';
 
 export const useGetInstances = (params: InstancesQueryParams) => {

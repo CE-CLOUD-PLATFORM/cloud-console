@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
+import React from 'react';
 import ModalCover from '../index';
-import Image from 'next/image';
 
 import {
   Autocomplete,
   Box,
   Button,
-  Checkbox,
   Chip,
   FormControl,
-  FormControlLabel,
   InputLabel,
   Link,
   MenuItem,
@@ -21,16 +22,16 @@ import {
 import '../index.css';
 import { Controller, useForm } from 'react-hook-form';
 import { useUserStore } from '@/modules/auth/store/auth';
-import { FormProps } from '@/shared/interfaces/modal';
+import type { FormProps } from '@/shared/interfaces/modal';
 import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
-import { useCreateGroup } from '@/modules/group/hook/use-create-group';
 import { useParams } from 'next/navigation';
-import { InstanceCreate } from '@/modules/instance/types/instance';
+import type { InstanceCreate } from '@/modules/instance/types/instance';
 import { useGetInstanceOption } from '@/modules/instance/hook/use-get-options';
 import { useGetUserPublicKeys } from '@/modules/config/hook/use-get-user-public-key';
-import { PublicKey } from '@/modules/config/types/public-key';
+import type { PublicKey } from '@/modules/config/types/public-key';
 import { useCreateInstance } from '@/modules/instance/hook/use-create-instance';
+import Image from 'next/image';
 
 const groupFormId = 'instance-create-form';
 const ModalCreateInstance = (props: FormProps) => {
@@ -156,7 +157,7 @@ const ModalCreateInstance = (props: FormProps) => {
                         className="flex gap-x-2"
                         value={image.id}
                       >
-                        <img
+                        <Image
                           width={24}
                           height={24}
                           src={image.Properties?.logo_url || '/assets/os.png'}

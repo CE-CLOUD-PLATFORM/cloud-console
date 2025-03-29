@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { axiosInstance } from '@/shared/utils';
 import { endpoints } from '@/shared/configs';
-import { IDomainUsersReqParam, IDomainUsersRes } from '../types/user';
+import type { IDomainUsersReqParam, IDomainUsersRes } from '../types/user';
 
 type Params = {
   queryKey: string[];

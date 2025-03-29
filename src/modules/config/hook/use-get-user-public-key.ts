@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { PublicKeyReqParams } from '../types/public-key';
+import type { PublicKeyReqParams } from '../types/public-key';
 import { getUserPublicKeys } from '../service';
 
 

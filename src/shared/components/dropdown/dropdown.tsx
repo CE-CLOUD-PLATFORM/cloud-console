@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-unused-vars */
 import type { FC, MouseEvent, ReactNode } from 'react';
 import { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';

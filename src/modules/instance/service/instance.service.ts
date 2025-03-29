@@ -1,7 +1,9 @@
-import { Instance } from './../../subject/types/subject';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { axiosInstance } from '@/shared/utils';
 import { endpoints } from '@/shared/configs';
-import { InstanceCreate, InstanceOptionQueryParam, InstanceOptionRes, InstanceQueryParams, InstanceRes, InstancesQueryParams, InstancesRes, InstanceVNCRes } from '../types/instance';
+import type { InstanceCreate, InstanceOptionQueryParam, InstanceOptionRes, InstanceQueryParams, InstanceRes, InstancesQueryParams, InstancesRes, InstanceVNCRes } from '../types/instance';
 
 type Params = {
   queryKey: string[];

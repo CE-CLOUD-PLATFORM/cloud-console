@@ -1,4 +1,5 @@
-import { IResponse } from "@/shared/interfaces/api"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IResponse } from "@/shared/interfaces/api"
 
 export interface Flavor {
     id: string

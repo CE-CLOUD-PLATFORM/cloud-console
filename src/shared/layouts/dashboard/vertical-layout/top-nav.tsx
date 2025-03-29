@@ -3,17 +3,12 @@ import type { FC } from 'react';
 import PropTypes from 'prop-types';
 import Menu01Icon from '@untitled-ui/icons-react/build/esm/Menu01';
 import type { Theme } from '@mui/material';
-import { Box, IconButton, Stack, SvgIcon, Typography, useMediaQuery } from '@mui/material';
+import { Box, IconButton, Stack, SvgIcon, useMediaQuery } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { AccountButton } from '../account-button';
-import { ContactsButton } from '../contacts-button';
-import { LanguageSwitch } from '../language-switch';
-import { NotificationsButton } from '../notifications-button';
-import { SearchButton } from '../search-button';
-import { useAppNavStore } from '@/modules/app/store/use-app-nav-store';
 
 const TOP_NAV_HEIGHT: number = 64;
-const SIDE_NAV_WIDTH: number = 280;
+// const SIDE_NAV_WIDTH: number = 280;
 
 interface TopNavProps {
   onMobileNavOpen?: () => void;
@@ -23,7 +18,7 @@ interface TopNavProps {
 export const TopNav: FC<TopNavProps> = (props) => {
   const { onMobileNavOpen, sizeNav, ...other } = props;
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
-  const title = useAppNavStore((state) => state.title);
+  // const title = useAppNavStore((state) => state.title);
 
   return (
     <Box

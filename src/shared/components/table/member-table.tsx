@@ -4,14 +4,12 @@ import './style.css';
 import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import {
-  Avatar,
   Box,
   Card,
   Checkbox,
   Divider,
   IconButton,
   InputAdornment,
-  Link,
   OutlinedInput,
   Stack,
   SvgIcon,
@@ -25,7 +23,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
-import { Member } from '@/modules/user/types/member';
+import type { Member } from '@/modules/user/types/member';
 
 
 interface Option {

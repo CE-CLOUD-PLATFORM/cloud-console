@@ -1,10 +1,11 @@
+/* eslint-disable prefer-const */
+/* eslint-disable no-unused-vars */
 import type { ChangeEvent, FC, MouseEvent } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Stack, Table, TableBody, TablePagination } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
 import { ItemListRow } from './item-list-row';
-import { Subject } from '@/modules/subject/types/subject';
-import { Group } from '@/modules/group/types/group';
+import type { Group } from '@/modules/group/types/group';
 
 interface ItemListProps {
   count?: number;

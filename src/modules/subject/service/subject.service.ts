@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { axiosInstance } from '@/shared/utils';
 import type {
   ISubjectRes,
@@ -7,7 +10,7 @@ import type {
   ISubjectCreate,
 } from '@/modules/subject/types/subject';
 import { endpoints } from '@/shared/configs';
-import { IMemberReqParams, IMemberRes } from '@/modules/user/types/member';
+import type { IMemberReqParams, IMemberRes } from '@/modules/user/types/member';
 
 type Params = {
   queryKey: string[];

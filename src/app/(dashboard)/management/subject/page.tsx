@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { useCallback, useState } from 'react';
 
@@ -15,18 +16,16 @@ import {
 
 import { useDeleteSubject } from '@/modules/subject/hook/use-delete-subject';
 import {
-  useCurrentItem,
   useItemsSearch,
   useItemsStore,
 } from '@/modules/subject/store/use-subjects-store';
 import { ItemList } from '@/shared/components/item-list/subject-list/item-list';
 import { ItemSearch } from '@/shared/components/item-list/subject-list/item-search';
 import ModalSubjectCreate from '@/shared/components/modals/subject/create-subject-modal';
-import { View } from '@/shared/types/view';
+import type { View } from '@/shared/types/view';
 import { useQueryClient } from '@tanstack/react-query';
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 import toast from 'react-hot-toast';
-import Loading from '@/shared/components/Loading';
 import CircleLoading from '@/shared/components/Loading/CircleLoading';
 
 export default function Page() {
@@ -36,7 +35,7 @@ export default function Page() {
   const [view, setView] = useState<View>('grid');
   const modalCreateSubject = useDialog();
   const detailsDialog = useDialog<string>();
-  const currentItem = useCurrentItem(itemsStore.items, detailsDialog.data);
+  // const currentItem = useCurrentItem(itemsStore.items, detailsDialog.data);
   const deleteSubject = useDeleteSubject({
     onSuccess: () => {
       toast.success('Project created successfully');

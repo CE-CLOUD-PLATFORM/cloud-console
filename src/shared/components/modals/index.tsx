@@ -1,4 +1,7 @@
-import React, { ReactNode } from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
+import type { ReactNode } from 'react';
+import React from 'react';
 import './index.css';
 interface ModalCoverProps {
   children: ReactNode;

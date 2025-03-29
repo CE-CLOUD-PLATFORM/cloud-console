@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getSubjectMembers } from '../../subject/service';
-import { IMemberReqParams } from '@/modules/user/types/member';
+import type { IMemberReqParams } from '@/modules/user/types/member';
 
 export const useGetSubjectMembers = ({ subject_id }: IMemberReqParams) =>
   useQuery({

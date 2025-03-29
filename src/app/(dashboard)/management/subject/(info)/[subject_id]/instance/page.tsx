@@ -1,5 +1,4 @@
 'use client';
-import { useUserStore } from '@/modules/auth/store/auth';
 import { useGetInstances } from '@/modules/instance/hook/use-get-instances';
 import { useGetInstanceOption } from '@/modules/instance/hook/use-get-options';
 import { TableInstances } from '@/shared/components/table/instance-table';
@@ -16,31 +15,29 @@ import {
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 import FileDownload03 from '@untitled-ui/icons-react/build/esm/FileDownload03';
 import { useParams } from 'next/navigation';
-import React, { useCallback } from 'react';
+import React from 'react';
 import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
-import toast, { useToaster } from 'react-hot-toast';
-import CircleLoading from '@/shared/components/Loading/CircleLoading';
+import toast from 'react-hot-toast';
 
 export default function InstancesPage() {
   const { subject_id } = useParams();
-  const { user } = useUserStore();
+  // const { user } = useUserStore();
   const modalCreateInstance = useDialog();
-  const detailsDialog = useDialog();
+  // const detailsDialog = useDialog();
   const { data: instancesData, isLoading } = useGetInstances({
     subject_id: subject_id as string,
   });
-  const { data: instanceOption, isLoading: isInstanceOptionLoading } =
-    useGetInstanceOption({
-      subject_id: subject_id as string,
-    });
+  const { data: instanceOption } = useGetInstanceOption({
+    subject_id: subject_id as string,
+  });
   // const instancesData = useSubjectStore();
 
-  const handleDelete = useCallback(
-    (itemId: string): void => {
-      detailsDialog.handleClose();
-    },
-    [detailsDialog, instancesData],
-  );
+  // const handleDelete = useCallback(
+  //   (itemId: string): void => {
+  //     detailsDialog.handleClose();
+  //   },
+  //   [detailsDialog, instancesData],
+  // );
   const handleDownloadVPN = async () => {
     try {
       const response = await fetch('/res/cloud.ovpn', {
@@ -59,7 +56,7 @@ export default function InstancesPage() {
 
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'ce-cloud-vpn.ovpn'; 
+      link.download = 'ce-cloud-vpn.ovpn';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -67,6 +64,7 @@ export default function InstancesPage() {
 
       toast.success('Download completed!');
     } catch (error) {
+      console.log(error);
       toast.error('Download failed. Please try again.');
     } finally {
       // setLoading(false);

@@ -1,12 +1,13 @@
-import React, { SyntheticEvent, useEffect, useState } from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
+import React, { useState } from 'react';
 import ModalCover from '../index';
 
 import {
   Autocomplete,
   Box,
   Button,
-  Card,
-  Checkbox,
   Divider,
   IconButton,
   MenuItem,
@@ -24,16 +25,13 @@ import {
 import '../index.css';
 import { useForm } from 'react-hook-form';
 import { useUserStore } from '@/modules/auth/store/auth';
-import { FormProps } from '@/shared/interfaces/modal';
-import toast from 'react-hot-toast';
+import type { FormProps } from '@/shared/interfaces/modal';
 import { useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import { PublicKey } from '@/modules/config/types/public-key';
-import { useCreateInstance } from '@/modules/instance/hook/use-create-instance';
 import { useGetDomainUsers } from '@/modules/user/hook/use-get-domain-users';
 import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
-import { IMemberSubjectAdd, Member } from '@/modules/user/types/member';
-import { User } from '@/modules/user/types/user';
+import type { IMemberSubjectAdd, Member } from '@/modules/user/types/member';
+import type { User } from '@/modules/user/types/user';
 import AlignBottom01 from '@untitled-ui/icons-react/build/esm/AlignBottom01';
 import XClose from '@untitled-ui/icons-react/build/esm/X';
 import { Scrollbar } from '../../scrollbar';
@@ -76,14 +74,14 @@ const ModalAddSubjectMember = (props: FormProps) => {
 
   const handleSelect = (event: React.SyntheticEvent, newValue: User | null) => {
     if (newValue) {
-      var members = getValues().members;
+      const {members} = getValues();
 
       setValue('members', [...members, { ...newValue, role: 'test' }]);
     }
     setSearchValue(null);
   };
   const handleDelete = (id: string) => {
-    var members = getValues().members;
+    const {members} = getValues();
 
     setValue(
       'members',
@@ -109,7 +107,7 @@ const ModalAddSubjectMember = (props: FormProps) => {
               className="flex-grow"
               options={
                 allUser?.users.filter((user) => {
-                  let members = watch('members').map((mem) => mem.id);
+                  const members = watch('members').map((mem) => mem.id);
                   return !members.includes(user.id);
                 }) || []
               }

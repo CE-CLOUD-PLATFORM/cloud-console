@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import React, { useState } from 'react';
 import ModalCover from '../index';
 import {
   Autocomplete,
   Box,
   Button,
   Divider,
-  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
@@ -18,16 +21,14 @@ import {
 } from '@mui/material';
 import '../index.css';
 import { Controller, useForm } from 'react-hook-form';
-import { Subject } from '@/modules/subject/types/subject';
 import { useUserStore } from '@/modules/auth/store/auth';
-import { FormProps } from '@/shared/interfaces/modal';
+import type { FormProps } from '@/shared/interfaces/modal';
 import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCreateGroup } from '@/modules/group/hook/use-create-group';
-import { IGroupCreate } from '@/modules/group/types/group';
+import type { IGroupCreate } from '@/modules/group/types/group';
 import { useParams } from 'next/navigation';
 import { useGetFlavors } from '@/modules/flavor/hook/use-get-flavors';
-import { useGetDomainUsers } from '@/modules/user/hook/use-get-domain-users';
 import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
 interface FlavorSpec {
   max_instance: number;

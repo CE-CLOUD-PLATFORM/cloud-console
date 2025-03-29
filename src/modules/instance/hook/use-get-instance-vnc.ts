@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { getInstance, getInstanceVNC } from '../service';
-import { InstanceQueryParams } from '../types/instance';
+import { getInstanceVNC } from '../service';
+import type { InstanceQueryParams } from '../types/instance';
 
 export const useGetInstanceVNC = (params: InstanceQueryParams) => {
     const { subject_id, instance_id } = params

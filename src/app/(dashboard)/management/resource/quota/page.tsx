@@ -1,6 +1,6 @@
 'use client';
 import { useGetQuotas } from '@/modules/resource/hook/use-get-quota-list';
-import { Quota } from '@/modules/resource/types/quota';
+import type { Quota } from '@/modules/resource/types/quota';
 import { QuotaDrawer } from '@/shared/components/item-drawer/quota-drawer';
 import ResourceCard from '@/shared/components/resource-card';
 import { TableQuota } from '@/shared/components/table/quota-table';
@@ -12,8 +12,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useParams } from 'next/navigation';
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 const useCurrentItem = (items: Quota[], itemId?: string): Quota | undefined => {
   return useMemo((): Quota | undefined => {
@@ -30,24 +29,23 @@ export interface handleQuotaDialogType {
 }
 
 export default function QuotaManagementPage() {
-  const { subject_id } = useParams();
+  // const { subject_id } = useParams();
   const { data: quotaData } = useGetQuotas();
   const detailsDialog = useDialog<handleQuotaDialogType>();
   const currentItem = useCurrentItem(
     quotaData?.quotas as Quota[],
     detailsDialog.data?.item?.id,
   );
-  
-  const handleDelete = useCallback(
-    (itemId: string): void => {
-      detailsDialog.handleClose();
-    },
-    [detailsDialog],
-  );
+
+  // const handleDelete = useCallback(
+  //   (itemId: string): void => {
+  //     detailsDialog.handleClose();
+  //   },
+  //   [detailsDialog],
+  // );
 
   return (
     <>
-    
       <Box
         component="main"
         sx={{

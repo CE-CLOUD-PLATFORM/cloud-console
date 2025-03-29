@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useState, type FC } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
-import Star01Icon from '@untitled-ui/icons-react/build/esm/Star01';
 import PieChart01 from '@untitled-ui/icons-react/build/esm/PieChart01';
 import XIcon from '@untitled-ui/icons-react/build/esm/X';
 import {
-  Avatar,
   backdropClasses,
   Box,
   Divider,
@@ -20,7 +22,7 @@ import {
   Collapse,
   Button,
 } from '@mui/material';
-import { Credit } from '@/modules/subject/types/credit';
+import type { Credit } from '@/modules/subject/types/credit';
 import ChevronUp from '@untitled-ui/icons-react/build/esm/ChevronUp';
 import ChevronDown from '@untitled-ui/icons-react/build/esm/ChevronDown';
 
@@ -159,7 +161,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
               <Stack display={'flex'} gap={1} direction={'row'}>
                 <Chip label={`Flavor: ${item.resource.flavor_id}`} />
                 <Chip label={`Instance: ${item.resource.instance}`} />
-                <Chip label={`Time Usage: ${item.resource.time}`} />
+                <Chip label={`Time Usage: ${item.resource.time_in_hour}`} />
               </Stack>
             </Grid>
             <Grid
@@ -189,10 +191,10 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
                   display: expandedRow ? 'none' : 'block',
                 }}
               >
-                {item.resource.details}
+                {item.resource.instance}
               </Typography>
               <Collapse in={expandedRow}>
-                <Typography variant="body2">{item.resource.details}</Typography>
+                <Typography variant="body2">{item.resource.instance}</Typography>
               </Collapse>
             </Grid>
 

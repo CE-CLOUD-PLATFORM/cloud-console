@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import { useState, type FC } from 'react';
-import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
-import Star01Icon from '@untitled-ui/icons-react/build/esm/Star01';
 import PieChart01 from '@untitled-ui/icons-react/build/esm/PieChart01';
 import XIcon from '@untitled-ui/icons-react/build/esm/X';
 import {
-  Avatar,
   backdropClasses,
   Box,
   Divider,
@@ -22,7 +22,7 @@ import {
 } from '@mui/material';
 import ChevronUp from '@untitled-ui/icons-react/build/esm/ChevronUp';
 import ChevronDown from '@untitled-ui/icons-react/build/esm/ChevronDown';
-import { Quota } from '@/modules/resource/types/quota';
+import type { Quota } from '@/modules/resource/types/quota';
 import { useApprovalQuota } from '@/modules/resource/hook/use-approval-quota';
 import { useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
@@ -39,7 +39,7 @@ interface QuotaDrawerProps {
 export const QuotaDrawer: FC<QuotaDrawerProps> = (props) => {
   const { item, onClose, onDelete, open = false } = props;
   const [expandedRow, setExpandedRow] = useState<boolean>(false);
-  let queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const approvalQuota = useApprovalQuota({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['quotas'] });

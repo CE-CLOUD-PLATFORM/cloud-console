@@ -1,4 +1,8 @@
-import { createContext, MouseEvent } from 'react';
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-unused-vars */
+import type { MouseEvent } from 'react';
+import { createContext } from 'react';
 
 const noop = (...args: any[]): any => {};
 

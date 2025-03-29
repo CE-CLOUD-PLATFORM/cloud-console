@@ -1,10 +1,8 @@
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import File04Icon from '@untitled-ui/icons-react/build/esm/File04';
-import { Box, Button, Divider, Drawer, Stack, SvgIcon, Typography } from '@mui/material';
+import { Box, Divider, Drawer, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { Logo } from '@/shared/components/logo';
 import { RouterLink } from '@/shared/components/router-link';
 import { Scrollbar } from '@/shared/components/scrollbar';
 import { usePathname } from '@/shared/hooks/use-pathname';
@@ -12,6 +10,7 @@ import { paths } from '@/paths';
 import type { NavColor } from '@/shared/types/settings';
 import type { Section } from '../config';
 import { MobileNavSection } from './mobile-nav-section';
+import Image from 'next/image';
 
 const MOBILE_NAV_WIDTH: number = 280;
 
@@ -157,7 +156,7 @@ export const MobileNav: FC<MobileNavProps> = (props) => {
                 width: 40,
               }}
             >
-              <img src="/assets/ce-logo.png" />
+              <Image src="/assets/ce-logo.png" alt='logo'/>
             </Box>
             <Typography color="" variant="h6">
               CE CLOUD

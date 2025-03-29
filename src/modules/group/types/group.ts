@@ -1,4 +1,4 @@
-import { SubjectResource } from '@/modules/subject/types/subject';
+import type { SubjectResource } from '@/modules/subject/types/subject';
 import type { IResponse } from '@/shared/interfaces/api';
 
 export interface IGroupsReqParams {

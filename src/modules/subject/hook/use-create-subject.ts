@@ -1,7 +1,9 @@
-import { MutationOptions, useMutation, useQuery } from '@tanstack/react-query';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { MutationOptions} from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { postSubject } from '../service';
-import { ISubjectCreate } from '../types/subject';
-import { AxiosError } from 'axios';
+import type { ISubjectCreate } from '../types/subject';
+import type { AxiosError } from 'axios';
 
 export const useCreateSubject = (options?:MutationOptions<any,AxiosError,ISubjectCreate,unknown>) =>
   useMutation({

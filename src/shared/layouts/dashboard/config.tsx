@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import type { ReactNode } from 'react';
 import { useMemo } from 'react';

@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import type { User, UserInfo } from "@/modules/auth/types/user";
-import { setCookie, getCookie, deleteCookie } from "cookies-next";
+import type { User } from "@/modules/auth/types/user";
+import { getCookie } from "cookies-next";
 import { cookieParser } from "@/shared/utils/cookie-parser";
 import { removeSession } from "@/shared/utils";
 type UserState = {

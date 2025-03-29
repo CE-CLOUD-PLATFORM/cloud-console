@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { cookieParser } from './shared/utils/cookie-parser';
 
 
 export function middleware(request: NextRequest) {

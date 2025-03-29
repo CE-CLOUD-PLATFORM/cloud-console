@@ -1,8 +1,6 @@
 import {
-  Box,
   Card,
   LinearProgress,
-  Paper,
   Stack,
   Typography,
 } from '@mui/material';

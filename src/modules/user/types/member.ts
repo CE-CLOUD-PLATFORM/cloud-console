@@ -1,5 +1,5 @@
-import { IResponse } from "@/shared/interfaces/api"
-import { User } from "./user"
+import type { IResponse } from "@/shared/interfaces/api"
+import type { User } from "./user"
 
 export interface Member extends User {
     role: string

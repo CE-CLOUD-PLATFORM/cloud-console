@@ -1,4 +1,3 @@
-import { validate } from "numeral";
 
 const version = {
   V1: "/api/v1"

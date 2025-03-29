@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { axiosInstance } from '@/shared/utils';
-import type {
-  ISubjectsReqParam,
-} from '@/modules/subject/types/subject';
+
+
 import { endpoints } from '@/shared/configs';
-import { PublicKeyReqParams, PublicKeyRes } from '../types/public-key';
+import type { PublicKeyReqParams, PublicKeyRes } from '../types/public-key';
 
 type Params = {
   queryKey: string[];

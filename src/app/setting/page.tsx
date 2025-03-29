@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const SettingPage = () => {
+const SettingPage = () => {
   return (
     <div>SettingPage</div>
   )

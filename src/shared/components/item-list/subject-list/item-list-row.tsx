@@ -1,13 +1,12 @@
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { FC } from 'react';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
-import Globe01Icon from '@untitled-ui/icons-react/build/esm/Globe03';
-import Star01Icon from '@untitled-ui/icons-react/build/esm/Star01';
 import DotsVerticalIcon from '@untitled-ui/icons-react/build/esm/DotsVertical';
 import {
-  Avatar,
-  AvatarGroup,
   Box,
   IconButton,
   Stack,
@@ -15,14 +14,12 @@ import {
   TableCell,
   tableCellClasses,
   TableRow,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import { usePopover } from '@/shared/hooks/use-popover';
-import { bytesToSize } from '@/shared/utils/bytes-to-size';
 import { ItemIcon } from './item-icon';
 import { ItemMenu } from './item-menu';
-import { Subject } from '@/modules/subject/types/subject';
+import type { Subject } from '@/modules/subject/types/subject';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 

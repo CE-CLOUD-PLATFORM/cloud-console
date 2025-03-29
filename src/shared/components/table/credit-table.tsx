@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, type FC } from 'react';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import './style.css';
@@ -6,16 +7,13 @@ import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import ChevronUp from '@untitled-ui/icons-react/build/esm/ChevronUp';
 import ChevronDown from '@untitled-ui/icons-react/build/esm/ChevronDown';
 import {
-  Avatar,
   Box,
   Card,
-  Checkbox,
   Chip,
   Collapse,
   Divider,
   IconButton,
   InputAdornment,
-  Link,
   OutlinedInput,
   Stack,
   SvgIcon,
@@ -29,8 +27,8 @@ import {
   Typography,
 } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
-import { Credit } from '@/modules/subject/types/credit';
-import { handleCreditDialogType } from '@/app/(dashboard)/management/resource/credit/page';
+import type { Credit } from '@/modules/subject/types/credit';
+import type { handleCreditDialogType } from '@/app/(dashboard)/management/resource/credit/page';
 
 interface Option {
   label: string;
@@ -147,7 +145,7 @@ export const TableCredit: FC<TablecreditProps> = ({ credits, onOpen }) => {
                         </Typography>
                         <Chip label={`Flavor: ${credit.resource.flavor_id}`} />
                         <Chip label={`Instance: ${credit.resource.instance}`} />
-                        <Chip label={`Time Usage: ${credit.resource.time}`} />
+                        <Chip label={`Time Usage: ${credit.resource.time_in_hour}`} />
                       </Stack>
                       <Typography
                         variant="body2"
@@ -160,11 +158,11 @@ export const TableCredit: FC<TablecreditProps> = ({ credits, onOpen }) => {
                           display: expandedRow === credit.id ? 'none' : 'block',
                         }}
                       >
-                        {credit.resource.details}
+                        {credit.resource.instance}
                       </Typography>
                       <Collapse in={expandedRow === credit.id}>
                         <Typography variant="body2">
-                          {credit.resource.details}
+                          {credit.resource.instance}
                         </Typography>
                       </Collapse>
                       <IconButton

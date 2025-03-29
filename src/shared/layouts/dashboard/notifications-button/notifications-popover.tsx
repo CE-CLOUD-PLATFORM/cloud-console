@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import type { FC } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';

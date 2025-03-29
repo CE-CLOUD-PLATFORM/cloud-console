@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import PropTypes from 'prop-types';
 import type { ListItemProps } from '@mui/material';
 import { Box, ListItem, ListItemText, Typography } from '@mui/material';
 
@@ -63,10 +62,10 @@ PropertyListItem.defaultProps = {
   align: 'vertical'
 };
 
-PropertyListItem.propTypes = {
-  align: PropTypes.oneOf<Direction>(['horizontal', 'vertical']),
-  children: PropTypes.node,
-  disableGutters: PropTypes.bool,
-  label: PropTypes.string.isRequired,
-  value: PropTypes.string
-};
+// PropertyListItem.propTypes = {
+//   align: PropTypes.oneOf<Direction>(['horizontal', 'vertical']),
+//   children: PropTypes.node,
+//   disableGutters: PropTypes.bool,
+//   label: PropTypes.string.isRequired,
+//   value: PropTypes.string
+// };

@@ -1,6 +1,5 @@
 'use client';
 import type { FC, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import type { Theme } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
 import { styled } from '@mui/material/styles';

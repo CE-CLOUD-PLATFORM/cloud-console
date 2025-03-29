@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { FC, ReactNode } from 'react';
 import { useContext } from 'react';
 import PropTypes from 'prop-types';

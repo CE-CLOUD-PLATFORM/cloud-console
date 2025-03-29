@@ -1,4 +1,4 @@
-import { IResponse } from "@/shared/interfaces/api"
+import type { IResponse } from "@/shared/interfaces/api"
 export interface User {
     id: string
     name: string

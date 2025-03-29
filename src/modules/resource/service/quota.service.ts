@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { axiosInstance } from '@/shared/utils';
 
 import { endpoints } from '@/shared/configs';
-import { IQuotaCreate, IQuotaResponse, QuotaStatus } from '../types/quota';
-import { QueryParams } from '@/shared/interfaces/api';
+import type { IQuotaCreate, IQuotaResponse, QuotaStatus } from '../types/quota';
+import type { QueryParams } from '@/shared/interfaces/api';
 
 
 

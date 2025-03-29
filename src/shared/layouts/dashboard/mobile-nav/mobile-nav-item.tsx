@@ -1,7 +1,7 @@
+/* eslint-disable no-nested-ternary */
 "use client"
 import type { FC, ReactNode } from 'react';
 import { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
 import ChevronDownIcon from '@untitled-ui/icons-react/build/esm/ChevronDown';
 import ChevronRightIcon from '@untitled-ui/icons-react/build/esm/ChevronRight';
 import { Box, ButtonBase, Collapse, SvgIcon } from '@mui/material';

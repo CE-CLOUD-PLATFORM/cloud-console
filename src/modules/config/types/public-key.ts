@@ -1,5 +1,5 @@
 
-import { IResponse } from "@/shared/interfaces/api";
+import type { IResponse } from "@/shared/interfaces/api";
 
 export interface PublicKey {
     id: string

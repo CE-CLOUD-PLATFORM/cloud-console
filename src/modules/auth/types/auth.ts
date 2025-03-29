@@ -1,5 +1,5 @@
-import { IResponse } from "@/shared/interfaces/api";
-import { UserInfo } from "./user";
+import type { IResponse } from "@/shared/interfaces/api";
+import type { UserInfo } from "./user";
 
 export interface IAuthLogin {
     username: string;

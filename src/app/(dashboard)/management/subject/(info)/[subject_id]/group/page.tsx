@@ -1,7 +1,6 @@
 'use client';
 import { useUserStore } from '@/modules/auth/store/auth';
 import { useGetGroups } from '@/modules/group/hook/use-get-groups';
-import { useSubjectStore } from '@/modules/subject/store/use-subject-store';
 import { ItemList } from '@/shared/components/item-list/group-list/item-list';
 import ModalGroupCreate from '@/shared/components/modals/group/create-group-modal';
 import { useDialog } from '@/shared/hooks/use-dialog';
@@ -23,7 +22,7 @@ export default function GroupPage() {
   const { user } = useUserStore();
   const modalGroupCreate = useDialog();
   const detailsDialog = useDialog();
-  const { data, isLoading: isSubjectsLoading } = useGetGroups({
+  const { data } = useGetGroups({
     user_id: user?.info.id as string,
     subject_id: subject_id as string,
     domain_name: user?.info.domain.name as string,
@@ -31,6 +30,7 @@ export default function GroupPage() {
   // const data = useSubjectStore();
   const handleDelete = useCallback(
     (itemId: string): void => {
+      console.log(itemId);
       detailsDialog.handleClose();
     },
     [detailsDialog],

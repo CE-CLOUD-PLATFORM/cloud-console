@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FC } from 'react';
 import PropTypes from 'prop-types';
+import Image from 'next/image';
 
 type Extension = 'jpeg' | 'jpg' | 'mp4' | 'pdf' | 'png' | string;
 
@@ -27,7 +29,7 @@ export const FileIcon: FC<FileIconProps> = (props) => {
     icon = icons[extension] || '/assets/icons/icon-other.svg';
   }
 
-  return <img src={icon} />;
+  return <Image src={icon} alt='logo'/>;
 };
 
 FileIcon.propTypes = {

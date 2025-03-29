@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { useGetSubject } from '@/modules/subject/hook/use-get-subject';
 import React, { useEffect } from 'react';
@@ -32,8 +33,7 @@ export default function OverviewPage() {
     }
   }, [data, isSubjectLoading]);
   return (
-    <>
-      <Box
+    <Box
         component="main"
         sx={{
           flexGrow: 1,
@@ -68,6 +68,5 @@ export default function OverviewPage() {
           </Grid>
         </Container>
       </Box>
-    </>
   );
 }
