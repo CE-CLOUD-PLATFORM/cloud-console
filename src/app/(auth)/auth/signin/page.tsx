@@ -113,7 +113,7 @@ export default function LoginPage() {
                   <Controller
                     name="domain"
                     control={control}
-                    defaultValue="Default"
+                    defaultValue="CE"
                     render={({ field }) => (
                       <Select
                         error={errors.domain ? true : false}
@@ -123,7 +123,7 @@ export default function LoginPage() {
                         variant="filled"
                         {...field}
                       >
-                        <MenuItem value={'Default'}>Default</MenuItem>
+                        <MenuItem value={'CE'}>CE</MenuItem>
                       </Select>
                     )}
                   />

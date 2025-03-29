@@ -1,15 +1,8 @@
-version: '3.8'
-
 services:
-  nextjs-app:
-    container_name: nextjs_app
+  platform:
+    container_name: cloud-console
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: production
-      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
-    env_file:
-      - .env
+    restart: always
+    network_mode: host

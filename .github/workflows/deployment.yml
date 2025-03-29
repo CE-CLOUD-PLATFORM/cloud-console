@@ -1,0 +1,28 @@
+name: Deploy NextJS
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  cloning:
+    name: cloning
+    runs-on: self-hosted
+    steps:
+      - name: Clone Repo ⬇️
+        uses: actions/checkout@v2
+
+  build:
+    runs-on: self-hosted
+    needs: [cloning]
+    steps:
+      - name: Checkout ✔️
+        uses: actions/checkout@v3
+      - name: Create .env file
+        run: |
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> .env
+      - name: Docker Time
+        run: docker compose up -d --build --force-recreate
+
+      - name: CleanUp
+        run: docker system prune -af --volumes
