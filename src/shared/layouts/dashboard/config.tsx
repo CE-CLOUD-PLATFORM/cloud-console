@@ -7,9 +7,7 @@ import { SvgIcon } from '@mui/material';
 
 import HomeSmileIcon from '@/shared/icons/untitled-ui/duocolor/home-smile';
 import { paths } from '@/paths';
-import Settings03 from '@untitled-ui/icons-react/build/esm/Settings03';
-import Settings02 from '@untitled-ui/icons-react/build/esm/Settings02';
-import DataFlow01 from '@untitled-ui/icons-react/build/esm/DataFlow01';
+import { Settings03, Settings02, Dataflow01 } from '@untitled-ui/icons-react';
 
 export interface Item {
   disabled?: boolean;
@@ -56,7 +54,7 @@ export const useSections = () => {
             path: paths.resource.index,
             icon: (
               <SvgIcon fontSize="small">
-                <DataFlow01 />
+                <Dataflow01 />
               </SvgIcon>
             ),
             items: [

@@ -2,5 +2,12 @@ import Image from 'next/image';
 import type { FC } from 'react';
 
 export const ItemIcon: FC = () => {
-  return <Image src="/assets/icons/icon-folder.svg" alt="logo" />;
+  return (
+    <Image
+      width={50}
+      height={50}
+      src="/assets/icons/icon-folder.svg"
+      alt="logo"
+    />
+  );
 };

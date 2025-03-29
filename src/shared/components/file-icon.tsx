@@ -11,7 +11,7 @@ const icons: Record<Extension, any> = {
   mp4: '/assets/icons/icon-mp4.svg',
   pdf: '/assets/icons/icon-pdf.svg',
   png: '/assets/icons/icon-png.svg',
-  svg: '/assets/icons/icon-svg.svg'
+  svg: '/assets/icons/icon-svg.svg',
 };
 
 interface FileIconProps {
@@ -29,9 +29,9 @@ export const FileIcon: FC<FileIconProps> = (props) => {
     icon = icons[extension] || '/assets/icons/icon-other.svg';
   }
 
-  return <Image src={icon} alt='logo'/>;
+  return <Image width={50} height={50} src={icon} alt="logo" />;
 };
 
 FileIcon.propTypes = {
-  extension: PropTypes.string
+  extension: PropTypes.string,
 };

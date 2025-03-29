@@ -12,7 +12,6 @@ import type { Section } from '../config';
 import { SideNavSection } from './side-nav-section';
 import Image from 'next/image';
 
-
 const useCssVars = (color: NavColor): Record<string, string> => {
   const theme = useTheme();
 
@@ -196,7 +195,12 @@ export const SideNav: FC<SideNavProps> = (props) => {
                 width: 40,
               }}
             >
-              <Image src="/assets/ce-logo.png" alt="logo" />
+              <Image
+                width={50}
+                height={50}
+                src="/assets/ce-logo.png"
+                alt="logo"
+              />
             </Box>
             <Typography color="" variant="h6">
               CE CLOUD
