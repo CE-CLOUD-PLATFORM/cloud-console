@@ -72,3 +72,10 @@ export const deleteSubject = async (id: string) => {
     params: id
   })).data
 }
+export const postSubjectMember = async (data: ISubjectCreate) => {
+  return (await axiosInstance.post<
+    any,
+    any,
+    ISubjectCreate
+  >(`${endpoints.subject.create}`, data)).data
+}

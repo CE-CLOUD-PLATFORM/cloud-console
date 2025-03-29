@@ -1,7 +1,7 @@
 import { Instance } from './../../subject/types/subject';
 import { axiosInstance } from '@/shared/utils';
 import { endpoints } from '@/shared/configs';
-import { InstanceCreate, InstanceOptionQueryParam, InstanceOptionRes, InstanceQueryParams, InstanceRes, InstancesQueryParams, InstancesRes } from '../types/instance';
+import { InstanceCreate, InstanceOptionQueryParam, InstanceOptionRes, InstanceQueryParams, InstanceRes, InstancesQueryParams, InstancesRes, InstanceVNCRes } from '../types/instance';
 
 type Params = {
   queryKey: string[];
@@ -23,7 +23,7 @@ export const getInstances = async ({
 };
 export const getInstance = async ({
   queryKey,
-}: Params): Promise<InstancesRes> => {
+}: Params): Promise<InstanceRes> => {
   const [_, subject_id, instance_id] = queryKey;
 
   const params: InstanceQueryParams = {
@@ -56,3 +56,20 @@ export const postInstance = async (data: InstanceCreate) => {
     InstanceCreate
   >(`${endpoints.instance.index}`, data)).data
 }
+
+export const getInstanceVNC = async ({
+  queryKey,
+}: Params): Promise<InstanceVNCRes> => {
+  const [_, subject_id, instance_id] = queryKey;
+
+  const params: InstanceQueryParams = {
+    subject_id,
+    instance_id
+  };
+  const response = await axiosInstance.get<
+    InstanceRes,
+    any,
+    InstanceQueryParams
+  >(`${endpoints.instance.vnc}`, { params });
+  return response.data;
+};

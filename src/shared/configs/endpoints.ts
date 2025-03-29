@@ -25,7 +25,9 @@ export const endpoints = {
     getAll: `${ROOTS.SUBJECT}s`,
     get: `${ROOTS.SUBJECT}`,
     create: `${ROOTS.SUBJECT}`,
-    listMember: `${ROOTS.SUBJECT}/members`
+    listMember: `${ROOTS.SUBJECT}/members`,
+    addMembers: `${ROOTS.SUBJECT}/members`,
+    deleteMembers: `${ROOTS.SUBJECT}/members`,
   },
   group: {
     getAll: `${ROOTS.SUBJECT}/groups`,
@@ -34,6 +36,7 @@ export const endpoints = {
   },
   instance: {
     index: `${ROOTS.SERVER}`,
+    vnc: `${ROOTS.SERVER}/vnc`,
     list: `${ROOTS.SERVER}s`,
     option: `${ROOTS.SERVER}/options`
   },
@@ -44,7 +47,8 @@ export const endpoints = {
     list: `${ROOTS.FLAVOR}s`
   },
   domain: {
-    users: `${ROOTS.DOMAIN}/users`
+    users: `${ROOTS.DOMAIN}/users`,
+    roles: `${ROOTS.DOMAIN}/roles`,
   },
   resource: {
     quota: `${ROOTS.RESOURCE}/quota`,
@@ -53,34 +57,3 @@ export const endpoints = {
   }
 };
 
-//from chat
-// const ROOTS = {
-//   AUTH: '/auth',
-//   SUBJECT: '/subject',
-//   SERVER: '/server',
-//   CONFIG: '/config',
-//   CAMERA: '/camera',
-//   GROUP: '/subject/groups',
-// };
-
-// export const endpoints = {
-//   auth: {
-//     login: `${ROOTS.AUTH}/login`,
-//     logout: `${ROOTS.AUTH}/logout`,
-//   },
-//   subject: {
-//     get: (subject_id: string) => `${ROOTS.SUBJECT}/${subject_id}`,
-//     create: ROOTS.SUBJECT,
-//     getAll: `${ROOTS.SUBJECT}s`,
-//   },
-//   instance: {
-//     base: ROOTS.SERVER,
-//     options: `${ROOTS.SERVER}/options`,
-//   },
-//   setting: {
-//     publicKey: `${ROOTS.CONFIG}/public-key`,
-//   },
-//   group: {
-//     list: ROOTS.GROUP,
-//   },
-// };

@@ -184,6 +184,9 @@ export const TableInstances: FC<TableInstanceProps> = ({
                             color="inherit"
                             className="cursor-pointer"
                             variant="subtitle1"
+                            onClick={() => {
+                              handleOnOpen(instance.id);
+                            }}
                           >
                             {instance.name}
                           </Link>

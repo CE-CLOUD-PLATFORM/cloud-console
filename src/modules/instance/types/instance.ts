@@ -14,7 +14,7 @@ export interface InstancesQueryParams {
     subject_id: string;
 }
 export interface InstanceQueryParams {
-    instance_id:string
+    instance_id: string
     subject_id: string;
 }
 export interface InstanceOptionQueryParam {
@@ -25,6 +25,9 @@ export interface InstancesRes extends IResponse {
 }
 export interface InstanceRes extends IResponse {
     instance: Instance;
+}
+export interface InstanceVNCRes extends IResponse {
+    url: string
 }
 export interface InstanceOptionRes extends IResponse {
     flavors: Flavor[]
@@ -85,9 +88,9 @@ export interface Shared {
 }
 
 export interface Metadata {
-    image_id:string
-    domain_name:string
- }
+    image_id: string
+    domain_name: string
+}
 
 export interface Link2 {
     href: string
@@ -123,7 +126,7 @@ export interface Image {
     os_hidden: boolean
     checksum: string
     metadata: {
-        logo_url :string
+        logo_url: string
     }
     Properties: ImageProperties
     created_at: string

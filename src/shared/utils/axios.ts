@@ -1,6 +1,7 @@
 import { CONFIG } from "@/global-config";
 import axios from "axios";
 import { getCookie } from 'cookies-next';
+console.log(getCookie("token"));
 
 export const axiosInstance = axios.create({
   baseURL: CONFIG.site.apiUrl,

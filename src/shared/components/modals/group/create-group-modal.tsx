@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ModalCover from '../index';
 import {
+  Autocomplete,
   Box,
   Button,
   Divider,
@@ -27,6 +28,7 @@ import { IGroupCreate } from '@/modules/group/types/group';
 import { useParams } from 'next/navigation';
 import { useGetFlavors } from '@/modules/flavor/hook/use-get-flavors';
 import { useGetDomainUsers } from '@/modules/user/hook/use-get-domain-users';
+import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
 interface FlavorSpec {
   max_instance: number;
   flavor_id: string;
@@ -39,8 +41,8 @@ const ModalGroupCreate = (props: FormProps) => {
   const { user } = useUserStore();
   const queryClient = useQueryClient();
   const { data: flavorsData } = useGetFlavors();
-  const { data: usersData } = useGetDomainUsers({
-    domain_id: user?.info.domain.id as string,
+  const { data: usersData } = useGetSubjectMembers({
+    subject_id: subject_id as string,
   });
   const [resourceChecked, setResourceChecked] = useState(false);
   const [resourceTab, setResourceTab] = useState(0);
@@ -107,7 +109,7 @@ const ModalGroupCreate = (props: FormProps) => {
   };
 
   return (
-    <ModalCover  handleOnClose={handleClose}  isOpen={isOpen}>
+    <ModalCover handleOnClose={handleClose} isOpen={isOpen}>
       <Box className="modal-box" gap={2}>
         <Box className="hidden-scrollbar flex-1 overflow-y-auto">
           <Typography variant="h5">New Group</Typography>
@@ -145,26 +147,30 @@ const ModalGroupCreate = (props: FormProps) => {
                 variant="filled"
                 id="users-label"
               >
-                User Admin
+                Group Admin
               </InputLabel>
               <Controller
                 name="user_id"
                 control={control}
                 defaultValue=""
-                render={({ field }) => (
-                  <Select
-                    labelId="users-label"
-                    id="user_id"
-                    label="User Admin"
-                    variant="filled"
-                    {...field}
-                  >
-                    {usersData?.users.map((user) => (
-                      <MenuItem key={user.id} value={user.id}>
-                        {user.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                render={({ field: { onChange, value } }) => (
+                  <Autocomplete
+                    options={usersData?.members || []}
+                    getOptionLabel={(option) => option.name || ''}
+                    isOptionEqualToValue={(option, value) =>
+                      option.id === value.id
+                    }
+                    onChange={(event, newValue) =>
+                      onChange(newValue ? newValue.id : '')
+                    }
+                    value={
+                      usersData?.members.find((user) => user.id === value) ||
+                      null
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} label="" variant="filled" />
+                    )}
+                  />
                 )}
               />
               {/* {errors.user_id && <span>This field is required</span>} */}

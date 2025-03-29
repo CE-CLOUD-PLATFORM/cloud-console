@@ -37,7 +37,6 @@ import { User } from '@/modules/user/types/user';
 import AlignBottom01 from '@untitled-ui/icons-react/build/esm/AlignBottom01';
 import XClose from '@untitled-ui/icons-react/build/esm/X';
 import { Scrollbar } from '../../scrollbar';
-import { useGetRoles } from '@/modules/roles/hook/use-get-role-list';
 const groupFormId = 'subject-member-add-form';
 
 const ModalAddSubjectMember = (props: FormProps) => {
@@ -48,18 +47,31 @@ const ModalAddSubjectMember = (props: FormProps) => {
   const { data: allUser } = useGetDomainUsers({
     domain_id: user?.info.domain.id as string,
   });
-  const { data: rolesData } = useGetRoles();
+
   const { data: subjectMembers } = useGetSubjectMembers({
     subject_id: subject_id as string,
   });
 
+  const createInstance = useCreateInstance({
+    onSuccess: () => {
+      toast.success('Instance created successfully');
+      queryClient.invalidateQueries({ queryKey: ['subject-members'] });
+      reset();
+      handleClose();
+    },
+    onError: () => {
+      toast.error('Fail to create Instance.');
+    },
+    onMutate: () => {
+      toast.loading('Creating...');
+    },
+  });
   const {
     register,
     handleSubmit,
     reset,
     watch,
     setValue,
-    getValues,
     control,
     formState: { errors },
   } = useForm<IMemberSubjectAdd>({
@@ -76,22 +88,25 @@ const ModalAddSubjectMember = (props: FormProps) => {
 
   const handleSelect = (event: React.SyntheticEvent, newValue: User | null) => {
     if (newValue) {
-      var members = getValues().members;
-
-      setValue('members', [...members, { ...newValue, role: 'test' }]);
+      console.log('Selected User:', newValue);
+      setValue('members', [
+        {
+          id: '12',
+          name: 'test-student-1',
+          role: 'member',
+        },
+        {
+          id: '2',
+          name: 'test-student-2',
+          role: 'member',
+        },
+      ]);
     }
     setSearchValue(null);
   };
-  const handleDelete = (id: string) => {
-    var members = getValues().members;
 
-    setValue(
-      'members',
-      members.filter((member) => member.id != id),
-    );
-  };
   return (
-    <ModalCover handleOnClose={handleClose} isOpen={isOpen}>
+    <ModalCover handleOnClose={handleClose}  isOpen={isOpen}>
       <Box className="modal-box !h-[80%] overflow-hidden" gap={2}>
         <Typography variant="h5">Add Member</Typography>
         <Box
@@ -107,12 +122,7 @@ const ModalAddSubjectMember = (props: FormProps) => {
             <Autocomplete
               sx={{}}
               className="flex-grow"
-              options={
-                allUser?.users.filter((user) => {
-                  let members = watch('members').map((mem) => mem.id);
-                  return !members.includes(user.id);
-                }) || []
-              }
+              options={allUser?.users || []}
               getOptionLabel={(option) => option.name}
               value={searchValue}
               onChange={handleSelect}
@@ -200,7 +210,6 @@ const ModalAddSubjectMember = (props: FormProps) => {
                         sx={{ whiteSpace: 'nowrap', width: '1%' }}
                       >
                         <IconButton
-                          onClick={() => handleDelete(member.id)}
                           sx={{
                             p: 0,
                           }}

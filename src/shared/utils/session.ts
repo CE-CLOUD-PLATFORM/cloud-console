@@ -3,6 +3,8 @@ import { setCookie, deleteCookie, getCookie } from 'cookies-next';
 export const setSession = (user: User) => {
   try {
     const { token, info } = user;
+    console.log(user);
+
     if (token && info) {
       setCookie('token', token);
       setCookie('user', info);
