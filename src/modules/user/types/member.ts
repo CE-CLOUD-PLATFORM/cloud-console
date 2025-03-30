@@ -1,4 +1,3 @@
-import { success } from './../../../shared/theme/colors';
 import type { IResponse } from "@/shared/interfaces/api"
 import type { User } from "./user"
 

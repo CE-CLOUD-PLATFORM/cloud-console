@@ -38,8 +38,7 @@ const BtnVPNDownload = () => {
         }
       };
   return (
-    <>
-      <Button
+    <Button
         onClick={handleDownloadVPN}
         startIcon={
           <SvgIcon>
@@ -50,7 +49,6 @@ const BtnVPNDownload = () => {
       >
         VPN
       </Button>
-    </>
   );
 };
 

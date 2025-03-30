@@ -18,7 +18,6 @@ import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 import { useParams } from 'next/navigation';
 import React from 'react';
 import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
-import toast from 'react-hot-toast';
 import BtnVPNDownload from '@/shared/components/button/vpn-download';
 
 export default function InstancesPage() {
