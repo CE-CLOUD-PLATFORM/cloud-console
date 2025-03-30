@@ -148,7 +148,7 @@ const ModalAddSubjectMember = (props: FormProps) => {
 
         if (matchedUsers.length === 0) {
           toast.error('No matching users found or all users already added.', {
-            duration: 5000,
+            duration: 3000,
           });
           return;
         }

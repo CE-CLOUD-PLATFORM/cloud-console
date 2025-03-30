@@ -29,11 +29,9 @@ import {
 import { Scrollbar } from '@/shared/components/scrollbar';
 import type { handleQuotaDialogType } from '@/app/(dashboard)/management/resource/quota/page';
 import type { Quota, QuotaStatus } from '@/modules/resource/types/quota';
-import type {
-  SeverityPillColor} from '@/shared/components/severity-pill';
-import {
-  SeverityPill
-} from '@/shared/components/severity-pill';
+import type { SeverityPillColor } from '@/shared/components/severity-pill';
+import { SeverityPill } from '@/shared/components/severity-pill';
+import { useUserStore } from '@/modules/auth/store/auth';
 const statusOptions: { label: string; value: QuotaStatus | '' }[] = [
   { label: 'All Statuses', value: '' },
   { label: 'Pending', value: 'pending' },
@@ -59,6 +57,7 @@ export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
   const handleToggle = (id: string) => {
     setExpandedRow(expandedRow === id ? null : id);
   };
+  const { admin } = useUserStore();
   return (
     <Box
       sx={{
@@ -213,18 +212,21 @@ export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
                         <Edit02Icon />
                       </SvgIcon>
                     </IconButton>
-                    <IconButton
-                      onClick={() => {
-                        onOpen?.({
-                          item: quota,
-                          edit: false,
-                        });
-                      }}
-                    >
-                      <SvgIcon>
-                        <ArrowRightIcon />
-                      </SvgIcon>
-                    </IconButton>
+                    {admin && (
+                      <IconButton
+                        disabled={!(quota.status === "pending")}
+                        onClick={() => {
+                          onOpen?.({
+                            item: quota,
+                            edit: false,
+                          });
+                        }}
+                      >
+                        <SvgIcon>
+                          <ArrowRightIcon />
+                        </SvgIcon>
+                      </IconButton>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

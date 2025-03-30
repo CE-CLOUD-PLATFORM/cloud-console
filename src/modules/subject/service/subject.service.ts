@@ -9,7 +9,7 @@ import type {
   ISubjectsReqParam,
   ISubjectsRes,
 } from '@/modules/subject/types/subject';
-import type { IMemberReqParams, IMemberRes, IMemberSubjectAdd, IMemberSubjectAddRes } from '@/modules/user/types/member';
+import type { IMemberReqParams, IMemberRes, IMemberSubjectAdd, IMemberSubjectAddRes, IMemberSubjectDel } from '@/modules/user/types/member';
 import { endpoints } from '@/shared/configs';
 import { axiosInstance } from '@/shared/utils';
 
@@ -73,13 +73,22 @@ export const postSubject = async (data: ISubjectCreate) => {
 
 export const deleteSubject = async (data: ISubjectDelete) => {
   return (await axiosInstance.delete(`${endpoints.subject.index}`, {
-    params: data.id
+    params: {
+      subject_id: data.id
+    }
   })).data
 }
+
 export const postSubjectMember = async (data: IMemberSubjectAdd) => {
   return (await axiosInstance.post<
     IMemberSubjectAddRes,
     any,
     IMemberSubjectAdd
   >(`${endpoints.subject.addMembers}`, data)).data
+}
+
+export const deleteSubjectMember = async (data: IMemberSubjectDel) => {
+  return (await axiosInstance.delete(`${endpoints.subject.addMembers}`, {
+    data
+  })).data
 }

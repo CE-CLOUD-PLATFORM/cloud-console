@@ -19,17 +19,10 @@ import React from 'react';
 export default function GroupPage() {
   const { subject_id } = useParams();
   const modalAddSubjectMember = useDialog();
-  // const detailsDialog = useDialog();
+  const deleteDialog = useDialog();
   const { data } = useGetSubjectMembers({
     subject_id: subject_id as string,
   });
-  // const data = useSubjectStore();
-  // const handleDelete = useCallback(
-  //   (itemId: string): void => {
-  //     detailsDialog.handleClose();
-  //   },
-  //   [detailsDialog],
-  // );
 
   return (
     <>

@@ -18,7 +18,7 @@ interface FlavorSpec {
 }
 const ModalSubjectCreate = (props: FormProps) => {
   const { isOpen, handleClose } = props;
-  const { user } = useUserStore();
+  const { admin } = useUserStore();
 
   const { data: flavorsData } = useGetFlavors();
   const [formTab, setFormTab] = useState(0);
@@ -32,22 +32,22 @@ const ModalSubjectCreate = (props: FormProps) => {
               setFormTab(v);
             }}
           >
-            <Tab label="Subject" />
+            {admin && <Tab label="Subject" />}
             <Tab label="Quota" />
-            <Tab label="Credit" />
+            {/* <Tab label="Credit" /> */}
           </Tabs>
           <Divider></Divider>
         </Box>
 
-        {formTab === 0 && (
+        {admin && formTab === 0 && (
           <ModalSubjectCreateForm isOpen={isOpen} handleClose={handleClose} />
         )}
-        {formTab === 1 && (
+        {((admin && formTab === 1) || (!admin && formTab === 0)) && (
           <ModalQuotaRequestForm isOpen={isOpen} handleClose={handleClose} />
         )}
-        {formTab === 2 && (
+        {/* {formTab === 2 && (
           <ModalCreditRequestForm isOpen={isOpen} handleClose={handleClose} />
-        )}
+        )} */}
 
         {/* {formTab === 0 && (
           <ModalQuotaRequestForm isOpen={isOpen} handleClose={handleClose} />

@@ -27,6 +27,7 @@ export const endpoints = {
     create: `${ROOTS.SUBJECT}`,
     listMember: `${ROOTS.SUBJECT}/members`,
     addMembers: `${ROOTS.SUBJECT}/members`,
+    member: `${ROOTS.SUBJECT}/member`,
     deleteMembers: `${ROOTS.SUBJECT}/members`,
   },
   group: {
