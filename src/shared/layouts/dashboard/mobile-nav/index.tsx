@@ -156,7 +156,7 @@ export const MobileNav: FC<MobileNavProps> = (props) => {
                 width: 40,
               }}
             >
-              <Image src="/assets/ce-logo.png" alt='logo'/>
+              <Image width={40} height={40} src="/assets/ce-logo.png" alt='logo'/>
             </Box>
             <Typography color="" variant="h6">
               CE CLOUD

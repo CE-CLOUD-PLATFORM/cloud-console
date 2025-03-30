@@ -41,10 +41,15 @@ export const ItemList: FC<ItemListProps> = (props) => {
     onPageChange = () => {},
     onRowsPerPageChange,
     page = 0,
-    rowsPerPage = 0,
+    rowsPerPage = 9, // ให้มีค่า default
     view = 'grid',
     isLoading = true,
   } = props;
+
+  // คำนวณข้อมูลที่แสดงผลตาม page และ rowsPerPage
+  const startIndex = page * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const displayedItems = items.slice(startIndex, endIndex);
 
   let content: JSX.Element;
 
@@ -57,7 +62,7 @@ export const ItemList: FC<ItemListProps> = (props) => {
           gridTemplateColumns: 'repeat(3, 1fr)',
         }}
       >
-        {items?.map((item) => (
+        {displayedItems.map((item) => (
           <ItemListCard
             key={item.id}
             item={item}
@@ -80,7 +85,7 @@ export const ItemList: FC<ItemListProps> = (props) => {
               }}
             >
               <TableBody>
-                {items.map((item) => (
+                {displayedItems.map((item) => (
                   <ItemListRow
                     key={item.id}
                     item={item}
