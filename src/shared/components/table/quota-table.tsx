@@ -103,7 +103,17 @@ export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
             ))}
           </TextField>
         </Stack>
-        <Scrollbar>
+        <Scrollbar
+          sx={{
+            '& simplebar-content-wrapper': {
+              scrollbarWidth: 'auto',
+              bgcolor: 'red',
+            },
+            '&::-webkit-scrollbar': {
+              display: 'auto',
+            },
+          }}
+        >
           <Table sx={{ minWidth: 700 }}>
             <TableHead>
               <TableRow>

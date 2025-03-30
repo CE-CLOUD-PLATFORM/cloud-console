@@ -117,8 +117,8 @@ export default function LoginPage() {
                   <Controller
                     name="domain"
                     control={control}
-                    defaultValue="CE"
-                    // defaultValue="default"
+                    // defaultValue="CE"
+                    defaultValue="default"
 
                     render={({ field }) => (
                       <Select
@@ -130,8 +130,8 @@ export default function LoginPage() {
                         {...field}
                         value={field.value}
                       >
-                        {/* <MenuItem value={'default'}>Default</MenuItem> */}
-                        <MenuItem value={'CE'}>CE</MenuItem>
+                        <MenuItem value={'default'}>Default</MenuItem>
+                        {/* <MenuItem value={'CE'}>CE</MenuItem> */}
                         {/* {domainsData?.domains?.map((domain) => (
                           <MenuItem value={domain.id}>{domain.name}</MenuItem>
                         ))} */}

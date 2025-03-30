@@ -62,10 +62,10 @@ export const useSections = () => {
                 title: 'Quota',
                 path: paths.resource.quota,
               },
-              {
-                title: 'Credit',
-                path: paths.resource.credit,
-              },
+              // {
+              //   title: 'Credit',
+              //   path: paths.resource.credit,
+              // },
             ],
           },
           {
