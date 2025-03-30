@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import type { FC } from 'react';
 import './style.css';
 import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
@@ -52,6 +53,7 @@ interface TableMembersProps {
   members: Member[];
 }
 export const TableMembers: FC<TableMembersProps> = ({ members }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
   const { data: roleData, isFetched } = useGetRoles();
   const roleKeyName = Object.fromEntries(
     roleData?.roles.map((item) => [item.id, item.name]) || [],

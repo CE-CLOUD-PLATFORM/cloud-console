@@ -2,9 +2,9 @@
 import { useUserStore } from '@/modules/auth/store/auth';
 import type { PublicKeyReq } from '@/modules/config/types/public-key';
 import type { FormProps } from '@/shared/interfaces/modal';
-import { Box, Button, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import type { SubmitHandler} from 'react-hook-form';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import ModalCover from '../index';
 import '../index.css';
@@ -33,9 +33,7 @@ const ModalConfirmDeleteMember = (props: FormProps) => {
   let { user } = useUserStore();
   const {
     handleSubmit,
-    control,
     reset,
-    formState: { errors },
   } = useForm<PublicKeyReq>({
     values: { user_id: user?.info.id as string, key: '', name: '' },
   });

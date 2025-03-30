@@ -5,7 +5,6 @@ import { axiosInstance } from '@/shared/utils';
 
 import { endpoints } from '@/shared/configs';
 import type { IRecoveryPassword } from '../types/account';
-import type { IResponse } from '@/shared/interfaces/api';
 import type {
   IAuthLogin,
   IAuthLoginRes,

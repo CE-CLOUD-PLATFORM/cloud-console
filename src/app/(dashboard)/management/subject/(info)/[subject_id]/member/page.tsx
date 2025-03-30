@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
 'use client';
 import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
 import ModalAddSubjectMember from '@/shared/components/modals/member/add-subject-member-modal';
