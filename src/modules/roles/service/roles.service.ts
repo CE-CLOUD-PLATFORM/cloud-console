@@ -3,7 +3,7 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import { axiosInstance } from '@/shared/utils';
 import { endpoints } from '@/shared/configs';
-import { RolesRes } from '../types/role';
+import type { RolesRes } from '../types/role';
 
 type Params = {
     queryKey: string[];

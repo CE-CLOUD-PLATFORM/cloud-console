@@ -1,6 +1,4 @@
 'use client';
-import { useUserStore } from '@/modules/auth/store/auth';
-import { useGetGroups } from '@/modules/group/hook/use-get-groups';
 import {
   useGroupsSearch,
   useGroupsStore,
@@ -25,7 +23,6 @@ import React, { useCallback } from 'react';
 
 export default function GroupPage() {
   const { subject_id } = useParams();
-  const { user } = useUserStore();
   const modalGroupCreate = useDialog();
   const detailsDialog = useDialog();
   const searchState = useGroupsSearch();

@@ -21,7 +21,6 @@ import ModalForgotPassword from '@/shared/components/modals/auth/forgot-password
 import { useDialog } from '@/shared/hooks/use-dialog';
 import type { IAuthLogin } from '@/modules/auth/types/auth';
 import Image from 'next/image';
-import { useGetDomainList } from '@/modules/domain/hook/use-get-domain-list';
 export default function LoginPage() {
   const router = useRouter();
   const { mutateAsync: authtentication } = useAuth();

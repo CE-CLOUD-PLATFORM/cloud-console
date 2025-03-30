@@ -1,9 +1,10 @@
+/* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { axiosInstance } from '@/shared/utils';
 import { endpoints } from '@/shared/configs';
-import { DomainListRes } from '../types/domain';
+import type { DomainListRes } from '../types/domain';
 
 type Params = {
   queryKey: string[];

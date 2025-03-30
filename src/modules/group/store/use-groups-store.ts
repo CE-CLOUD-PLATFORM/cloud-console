@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -7,7 +8,7 @@ import { useMounted } from "@/shared/hooks/use-mounted";
 import type { ChangeEvent, MouseEvent } from 'react';
 import type { SortDir } from "@/shared/types/sort";
 import { useUserStore } from "@/modules/auth/store/auth";
-import { Group } from "../types/group";
+import type { Group } from "../types/group";
 import { useGetGroups } from "../hook/use-get-groups";
 
 interface Filters {
