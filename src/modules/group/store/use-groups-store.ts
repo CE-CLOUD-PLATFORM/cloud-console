@@ -3,12 +3,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable unused-imports/no-unused-vars */
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { Subject } from "../types/subject";
 import { useMounted } from "@/shared/hooks/use-mounted";
 import type { ChangeEvent, MouseEvent } from 'react';
 import type { SortDir } from "@/shared/types/sort";
-import { useGetSubjects } from "../hook/use-get-subjects";
 import { useUserStore } from "@/modules/auth/store/auth";
+import { Group } from "../types/group";
+import { useGetGroups } from "../hook/use-get-groups";
 
 interface Filters {
   query?: string;
@@ -22,7 +22,7 @@ interface ItemsSearchState {
   sortDir?: SortDir;
 }
 
-export const useItemsSearch = () => {
+export const useGroupsSearch = () => {
   const [state, setState] = useState<ItemsSearchState>({
     filters: {
       query: undefined,
@@ -77,13 +77,17 @@ export const useItemsSearch = () => {
 };
 
 interface ItemsStoreState {
-  items: Subject[];
+  items: Group[];
   itemsCount: number;
 }
 
-export const useItemsStore = (searchState: ItemsSearchState) => {
+export const useGroupsStore = (subject_id: string, searchState: ItemsSearchState) => {
   const { user } = useUserStore();
-  const { data, isLoading, isFetched } = useGetSubjects({ user_id: user?.info.id as string });
+  const { data, isLoading, isFetched } = useGetGroups({
+    user_id: user?.info.id as string,
+    subject_id: subject_id as string,
+    domain_name: user?.info.domain.name as string,
+  });
   const isMounted = useMounted();
   const [state, setState] = useState<ItemsStoreState>({
     items: [],
@@ -99,7 +103,7 @@ export const useItemsStore = (searchState: ItemsSearchState) => {
   //     });
   //   }
   // }, [isMounted]);
-  const sortItem = (data: Subject[]) => {
+  const sortItem = (data: Group[]) => {
     let sortedItems = [...data];
     sortedItems.sort((a, b) => {
       const nameA = a.name.toLowerCase();
@@ -119,17 +123,18 @@ export const useItemsStore = (searchState: ItemsSearchState) => {
   useEffect(
     () => {
 
-      if (data?.subjects) {
+      if (data?.groups) {
 
-        let sortedItems = sortItem(data.subjects)
+        let sortedItems = sortItem(data.groups)
 
         setState({
           items: sortedItems,
-          itemsCount: data.subjects.length,
+          itemsCount: data.groups.length,
         });
       }
     },
     [data, searchState.sortDir],
+
   );
 
   useEffect(
@@ -137,14 +142,14 @@ export const useItemsStore = (searchState: ItemsSearchState) => {
 
       if (searchState.filters.query && searchState.filters.query !== "") {
         let keyword = searchState.filters.query as string
-        const sortedItem = sortItem(data?.subjects || [])
+        const sortedItem = sortItem(data?.groups || [])
         const searchItem = sortedItem.filter(item => item.name.toLowerCase().includes(keyword.toLowerCase())) || []
         setState({
           items: searchItem,
           itemsCount: searchItem.length
         })
       } else {
-        const sortedItem = sortItem(data?.subjects || [])
+        const sortedItem = sortItem(data?.groups || [])
         setState({
           items: sortedItem,
           itemsCount: sortedItem.length
@@ -169,15 +174,15 @@ export const useItemsStore = (searchState: ItemsSearchState) => {
     handleDelete,
     ...state,
     itemLoading: isLoading,
-    itemFetched:isFetched
+    itemFetched: isFetched
   };
 };
 
 export const useCurrentItem = (
-  items: Subject[],
+  items: Group[],
   itemId?: string,
-): Subject | undefined => {
-  return useMemo((): Subject | undefined => {
+): Group | undefined => {
+  return useMemo((): Group | undefined => {
     if (!itemId) {
       return undefined;
     }

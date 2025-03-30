@@ -25,7 +25,10 @@ import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGetFlavors } from '@/modules/flavor/hook/use-get-flavors';
 import { useGetDomainUsers } from '@/modules/user/hook/use-get-domain-users';
-import type { CreditDetail, ICreditCreate } from '@/modules/subject/types/credit';
+import type {
+  CreditDetail,
+  ICreditCreate,
+} from '@/modules/subject/types/credit';
 
 interface FlavorSpec {
   max_instance: number;
@@ -43,13 +46,13 @@ const ModalCreditRequestForm = (props: FormProps) => {
     onSuccess: () => {
       toast.success('Project created successfully');
       reset();
-      handleClose();
     },
     onError: () => {
       toast.error('Fail to create Subject.');
     },
     onMutate: () => {
-      toast.loading('Creating...');
+      handleClose();
+      toast.loading('Requesting Credit...');
     },
   });
   const { data: flavorsData } = useGetFlavors();
@@ -113,7 +116,7 @@ const ModalCreditRequestForm = (props: FormProps) => {
   };
 
   return (
-    <Box className="hidden-scrollbar flex-1  overflow-y-auto  space-y-3">
+    <Box className="hidden-scrollbar flex-1 space-y-3 overflow-y-auto">
       <Typography variant="h5">Request Credit</Typography>
       <Box
         component="form"

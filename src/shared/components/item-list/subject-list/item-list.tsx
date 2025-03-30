@@ -41,12 +41,11 @@ export const ItemList: FC<ItemListProps> = (props) => {
     onPageChange = () => {},
     onRowsPerPageChange,
     page = 0,
-    rowsPerPage = 9, // ให้มีค่า default
+    rowsPerPage = 9,
     view = 'grid',
     isLoading = true,
   } = props;
 
-  // คำนวณข้อมูลที่แสดงผลตาม page และ rowsPerPage
   const startIndex = page * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const displayedItems = items.slice(startIndex, endIndex);
@@ -103,13 +102,7 @@ export const ItemList: FC<ItemListProps> = (props) => {
   return (
     <Stack spacing={4} className="flex-grow">
       {content}
-      {!isLoading && count === 0 && (
-        <Box display={'flex'} justifyContent={'center'}>
-          <Typography className="text-slate-500" variant="subtitle1">
-            No subjects found.
-          </Typography>
-        </Box>
-      )}
+
       <TablePagination
         component="div"
         count={count}

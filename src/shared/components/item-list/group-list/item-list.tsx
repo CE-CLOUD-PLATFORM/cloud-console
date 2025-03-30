@@ -32,7 +32,9 @@ export const ItemList: FC<ItemListProps> = (props) => {
     page = 0,
     rowsPerPage = 0,
   } = props;
-
+  const startIndex = page * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const displayedItems = items.slice(startIndex, endIndex);
   let content: JSX.Element;
 
   content = (
@@ -47,7 +49,7 @@ export const ItemList: FC<ItemListProps> = (props) => {
             }}
           >
             <TableBody>
-              {items.map((item) => (
+              {displayedItems.map((item) => (
                 <ItemListRow
                   key={item.id}
                   item={item}

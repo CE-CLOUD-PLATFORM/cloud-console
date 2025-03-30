@@ -41,12 +41,13 @@ const ModalQuotaRequestForm = (props: FormProps) => {
     onSuccess: () => {
       toast.success('Quota requested successfully');
       reset();
-      handleClose();
     },
     onError: () => {
       toast.error('Fail to request Quota.');
     },
     onMutate: () => {
+      handleClose();
+
       toast.loading('Requesting Quota...');
     },
   });

@@ -1,7 +1,13 @@
 'use client';
 import { useUserStore } from '@/modules/auth/store/auth';
 import { useGetGroups } from '@/modules/group/hook/use-get-groups';
+import {
+  useGroupsSearch,
+  useGroupsStore,
+} from '@/modules/group/store/use-groups-store';
 import { ItemList } from '@/shared/components/item-list/group-list/item-list';
+import { ItemSearch } from '@/shared/components/item-list/group-list/item-search';
+import CircleLoading from '@/shared/components/Loading/CircleLoading';
 import ModalGroupCreate from '@/shared/components/modals/group/create-group-modal';
 import { useDialog } from '@/shared/hooks/use-dialog';
 import {
@@ -22,12 +28,8 @@ export default function GroupPage() {
   const { user } = useUserStore();
   const modalGroupCreate = useDialog();
   const detailsDialog = useDialog();
-  const { data } = useGetGroups({
-    user_id: user?.info.id as string,
-    subject_id: subject_id as string,
-    domain_name: user?.info.domain.name as string,
-  });
-  // const data = useSubjectStore();
+  const searchState = useGroupsSearch();
+  const data = useGroupsStore(subject_id as string, searchState.state);
   const handleDelete = useCallback(
     (itemId: string): void => {
       console.log(itemId);
@@ -84,25 +86,32 @@ export default function GroupPage() {
                   lg: 4,
                 }}
               >
-                {/* <ItemSearch
-                onFiltersChange={itemsSearch.handleFiltersChange}
-                onSortChange={itemsSearch.handleSortChange}
-                onViewChange={setView}
-                sortBy={itemsSearch.state.sortBy}
-                sortDir={itemsSearch.state.sortDir}
-                view={view}
-              /> */}
-                <ItemList
-                  count={data?.groups?.length}
-                  items={data?.groups}
-                  onDelete={handleDelete}
-                  onOpen={detailsDialog.handleOpen}
-                  // onPageChange={}
-                  // onRowsPerPageChange={}
-                  page={5}
-                  rowsPerPage={5}
-                  // view={view}
+                <ItemSearch
+                  onFiltersChange={searchState.handleFiltersChange}
+                  onSortChange={searchState.handleSortChange}
+                  sortBy={searchState.state.sortBy}
+                  sortDir={searchState.state.sortDir}
                 />
+                {!data.itemFetched && <CircleLoading />}
+                {data.itemFetched && data.itemsCount === 0 ? (
+                  <Box display={'flex'} justifyContent={'center'}>
+                    <Typography className="text-slate-500" variant="subtitle1">
+                      No subjects found.
+                    </Typography>
+                  </Box>
+                ) : (
+                  <ItemList
+                    count={data?.itemsCount}
+                    items={data?.items}
+                    onDelete={handleDelete}
+                    onOpen={detailsDialog.handleOpen}
+                    onPageChange={searchState.handlePageChange}
+                    onRowsPerPageChange={searchState.handleRowsPerPageChange}
+                    page={searchState.state.page}
+                    rowsPerPage={searchState.state.rowsPerPage}
+                    // view={view}
+                  />
+                )}
               </Stack>
             </Grid>
           </Grid>

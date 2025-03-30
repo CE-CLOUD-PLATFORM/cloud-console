@@ -63,7 +63,7 @@ export const ItemSearch: FC<ItemSearchProps> = (props) => {
   const queryRef = useRef<HTMLInputElement | null>(null);
 
   const handleQueryChange = useCallback(
-    (event: ChangeEvent): void => {
+    (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
       event.preventDefault();
       const query = queryRef.current?.value || '';
 
@@ -80,13 +80,6 @@ export const ItemSearch: FC<ItemSearchProps> = (props) => {
       onSortChange?.(sortDir);
     },
     [onSortChange],
-  );
-
-  const handleViewChange = useCallback(
-    (event: MouseEvent<HTMLElement>, value: View) => {
-      onViewChange?.(value);
-    },
-    [onViewChange],
   );
 
   return (
@@ -109,37 +102,7 @@ export const ItemSearch: FC<ItemSearchProps> = (props) => {
             }
           />
         </Box>
-        <ToggleButtonGroup
-          exclusive
-          onChange={handleViewChange}
-          sx={{
-            borderWidth: 1,
-            borderColor: 'divider',
-            borderStyle: 'solid',
-            [`& .${toggleButtonGroupClasses.grouped}`]: {
-              margin: 0.5,
-              border: 0,
-              '&:not(:first-of-type)': {
-                borderRadius: 1,
-              },
-              '&:first-of-type': {
-                borderRadius: 1,
-              },
-            },
-          }}
-          value={view}
-        >
-          <ToggleButton value="grid">
-            <SvgIcon fontSize="small">
-              <Grid01Icon />
-            </SvgIcon>
-          </ToggleButton>
-          <ToggleButton value="list">
-            <SvgIcon fontSize="small">
-              <ListIcon />
-            </SvgIcon>
-          </ToggleButton>
-        </ToggleButtonGroup>
+
         <TextField
           label="Sort By"
           name="sort"

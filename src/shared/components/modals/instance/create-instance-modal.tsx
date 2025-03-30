@@ -50,13 +50,13 @@ const ModalCreateInstance = (props: FormProps) => {
       toast.success('Instance created successfully');
       queryClient.invalidateQueries({ queryKey: ['instances'] });
       reset();
-      handleClose();
     },
     onError: () => {
       toast.error('Fail to create Instance.');
     },
     onMutate: () => {
-      toast.loading('Creating...');
+      handleClose();
+      toast.loading('Creating Instance...');
     },
   });
   const {

@@ -4,6 +4,7 @@ import { useGetInstanceOption } from '@/modules/instance/hook/use-get-options';
 import { TableInstances } from '@/shared/components/table/instance-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
 import {
+  Alert,
   Box,
   Button,
   Container,
@@ -18,6 +19,7 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
 import toast from 'react-hot-toast';
+import BtnVPNDownload from '@/shared/components/button/vpn-download';
 
 export default function InstancesPage() {
   const { subject_id } = useParams();
@@ -38,38 +40,7 @@ export default function InstancesPage() {
   //   },
   //   [detailsDialog, instancesData],
   // );
-  const handleDownloadVPN = async () => {
-    try {
-      const response = await fetch('/res/cloud.ovpn', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/octet-stream',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to download file');
-      }
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'ce-cloud-vpn.ovpn';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-
-      toast.success('Download completed!');
-    } catch (error) {
-      console.log(error);
-      toast.error('Download failed. Please try again.');
-    } finally {
-      // setLoading(false);
-    }
-  };
+ 
   return (
     <>
       <ModalCreateInstance
@@ -97,17 +68,7 @@ export default function InstancesPage() {
                   <Typography variant="h5">Instances</Typography>
                 </div>
                 <Stack alignItems="center" direction="row" spacing={2}>
-                  <Button
-                    onClick={handleDownloadVPN}
-                    startIcon={
-                      <SvgIcon>
-                        <FileDownload03 />
-                      </SvgIcon>
-                    }
-                    variant="outlined"
-                  >
-                    VPN
-                  </Button>
+                  <BtnVPNDownload/>
                   <Button
                     onClick={modalCreateInstance.handleOpen}
                     startIcon={
@@ -121,6 +82,10 @@ export default function InstancesPage() {
                   </Button>
                 </Stack>
               </Stack>
+              <Alert className="mt-3" severity="info">
+                Only instances you have permission to access will be displayed.
+              </Alert>
+              
             </Grid>
             <Grid size={12}>
               <Stack

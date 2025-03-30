@@ -1,8 +1,9 @@
 'use client';
 import { useGetInstance } from '@/modules/instance/hook/use-get-instance';
 import { useGetInstanceVNC } from '@/modules/instance/hook/use-get-instance-vnc';
+import BtnVPNDownload from '@/shared/components/button/vpn-download';
 import CircleLoading from '@/shared/components/Loading/CircleLoading';
-import { Box, Button, Stack, SvgIcon } from '@mui/material';
+import { Alert, Box, Button, Stack, SvgIcon } from '@mui/material';
 import AirStart from '@untitled-ui/icons-react/build/esm/Airplay';
 import { useParams } from 'next/navigation';
 import React from 'react';
@@ -27,16 +28,16 @@ export default function Page() {
     );
   }
   return (
-    <Stack className="h-full bg-red-200">
+    <Stack className="h-full px-24">
       <div>Card</div>
       <Stack
         flexDirection={'row'}
         justifyContent={'space-between'}
-        paddingX={15}
       >
         <Box>Instance: {instanceData?.instance.name}</Box>
-        <Box>
-          {' '}
+
+        <Box display={"flex"} gap={2}>
+          <BtnVPNDownload/>
           <Button
             onClick={() => {
               refetchVNC();
@@ -51,8 +52,11 @@ export default function Page() {
             VNC
           </Button>
         </Box>
-        {vncData && <iframe src={vncData.url}></iframe>}
       </Stack>
+      <Alert className="mt-3" severity="info">
+        You must connect to the VPN before accessing VNC.
+      </Alert>
+      {vncData && <iframe src={vncData.url}></iframe>}
     </Stack>
   );
 }
