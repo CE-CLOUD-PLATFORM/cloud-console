@@ -25,6 +25,7 @@ import { useGetDomainList } from '@/modules/domain/hook/use-get-domain-list';
 export default function LoginPage() {
   const router = useRouter();
   const { mutateAsync: authtentication } = useAuth();
+  // const { data: domainsData,isFetched } = useGetDomainList();
   const {
     register,
     handleSubmit,
@@ -34,7 +35,6 @@ export default function LoginPage() {
     resolver: userLoginResolver,
   });
   const forgotPassModal = useDialog();
-  const { data: domainsData } = useGetDomainList();
   const onSubmit: SubmitHandler<IAuthLogin> = async (
     loginRequest: IAuthLogin,
   ) => {
@@ -119,8 +119,7 @@ export default function LoginPage() {
                     name="domain"
                     control={control}
                     // defaultValue="CE"
-                    // defaultValue="default"
-                    defaultValue={domainsData?.domains[0].id}
+                    defaultValue="default"
                     render={({ field }) => (
                       <Select
                         error={errors.domain ? true : false}
@@ -131,11 +130,11 @@ export default function LoginPage() {
                         {...field}
                         value={field.value}
                       >
-                        {/* <MenuItem value={'default'}>Default</MenuItem> */}
-                        {/* <MenuItem value={'CE'}>CE</MenuItem> */}
-                        {domainsData?.domains?.map((domain) => (
-                          <MenuItem key={domain.id} value={domain.id}>{domain.name}</MenuItem>
-                        ))}
+                        <MenuItem value={'default'}>Default</MenuItem>
+                        <MenuItem value={'CE'}>CE</MenuItem>
+                        {/* {domainsData?.domains?.map((domain) => (
+                          <MenuItem value={domain.id}>{domain.name}</MenuItem>
+                        ))} */}
                       </Select>
                     )}
                   />
