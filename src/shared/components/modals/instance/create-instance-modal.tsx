@@ -38,11 +38,10 @@ const ModalCreateInstance = (props: FormProps) => {
   const { isOpen, handleClose } = props;
   const { subject_id, group_id } = useParams();
 
-
   const { user } = useUserStore();
   const queryClient = useQueryClient();
   const { data: instanceOptions } = useGetInstanceOption({
-    subject_id: (subject_id || group_id) as string ,
+    subject_id: (subject_id || group_id) as string,
   });
 
   const { data: keysData } = useGetUserPublicKeys({
@@ -234,7 +233,11 @@ const ModalCreateInstance = (props: FormProps) => {
                     />
                   )}
                 />
-                {errors.public_key && <span>{errors.public_key.message}</span>}
+                {errors.public_key && (
+                  <span className="text-red-500">
+                    {errors.public_key.message}
+                  </span>
+                )}
               </div>
 
               <Link
