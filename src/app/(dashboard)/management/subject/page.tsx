@@ -38,14 +38,14 @@ export default function Page() {
   // const currentItem = useCurrentItem(itemsStore.items, detailsDialog.data);
   const deleteSubject = useDeleteSubject({
     onSuccess: () => {
-      toast.success('Project created successfully');
+      toast.success('Project deleted successfully');
       queryClient.invalidateQueries({ queryKey: ['subjects'] });
     },
-    onError: () => {
-      toast.error('Fail to create Subject.');
+    onError: (err) => {
+      toast.error('Fail to delete Subject.');
     },
     onMutate: () => {
-      toast.loading('Creating...');
+      toast.loading('Deleting...');
     },
   });
   usePageView();
@@ -53,8 +53,8 @@ export default function Page() {
   const handleDelete = useCallback(
     (itemId: string): void => {
       detailsDialog.handleClose();
-      deleteSubject.mutate(itemId);
-      itemsStore.handleDelete(itemId);
+      deleteSubject.mutate({ id: itemId });
+      // itemsStore.handleDelete(itemId);
     },
     [detailsDialog, itemsStore],
   );

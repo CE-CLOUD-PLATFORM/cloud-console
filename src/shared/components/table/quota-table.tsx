@@ -28,38 +28,33 @@ import {
 } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
 import type { handleQuotaDialogType } from '@/app/(dashboard)/management/resource/quota/page';
-import type { Quota } from '@/modules/resource/types/quota';
-
-interface Option {
-  label: string;
-  value: string;
-}
-
-const sortOptions: Option[] = [
-  {
-    label: 'Last update (newest)',
-    value: 'updatedAt|desc',
-  },
-  {
-    label: 'Last update (oldest)',
-    value: 'updatedAt|asc',
-  },
-  {
-    label: 'Total orders (highest)',
-    value: 'orders|desc',
-  },
-  {
-    label: 'Total orders (lowest)',
-    value: 'orders|asc',
-  },
+import type { Quota, QuotaStatus } from '@/modules/resource/types/quota';
+import {
+  SeverityPill,
+  SeverityPillColor,
+} from '@/shared/components/severity-pill';
+const statusOptions: { label: string; value: QuotaStatus | '' }[] = [
+  { label: 'All Statuses', value: '' },
+  { label: 'Pending', value: 'pending' },
+  { label: 'Requesting', value: 'requesting' },
+  { label: 'Accepted', value: 'accepted' },
+  { label: 'Rejected', value: 'rejected' },
+  { label: 'Revision Required', value: 'revision_required' },
 ];
+const labelColors: Record<QuotaStatus, SeverityPillColor> = {
+  accepted: 'success',
+  pending: 'info',
+  rejected: 'error',
+  requesting: 'info',
+  revision_required: 'warning',
+};
 interface TableQuotaProps {
   quotas: Quota[];
   onOpen: (data: handleQuotaDialogType) => void;
 }
 export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
-
+  const [selectedStatus, setSelectedStatus] = useState<string>('');
   const handleToggle = (id: string) => {
     setExpandedRow(expandedRow === id ? null : id);
   };
@@ -91,12 +86,14 @@ export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
             sx={{ flexGrow: 1 }}
           />
           <TextField
-            label="Sort By"
-            name="sort"
+            label="Filter by Status"
+            name="status"
             select
             SelectProps={{ native: true }}
+            value={selectedStatus}
+            onChange={(e) => setSelectedStatus(e.target.value)}
           >
-            {sortOptions.map((option) => (
+            {statusOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
@@ -114,12 +111,13 @@ export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
             },
           }}
         >
-          <Table sx={{ minWidth: 700 }}>
+          <Table sx={{ minWidth: 500 }}>
             <TableHead>
               <TableRow>
                 <TableCell sx={{ whiteSpace: 'nowrap', width: '1%' }}>
                   Subject Name
                 </TableCell>
+                <TableCell>Status</TableCell>
                 <TableCell>Details</TableCell>
                 <TableCell>Request by</TableCell>
                 <TableCell>Request Date</TableCell>
@@ -133,12 +131,22 @@ export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {quotas?.map((quota) => (
+              {(selectedStatus
+                ? quotas.filter((quota) => quota.status === selectedStatus)
+                : quotas
+              )?.map((quota) => (
                 <TableRow hover key={quota.id}>
                   <TableCell>
                     <Typography className="text-nowrap pl-2" variant="body1">
                       {quota.subject_name}
                     </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <SeverityPill
+                      color={labelColors[quota.status as QuotaStatus]}
+                    >
+                      {quota.status}
+                    </SeverityPill>
                   </TableCell>
                   <TableCell>
                     <Stack display={'flex'} direction={'row'} spacing={1}>

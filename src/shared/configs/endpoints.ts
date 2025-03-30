@@ -23,6 +23,7 @@ export const endpoints = {
   subject: {
     getAll: `${ROOTS.SUBJECT}s`,
     get: `${ROOTS.SUBJECT}`,
+    index: `${ROOTS.SUBJECT}`,
     create: `${ROOTS.SUBJECT}`,
     listMember: `${ROOTS.SUBJECT}/members`,
     addMembers: `${ROOTS.SUBJECT}/members`,

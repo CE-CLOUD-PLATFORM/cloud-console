@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { axiosInstance } from '@/shared/utils';
 import type {
-  ISubjectRes,
-  ISubjectsRes,
-  ISubjectsReqParam,
-  ISubjectReqParam,
   ISubjectCreate,
+  ISubjectDelete,
+  ISubjectReqParam,
+  ISubjectRes,
+  ISubjectsReqParam,
+  ISubjectsRes,
 } from '@/modules/subject/types/subject';
-import { endpoints } from '@/shared/configs';
 import type { IMemberReqParams, IMemberRes, IMemberSubjectAdd, IMemberSubjectAddRes } from '@/modules/user/types/member';
+import { endpoints } from '@/shared/configs';
+import { axiosInstance } from '@/shared/utils';
 
 type Params = {
   queryKey: string[];
@@ -70,9 +71,9 @@ export const postSubject = async (data: ISubjectCreate) => {
   >(`${endpoints.subject.create}`, data)).data
 }
 
-export const deleteSubject = async (id: string) => {
-  return (await axiosInstance.delete(`${endpoints.subject.create}`, {
-    params: id
+export const deleteSubject = async (data: ISubjectDelete) => {
+  return (await axiosInstance.delete(`${endpoints.subject.index}`, {
+    params: data.id
   })).data
 }
 export const postSubjectMember = async (data: IMemberSubjectAdd) => {

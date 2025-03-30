@@ -12,7 +12,9 @@ export interface ISubjectReqParam {
 export interface ISubjectsReqParam {
   user_id: string
 }
-
+export interface ISubjectDelete {
+id:string
+}
 export interface ISubjectCreate {
   name: string;
   description: string;
