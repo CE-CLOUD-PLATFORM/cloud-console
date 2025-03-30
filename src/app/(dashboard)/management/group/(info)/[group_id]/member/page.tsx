@@ -1,10 +1,9 @@
 'use client';
-import { useGetInstances } from '@/modules/instance/hook/use-get-instances';
-import { useGetInstanceOption } from '@/modules/instance/hook/use-get-options';
-import { TableInstances } from '@/shared/components/table/instance-table';
+import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
+import ModalAddSubjectMember from '@/shared/components/modals/member/add-subject-member-modal';
+import { TableMembers } from '@/shared/components/table/member-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
 import {
-  Alert,
   Box,
   Button,
   Container,
@@ -14,38 +13,29 @@ import {
   Typography,
 } from '@mui/material';
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
-
 import { useParams } from 'next/navigation';
 import React from 'react';
-import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
-import toast from 'react-hot-toast';
-import BtnVPNDownload from '@/shared/components/button/vpn-download';
 
-export default function InstancesPage() {
+export default function GroupPage() {
   const { subject_id } = useParams();
-  // const { user } = useUserStore();
-  const modalCreateInstance = useDialog();
+  const modalAddSubjectMember = useDialog();
   // const detailsDialog = useDialog();
-  const { data: instancesData, isLoading } = useGetInstances({
+  const { data } = useGetSubjectMembers({
     subject_id: subject_id as string,
   });
-  const { data: instanceOption } = useGetInstanceOption({
-    subject_id: subject_id as string,
-  });
-  // const instancesData = useSubjectStore();
-
+  // const data = useSubjectStore();
   // const handleDelete = useCallback(
   //   (itemId: string): void => {
   //     detailsDialog.handleClose();
   //   },
-  //   [detailsDialog, instancesData],
+  //   [detailsDialog],
   // );
 
   return (
     <>
-      <ModalCreateInstance
-        isOpen={modalCreateInstance.open}
-        handleClose={modalCreateInstance.handleClose}
+      <ModalAddSubjectMember
+        isOpen={modalAddSubjectMember.open}
+        handleClose={modalAddSubjectMember.handleClose}
       />
       <Box
         component="main"
@@ -65,12 +55,11 @@ export default function InstancesPage() {
             <Grid size={12}>
               <Stack direction="row" justifyContent="space-between" spacing={4}>
                 <div>
-                  <Typography variant="h5">Instances</Typography>
+                  <Typography variant="h5">Members</Typography>
                 </div>
                 <Stack alignItems="center" direction="row" spacing={2}>
-                  <BtnVPNDownload />
                   <Button
-                    onClick={modalCreateInstance.handleOpen}
+                    onClick={modalAddSubjectMember.handleOpen}
                     startIcon={
                       <SvgIcon>
                         <Plus />
@@ -78,14 +67,10 @@ export default function InstancesPage() {
                     }
                     variant="contained"
                   >
-                    New
+                    Add
                   </Button>
                 </Stack>
               </Stack>
-              <Alert className="mt-3" severity="info">
-                Only instances you have permission to access will be displayed,
-                including those from both your subjects and groups.
-              </Alert>
             </Grid>
             <Grid size={12}>
               <Stack
@@ -94,12 +79,7 @@ export default function InstancesPage() {
                   lg: 4,
                 }}
               >
-                <TableInstances
-                  data={instancesData?.instances || []}
-                  flavors={instanceOption?.flavors || []}
-                  images={instanceOption?.images || []}
-                  isLoading={isLoading}
-                />
+                <TableMembers members={data?.members || []} />
               </Stack>
             </Grid>
           </Grid>

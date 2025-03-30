@@ -36,15 +36,19 @@ import Image from 'next/image';
 const groupFormId = 'instance-create-form';
 const ModalCreateInstance = (props: FormProps) => {
   const { isOpen, handleClose } = props;
-  const { subject_id } = useParams();
+  const { subject_id, group_id } = useParams();
+
+
   const { user } = useUserStore();
   const queryClient = useQueryClient();
   const { data: instanceOptions } = useGetInstanceOption({
-    subject_id: subject_id as string,
+    subject_id: (subject_id || group_id) as string ,
   });
+
   const { data: keysData } = useGetUserPublicKeys({
     user_id: user?.info.id as string,
   });
+  console.log(instanceOptions, keysData);
   const createInstance = useCreateInstance({
     onSuccess: () => {
       toast.success('Instance created successfully');

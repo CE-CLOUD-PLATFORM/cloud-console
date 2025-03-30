@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import type { ChangeEvent, FC, FormEvent, MouseEvent } from 'react';
+import type { ChangeEvent, FC, MouseEvent } from 'react';
 import { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Grid01Icon from '@untitled-ui/icons-react/build/esm/Grid01';
@@ -57,7 +57,6 @@ export const ItemSearch: FC<ItemSearchProps> = (props) => {
     onSortChange,
     onViewChange,
     view = 'grid',
-    sortBy = 'name',
     sortDir = 'asc',
   } = props;
   const queryRef = useRef<HTMLInputElement | null>(null);

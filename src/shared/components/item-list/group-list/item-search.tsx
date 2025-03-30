@@ -1,10 +1,4 @@
 /* eslint-disable no-unused-vars */
-import type { ChangeEvent, FC, FormEvent, MouseEvent } from 'react';
-import { useCallback, useRef } from 'react';
-import PropTypes from 'prop-types';
-import Grid01Icon from '@untitled-ui/icons-react/build/esm/Grid01';
-import ListIcon from '@untitled-ui/icons-react/build/esm/List';
-import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import {
   Box,
   Card,
@@ -13,10 +7,11 @@ import {
   Stack,
   SvgIcon,
   TextField,
-  ToggleButton,
-  ToggleButtonGroup,
-  toggleButtonGroupClasses,
 } from '@mui/material';
+import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+import PropTypes from 'prop-types';
+import type { ChangeEvent, FC } from 'react';
+import { useCallback, useRef } from 'react';
 
 interface Filters {
   query?: string;
@@ -55,9 +50,6 @@ export const ItemSearch: FC<ItemSearchProps> = (props) => {
   const {
     onFiltersChange,
     onSortChange,
-    onViewChange,
-    view = 'grid',
-    sortBy = 'name',
     sortDir = 'asc',
   } = props;
   const queryRef = useRef<HTMLInputElement | null>(null);

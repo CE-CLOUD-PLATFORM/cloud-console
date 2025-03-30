@@ -3,7 +3,7 @@ import { useGetInstance } from '@/modules/instance/hook/use-get-instance';
 import { useGetInstanceVNC } from '@/modules/instance/hook/use-get-instance-vnc';
 import BtnVPNDownload from '@/shared/components/button/vpn-download';
 import CircleLoading from '@/shared/components/Loading/CircleLoading';
-import { Alert, Box, Button, Stack, SvgIcon } from '@mui/material';
+import { Alert, Box, Button, Stack, SvgIcon, Typography } from '@mui/material';
 import AirStart from '@untitled-ui/icons-react/build/esm/Airplay';
 import { useParams } from 'next/navigation';
 import React from 'react';
@@ -16,7 +16,11 @@ export default function Page() {
       subject_id: subject_id as string,
     },
   );
-  const { data: vncData, refetch: refetchVNC } = useGetInstanceVNC({
+  const {
+    data: vncData,
+    isFetching: vncFetching,
+    refetch: refetchVNC,
+  } = useGetInstanceVNC({
     instance_id: instance_id as string,
     subject_id: subject_id as string,
   });
@@ -28,16 +32,21 @@ export default function Page() {
     );
   }
   return (
-    <Stack className="h-full px-24">
-      <div>Card</div>
+    <Stack className="h-full px-24 py-16">
       <Stack
         flexDirection={'row'}
+        alignItems={'center'}
         justifyContent={'space-between'}
       >
-        <Box>Instance: {instanceData?.instance.name}</Box>
+        <Box display={'flex'} alignItems={'end'} gap={1}>
+          <Typography variant="h5">Instance:</Typography>{' '}
+          <Typography fontSize={20} variant="body1">
+            {instanceData?.instance.name}
+          </Typography>
+        </Box>
 
-        <Box display={"flex"} gap={2}>
-          <BtnVPNDownload/>
+        <Box display={'flex'} gap={2}>
+          <BtnVPNDownload />
           <Button
             onClick={() => {
               refetchVNC();
@@ -56,7 +65,12 @@ export default function Page() {
       <Alert className="mt-3" severity="info">
         You must connect to the VPN before accessing VNC.
       </Alert>
-      {vncData && <iframe src={vncData.url}></iframe>}
+      <Box className="w-full flex-1 flex justify-center items-center">
+        {vncFetching && <CircleLoading />}
+        {vncData && !vncFetching && (
+          <iframe className="h-full w-full" src={vncData.url}></iframe>
+        )}
+      </Box>
     </Stack>
   );
 }

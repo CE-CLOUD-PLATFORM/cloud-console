@@ -1,3 +1,4 @@
+'use client';
 import { Button, SvgIcon } from '@mui/material';
 import FileDownload03 from '@untitled-ui/icons-react/build/esm/FileDownload03';
 import React from 'react';

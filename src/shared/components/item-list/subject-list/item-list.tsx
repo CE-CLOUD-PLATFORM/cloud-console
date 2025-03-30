@@ -7,7 +7,6 @@ import {
   Table,
   TableBody,
   TablePagination,
-  Typography,
 } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
 import { ItemListCard } from './item-list-card';
@@ -43,7 +42,6 @@ export const ItemList: FC<ItemListProps> = (props) => {
     page = 0,
     rowsPerPage = 9,
     view = 'grid',
-    isLoading = true,
   } = props;
 
   const startIndex = page * rowsPerPage;
