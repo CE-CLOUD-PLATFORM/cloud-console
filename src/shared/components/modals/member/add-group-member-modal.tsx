@@ -144,7 +144,6 @@ const ModalAddSubjectMember = (props: FormProps) => {
           .filter(
             (user): user is Member => !!user && !existingIds.includes(user.id),
           );
-        console.log(matchedUsers);
 
         if (matchedUsers.length === 0) {
           toast.error('No matching users found or all users already added.', {
