@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import './style.css';
 import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
@@ -19,40 +18,44 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  TextField,
   Typography,
 } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
 import type { Member } from '@/modules/user/types/member';
+import { Trash01 } from '@untitled-ui/icons-react';
+import { useGetRoles } from '@/modules/roles/hook/use-get-role-list';
 
+// interface Option {
+//   label: string;
+//   value: string;
+// }
 
-interface Option {
-  label: string;
-  value: string;
-}
-
-const sortOptions: Option[] = [
-  {
-    label: 'Last update (newest)',
-    value: 'updatedAt|desc',
-  },
-  {
-    label: 'Last update (oldest)',
-    value: 'updatedAt|asc',
-  },
-  {
-    label: 'Total orders (highest)',
-    value: 'orders|desc',
-  },
-  {
-    label: 'Total orders (lowest)',
-    value: 'orders|asc',
-  },
-];
+// const sortOptions: Option[] = [
+//   {
+//     label: 'Last update (newest)',
+//     value: 'updatedAt|desc',
+//   },
+//   {
+//     label: 'Last update (oldest)',
+//     value: 'updatedAt|asc',
+//   },
+//   {
+//     label: 'Total orders (highest)',
+//     value: 'orders|desc',
+//   },
+//   {
+//     label: 'Total orders (lowest)',
+//     value: 'orders|asc',
+//   },
+// ];
 interface TableMembersProps {
   members: Member[];
 }
 export const TableMembers: FC<TableMembersProps> = ({ members }) => {
+  const { data: roleData, isFetched } = useGetRoles();
+  const roleKeyName = Object.fromEntries(
+    roleData?.roles.map((item) => [item.id, item.name]) || [],
+  );
   return (
     <Box
       sx={{
@@ -80,7 +83,7 @@ export const TableMembers: FC<TableMembersProps> = ({ members }) => {
             }
             sx={{ flexGrow: 1 }}
           />
-          <TextField
+          {/* <TextField
             label="Sort By"
             name="sort"
             select
@@ -91,7 +94,7 @@ export const TableMembers: FC<TableMembersProps> = ({ members }) => {
                 {option.label}
               </option>
             ))}
-          </TextField>
+          </TextField> */}
         </Stack>
         <Scrollbar>
           <Table sx={{ minWidth: 700 }}>
@@ -130,7 +133,7 @@ export const TableMembers: FC<TableMembersProps> = ({ members }) => {
                     align="right"
                     sx={{ whiteSpace: 'nowrap', width: '1%' }}
                   >
-                    {member.role}
+                    {roleKeyName[member.role]}
                   </TableCell>
                   <TableCell
                     align="right"
@@ -143,7 +146,7 @@ export const TableMembers: FC<TableMembersProps> = ({ members }) => {
                     </IconButton>
                     <IconButton>
                       <SvgIcon>
-                        <ArrowRightIcon />
+                        <Trash01 />
                       </SvgIcon>
                     </IconButton>
                   </TableCell>

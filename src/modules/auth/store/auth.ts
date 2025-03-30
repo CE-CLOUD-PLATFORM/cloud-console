@@ -8,9 +8,11 @@ import { cookieParser } from "@/shared/utils/cookie-parser";
 import { removeSession } from "@/shared/utils";
 type UserState = {
   user: User | null;
+  admin:boolean;
   loading: boolean;
   actions: {
     setUser: (user: User | null) => void;
+    setAdmin: (admin: boolean) => void;
     setLoading: (loading: boolean) => void;
     logoutUser: () => void,
     initializeUser: () => void
@@ -21,8 +23,10 @@ export const useUserStore = create<UserState>()(
   devtools((set) => ({
     user: null,
     loading: true,
+    admin: false,
     actions: {
       setUser: (user) => set({ user }),
+      setAdmin: (admin) => set({ admin }),
       setLoading: (loading) => set({ loading }),
       logoutUser: () => {
         removeSession()

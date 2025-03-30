@@ -83,7 +83,7 @@ export default function InstancesPage() {
               </Stack>
               <Alert className="mt-3" severity="info">
                 Only instances you have permission to access will be displayed,
-                including those from both your subjects and groups.
+                including only from this subject.
               </Alert>
             </Grid>
             <Grid size={12}>

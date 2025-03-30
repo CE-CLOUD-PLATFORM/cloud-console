@@ -30,20 +30,22 @@ export const recoveryPassword = async (data: IRecoveryPassword) => {
 
 export const validateToken = async ({ queryKey }: QueryParams) => {
   const [_, token] = queryKey;
-
+  interface ResData {
+    admin: boolean
+  }
   const params: IAuthValidateToken = {
     token,
   };
   try {
-    const response = await axiosInstance.get<IResponse>(
+    const response = await axiosInstance.get<ResData>(
       endpoints.auth.validate,
       {
         params,
       },
     );
-    return response.status;
+    return { code: response.status, admin: response.data.admin };
   } catch (error) {
     console.log(error);
-    return 401;
+    return { code: 401, admin: false };
   }
 };

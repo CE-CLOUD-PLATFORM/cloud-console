@@ -16,6 +16,10 @@ export interface IMemberSubjectAdd {
     members: Member[]
     subject_id: string
 }
+export interface IMemberSubjectDel {
+    members: Member
+    subject_id: string
+}
 export interface IMemberSubjectAddRes extends IResponse {
     success: string[]
 }

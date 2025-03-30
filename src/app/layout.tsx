@@ -32,6 +32,7 @@ export default function RootLayout({
                 toastOptions={{
                   className: 'mt-5',
                   duration: 1800,
+                  
                 }}
                 key={"toast"}
                 
