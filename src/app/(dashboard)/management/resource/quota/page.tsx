@@ -2,7 +2,6 @@
 import { useGetQuotas } from '@/modules/resource/hook/use-get-quota-list';
 import type { Quota } from '@/modules/resource/types/quota';
 import { QuotaDrawer } from '@/shared/components/item-drawer/quota-drawer';
-import ResourceCard from '@/shared/components/resource-card';
 import { TableQuota } from '@/shared/components/table/quota-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
 import {

@@ -2,10 +2,10 @@
 /* eslint-disable no-unused-vars */
 import type { ChangeEvent, FC, MouseEvent } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Stack, Table, TableBody, TablePagination } from '@mui/material';
+import { Box, Stack, Table, TableBody } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
 import { ItemListRow } from './item-list-row';
-import { PublicKey } from '@/modules/config/types/public-key';
+import type { PublicKey } from '@/modules/config/types/public-key';
 
 interface ItemListProps {
   count?: number;

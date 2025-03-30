@@ -6,7 +6,7 @@ import { axiosInstance } from '@/shared/utils';
 
 import { endpoints } from '@/shared/configs';
 import type { PublicKeyReq, PublicKeyReqParams, PublicKeyRes } from '../types/public-key';
-import { IResponse } from '@/shared/interfaces/api';
+import type { IResponse } from '@/shared/interfaces/api';
 
 type Params = {
   queryKey: string[];

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable unused-imports/no-unused-vars */
@@ -28,7 +30,6 @@ import { useUserStore } from '@/modules/auth/store/auth';
 import type { FormProps } from '@/shared/interfaces/modal';
 import { useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import { useGetDomainUsers } from '@/modules/user/hook/use-get-domain-users';
 import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
 import type { IMemberSubjectAdd, Member } from '@/modules/user/types/member';
 import type { User } from '@/modules/user/types/user';

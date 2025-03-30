@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { useRecoveryPassword } from '@/modules/auth/hook/use-recovery-pass';
 import { useUserStore } from '@/modules/auth/store/auth';
-import { PublicKeyReq } from '@/modules/config/types/public-key';
+import type { PublicKeyReq } from '@/modules/config/types/public-key';
 import type { FormProps } from '@/shared/interfaces/modal';
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import type { SubmitHandler} from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import ModalCover from '../index';
 import '../index.css';
@@ -29,11 +29,10 @@ const ModalSSHKeyCreate = (props: FormProps) => {
       toast.error('Fail to create SSH key, try again later.');
     },
   });
+  // eslint-disable-next-line prefer-const
   let { user } = useUserStore();
   const {
-    register,
     handleSubmit,
-    watch,
     control,
     reset,
     formState: { errors },
