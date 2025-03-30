@@ -5,7 +5,6 @@
 import type { FC } from 'react';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import DotsVerticalIcon from '@untitled-ui/icons-react/build/esm/DotsVertical';
 import {
   Box,
   IconButton,
@@ -18,19 +17,19 @@ import {
 } from '@mui/material';
 import { usePopover } from '@/shared/hooks/use-popover';
 import { ItemIcon } from './item-icon';
-import { ItemMenu } from './item-menu';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import type { Group } from '@/modules/group/types/group';
+import { PublicKey } from '@/modules/config/types/public-key';
+import { Trash03 } from '@untitled-ui/icons-react';
+import { getDateddMMYYYY } from '@/shared/utils/date-locale';
 
 interface ItemListRowProps {
-  item: Group;
+  item: PublicKey;
   onDelete?: (itemId: string) => void;
   onOpen?: (itemId: string) => void;
 }
 
 export const ItemListRow: FC<ItemListRowProps> = (props) => {
-  const { item, onDelete,  onOpen } = props;
+  const { item, onDelete, onOpen } = props;
   const popover = usePopover<HTMLButtonElement>();
   const pathname = usePathname();
 
@@ -38,7 +37,6 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
     popover.handleClose();
     onDelete?.(item.id);
   }, [item, popover, onDelete]);
-
 
   return (
     <>
@@ -83,52 +81,40 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
         }}
       >
         <TableCell>
-          <Link href={`/management/group/${item.project_id}/${item.id}/overview`}>
-            <Stack alignItems="center" direction="row" spacing={2}>
-              <Box onClick={() => onOpen?.(item.id)} sx={{ cursor: 'pointer' }}>
-                <ItemIcon />
-              </Box>
-              <div>
-                <Typography
-                  noWrap
-                  onClick={() => onOpen?.(item.id)}
-                  sx={{ cursor: 'pointer' }}
-                  variant="subtitle2"
-                >
-                  {item.name}
-                </Typography>
-                <Typography color="text.secondary" noWrap variant="body2">
-                </Typography>
-              </div>
-            </Stack>
-          </Link>
+          <Stack alignItems="center" direction="row" spacing={2}>
+            <Box onClick={() => onOpen?.(item.id)} sx={{ cursor: 'pointer' }}>
+              <ItemIcon />
+            </Box>
+            <div>
+              <Typography
+                noWrap
+                onClick={() => onOpen?.(item.id)}
+                sx={{ cursor: 'pointer', fontSize: '18px' }}
+                variant="body1"
+              >
+                {item.name}
+              </Typography>
+              <Typography
+                color="text.secondary"
+                noWrap
+                variant="body2"
+              ></Typography>
+            </div>
+          </Stack>
         </TableCell>
         <TableCell>
-          <Typography noWrap variant="subtitle2">
-            Member
-          </Typography>
-          <Typography color="text.secondary" noWrap variant="body2">
-            {item.member_count}
-          </Typography>
+          <Stack alignItems="center" direction="row" spacing={2}>
+            Added on {getDateddMMYYYY(new Date(item.created_at).toString())}
+          </Stack>
         </TableCell>
-        <TableCell>
-          <Box sx={{ display: 'flex' }}></Box>
-        </TableCell>
-        <TableCell align="right"></TableCell>
         <TableCell align="right">
-          <IconButton onClick={popover.handleOpen} ref={popover.anchorRef}>
+          <IconButton onClick={handleDelete}>
             <SvgIcon fontSize="small">
-              <DotsVerticalIcon />
+              <Trash03 />
             </SvgIcon>
           </IconButton>
         </TableCell>
       </TableRow>
-      <ItemMenu
-        anchorEl={popover.anchorRef.current}
-        onClose={popover.handleClose}
-        onDelete={handleDelete}
-        open={popover.open}
-      />
     </>
   );
 };

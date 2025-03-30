@@ -48,7 +48,6 @@ const ModalCreateInstance = (props: FormProps) => {
   const { data: keysData } = useGetUserPublicKeys({
     user_id: user?.info.id as string,
   });
-  console.log(instanceOptions, keysData);
   const createInstance = useCreateInstance({
     onSuccess: () => {
       toast.success('Instance created successfully');
@@ -74,7 +73,7 @@ const ModalCreateInstance = (props: FormProps) => {
     defaultValues: {
       name: 'untitled',
       volume_size: 30,
-      subject_id: subject_id as string,
+      subject_id: (subject_id || group_id) as string,
     },
   });
 

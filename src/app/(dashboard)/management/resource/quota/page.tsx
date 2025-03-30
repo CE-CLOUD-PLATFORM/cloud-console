@@ -63,14 +63,13 @@ export default function QuotaManagementPage() {
           >
             <Grid size={12}>
               <Stack direction="row" justifyContent="space-between" spacing={4}>
-                <div>
-                  <Typography variant="h5">Quota</Typography>
-                </div>
+                <Typography variant="h5">Quota</Typography>
+                <Stack>
+                  
+                </Stack>
               </Stack>
             </Grid>
-            <Grid size={12}>
-              <ResourceCard />
-            </Grid>
+            <Grid size={12}>{/* <ResourceCard /> */}</Grid>
             <Grid size={12}>
               <Stack
                 spacing={{

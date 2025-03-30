@@ -5,7 +5,8 @@ import { axiosInstance } from '@/shared/utils';
 
 
 import { endpoints } from '@/shared/configs';
-import type { PublicKeyReqParams, PublicKeyRes } from '../types/public-key';
+import type { PublicKeyReq, PublicKeyReqParams, PublicKeyRes } from '../types/public-key';
+import { IResponse } from '@/shared/interfaces/api';
 
 type Params = {
   queryKey: string[];
@@ -24,5 +25,14 @@ export const getUserPublicKeys = async ({
     any,
     PublicKeyReqParams
   >(`${endpoints.config.publicKey}`, { params });
+  return response.data;
+};
+export const postUserPublicKey = async (data: PublicKeyReq): Promise<PublicKeyRes> => {
+
+  const response = await axiosInstance.post<
+    IResponse,
+    any,
+    PublicKeyReq
+  >(`${endpoints.config.publicKey}`, data);
   return response.data;
 };

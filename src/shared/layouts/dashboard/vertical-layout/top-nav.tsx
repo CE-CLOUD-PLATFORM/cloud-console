@@ -51,37 +51,39 @@ export const TopNav: FC<TopNavProps> = (props) => {
           px: 2,
         }}
       >
-        {!lgUp && (
-          <Stack alignItems="center" direction="row" spacing={2}>
-            <Box
-              component={RouterLink}
-              href={paths.index}
-              sx={{
-                display: 'flex',
-                height: 40,
-                p: '4px',
-                width: 40,
-                borderRadius:'10px',
-                transitionDuration:'0.5s',
-                '&:hover':{
-                  boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.2)'
-                }
-              }}
-            >
-              <Image
-                width={50}
-                height={50}
-                src="/assets/ce-logo.png"
-                alt="logo"
-              />
-            </Box>
-            <IconButton onClick={onMobileNavOpen}>
-              <SvgIcon>
-                <Menu01Icon />
-              </SvgIcon>
-            </IconButton>
-          </Stack>
-        )}
+        <Stack alignItems="center" direction="row" spacing={2}>
+          {!lgUp && (
+            <>
+              <Box
+                component={RouterLink}
+                href={paths.index}
+                sx={{
+                  display: 'flex',
+                  height: 40,
+                  p: '4px',
+                  width: 40,
+                  borderRadius: '10px',
+                  transitionDuration: '0.5s',
+                  '&:hover': {
+                    boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.2)',
+                  },
+                }}
+              >
+                <Image
+                  width={50}
+                  height={50}
+                  src="/assets/ce-logo.png"
+                  alt="logo"
+                />
+              </Box>
+              <IconButton onClick={onMobileNavOpen}>
+                <SvgIcon>
+                  <Menu01Icon />
+                </SvgIcon>
+              </IconButton>
+            </>
+          )}
+        </Stack>
         {/* <SearchButton /> */}
         {/* <Typography variant='h6'>{title}</Typography> */}
 
