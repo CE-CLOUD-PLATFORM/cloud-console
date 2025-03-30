@@ -134,7 +134,7 @@ export default function LoginPage() {
                         {/* <MenuItem value={'default'}>Default</MenuItem> */}
                         {/* <MenuItem value={'CE'}>CE</MenuItem> */}
                         {domainsData?.domains?.map((domain) => (
-                          <MenuItem value={domain.id}>{domain.name}</MenuItem>
+                          <MenuItem key={domain.id} value={domain.id}>{domain.name}</MenuItem>
                         ))}
                       </Select>
                     )}
