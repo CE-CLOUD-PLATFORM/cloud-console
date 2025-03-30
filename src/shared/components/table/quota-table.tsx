@@ -29,9 +29,10 @@ import {
 import { Scrollbar } from '@/shared/components/scrollbar';
 import type { handleQuotaDialogType } from '@/app/(dashboard)/management/resource/quota/page';
 import type { Quota, QuotaStatus } from '@/modules/resource/types/quota';
+import type {
+  SeverityPillColor} from '@/shared/components/severity-pill';
 import {
-  SeverityPill,
-  SeverityPillColor,
+  SeverityPill
 } from '@/shared/components/severity-pill';
 const statusOptions: { label: string; value: QuotaStatus | '' }[] = [
   { label: 'All Statuses', value: '' },
