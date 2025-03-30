@@ -32,7 +32,7 @@ export default function Page() {
     );
   }
   return (
-    <Stack className="h-full px-24 py-16">
+    <Stack className="h-full w-full max-w-[1280px] px-24 py-16">
       <Stack
         flexDirection={'row'}
         alignItems={'center'}
@@ -65,7 +65,7 @@ export default function Page() {
       <Alert className="mt-3" severity="info">
         You must connect to the VPN before accessing VNC.
       </Alert>
-      <Box className="w-full flex-1 flex justify-center items-center">
+      <Box className="flex w-full flex-1 items-center justify-center">
         {vncFetching && <CircleLoading />}
         {vncData && !vncFetching && (
           <iframe className="h-full w-full" src={vncData.url}></iframe>
