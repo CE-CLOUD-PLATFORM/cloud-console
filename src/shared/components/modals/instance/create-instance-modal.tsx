@@ -239,7 +239,7 @@ const ModalCreateInstance = (props: FormProps) => {
 
               <Link
                 className="text-nowrap rounded-md bg-gray-200 p-2"
-                href={'/settings/keys'}
+                href={'/setting/access/keys'}
               >
                 Manage Key
               </Link>

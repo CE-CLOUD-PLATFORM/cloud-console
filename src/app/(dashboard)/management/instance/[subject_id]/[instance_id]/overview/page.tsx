@@ -32,7 +32,7 @@ export default function Page() {
     );
   }
   return (
-    <Stack className="h-full w-full max-w-[1280px] px-24 py-16">
+    <Stack className="h-full w-full  px-24 py-16">
       <Stack
         flexDirection={'row'}
         alignItems={'center'}

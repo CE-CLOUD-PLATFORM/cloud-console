@@ -28,7 +28,7 @@ const Page = () => {
         isOpen={modalSSHKey.open}
         handleClose={modalSSHKey.handleClose}
       />
-      <Stack className="h-full w-full max-w-[1280px] px-24 py-16" spacing={1}>
+      <Stack className="h-full w-full  px-24 py-16" spacing={1}>
         <Stack
           flexDirection={'row'}
           alignItems={'center'}
@@ -57,7 +57,7 @@ const Page = () => {
           This is a list of SSH keys associated with your account. Remove any
           keys that you do not recognize.
         </Typography>
-        <ItemList count={data?.keys.length} items={data?.keys} />
+        <ItemList count={data?.keys?.length || 0} items={data?.keys} />
       </Stack>
     </>
   );
