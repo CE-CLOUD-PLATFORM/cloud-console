@@ -1,3 +1,6 @@
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 'use client';
 import { useUserStore } from '@/modules/auth/store/auth';
 import { useGetQuotas } from '@/modules/resource/hook/use-get-quota-list';
