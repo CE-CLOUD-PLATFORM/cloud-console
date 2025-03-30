@@ -28,7 +28,7 @@ const Page = () => {
         isOpen={modalSSHKey.open}
         handleClose={modalSSHKey.handleClose}
       />
-      <Stack className="h-full w-full max-w-[1280px] px-24 py-16" spacing={1}>
+      <Stack className="h-full w-full  px-24 py-16" spacing={1}>
         <Stack
           flexDirection={'row'}
           alignItems={'center'}

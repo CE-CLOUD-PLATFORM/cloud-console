@@ -34,11 +34,12 @@ interface FlavorSpec {
 
 const form_id = 'quota-request-form';
 const ModalQuotaRequestForm = (props: FormProps) => {
-  const { isOpen, handleClose } = props;
+  const { handleClose } = props;
   const { user } = useUserStore();
   const queryClient = useQueryClient();
   const createSubject = useCreateQuota({
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['quotas'] });
       toast.success('Quota requested successfully');
       reset();
     },
@@ -91,7 +92,7 @@ const ModalQuotaRequestForm = (props: FormProps) => {
       //   memory: Number(data.req_resource.memory),
       // };
       if (!resourceChecked) {
-        data.req_resource = undefined
+        data.req_resource = undefined;
       }
       createSubject.mutate(data);
     } catch (error) {
