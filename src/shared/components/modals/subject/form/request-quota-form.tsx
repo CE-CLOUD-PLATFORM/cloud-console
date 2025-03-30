@@ -72,6 +72,7 @@ const ModalQuotaRequestForm = (props: FormProps) => {
       },
       request_user_id: user?.info.id,
       subject_academic_year: '',
+      detail: '',
     },
   });
   const flavorSpecForm = useForm<FlavorSpec>({
@@ -175,7 +176,13 @@ const ModalQuotaRequestForm = (props: FormProps) => {
               />
             )}
           />
-
+          <Controller
+            name="detail"
+            control={control}
+            render={({ field }) => (
+              <TextField {...field} fullWidth label="Usage details" />
+            )}
+          />
           <Box
             display="flex"
             alignItems={'center'}

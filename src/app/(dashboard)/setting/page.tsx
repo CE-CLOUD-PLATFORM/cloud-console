@@ -1,8 +1,7 @@
-import React from 'react'
+
+import Page from './access/keys/page';
 
 const SettingPage = () => {
-  return (
-    <div>SettingPage</div>
-  )
-}
-export default SettingPage
+  return <Page />;
+};
+export default SettingPage;

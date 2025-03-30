@@ -37,12 +37,12 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
   const handleLogout = useCallback(async (): Promise<void> => {
     try {
       onClose?.();
-      logoutUser()
+      logoutUser();
     } catch (err) {
       console.error(err);
       toast.error('Something went wrong!');
     }
-  }, [user,router, onClose]);
+  }, [user, router, onClose]);
 
   return (
     <Popover
@@ -58,9 +58,9 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
       {...other}
     >
       <Box sx={{ p: 2 }}>
-        <Typography variant="body1">{'user.name'}</Typography>
+        <Typography variant="body1">{user?.info.name}</Typography>
         <Typography color="text.secondary" variant="body2">
-          demo@devias.io
+          {user?.info.domain.name}
         </Typography>
       </Box>
       <Divider />
@@ -77,49 +77,11 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
         >
           <ListItemIcon>
             <SvgIcon fontSize="small">
-              <User03Icon />
-            </SvgIcon>
-          </ListItemIcon>
-          <ListItemText
-            primary={<Typography variant="body1">Profile</Typography>}
-          />
-        </ListItemButton>
-        <ListItemButton
-          component={RouterLink}
-          href={paths.dashboard.index}
-          onClick={onClose}
-          sx={{
-            borderRadius: 1,
-            px: 1,
-            py: 0.5,
-          }}
-        >
-          <ListItemIcon>
-            <SvgIcon fontSize="small">
               <Settings04Icon />
             </SvgIcon>
           </ListItemIcon>
           <ListItemText
             primary={<Typography variant="body1">Settings</Typography>}
-          />
-        </ListItemButton>
-        <ListItemButton
-          component={RouterLink}
-          href={paths.dashboard.index}
-          onClick={onClose}
-          sx={{
-            borderRadius: 1,
-            px: 1,
-            py: 0.5,
-          }}
-        >
-          <ListItemIcon>
-            <SvgIcon fontSize="small">
-              <CreditCard01Icon />
-            </SvgIcon>
-          </ListItemIcon>
-          <ListItemText
-            primary={<Typography variant="body1">Billing</Typography>}
           />
         </ListItemButton>
       </Box>
