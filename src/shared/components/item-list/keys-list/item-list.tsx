@@ -22,11 +22,7 @@ interface ItemListProps {
 }
 
 export const ItemList: FC<ItemListProps> = (props) => {
-  const {
-    items = [],
-    onDelete,
-    onOpen,
-  } = props;
+  const { items = [], onDelete, onOpen } = props;
   let content: JSX.Element;
 
   content = (
@@ -37,11 +33,11 @@ export const ItemList: FC<ItemListProps> = (props) => {
             sx={{
               minWidth: 600,
               borderCollapse: 'separate',
-              borderSpacing: '0 8px'
+              borderSpacing: '0 8px',
             }}
           >
             <TableBody>
-              {items.map((item) => (
+              {items?.map((item) => (
                 <ItemListRow
                   key={item.id}
                   item={item}
@@ -56,11 +52,7 @@ export const ItemList: FC<ItemListProps> = (props) => {
     </Box>
   );
 
-  return (
-    <Stack spacing={4}>
-      {content}
-    </Stack>
-  );
+  return <Stack spacing={4}>{content}</Stack>;
 };
 
 ItemList.propTypes = {
