@@ -16,8 +16,8 @@ import {
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 
 const Page = () => {
-  let { user } = useUserStore();
-  let modalSSHKey = useDialog();
+  const { user } = useUserStore();
+  const modalSSHKey = useDialog();
   const { data } = useGetUserPublicKeys({
     user_id: user?.info.id as string,
   });

@@ -18,7 +18,7 @@ import {
 import { usePopover } from '@/shared/hooks/use-popover';
 import { ItemIcon } from './item-icon';
 import { usePathname } from 'next/navigation';
-import { PublicKey } from '@/modules/config/types/public-key';
+import type { PublicKey } from '@/modules/config/types/public-key';
 import { Trash03 } from '@untitled-ui/icons-react';
 import { getDateddMMYYYY } from '@/shared/utils/date-locale';
 
@@ -39,8 +39,7 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
   }, [item, popover, onDelete]);
 
   return (
-    <>
-      <TableRow
+    <TableRow
         key={item.id}
         sx={{
           backgroundColor: 'white',
@@ -115,7 +114,6 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
           </IconButton>
         </TableCell>
       </TableRow>
-    </>
   );
 };
 
