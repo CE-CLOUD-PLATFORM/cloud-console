@@ -81,10 +81,10 @@ export const useSections = () => {
                 title: 'Public keys',
                 path: paths.setting.access.public_key,
               },
-              {
-                title: 'VPN',
-                path: paths.setting.access.index,
-              },
+              // {
+              //   title: 'VPN',
+              //   path: paths.setting.access.index,
+              // },
             ],
           },
 

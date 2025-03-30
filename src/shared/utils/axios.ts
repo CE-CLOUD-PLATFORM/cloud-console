@@ -1,17 +1,22 @@
 import { CONFIG } from "@/global-config";
 import axios from "axios";
 import { getCookie } from 'cookies-next';
-console.log(getCookie("token"));
 
 export const axiosInstance = axios.create({
   baseURL: CONFIG.site.apiUrl,
-  headers: {
-    "X-Auth-Token": getCookie("token"),
-  },
+  // headers: {
+  //   "X-Auth-Token": getCookie("token"),
+  // },
 });
 
 axiosInstance.interceptors.request.use(
-  (request) => request,
+  (request) => {
+    const token = getCookie("token");
+    if (token) {
+      request.headers["X-Auth-Token"] = token;
+    }
+    return request;
+  },
   (error) => Promise.reject(error)
 );
 

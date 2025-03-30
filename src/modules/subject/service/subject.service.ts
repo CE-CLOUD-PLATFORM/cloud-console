@@ -10,7 +10,7 @@ import type {
   ISubjectCreate,
 } from '@/modules/subject/types/subject';
 import { endpoints } from '@/shared/configs';
-import type { IMemberReqParams, IMemberRes } from '@/modules/user/types/member';
+import type { IMemberReqParams, IMemberRes, IMemberSubjectAdd, IMemberSubjectAddRes } from '@/modules/user/types/member';
 
 type Params = {
   queryKey: string[];
@@ -75,10 +75,10 @@ export const deleteSubject = async (id: string) => {
     params: id
   })).data
 }
-export const postSubjectMember = async (data: ISubjectCreate) => {
+export const postSubjectMember = async (data: IMemberSubjectAdd) => {
   return (await axiosInstance.post<
+    IMemberSubjectAddRes,
     any,
-    any,
-    ISubjectCreate
-  >(`${endpoints.subject.create}`, data)).data
+    IMemberSubjectAdd
+  >(`${endpoints.subject.addMembers}`, data)).data
 }

@@ -1,3 +1,4 @@
+import { success } from './../../../shared/theme/colors';
 import type { IResponse } from "@/shared/interfaces/api"
 import type { User } from "./user"
 
@@ -14,4 +15,12 @@ export interface IMemberReqParams {
 
 export interface IMemberSubjectAdd {
     members: Member[]
+    subject_id: string
+}
+export interface IMemberSubjectAddRes extends IResponse {
+    success: string[]
+}
+export interface IMemberGroupAdd {
+    members: Member[]
+    group_id: string
 }

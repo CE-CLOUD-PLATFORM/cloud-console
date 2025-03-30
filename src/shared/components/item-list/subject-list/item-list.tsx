@@ -7,7 +7,6 @@ import {
   Table,
   TableBody,
   TablePagination,
-  Typography,
 } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
 import { ItemListCard } from './item-list-card';
@@ -41,10 +40,13 @@ export const ItemList: FC<ItemListProps> = (props) => {
     onPageChange = () => {},
     onRowsPerPageChange,
     page = 0,
-    rowsPerPage = 0,
+    rowsPerPage = 9,
     view = 'grid',
-    isLoading = true,
   } = props;
+
+  const startIndex = page * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const displayedItems = items.slice(startIndex, endIndex);
 
   let content: JSX.Element;
 
@@ -57,7 +59,7 @@ export const ItemList: FC<ItemListProps> = (props) => {
           gridTemplateColumns: 'repeat(3, 1fr)',
         }}
       >
-        {items?.map((item) => (
+        {displayedItems.map((item) => (
           <ItemListCard
             key={item.id}
             item={item}
@@ -80,7 +82,7 @@ export const ItemList: FC<ItemListProps> = (props) => {
               }}
             >
               <TableBody>
-                {items.map((item) => (
+                {displayedItems.map((item) => (
                   <ItemListRow
                     key={item.id}
                     item={item}
@@ -98,13 +100,7 @@ export const ItemList: FC<ItemListProps> = (props) => {
   return (
     <Stack spacing={4} className="flex-grow">
       {content}
-      {!isLoading && count === 0 && (
-        <Box display={'flex'} justifyContent={'center'}>
-          <Typography className="text-slate-500" variant="subtitle1">
-            No subjects found.
-          </Typography>
-        </Box>
-      )}
+
       <TablePagination
         component="div"
         count={count}

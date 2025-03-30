@@ -6,7 +6,9 @@ import type { Theme } from '@mui/material';
 import { Box, IconButton, Stack, SvgIcon, useMediaQuery } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { AccountButton } from '../account-button';
-
+import { RouterLink } from '@/shared/components/router-link';
+import { paths } from '@/paths';
+import Image from 'next/image';
 const TOP_NAV_HEIGHT: number = 64;
 // const SIDE_NAV_WIDTH: number = 280;
 
@@ -49,17 +51,40 @@ export const TopNav: FC<TopNavProps> = (props) => {
           px: 2,
         }}
       >
-        <Stack alignItems="center" direction="row" spacing={2}>
-          {!lgUp && (
+        {!lgUp && (
+          <Stack alignItems="center" direction="row" spacing={2}>
+            <Box
+              component={RouterLink}
+              href={paths.index}
+              sx={{
+                display: 'flex',
+                height: 40,
+                p: '4px',
+                width: 40,
+                borderRadius:'10px',
+                transitionDuration:'0.5s',
+                '&:hover':{
+                  boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.2)'
+                }
+              }}
+            >
+              <Image
+                width={50}
+                height={50}
+                src="/assets/ce-logo.png"
+                alt="logo"
+              />
+            </Box>
             <IconButton onClick={onMobileNavOpen}>
               <SvgIcon>
                 <Menu01Icon />
               </SvgIcon>
             </IconButton>
-          )}
-          {/* <SearchButton /> */}
-          {/* <Typography variant='h6'>{title}</Typography> */}
-        </Stack>
+          </Stack>
+        )}
+        {/* <SearchButton /> */}
+        {/* <Typography variant='h6'>{title}</Typography> */}
+
         <Stack alignItems="center" direction="row" spacing={2}>
           <AccountButton />
         </Stack>

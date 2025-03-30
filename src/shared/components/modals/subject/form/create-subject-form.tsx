@@ -44,13 +44,13 @@ const ModalSubjectCreateForm = (props: FormProps) => {
       toast.success('Project created successfully');
       queryClient.invalidateQueries({ queryKey: ['subjects'] });
       reset();
-      handleClose();
     },
     onError: () => {
       toast.error('Fail to create Subject.');
     },
     onMutate: () => {
-      toast.loading('Creating...');
+      handleClose();
+      toast.loading('Creating Subject...');
     },
   });
   const { data: flavorsData } = useGetFlavors();

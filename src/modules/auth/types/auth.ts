@@ -11,6 +11,7 @@ export interface IAuthLogin {
 export interface IAuthLoginRes extends IResponse {
     token: string;
     user: UserInfo;
+    admin:boolean
 }
 
 export interface IAuthValidateToken {

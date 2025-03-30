@@ -7,16 +7,17 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import StorageIcon from '@mui/icons-material/Storage';
-import GroupsIcon from '@mui/icons-material/Groups';
+
 import Link from 'next/link';
+import LayoutAlt04 from '@untitled-ui/icons-react/build/esm/LayoutAlt04';
+import Server01 from '@untitled-ui/icons-react/build/esm/Server01';
+import User01 from '@untitled-ui/icons-react/build/esm/User01';
 
 export default function SidebarGroup() {
   const menus = [
-    { name: 'Overview', icon: <SpaceDashboardIcon />, link: 'overview' },
-    { name: 'Instances', icon: <StorageIcon />, link: 'instance' },
-    { name: 'Member', icon: <GroupsIcon />, link: 'member' },
+    { name: 'Overview', icon: <LayoutAlt04 />, link: 'overview' },
+    { name: 'Instances', icon: <Server01 />, link: 'instance' },
+    { name: 'Member', icon: <User01 />, link: 'member' },
   ];
 
   return (

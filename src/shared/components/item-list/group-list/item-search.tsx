@@ -1,10 +1,4 @@
 /* eslint-disable no-unused-vars */
-import type { ChangeEvent, FC, MouseEvent } from 'react';
-import { useCallback, useRef } from 'react';
-import PropTypes from 'prop-types';
-import Grid01Icon from '@untitled-ui/icons-react/build/esm/Grid01';
-import ListIcon from '@untitled-ui/icons-react/build/esm/List';
-import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import {
   Box,
   Card,
@@ -13,10 +7,11 @@ import {
   Stack,
   SvgIcon,
   TextField,
-  ToggleButton,
-  ToggleButtonGroup,
-  toggleButtonGroupClasses,
 } from '@mui/material';
+import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+import PropTypes from 'prop-types';
+import type { ChangeEvent, FC } from 'react';
+import { useCallback, useRef } from 'react';
 
 interface Filters {
   query?: string;
@@ -55,14 +50,12 @@ export const ItemSearch: FC<ItemSearchProps> = (props) => {
   const {
     onFiltersChange,
     onSortChange,
-    onViewChange,
-    view = 'grid',
     sortDir = 'asc',
   } = props;
   const queryRef = useRef<HTMLInputElement | null>(null);
 
   const handleQueryChange = useCallback(
-    (event: ChangeEvent): void => {
+    (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
       event.preventDefault();
       const query = queryRef.current?.value || '';
 
@@ -79,13 +72,6 @@ export const ItemSearch: FC<ItemSearchProps> = (props) => {
       onSortChange?.(sortDir);
     },
     [onSortChange],
-  );
-
-  const handleViewChange = useCallback(
-    (event: MouseEvent<HTMLElement>, value: View) => {
-      onViewChange?.(value);
-    },
-    [onViewChange],
   );
 
   return (
@@ -108,37 +94,7 @@ export const ItemSearch: FC<ItemSearchProps> = (props) => {
             }
           />
         </Box>
-        <ToggleButtonGroup
-          exclusive
-          onChange={handleViewChange}
-          sx={{
-            borderWidth: 1,
-            borderColor: 'divider',
-            borderStyle: 'solid',
-            [`& .${toggleButtonGroupClasses.grouped}`]: {
-              margin: 0.5,
-              border: 0,
-              '&:not(:first-of-type)': {
-                borderRadius: 1,
-              },
-              '&:first-of-type': {
-                borderRadius: 1,
-              },
-            },
-          }}
-          value={view}
-        >
-          <ToggleButton value="grid">
-            <SvgIcon fontSize="small">
-              <Grid01Icon />
-            </SvgIcon>
-          </ToggleButton>
-          <ToggleButton value="list">
-            <SvgIcon fontSize="small">
-              <ListIcon />
-            </SvgIcon>
-          </ToggleButton>
-        </ToggleButtonGroup>
+
         <TextField
           label="Sort By"
           name="sort"

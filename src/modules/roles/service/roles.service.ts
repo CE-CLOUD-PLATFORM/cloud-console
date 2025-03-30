@@ -3,6 +3,7 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import { axiosInstance } from '@/shared/utils';
 import { endpoints } from '@/shared/configs';
+import { RolesRes } from '../types/role';
 
 type Params = {
     queryKey: string[];
@@ -11,7 +12,7 @@ type Params = {
 
 export const getRoles = async ({
     queryKey,
-}: Params): Promise<any> => {
+}: Params): Promise<RolesRes> => {
 
 
     const response = await axiosInstance.get(`${endpoints.domain.roles}`,);

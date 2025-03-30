@@ -48,6 +48,7 @@ export const endpoints = {
   domain: {
     users: `${ROOTS.DOMAIN}/users`,
     roles: `${ROOTS.DOMAIN}/roles`,
+    list: `${ROOTS.DOMAIN}s`,
   },
   resource: {
     quota: `${ROOTS.RESOURCE}/quota`,

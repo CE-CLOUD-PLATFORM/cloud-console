@@ -115,19 +115,27 @@ export default function Page() {
                   sortDir={itemsSearch.state.sortDir}
                   view={view}
                 />
-                {itemsStore.itemLoading && <CircleLoading />}
-                <ItemList
-                  isLoading={itemsStore.itemLoading}
-                  count={itemsStore.itemsCount}
-                  items={itemsStore.items}
-                  onDelete={handleDelete}
-                  onOpen={detailsDialog.handleOpen}
-                  onPageChange={itemsSearch.handlePageChange}
-                  onRowsPerPageChange={itemsSearch.handleRowsPerPageChange}
-                  page={itemsSearch.state.page}
-                  rowsPerPage={itemsSearch.state.rowsPerPage}
-                  view={view}
-                />
+                {!itemsStore.itemFetched && <CircleLoading />}
+                {itemsStore.itemFetched && itemsStore.itemsCount === 0 ? (
+                  <Box display={'flex'} justifyContent={'center'}>
+                    <Typography className="text-slate-500" variant="subtitle1">
+                      No subjects found.
+                    </Typography>
+                  </Box>
+                ) : (
+                  <ItemList
+                    isLoading={itemsStore.itemLoading}
+                    count={itemsStore.itemsCount}
+                    items={itemsStore.items}
+                    onDelete={handleDelete}
+                    onOpen={detailsDialog.handleOpen}
+                    onPageChange={itemsSearch.handlePageChange}
+                    onRowsPerPageChange={itemsSearch.handleRowsPerPageChange}
+                    page={itemsSearch.state.page}
+                    rowsPerPage={itemsSearch.state.rowsPerPage}
+                    view={view}
+                  />
+                )}
               </Stack>
             </Grid>
           </Grid>

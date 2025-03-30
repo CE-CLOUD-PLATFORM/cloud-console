@@ -21,6 +21,7 @@ import ModalForgotPassword from '@/shared/components/modals/auth/forgot-password
 import { useDialog } from '@/shared/hooks/use-dialog';
 import type { IAuthLogin } from '@/modules/auth/types/auth';
 import Image from 'next/image';
+import { useGetDomainList } from '@/modules/domain/hook/use-get-domain-list';
 export default function LoginPage() {
   const router = useRouter();
   const { mutateAsync: authtentication } = useAuth();
@@ -33,7 +34,7 @@ export default function LoginPage() {
     resolver: userLoginResolver,
   });
   const forgotPassModal = useDialog();
-
+  // const { data: domainsData } = useGetDomainList();
   const onSubmit: SubmitHandler<IAuthLogin> = async (
     loginRequest: IAuthLogin,
   ) => {
@@ -53,6 +54,7 @@ export default function LoginPage() {
       console.log(error);
     }
   };
+
   return (
     <>
       <div className="flex h-screen min-w-full overflow-y-scroll lg:bg-cover">
@@ -62,7 +64,12 @@ export default function LoginPage() {
         ></div>
         <div className="flex h-fit w-full flex-col items-center justify-center bg-transparent p-5 md:h-full md:min-w-[450px] min-[1028px]:w-1/3">
           <div className="flex w-full max-w-[550px] flex-col items-center rounded-lg bg-white p-5 py-28 text-2xl font-semibold">
-            <Image width={150} height={150} alt="ce-logo" src="/assets/ce-logo.png" />
+            <Image
+              width={150}
+              height={150}
+              alt="ce-logo"
+              src="/assets/ce-logo.png"
+            />
             <h1 className="text-center text-lg text-black md:text-3xl">
               CE CLOUD PLATFORM
             </h1>
@@ -111,7 +118,9 @@ export default function LoginPage() {
                   <Controller
                     name="domain"
                     control={control}
-                    defaultValue="CE"
+                    // defaultValue="CE"
+                    defaultValue="default"
+                  
                     render={({ field }) => (
                       <Select
                         error={errors.domain ? true : false}
@@ -120,8 +129,13 @@ export default function LoginPage() {
                         label="Domain"
                         variant="filled"
                         {...field}
+                        value={field.value}
                       >
-                        <MenuItem value={'CE'}>CE</MenuItem>
+                        <MenuItem value={'default'}>Default</MenuItem>
+                        {/* <MenuItem value={'CE'}>CE</MenuItem> */}
+                        {/* {domainsData?.domains?.map((domain) => (
+                          <MenuItem value={domain.id}>{domain.name}</MenuItem>
+                        ))} */}
                       </Select>
                     )}
                   />

@@ -56,37 +56,37 @@ const ModalGroupCreate = (props: FormProps) => {
   const createGroup = useCreateGroup({
     onSuccess: () => {
       toast.success('Group created successfully');
-      queryClient.invalidateQueries({ queryKey: ['subjects', 'groups'] });
+      queryClient.invalidateQueries({ queryKey: ['groups'] });
       reset();
-      handleClose();
     },
     onError: () => {
       toast.error('Fail to create Group.');
     },
     onMutate: () => {
+      handleClose();
+
       toast.loading('Creating...');
     },
   });
-  const { register, handleSubmit, reset, setValue, control } =
-    useForm<IGroupCreate>({
-      defaultValues: {
-        name: 'untitled',
-        description: '',
-        domain_id: user?.info.domain.id,
-        user_id: user?.info.id,
-        project_id: subject_id as string,
-        req_resource: {
-          cores: flavorsData?.flavors?.[0].vcpus || 1,
-          max_instance: 1,
-          memory: flavorsData?.flavors?.[0].ram || 4096,
-        },
-        set_resource: false,
+  const { handleSubmit, reset, setValue, control } = useForm<IGroupCreate>({
+    values: {
+      name: 'untitled',
+      description: '',
+      domain_id: user?.info.domain.id as string,
+      user_id: user?.info.id as string,
+      project_id: subject_id as string,
+      req_resource: {
+        cores: flavorsData?.flavors?.[0].vcpus || 1,
+        max_instance: 1,
+        memory: flavorsData?.flavors?.[0].ram || 4096,
       },
-    });
+      set_resource: false,
+    },
+  });
 
   const onSubmit = async (data: IGroupCreate) => {
     try {
-      setValue('domain_id', user?.info.domain.id as string);
+      // setValue('domain_id', user?.info.domain.id as string);
 
       createGroup.mutate(data);
     } catch (error) {

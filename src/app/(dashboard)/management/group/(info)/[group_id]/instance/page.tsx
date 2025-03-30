@@ -18,19 +18,18 @@ import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 import { useParams } from 'next/navigation';
 import React from 'react';
 import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
-import toast from 'react-hot-toast';
 import BtnVPNDownload from '@/shared/components/button/vpn-download';
 
 export default function InstancesPage() {
-  const { subject_id } = useParams();
+  const { group_id } = useParams();
   // const { user } = useUserStore();
   const modalCreateInstance = useDialog();
   // const detailsDialog = useDialog();
   const { data: instancesData, isLoading } = useGetInstances({
-    subject_id: subject_id as string,
+    subject_id: group_id as string,
   });
   const { data: instanceOption } = useGetInstanceOption({
-    subject_id: subject_id as string,
+    subject_id: group_id as string,
   });
   // const instancesData = useSubjectStore();
 
@@ -82,10 +81,6 @@ export default function InstancesPage() {
                   </Button>
                 </Stack>
               </Stack>
-              <Alert className="mt-3" severity="info">
-                Only instances you have permission to access will be displayed,
-                including those from both your subjects and groups.
-              </Alert>
             </Grid>
             <Grid size={12}>
               <Stack

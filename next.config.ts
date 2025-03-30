@@ -7,8 +7,12 @@ const nextConfig: NextConfig = {
         source: '/',
         destination: '/auth/signin',
         permanent: true,
+
       },
     ];
+  }, 
+  images: {
+    domains: ['upload.wikimedia.org'],
   },
   reactStrictMode: true,
   output: "standalone",
