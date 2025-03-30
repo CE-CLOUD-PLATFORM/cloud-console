@@ -21,6 +21,7 @@ import ModalForgotPassword from '@/shared/components/modals/auth/forgot-password
 import { useDialog } from '@/shared/hooks/use-dialog';
 import type { IAuthLogin } from '@/modules/auth/types/auth';
 import Image from 'next/image';
+import { useGetDomainList } from '@/modules/domain/hook/use-get-domain-list';
 export default function LoginPage() {
   const router = useRouter();
   const { mutateAsync: authtentication } = useAuth();
@@ -33,7 +34,7 @@ export default function LoginPage() {
     resolver: userLoginResolver,
   });
   const forgotPassModal = useDialog();
-  // const { data: domainsData } = useGetDomainList();
+  const { data: domainsData } = useGetDomainList();
   const onSubmit: SubmitHandler<IAuthLogin> = async (
     loginRequest: IAuthLogin,
   ) => {
@@ -118,8 +119,8 @@ export default function LoginPage() {
                     name="domain"
                     control={control}
                     // defaultValue="CE"
-                    defaultValue="default"
-
+                    // defaultValue="default"
+                    defaultValue={domainsData?.domains[0].id}
                     render={({ field }) => (
                       <Select
                         error={errors.domain ? true : false}
@@ -130,11 +131,11 @@ export default function LoginPage() {
                         {...field}
                         value={field.value}
                       >
-                        <MenuItem value={'default'}>Default</MenuItem>
+                        {/* <MenuItem value={'default'}>Default</MenuItem> */}
                         {/* <MenuItem value={'CE'}>CE</MenuItem> */}
-                        {/* {domainsData?.domains?.map((domain) => (
+                        {domainsData?.domains?.map((domain) => (
                           <MenuItem value={domain.id}>{domain.name}</MenuItem>
-                        ))} */}
+                        ))}
                       </Select>
                     )}
                   />

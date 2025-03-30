@@ -7,6 +7,7 @@ import { useGetQuotas } from '@/modules/resource/hook/use-get-quota-list';
 import type { Quota } from '@/modules/resource/types/quota';
 import { useGetDomainUsers } from '@/modules/user/hook/use-get-domain-users';
 import { QuotaDrawer } from '@/shared/components/item-drawer/quota-drawer';
+import CircleLoading from '@/shared/components/Loading/CircleLoading';
 import ModalQuotaCreate from '@/shared/components/modals/subject/create-quota-modal';
 import { TableQuota } from '@/shared/components/table/quota-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
@@ -39,8 +40,10 @@ export interface handleQuotaDialogType {
 export default function QuotaManagementPage() {
   // const { subject_id } = useParams();
   const { user } = useUserStore();
-  const { data: quotaData } = useGetQuotas();
-  const { data: userData } = useGetDomainUsers({
+  const { data: quotaData, isFetched: quotaFetched } = useGetQuotas({
+    user_id: user?.info.id as string,
+  });
+  const { data: userData, isFetched: userFetched } = useGetDomainUsers({
     domain_id: user?.info.domain.id as string,
   });
   const detailsDialog = useDialog<handleQuotaDialogType>();
@@ -105,10 +108,21 @@ export default function QuotaManagementPage() {
                   lg: 4,
                 }}
               >
-                <TableQuota
-                  onOpen={detailsDialog.handleOpen}
-                  quotas={quotaData?.quotas as Quota[]}
-                />
+                {!(quotaFetched && userFetched) && <CircleLoading />}
+                {quotaFetched && userFetched && (
+                  <TableQuota
+                    onOpen={detailsDialog.handleOpen}
+                    quotas={
+                      quotaData?.quotas.map((quota) => {
+                        quota.request_user_id =
+                          userData?.users.find(
+                            (user) => user.id === quota.request_user_id,
+                          )?.name || quota.request_user_id;
+                        return quota;
+                      }) as Quota[]
+                    }
+                  />
+                )}
               </Stack>
             </Grid>
           </Grid>

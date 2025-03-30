@@ -9,8 +9,14 @@ import type { QueryParams } from '@/shared/interfaces/api';
 
 
 
-export const getQuotas = async (): Promise<IQuotaResponse> => {
-  return (await axiosInstance.get<IQuotaResponse>(`${endpoints.resource.quotaAll}`,)).data
+export const getQuotas = async ({ queryKey }: QueryParams): Promise<IQuotaResponse> => {
+  const [_, user_id] = queryKey
+
+  return (await axiosInstance.get<IQuotaResponse>(`${endpoints.resource.quotaAll}`, {
+    params: {
+      user_id
+    }
+  })).data
 }
 
 export const getUserQuotas = async ({ queryKey }: QueryParams): Promise<IQuotaResponse> => {
