@@ -11,6 +11,10 @@ export interface InstanceCreate {
     username: string;
     password: string;
 }
+export interface InstanceDelete {
+    subject_id: string;
+    id: string
+}
 export interface InstancesQueryParams {
     subject_id: string;
 }
