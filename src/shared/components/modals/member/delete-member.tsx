@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { useDeleteSubjectMember } from '@/modules/subject/hook/use-delete-subject-member';
-import { IMemberSubjectDel, Member } from '@/modules/user/types/member';
+import type { IMemberSubjectDel, Member } from '@/modules/user/types/member';
 import type { FormProps } from '@/shared/interfaces/modal';
 import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';

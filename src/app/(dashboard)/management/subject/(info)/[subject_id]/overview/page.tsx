@@ -1,7 +1,10 @@
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { useGetSubject } from '@/modules/subject/hook/use-get-subject';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'next/navigation';
 import { useUserStore } from '@/modules/auth/store/auth';
 import { useSubjectStore } from '@/modules/subject/store/use-subject-store';
@@ -15,11 +18,12 @@ import {
 import { useAppNavStore } from '@/modules/app/store/use-app-nav-store';
 import { SubjectDetails } from '@/shared/components/detail-list/subject-detail';
 import CircleLoading from '@/shared/components/Loading/CircleLoading';
-import { Subject } from '@/modules/subject/types/subject';
+import type { Subject } from '@/modules/subject/types/subject';
 
 export default function OverviewPage() {
   const { subject_id } = useParams();
   const { user } = useUserStore();
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const setSubjectData = useSubjectStore(
     (state) => state.actions.setSubjectData,
   );

@@ -2,7 +2,6 @@
 import { useState, type FC } from 'react';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import './style.css';
-import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import ChevronUp from '@untitled-ui/icons-react/build/esm/ChevronUp';
 import ChevronDown from '@untitled-ui/icons-react/build/esm/ChevronDown';
