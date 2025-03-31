@@ -74,6 +74,7 @@ interface TableInstanceProps {
   flavors: Flavor[];
   images: Image[];
   isLoading: boolean;
+  onDelete: (item: Instance) => void;
 }
 export const TableInstances: FC<TableInstanceProps> = ({
   data,
@@ -100,6 +101,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
   const handleOnOpen = (id: string) => {
     router.push(`/management/instance/${subject_id}/${id}/overview`);
   };
+
   return (
     <Box
       sx={{
