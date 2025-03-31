@@ -19,11 +19,13 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
 import BtnVPNDownload from '@/shared/components/button/vpn-download';
+import type { Instance } from '@/modules/instance/types/instance';
 
 export default function InstancesPage() {
   const { subject_id } = useParams();
   // const { user } = useUserStore();
   const modalCreateInstance = useDialog();
+  const deleteDialog = useDialog<Instance>();
   // const detailsDialog = useDialog();
   const { data: instancesData, isLoading } = useGetInstances({
     subject_id: subject_id as string,
@@ -31,6 +33,10 @@ export default function InstancesPage() {
   const { data: instanceOption } = useGetInstanceOption({
     subject_id: subject_id as string,
   });
+
+  const handleOnDelete = (data: Instance) => {
+    deleteDialog.handleOpen(data);
+  };
   // const instancesData = useSubjectStore();
 
   // const handleDelete = useCallback(
@@ -94,6 +100,7 @@ export default function InstancesPage() {
                 }}
               >
                 <TableInstances
+                  onDelete={handleOnDelete}
                   data={instancesData?.instances || []}
                   flavors={instanceOption?.flavors || []}
                   images={instanceOption?.images || []}
