@@ -88,7 +88,7 @@ export const postSubjectMember = async (data: IMemberSubjectAdd) => {
 }
 
 export const deleteSubjectMember = async (data: IMemberSubjectDel) => {
-  return (await axiosInstance.delete(`${endpoints.subject.addMembers}`, {
+  return (await axiosInstance.delete(`${endpoints.subject.member}`, {
     data
   })).data
 }

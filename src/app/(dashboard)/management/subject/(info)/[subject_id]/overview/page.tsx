@@ -13,6 +13,9 @@ import {
   Typography,
 } from '@mui/material';
 import { useAppNavStore } from '@/modules/app/store/use-app-nav-store';
+import { SubjectDetails } from '@/shared/components/detail-list/subject-detail';
+import CircleLoading from '@/shared/components/Loading/CircleLoading';
+import { Subject } from '@/modules/subject/types/subject';
 
 export default function OverviewPage() {
   const { subject_id } = useParams();
@@ -20,53 +23,64 @@ export default function OverviewPage() {
   const setSubjectData = useSubjectStore(
     (state) => state.actions.setSubjectData,
   );
-  const setNavTitle = useAppNavStore(state => state.actions.setTitle)
-  const { data, isLoading: isSubjectLoading } = useGetSubject({
+  const setNavTitle = useAppNavStore((state) => state.actions.setTitle);
+  const { data, isFetched } = useGetSubject({
     subject_id: subject_id as string,
     domain_name: user?.info.domain.name as string,
     user_id: user?.info.id as string,
   });
-  useEffect(() => {
-    if (data && !isSubjectLoading) {
-      setSubjectData(data);
-      setNavTitle(data.subject.name)
-    }
-  }, [data, isSubjectLoading]);
+  // useEffect(() => {
+  //   if (data && !isSubjectLoading) {
+  //     setSubjectData(data);
+  //     setNavTitle(data.subject.name);
+  //   }
+  // }, [data, isSubjectLoading]);
   return (
     <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          py: 8,
-        }}
-      >
-        <Container>
-          <Grid
-            container
-            spacing={{
-              xs: 3,
-              lg: 4,
-            }}
-          >
-            <Grid size={12}>
-              <Stack direction="row" justifyContent="space-between" spacing={4}>
-                <div>
-                  <Typography variant="h5">Overview</Typography>
-                </div>
-                <Stack alignItems="center" direction="row" spacing={2}>
-                </Stack>
-              </Stack>
-            </Grid>
-            <Grid size={12}>
+      component="main"
+      sx={{
+        flexGrow: 1,
+        py: 8,
+      }}
+    >
+      <Container>
+        <Grid
+          container
+          spacing={{
+            xs: 3,
+            lg: 4,
+          }}
+        >
+          <Grid size={12}>
+            <Stack direction="column" spacing={4}>
+              <Typography variant="h5">Overview</Typography>
               <Stack
-                spacing={{
-                  xs: 3,
-                  lg: 4,
-                }}
-              ></Stack>
-            </Grid>
+                width={'100%'}
+                alignItems="center"
+                direction="row"
+                spacing={2}
+              >
+                {!isFetched && (
+                  <Stack className="flex h-full w-full items-center justify-center">
+                    <CircleLoading />
+                  </Stack>
+                )}
+                {isFetched && (
+                  <SubjectDetails data={data?.subject as Subject} />
+                )}
+              </Stack>
+            </Stack>
           </Grid>
-        </Container>
-      </Box>
+          <Grid size={12}>
+            <Stack
+              spacing={{
+                xs: 3,
+                lg: 4,
+              }}
+            ></Stack>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
   );
 }

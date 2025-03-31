@@ -200,7 +200,7 @@ export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
                   </TableCell>
                   <TableCell>{quota.subject_academic_year}</TableCell>
                   <TableCell className="flex-nowrap text-nowrap">
-                    <IconButton
+                    {/* <IconButton
                       onClick={() => {
                         onOpen?.({
                           item: quota,
@@ -211,7 +211,7 @@ export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
                       <SvgIcon>
                         <Edit02Icon />
                       </SvgIcon>
-                    </IconButton>
+                    </IconButton> */}
                     {admin && (
                       <IconButton
                         disabled={!(quota.status === "pending")}

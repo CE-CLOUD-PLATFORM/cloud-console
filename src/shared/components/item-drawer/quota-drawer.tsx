@@ -42,7 +42,8 @@ export const QuotaDrawer: FC<QuotaDrawerProps> = (props) => {
   const queryClient = useQueryClient();
   const approvalQuota = useApprovalQuota({
     onSuccess: () => {
-      toast.success("Updated Quota Successfully.")
+      toast.success('Updated Quota Successfully.');
+      queryClient.invalidateQueries({ queryKey: ['subjects'] });
       queryClient.invalidateQueries({ queryKey: ['quotas'] });
     },
     onMutate: () => {

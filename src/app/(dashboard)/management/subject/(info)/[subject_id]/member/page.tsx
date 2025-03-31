@@ -4,8 +4,10 @@
 'use client';
 import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
 import ModalAddSubjectMember from '@/shared/components/modals/member/add-subject-member-modal';
+import ModalConfirmDeleteMember from '@/shared/components/modals/member/delete-member';
 import { TableMembers } from '@/shared/components/table/member-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
+import { Member } from '@/shared/types/job';
 import {
   Box,
   Button,
@@ -22,16 +24,23 @@ import React from 'react';
 export default function GroupPage() {
   const { subject_id } = useParams();
   const modalAddSubjectMember = useDialog();
-  const deleteDialog = useDialog();
+  const deleteDialog = useDialog<Member>();
   const { data } = useGetSubjectMembers({
     subject_id: subject_id as string,
   });
-
+  const handleDelete = (item: Member) => {
+    deleteDialog.handleOpen(item);
+  };
   return (
     <>
       <ModalAddSubjectMember
         isOpen={modalAddSubjectMember.open}
         handleClose={modalAddSubjectMember.handleClose}
+      />
+      <ModalConfirmDeleteMember
+        isOpen={deleteDialog.open}
+        handleClose={deleteDialog.handleClose}
+        data={deleteDialog.data }
       />
       <Box
         component="main"
@@ -75,7 +84,7 @@ export default function GroupPage() {
                   lg: 4,
                 }}
               >
-                <TableMembers members={data?.members || []} />
+                <TableMembers onDelete={handleDelete} members={data?.members || []} />
               </Stack>
             </Grid>
           </Grid>

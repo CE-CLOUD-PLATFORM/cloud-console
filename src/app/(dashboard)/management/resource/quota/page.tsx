@@ -117,7 +117,7 @@ export default function QuotaManagementPage() {
                         quota.request_user_id =
                           userData?.users.find(
                             (user) => user.id === quota.request_user_id,
-                          )?.name || quota.request_user_id;
+                          )?.name || "-";
                         return quota;
                       }) as Quota[]
                     }

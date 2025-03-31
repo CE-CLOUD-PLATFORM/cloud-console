@@ -9,14 +9,10 @@ import ModalCover from '../index';
 import '../index.css';
 import ModalQuotaRequestForm from './form/request-quota-form';
 
-interface FlavorSpec {
-  max_instance: number;
-  flavor_id: string;
-}
+
 const ModalQuotaCreate = (props: FormProps) => {
   const { isOpen, handleClose } = props;
 
-  const { data: flavorsData } = useGetFlavors();
   const [formTab, setFormTab] = useState(0);
   return (
     <ModalCover handleOnClose={handleClose} isOpen={isOpen}>
