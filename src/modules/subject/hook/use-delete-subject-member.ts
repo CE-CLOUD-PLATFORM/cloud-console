@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 import { deleteSubjectMember } from '../service';
 
-export const useDeleteSubject = (options?: MutationOptions<any, AxiosError, IMemberSubjectDel, unknown>) =>
+export const useDeleteSubjectMember = (options?: MutationOptions<any, AxiosError, IMemberSubjectDel, unknown>) =>
   useMutation({
     mutationFn: deleteSubjectMember,
     ...options

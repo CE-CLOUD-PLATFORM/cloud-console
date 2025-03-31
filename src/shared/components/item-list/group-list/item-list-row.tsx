@@ -83,7 +83,9 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
         }}
       >
         <TableCell>
-          <Link href={`/management/group/${item.project_id}/${item.id}/overview`}>
+          {/* <Link href={`/management/group/${item.project_id}/${item.id}/overview`}>
+           */}
+           <Link href={`/management/group/${item.project_id}/${item.id}/instance`}>
             <Stack alignItems="center" direction="row" spacing={2}>
               <Box onClick={() => onOpen?.(item.id)} sx={{ cursor: 'pointer' }}>
                 <ItemIcon />

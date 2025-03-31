@@ -34,15 +34,13 @@ import type {
   Instance,
   InstanceStatus,
 } from '@/modules/instance/types/instance';
-import type {
-  SeverityPillColor} from '@/shared/components/severity-pill';
-import {
-  SeverityPill
-} from '@/shared/components/severity-pill';
+import type { SeverityPillColor } from '@/shared/components/severity-pill';
+import { SeverityPill } from '@/shared/components/severity-pill';
 import CircleLoading from '../Loading/CircleLoading';
 import { copyToClipboard } from '@/shared/utils/clipboard';
 import toast from 'react-hot-toast';
 import { useParams, useRouter } from 'next/navigation';
+import { Trash02 } from '@untitled-ui/icons-react';
 
 interface Option {
   label: string;
@@ -262,14 +260,14 @@ export const TableInstances: FC<TableInstanceProps> = ({
                       {getDateddMMYYYYHHmmss(instance.updated)}
                     </TableCell> */}
                     <TableCell align="right">
-                      <IconButton onClick={() => handleOnEdit(instance.id)}>
+                      {/* <IconButton onClick={() => handleOnEdit(instance.id)}>
                         <SvgIcon>
                           <Edit02Icon />
                         </SvgIcon>
-                      </IconButton>
+                      </IconButton> */}
                       <IconButton onClick={() => handleOnOpen(instance.id)}>
                         <SvgIcon>
-                          <ArrowRightIcon />
+                          <Trash02 />
                         </SvgIcon>
                       </IconButton>
                     </TableCell>

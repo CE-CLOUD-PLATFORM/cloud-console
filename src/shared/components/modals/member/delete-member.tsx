@@ -1,47 +1,49 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { useUserStore } from '@/modules/auth/store/auth';
-import type { PublicKeyReq } from '@/modules/config/types/public-key';
+import { useDeleteSubjectMember } from '@/modules/subject/hook/use-delete-subject-member';
+import { IMemberSubjectDel, Member } from '@/modules/user/types/member';
 import type { FormProps } from '@/shared/interfaces/modal';
-import { Box, Button, Stack, TextField, Typography } from '@mui/material';
-import type { SubmitHandler} from 'react-hook-form';
-import { Controller, useForm } from 'react-hook-form';
+import { Box, Button, Divider, Stack, Typography } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import ModalCover from '../index';
 import '../index.css';
-import { useCreateSshKey } from '@/modules/config/hook/use-create-public-key';
-import { useQueryClient } from '@tanstack/react-query';
-
+interface MemberFormProps extends FormProps {
+  data?: Member;
+}
 const form_id = 'subject-member-delete-form';
-const ModalConfirmDeleteMember = (props: FormProps) => {
-  const { isOpen, handleClose } = props;
+const ModalConfirmDeleteMember = (props: MemberFormProps) => {
+  const { subject_id } = useParams();
+  const { isOpen, handleClose, data } = props;
   const queryClient = useQueryClient();
-  const recoveryPass = useCreateSshKey({
+  const deleteSubjectMember = useDeleteSubjectMember({
     onSuccess: () => {
       reset();
-      queryClient.invalidateQueries({ queryKey: ['user-public-key'] });
-      toast.success('Created SSH key successfully.');
+      queryClient.invalidateQueries({ queryKey: ['subject_members'] });
+      toast.success('Deleted member successfully.');
     },
     onMutate: () => {
       handleClose();
-      toast.loading('Creating SSH key.');
+      toast.loading('Deleting member...');
     },
     onError: () => {
-      toast.error('Fail to create SSH key, try again later.');
+      toast.error('Fail to delete member, try again.');
     },
   });
   // eslint-disable-next-line prefer-const
-  let { user } = useUserStore();
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm<PublicKeyReq>({
-    values: { user_id: user?.info.id as string, key: '', name: '' },
+  const { handleSubmit, reset } = useForm<IMemberSubjectDel>({
+    values: {
+      subject_id: subject_id as string,
+      member: data as Member,
+    },
   });
-  const onSubmit: SubmitHandler<PublicKeyReq> = async (data) => {
+  const onSubmit: SubmitHandler<IMemberSubjectDel> = async (data) => {
     try {
-      recoveryPass.mutate(data);
+      if (data.member) {
+        deleteSubjectMember.mutate(data);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -51,7 +53,7 @@ const ModalConfirmDeleteMember = (props: FormProps) => {
     <ModalCover handleOnClose={handleClose} isOpen={isOpen}>
       <Box className="modal-box !min-h-[auto]" gap={3}>
         <Box className="hidden-scrollbar flex-1 space-y-2 overflow-y-auto">
-          <Typography variant="h5">New SSH Key</Typography>
+          <Typography variant="h5">Confirm Delete Member</Typography>
           <Box
             component="form"
             id={form_id}
@@ -61,10 +63,24 @@ const ModalConfirmDeleteMember = (props: FormProps) => {
             className="flex-1 p-1"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Stack spacing={1}>
-
+            <Stack
+              display={'flex'}
+              flexDirection={'row'}
+              alignItems={'center'}
+              px={3}
+              gap={1}
+            >
+              <Typography fontWeight={600} variant="body1">
+                User:
+              </Typography>
+              <Typography fontWeight={400}>{data?.name}</Typography>
             </Stack>
-
+            <Divider
+              sx={{
+                height: '2px',
+                mt: 2,
+              }}
+            />
             <Box
               sx={{
                 alignItems: 'center',

@@ -81,7 +81,8 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
         </Stack>
         <Box sx={{ p: 2, bgcolor: 'white' }}>
           <Link
-            href={`${pathName}/${item.id}/overview`}
+            href={`${pathName}/${item.id}/instance`}
+            // href={`${pathName}/${item.id}/overview`}
             className="cursor-pointer"
           >
             <Box

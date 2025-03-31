@@ -1,7 +1,6 @@
-import type { FC } from 'react';
-import './style.css';
-import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
-import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+import { useGetRoles } from '@/modules/roles/hook/use-get-role-list';
+import type { Member } from '@/modules/user/types/member';
+import { Scrollbar } from '@/shared/components/scrollbar';
 import {
   Box,
   Card,
@@ -20,10 +19,10 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { Scrollbar } from '@/shared/components/scrollbar';
-import type { Member } from '@/modules/user/types/member';
-import { Trash01 } from '@untitled-ui/icons-react';
-import { useGetRoles } from '@/modules/roles/hook/use-get-role-list';
+import { Trash02 } from '@untitled-ui/icons-react';
+import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+import type { FC } from 'react';
+import './style.css';
 
 // interface Option {
 //   label: string;
@@ -50,8 +49,9 @@ import { useGetRoles } from '@/modules/roles/hook/use-get-role-list';
 // ];
 interface TableMembersProps {
   members: Member[];
+  onDelete: (item: Member) => void;
 }
-export const TableMembers: FC<TableMembersProps> = ({ members }) => {
+export const TableMembers: FC<TableMembersProps> = ({ members, onDelete }) => {
   const { data: roleData, isFetched } = useGetRoles();
   const roleKeyName = Object.fromEntries(
     roleData?.roles.map((item) => [item.id, item.name]) || [],
@@ -139,14 +139,14 @@ export const TableMembers: FC<TableMembersProps> = ({ members }) => {
                     align="right"
                     sx={{ whiteSpace: 'nowrap', width: '1%' }}
                   >
-                    <IconButton>
+                    {/* <IconButton>
                       <SvgIcon>
                         <Edit02Icon />
                       </SvgIcon>
-                    </IconButton>
-                    <IconButton>
+                    </IconButton> */}
+                    <IconButton onClick={() => onDelete(member)}>
                       <SvgIcon>
-                        <Trash01 />
+                        <Trash02 />
                       </SvgIcon>
                     </IconButton>
                   </TableCell>
