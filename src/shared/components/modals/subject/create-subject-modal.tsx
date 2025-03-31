@@ -8,7 +8,6 @@ import { Box, Divider, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 import ModalCover from '../index';
 import '../index.css';
-import ModalCreditRequestForm from './form/request-credit-form';
 import ModalQuotaRequestForm from './form/request-quota-form';
 import ModalSubjectCreateForm from './form/create-subject-form';
 
