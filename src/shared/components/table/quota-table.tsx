@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { ChangeEvent, useState, type FC ,MouseEvent} from 'react';
+import type { ChangeEvent,MouseEvent} from 'react';
+import { useState, type FC } from 'react';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import './style.css';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';

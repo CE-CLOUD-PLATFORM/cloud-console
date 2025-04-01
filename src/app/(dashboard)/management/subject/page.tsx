@@ -85,7 +85,7 @@ export default function Page() {
             <Grid size={12}>
               <Stack direction="row" justifyContent="space-between" spacing={4}>
                 <div>
-                  <Typography variant="h4">Your Subjects</Typography>
+                  <Typography variant="h4">Subjects</Typography>
                 </div>
                 <Stack alignItems="center" direction="row" spacing={2}>
                   <Button

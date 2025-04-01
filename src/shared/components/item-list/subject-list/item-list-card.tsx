@@ -110,10 +110,10 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
               <Typography
                 sx={{
                   cursor: 'pointer',
-                  fontWeight: 'bold',
+                  fontWeight: 'normal',
                   fontSize: '16px',
                   color: 'black',
-                  minHeight:"48px",
+                  minHeight: '48px',
                 }}
               >
                 {item.name}
@@ -128,7 +128,11 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
             justifyContent="space-between"
             spacing={1}
           >
-            <Typography className='h-[22px]' color="text.secondary" variant="body2">
+            <Typography
+              className="h-[22px]"
+              color="text.secondary"
+              variant="body2"
+            >
               {item.description || ''}
             </Typography>
           </Stack>

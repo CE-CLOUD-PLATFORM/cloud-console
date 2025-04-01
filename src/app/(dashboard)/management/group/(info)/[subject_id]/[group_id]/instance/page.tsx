@@ -35,6 +35,7 @@ export default function InstancesPage() {
   const handleOnDelete = (data: Instance) => {
     deleteDialog.handleOpen(data);
   };
+
   // const instancesData = useSubjectStore();
 
   // const handleDelete = useCallback(
