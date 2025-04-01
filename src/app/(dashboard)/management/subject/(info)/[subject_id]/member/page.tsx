@@ -24,10 +24,10 @@ import React from 'react';
 export default function GroupPage() {
   const { subject_id } = useParams();
   const modalAddSubjectMember = useDialog();
-  const deleteDialog = useDialog<Member>();
   const { data } = useGetSubjectMembers({
     subject_id: subject_id as string,
   });
+  const deleteDialog = useDialog<Member>();
   const handleDelete = (item: Member) => {
     deleteDialog.handleOpen(item);
   };

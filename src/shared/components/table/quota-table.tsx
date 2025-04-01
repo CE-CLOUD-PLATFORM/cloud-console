@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, type FC } from 'react';
+import { ChangeEvent, useState, type FC ,MouseEvent} from 'react';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import './style.css';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
@@ -49,6 +49,13 @@ const labelColors: Record<QuotaStatus, SeverityPillColor> = {
 interface TableQuotaProps {
   quotas: Quota[];
   onOpen: (data: handleQuotaDialogType) => void;
+  onPageChange?: (
+    event: MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => void;
+  onRowsPerPageChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  page?: number;
+  rowsPerPage?: number;
 }
 export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
