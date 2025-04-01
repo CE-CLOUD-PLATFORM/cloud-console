@@ -10,11 +10,12 @@ import type { QueryParams } from '@/shared/interfaces/api';
 
 
 export const getQuotas = async ({ queryKey }: QueryParams): Promise<IQuotaResponse> => {
-  const [_, user_id] = queryKey
+  const [_, user_id,domain_id] = queryKey
 
   return (await axiosInstance.get<IQuotaResponse>(`${endpoints.resource.quotaAll}`, {
     params: {
-      user_id
+      user_id,
+      domain_id
     }
   })).data
 }

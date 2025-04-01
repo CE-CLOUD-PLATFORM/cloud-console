@@ -21,7 +21,82 @@ import {
   Typography,
 } from '@mui/material';
 import { Plus } from '@untitled-ui/icons-react';
-import { useMemo } from 'react';
+import { useCallback, useMemo, useState ,MouseEvent, ChangeEvent, useEffect} from 'react';
+import type { SortDir } from "@/shared/types/sort";
+import { useMounted } from '@/shared/hooks/use-mounted';
+
+interface Filters {
+  query?: string;
+}
+
+interface ItemsSearchState {
+  filters: Filters;
+  page: number;
+  rowsPerPage: number;
+  sortBy?: string;
+  sortDir?: SortDir;
+}
+
+export const useItemsSearch = () => {
+  const [state, setState] = useState<ItemsSearchState>({
+    filters: {
+      query: undefined,
+    },
+    page: 0,
+    rowsPerPage: 9,
+    sortBy: 'name',
+    sortDir: 'asc',
+  });
+
+  const handleFiltersChange = useCallback((filters: Filters): void => {
+    setState((prevState) => ({
+      ...prevState,
+      filters,
+    }));
+  }, []);
+
+  const handleSortChange = useCallback((sortDir: SortDir): void => {
+    setState((prevState) => ({
+      ...prevState,
+      sortDir,
+    }));
+  }, []);
+
+  const handlePageChange = useCallback(
+    (event: MouseEvent<HTMLButtonElement> | null, page: number): void => {
+      setState((prevState) => ({
+        ...prevState,
+        page,
+      }));
+    },
+    [],
+  );
+
+  const handleRowsPerPageChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      setState((prevState) => ({
+        ...prevState,
+        rowsPerPage: parseInt(event.target.value, 10),
+      }));
+    },
+    [],
+  );
+
+  return {
+    handleFiltersChange,
+    handleSortChange,
+    handlePageChange,
+    handleRowsPerPageChange,
+    state,
+  };
+};
+
+interface ItemsStoreState {
+  items: Quota[];
+  itemsCount: number;
+}
+
+
 
 const useCurrentItem = (items: Quota[], itemId?: string): Quota | undefined => {
   return useMemo((): Quota | undefined => {
@@ -42,6 +117,7 @@ export default function QuotaManagementPage() {
   const { user } = useUserStore();
   const { data: quotaData, isFetched: quotaFetched } = useGetQuotas({
     user_id: user?.info.id as string,
+    domain_id:user?.info.domain.id as string,
   });
   const { data: userData, isFetched: userFetched } = useGetDomainUsers({
     domain_id: user?.info.domain.id as string,

@@ -19,7 +19,6 @@ import React from 'react';
 import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
 import BtnVPNDownload from '@/shared/components/button/vpn-download';
 import { Instance } from '@/modules/instance/types/instance';
-import { dark } from '@mui/material/styles/createPalette';
 
 export default function InstancesPage() {
   const { group_id } = useParams();

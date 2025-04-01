@@ -85,7 +85,6 @@ interface ItemsStoreState {
 export const useItemsStore = (searchState: ItemsSearchState) => {
   const { user } = useUserStore();
   const { data, isLoading, isFetched } = useGetSubjects({ user_id: user?.info.id as string });
-  const isMounted = useMounted();
   const [state, setState] = useState<ItemsStoreState>({
     items: [],
     itemsCount: 0,
