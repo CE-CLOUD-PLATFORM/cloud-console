@@ -123,7 +123,8 @@ const ModalCreateInstance = (props: FormProps) => {
                   >
                     {instanceOptions?.flavors.map((flavor) => (
                       <MenuItem key={flavor.id} value={flavor.id}>
-                        {flavor.name}
+                        {flavor.name} ({flavor.vcpus} vCPUs, {flavor.ram}
+                          MB RAM, {flavor.disk}GB Disk)
                       </MenuItem>
                     ))}
                   </Select>
