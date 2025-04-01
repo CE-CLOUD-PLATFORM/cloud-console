@@ -1,9 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 /* eslint-disable unused-imports/no-unused-vars */
 import type { FC } from 'react';
-import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import './style.css';
-import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import Copy03 from '@untitled-ui/icons-react/build/esm/Copy03';
 import {

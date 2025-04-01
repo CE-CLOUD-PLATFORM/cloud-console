@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable unused-imports/no-unused-vars */
-import { useGetFlavors } from '@/modules/flavor/hook/use-get-flavors';
 import type { FormProps } from '@/shared/interfaces/modal';
 import { Box, Divider, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';

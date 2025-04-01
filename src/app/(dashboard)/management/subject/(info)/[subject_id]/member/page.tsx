@@ -7,7 +7,7 @@ import ModalAddSubjectMember from '@/shared/components/modals/member/add-subject
 import ModalConfirmDeleteMember from '@/shared/components/modals/member/delete-member';
 import { TableMembers } from '@/shared/components/table/member-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
-import { Member } from '@/shared/types/job';
+import type { Member } from '@/shared/types/job';
 import {
   Box,
   Button,

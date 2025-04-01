@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import { useGetRoles } from '@/modules/roles/hook/use-get-role-list';
 import type { Member } from '@/modules/user/types/member';
 import { Scrollbar } from '@/shared/components/scrollbar';

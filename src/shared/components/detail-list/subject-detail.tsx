@@ -16,7 +16,7 @@ import {
   SvgIcon,
   Typography,
 } from '@mui/material';
-import { Subject } from '@/modules/subject/types/subject';
+import type { Subject } from '@/modules/subject/types/subject';
 interface DataProps {
   data: Subject;
 }

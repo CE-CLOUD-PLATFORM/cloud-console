@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
 'use client';
 import { useGetSubjectMembers } from '@/modules/group/hook/use-get-members';
+import type { Member } from '@/modules/user/types/member';
 import ModalAddGroupMember from '@/shared/components/modals/member/add-group-member-modal';
 import { TableMembers } from '@/shared/components/table/member-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
@@ -79,7 +82,9 @@ export default function GroupPage() {
                   lg: 4,
                 }}
               >
-                <TableMembers members={data?.members || []} />
+                <TableMembers members={data?.members || []} onDelete={function (item: Member): void {
+                  throw new Error('Function not implemented.');
+                } } />
               </Stack>
             </Grid>
           </Grid>
