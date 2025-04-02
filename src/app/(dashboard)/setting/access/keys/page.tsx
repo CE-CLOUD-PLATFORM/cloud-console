@@ -28,14 +28,14 @@ const Page = () => {
         isOpen={modalSSHKey.open}
         handleClose={modalSSHKey.handleClose}
       />
-      <Stack className="h-full w-full  px-24 py-16" spacing={1}>
+      <Stack className="h-full w-full px-24 py-16" spacing={1}>
         <Stack
           flexDirection={'row'}
           alignItems={'center'}
           justifyContent={'space-between'}
         >
           <Box display={'flex'} alignItems={'end'} gap={1}>
-            <Typography variant="h5">SHH keys</Typography>{' '}
+            <Typography variant="h5">SSH keys</Typography>{' '}
           </Box>
 
           <Box display={'flex'} gap={2}>

@@ -37,11 +37,10 @@ const groupFormId = 'instance-create-form';
 const ModalCreateInstance = (props: FormProps) => {
   const { isOpen, handleClose } = props;
   const { subject_id, group_id } = useParams();
-
   const { user } = useUserStore();
   const queryClient = useQueryClient();
   const { data: instanceOptions } = useGetInstanceOption({
-    subject_id: (subject_id || group_id) as string,
+    subject_id: (group_id ? group_id : subject_id) as string,
   });
 
   const { data: keysData } = useGetUserPublicKeys({
@@ -70,9 +69,9 @@ const ModalCreateInstance = (props: FormProps) => {
     formState: { errors },
   } = useForm<InstanceCreate>({
     defaultValues: {
-      name: 'untitled',
+      name: '',
       volume_size: 30,
-      subject_id: (subject_id || group_id) as string,
+      subject_id: (group_id ? group_id : subject_id) as string,
     },
   });
 
@@ -123,7 +122,8 @@ const ModalCreateInstance = (props: FormProps) => {
                   >
                     {instanceOptions?.flavors.map((flavor) => (
                       <MenuItem key={flavor.id} value={flavor.id}>
-                        {flavor.name}
+                        {flavor.name} ({flavor.vcpus} vCPUs, {flavor.ram}
+                        MB RAM, {flavor.disk}GB Disk)
                       </MenuItem>
                     ))}
                   </Select>

@@ -5,7 +5,6 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Subject } from "../types/subject";
-import { useMounted } from "@/shared/hooks/use-mounted";
 import type { ChangeEvent, MouseEvent } from 'react';
 import type { SortDir } from "@/shared/types/sort";
 import { useGetSubjects } from "../hook/use-get-subjects";

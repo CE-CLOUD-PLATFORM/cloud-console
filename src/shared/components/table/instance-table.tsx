@@ -236,14 +236,14 @@ export const TableInstances: FC<TableInstanceProps> = ({
                           <IconButton
                             onClick={() => {
                               copyToClipboard(
-                                instance.accessIPv4,
+                                instance.metadata.domain_name,
                                 () => {
                                   toast.success(
-                                    'IP Copied to clipboard successfully!',
+                                    'Domain Copied to clipboard successfully!',
                                   );
                                 },
                                 () => {
-                                  toast.error('Failed to copy IP to clipboard');
+                                  toast.error('Failed to copy Domain to clipboard');
                                 },
                               );
                             }}

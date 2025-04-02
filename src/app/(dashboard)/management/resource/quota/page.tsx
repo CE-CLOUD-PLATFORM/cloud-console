@@ -21,9 +21,8 @@ import {
   Typography,
 } from '@mui/material';
 import { Plus } from '@untitled-ui/icons-react';
-import { useCallback, useMemo, useState ,MouseEvent, ChangeEvent, useEffect} from 'react';
+import { useMemo} from 'react';
 import type { SortDir } from "@/shared/types/sort";
-import { useMounted } from '@/shared/hooks/use-mounted';
 
 interface Filters {
   query?: string;
@@ -37,64 +36,64 @@ interface ItemsSearchState {
   sortDir?: SortDir;
 }
 
-export const useItemsSearch = () => {
-  const [state, setState] = useState<ItemsSearchState>({
-    filters: {
-      query: undefined,
-    },
-    page: 0,
-    rowsPerPage: 9,
-    sortBy: 'name',
-    sortDir: 'asc',
-  });
+// export const useItemsSearch = () => {
+//   const [state, setState] = useState<ItemsSearchState>({
+//     filters: {
+//       query: undefined,
+//     },
+//     page: 0,
+//     rowsPerPage: 9,
+//     sortBy: 'name',
+//     sortDir: 'asc',
+//   });
 
-  const handleFiltersChange = useCallback((filters: Filters): void => {
-    setState((prevState) => ({
-      ...prevState,
-      filters,
-    }));
-  }, []);
+//   const handleFiltersChange = useCallback((filters: Filters): void => {
+//     setState((prevState) => ({
+//       ...prevState,
+//       filters,
+//     }));
+//   }, []);
 
-  const handleSortChange = useCallback((sortDir: SortDir): void => {
-    setState((prevState) => ({
-      ...prevState,
-      sortDir,
-    }));
-  }, []);
+//   const handleSortChange = useCallback((sortDir: SortDir): void => {
+//     setState((prevState) => ({
+//       ...prevState,
+//       sortDir,
+//     }));
+//   }, []);
 
-  const handlePageChange = useCallback(
-    (event: MouseEvent<HTMLButtonElement> | null, page: number): void => {
-      setState((prevState) => ({
-        ...prevState,
-        page,
-      }));
-    },
-    [],
-  );
+//   const handlePageChange = useCallback(
+//     (event: MouseEvent<HTMLButtonElement> | null, page: number): void => {
+//       setState((prevState) => ({
+//         ...prevState,
+//         page,
+//       }));
+//     },
+//     [],
+//   );
 
-  const handleRowsPerPageChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>): void => {
-      setState((prevState) => ({
-        ...prevState,
-        rowsPerPage: parseInt(event.target.value, 10),
-      }));
-    },
-    [],
-  );
+//   const handleRowsPerPageChange = useCallback(
+//     (event: ChangeEvent<HTMLInputElement>): void => {
+//       setState((prevState) => ({
+//         ...prevState,
+//         rowsPerPage: parseInt(event.target.value, 10),
+//       }));
+//     },
+//     [],
+//   );
 
-  return {
-    handleFiltersChange,
-    handleSortChange,
-    handlePageChange,
-    handleRowsPerPageChange,
-    state,
-  };
-};
+//   return {
+//     handleFiltersChange,
+//     handleSortChange,
+//     handlePageChange,
+//     handleRowsPerPageChange,
+//     state,
+//   };
+// };
 
-interface ItemsStoreState {
-  items: Quota[];
-  itemsCount: number;
-}
+// interface ItemsStoreState {
+//   items: Quota[];
+//   itemsCount: number;
+// }
 
 
 
