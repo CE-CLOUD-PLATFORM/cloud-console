@@ -1,6 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IResponse } from '@/shared/interfaces/api';
-export type InstanceStatus = "ACTIVE" | "BUILD" | "SHUTOFF" | "REBUILD" | string
+export type InstanceStatus = "ACTIVE"
+    | "BUILD"
+    | "DELETED"
+    | "ERROR"
+    | "HARD_REBOOT"
+    | "MIGRATING"
+    | "PASSWORD"
+    | "PAUSED"
+    | "REBOOT"
+    | "REBUILD"
+    | "RESCUE"
+    | "RESIZE"
+    | "REVERT_RESIZE"
+    | "SHELVED"
+    | "SHELVED_OFFLOADED"
+    | "SHUTOFF"
+    | "SOFT_DELETED"
+    | "SUSPENDED"
+    | "UNKNOWN"
+    | "VERIFY_RESIZE"
 export interface InstanceCreate {
     name: string;
     subject_id: string;
@@ -10,7 +29,6 @@ export interface InstanceCreate {
     public_key: string[];
     username: string;
     password: string;
-    external_access: boolean
 }
 export interface InstanceDelete {
     subject_id: string;

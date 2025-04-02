@@ -273,8 +273,8 @@ const ModalCreateInstance = (props: FormProps) => {
                 {...register('password', { required: true })}
               />
               {errors.password && <span>This field is required</span>}
-              <Typography variant="h6">Network Accessibility</Typography>
-              <Controller
+              {/* <Typography variant="h6">Network Accessibility</Typography> */}
+              {/* <Controller
                 name="external_access"
                 control={control}
                 render={({ field }) => (
@@ -283,7 +283,7 @@ const ModalCreateInstance = (props: FormProps) => {
                     label="External Access (Allow Public DNS Access)"
                   />
                 )}
-              />
+              /> */}
             </Stack>
 
             <Box

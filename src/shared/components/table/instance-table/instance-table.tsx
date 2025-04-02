@@ -2,14 +2,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable unused-imports/no-unused-vars */
 import type { FC } from 'react';
-import './style.css';
+import '../style.css';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import Copy03 from '@untitled-ui/icons-react/build/esm/Copy03';
 import {
   Avatar,
   Box,
   Card,
-  Checkbox,
   Divider,
   IconButton,
   InputAdornment,
@@ -35,12 +34,13 @@ import type {
 } from '@/modules/instance/types/instance';
 import type { SeverityPillColor } from '@/shared/components/severity-pill';
 import { SeverityPill } from '@/shared/components/severity-pill';
-import CircleLoading from '../Loading/CircleLoading';
+import CircleLoading from '../../Loading/CircleLoading';
 import { copyToClipboard } from '@/shared/utils/clipboard';
 import toast from 'react-hot-toast';
 import { useParams, useRouter } from 'next/navigation';
-import { Trash02 } from '@untitled-ui/icons-react';
-
+import DotsVerticalIcon from '@untitled-ui/icons-react/build/esm/DotsVertical';
+import { usePopover } from '@/shared/hooks/use-popover';
+import { ItemMenu } from './item-menu';
 interface Option {
   label: string;
   value: string;
@@ -48,9 +48,26 @@ interface Option {
 const labelColors: Record<InstanceStatus, SeverityPillColor> = {
   ACTIVE: 'success',
   BUILD: 'warning',
+  DELETED: 'error',
+  ERROR: 'primary',
+  HARD_REBOOT: 'primary',
+  MIGRATING: 'primary',
+  PASSWORD: 'primary',
+  PAUSED: 'warning',
+  REBOOT: 'warning',
   REBUILD: 'warning',
-  SHUTOFF: 'info',
+  RESCUE: 'primary',
+  RESIZE: 'primary',
+  REVERT_RESIZE: 'primary',
+  SHELVED: 'info',
+  SHELVED_OFFLOADED: 'primary',
+  SHUTOFF: 'error',
+  SOFT_DELETED: 'primary',
+  SUSPENDED: 'primary',
+  UNKNOWN: 'primary',
+  VERIFY_RESIZE: 'primary'
 };
+
 const sortOptions: Option[] = [
   {
     label: 'Last update (newest)',
@@ -102,6 +119,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
   const handleOnOpen = (id: string) => {
     router.push(`/management/instance/${subject_id}/${id}/overview`);
   };
+  const popover = usePopover<HTMLButtonElement>();
 
   return (
     <Box
@@ -266,16 +284,21 @@ export const TableInstances: FC<TableInstanceProps> = ({
                       {getDateddMMYYYYHHmmss(instance.updated)}
                     </TableCell> */}
                     <TableCell align="right">
-                      {/* <IconButton onClick={() => handleOnEdit(instance.id)}>
-                        <SvgIcon>
-                          <Edit02Icon />
-                        </SvgIcon>
-                      </IconButton> */}
-                      <IconButton onClick={() => onDelete(instance)}>
-                        <SvgIcon>
-                          <Trash02 />
+                      <IconButton
+                        onClick={popover.handleOpen}
+                        ref={popover.anchorRef}
+                      >
+                        <SvgIcon fontSize="small">
+                          <DotsVerticalIcon />
                         </SvgIcon>
                       </IconButton>
+                      <ItemMenu
+                        anchorEl={popover.anchorRef.current}
+                        onClose={popover.handleClose}
+                        onDelete={() => onDelete(instance)}
+                        open={popover.open}
+                        data={instance}
+                      />
                     </TableCell>
                   </TableRow>
                 );
