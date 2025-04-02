@@ -8,17 +8,17 @@ import toast from 'react-hot-toast';
 import ModalDelete from '../base/modal-delete';
 import '../index.css';
 import type { Instance } from '@/modules/instance/types/instance';
-import { useDeleteInstance } from '@/modules/instance/hook/use-delete-instance';
+import { useMakeInternal } from '@/modules/instance/hook/use-make-internal';
 interface ModalFormProps extends FormProps {
   data?: Instance;
 }
-const formLabel = 'Instance';
+const formLabel = 'Domain name';
 const formId = `${formLabel}-delete-form`;
-const ModalInstanceDelete = (props: ModalFormProps) => {
+const ModalMakeInternal = (props: ModalFormProps) => {
   const { group_id, subject_id } = useParams();
   const { isOpen, handleClose, data } = props;
   const queryClient = useQueryClient();
-  const deleteFn = useDeleteInstance({
+  const deleteFn = useMakeInternal({
     onSuccess: () => {
       toast.success(`${formLabel} deleted successfully`);
       queryClient.invalidateQueries({
@@ -54,10 +54,10 @@ const ModalInstanceDelete = (props: ModalFormProps) => {
       formLabel={formLabel}
       isOpen={isOpen}
       handleClose={handleClose}
-      data={data?.name}
+      data={data?.metadata.domain_name}
       onSubmit={onSubmit}
     />
   );
 };
 
-export default ModalInstanceDelete;
+export default ModalMakeInternal;

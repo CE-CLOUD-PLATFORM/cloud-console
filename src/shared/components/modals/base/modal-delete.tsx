@@ -50,7 +50,7 @@ const ModalDelete = (props: ModalDeleteFormProps) => {
             />
             <Box
               sx={{
-                alignItems: 'center',
+                alignItems: '',
                 display: 'flex',
                 marginTop: 2,
               }}

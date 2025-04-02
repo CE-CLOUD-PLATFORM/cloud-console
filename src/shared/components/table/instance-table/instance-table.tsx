@@ -27,6 +27,7 @@ import {
 } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
 import type {
+  ExternalAccess,
   Flavor,
   Image,
   Instance,
@@ -41,6 +42,8 @@ import { useParams, useRouter } from 'next/navigation';
 import DotsVerticalIcon from '@untitled-ui/icons-react/build/esm/DotsVertical';
 import { usePopover } from '@/shared/hooks/use-popover';
 import { ItemMenu } from './item-menu';
+import { useExternalAccess } from '@/modules/instance/hook/use-external-access';
+import { useQueryClient } from '@tanstack/react-query';
 interface Option {
   label: string;
   value: string;
@@ -65,7 +68,7 @@ const labelColors: Record<InstanceStatus, SeverityPillColor> = {
   SOFT_DELETED: 'primary',
   SUSPENDED: 'primary',
   UNKNOWN: 'primary',
-  VERIFY_RESIZE: 'primary'
+  VERIFY_RESIZE: 'primary',
 };
 
 const sortOptions: Option[] = [
@@ -92,6 +95,7 @@ interface TableInstanceProps {
   images: Image[];
   isLoading: boolean;
   onDelete: (item: Instance) => void;
+  onInternal: (item: Instance) => void;
 }
 export const TableInstances: FC<TableInstanceProps> = ({
   data,
@@ -99,9 +103,12 @@ export const TableInstances: FC<TableInstanceProps> = ({
   images,
   isLoading,
   onDelete,
+  onInternal,
 }) => {
   const { subject_id } = useParams();
   const router = useRouter();
+
+  const queryClient = useQueryClient();
   const getFlavorName = (id: string) => {
     const flavorName = flavors.find((flavor) => flavor.id === id)?.name || '';
     return flavorName;
@@ -115,12 +122,35 @@ export const TableInstances: FC<TableInstanceProps> = ({
   const getImageName = (id: string) => {
     return images.find((image) => image.id === id)?.name || '';
   };
-  const handleOnEdit = (id: string) => {};
   const handleOnOpen = (id: string) => {
     router.push(`/management/instance/${subject_id}/${id}/overview`);
   };
   const popover = usePopover<HTMLButtonElement>();
 
+  const exposeExternalAccess = useExternalAccess({
+    onSuccess: () => {
+      toast.success('Expose Successfully');
+      queryClient.invalidateQueries({ queryKey: ['instances'] });
+    },
+    onError: () => {
+      toast.error('Fail to Expose Instance.');
+    },
+    onMutate: () => {
+      toast.loading('Exposing Instance...');
+    },
+  });
+
+  const handleExpose = (data: Instance) => {
+    try {
+      const external_access: ExternalAccess = {
+        instance_id: data.id,
+        subject_id: data.tenant_id,
+      };
+      exposeExternalAccess.mutate(external_access);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Box
       sx={{
@@ -204,7 +234,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
                             className="cursor-pointer"
                             variant="subtitle1"
                             onClick={() => {
-                              let InstanceStatusActive: InstanceStatus =
+                              const InstanceStatusActive: InstanceStatus =
                                 'ACTIVE';
                               if (instance.status === InstanceStatusActive) {
                                 handleOnOpen(instance.id);
@@ -298,6 +328,8 @@ export const TableInstances: FC<TableInstanceProps> = ({
                         onDelete={() => onDelete(instance)}
                         open={popover.open}
                         data={instance}
+                        expose={() => handleExpose(instance)}
+                        internal={() => onInternal(instance)}
                       />
                     </TableCell>
                   </TableRow>

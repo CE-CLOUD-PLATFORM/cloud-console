@@ -4,9 +4,6 @@ import { getCookie } from 'cookies-next';
 
 export const axiosInstance = axios.create({
   baseURL: CONFIG.site.apiUrl,
-  // headers: {
-  //   "X-Auth-Token": getCookie("token"),
-  // },
 });
 
 axiosInstance.interceptors.request.use(

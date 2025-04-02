@@ -20,12 +20,14 @@ import ModalCreateInstance from '@/shared/components/modals/instance/create-inst
 import BtnVPNDownload from '@/shared/components/button/vpn-download';
 import type { Instance } from '@/modules/instance/types/instance';
 import ModalInstanceDelete from '@/shared/components/modals/instance/delete-instance-modal';
+import ModalMakeInternal from '@/shared/components/modals/instance/make-internal-modal';
 
 export default function InstancesPage() {
   const { group_id } = useParams();
   // const { user } = useUserStore();
   const modalCreateInstance = useDialog();
   const deleteDialog = useDialog<Instance>();
+  const internalDialog = useDialog<Instance>();
   const { data: instancesData, isLoading } = useGetInstances({
     subject_id: group_id as string,
   });
@@ -37,14 +39,10 @@ export default function InstancesPage() {
     deleteDialog.handleOpen(data);
   };
 
-  // const instancesData = useSubjectStore();
+  const handleInternal = (data: Instance) => {
+    internalDialog.handleOpen(data);
+  };
 
-  // const handleDelete = useCallback(
-  //   (itemId: string): void => {
-  //     detailsDialog.handleClose();
-  //   },
-  //   [detailsDialog, instancesData],
-  // );
   return (
     <>
       <ModalCreateInstance
@@ -55,6 +53,11 @@ export default function InstancesPage() {
         handleClose={deleteDialog.handleClose}
         isOpen={deleteDialog.open}
         data={deleteDialog.data}
+      />
+      <ModalMakeInternal
+        handleClose={internalDialog.handleClose}
+        isOpen={internalDialog.open}
+        data={internalDialog.data}
       />
       <Box
         component="main"
@@ -105,6 +108,7 @@ export default function InstancesPage() {
                   flavors={instanceOption?.flavors || []}
                   images={instanceOption?.images || []}
                   isLoading={isLoading}
+                  onInternal={handleInternal}
                 />
               </Stack>
             </Grid>

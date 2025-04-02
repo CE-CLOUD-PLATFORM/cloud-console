@@ -3,7 +3,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { axiosInstance } from '@/shared/utils';
 import { endpoints } from '@/shared/configs';
-import type { InstanceCreate, InstanceDelete, InstanceOptionQueryParam, InstanceOptionRes, InstanceQueryParams, InstanceRes, InstancesQueryParams, InstancesRes, InstanceVNCRes } from '../types/instance';
+import type {
+  InstanceCreate,
+  InstanceDelete,
+  InstanceOptionQueryParam,
+  InstanceOptionRes,
+  InstanceQueryParams,
+  InstanceRes,
+  InstancesQueryParams,
+  InstancesRes,
+  InstanceVNCRes,
+  ExternalAccess,
+  MakeInternal,
+} from '../types/instance';
 
 type Params = {
   queryKey: string[];
@@ -30,7 +42,7 @@ export const getInstance = async ({
 
   const params: InstanceQueryParams = {
     subject_id,
-    instance_id
+    instance_id,
   };
   const response = await axiosInstance.get<
     InstanceRes,
@@ -47,26 +59,30 @@ export const getInstanceOptions = async ({
   const params: InstanceOptionQueryParam = {
     subject_id,
   };
-  const response = await axiosInstance.get(`${endpoints.instance.option}`, { params });
+  const response = await axiosInstance.get(`${endpoints.instance.option}`, {
+    params,
+  });
   return response.data;
 };
 
 export const postInstance = async (data: InstanceCreate) => {
-  return (await axiosInstance.post<
-    any,
-    any,
-    InstanceCreate
-  >(`${endpoints.instance.index}`, data)).data
-}
+  return (
+    await axiosInstance.post<any, any, InstanceCreate>(
+      `${endpoints.instance.index}`,
+      data,
+    )
+  ).data;
+};
 export const deleteInstance = async (params: InstanceDelete) => {
-  return (await axiosInstance.delete<
-    any,
-    any,
-    InstanceDelete
-  >(`${endpoints.instance.index}`, {
-    params
-  })).data
-}
+  return (
+    await axiosInstance.delete<any, any, InstanceDelete>(
+      `${endpoints.instance.index}`,
+      {
+        params,
+      },
+    )
+  ).data;
+};
 
 export const getInstanceVNC = async ({
   queryKey,
@@ -75,7 +91,7 @@ export const getInstanceVNC = async ({
 
   const params: InstanceQueryParams = {
     subject_id,
-    instance_id
+    instance_id,
   };
   const response = await axiosInstance.get<
     InstanceRes,
@@ -83,4 +99,24 @@ export const getInstanceVNC = async ({
     InstanceQueryParams
   >(`${endpoints.instance.vnc}`, { params });
   return response.data;
+};
+
+export const externalAccess = async (data: ExternalAccess) => {
+  return (
+    await axiosInstance.post<any, any, ExternalAccess>(
+      `${endpoints.instance.external}`,
+      data,
+    )
+  ).data;
+};
+
+export const makeInternal = async (params: MakeInternal) => {
+  return (
+    await axiosInstance.delete<any, any, MakeInternal>(
+      `${endpoints.instance.external}`,
+      {
+        params,
+      },
+    )
+  ).data;
 };

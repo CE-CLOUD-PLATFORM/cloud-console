@@ -1,4 +1,7 @@
-import { Instance, InstanceStatus } from '@/modules/instance/types/instance';
+import type {
+  Instance,
+  InstanceStatus,
+} from '@/modules/instance/types/instance';
 import { Menu, MenuItem, menuItemClasses, SvgIcon } from '@mui/material';
 import {
   Globe02,
@@ -17,10 +20,20 @@ interface ItemMenuProps {
   onDelete?: () => void;
   open?: boolean;
   data: Instance;
+  expose?: () => void;
+  internal?: () => void;
 }
 
 export const ItemMenu: FC<ItemMenuProps> = (props) => {
-  const { anchorEl, onClose, onDelete, open = false, data } = props;
+  const {
+    anchorEl,
+    onClose,
+    onDelete,
+    open = false,
+    data,
+    expose,
+    internal,
+  } = props;
   const InstancePause: InstanceStatus = 'PAUSED';
   const InstanceActive: InstanceStatus = 'ACTIVE';
   const InstanceReboot: InstanceStatus = 'REBOOT';
@@ -58,13 +71,13 @@ export const ItemMenu: FC<ItemMenuProps> = (props) => {
         </SvgIcon>
         Stop
       </MenuItem>
-      <MenuItem disabled={!!data.metadata.domain_name} onClick={onClose}>
+      <MenuItem disabled={!!data.metadata.domain_name} onClick={expose}>
         <SvgIcon fontSize="small">
           <Globe02 />
         </SvgIcon>
         Expose
       </MenuItem>
-      <MenuItem disabled={!data.metadata.domain_name} onClick={onClose}>
+      <MenuItem disabled={!data.metadata.domain_name} onClick={internal}>
         <SvgIcon fontSize="small">
           <SlashCircle01 />
         </SvgIcon>
@@ -96,4 +109,7 @@ ItemMenu.propTypes = {
   onClose: PropTypes.func,
   onDelete: PropTypes.func,
   open: PropTypes.bool,
+  expose: PropTypes.func,
+  internal: PropTypes.func,
+  data: PropTypes.any,
 };

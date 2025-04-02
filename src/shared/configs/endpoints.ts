@@ -1,7 +1,6 @@
-
 const version = {
-  V1: "/api/v1"
-}
+  V1: '/api/v1',
+};
 
 const ROOTS = {
   AUTH: `${version.V1}/auth`,
@@ -18,7 +17,7 @@ export const endpoints = {
   auth: {
     login: `${ROOTS.AUTH}/login`,
     recoveryPass: `https://iam-api.cloud.ce.kmitl.ac.th/api/password/reset-password`,
-    validate: `${ROOTS.AUTH}/validate`
+    validate: `${ROOTS.AUTH}/validate`,
   },
   subject: {
     getAll: `${ROOTS.SUBJECT}s`,
@@ -33,19 +32,23 @@ export const endpoints = {
   group: {
     getAll: `${ROOTS.SUBJECT}/groups`,
     get: `${ROOTS.SUBJECT}/group`,
-    post: `${ROOTS.GROUP}`
+    post: `${ROOTS.GROUP}`,
   },
   instance: {
     index: `${ROOTS.SERVER}`,
     vnc: `${ROOTS.SERVER}/vnc`,
     list: `${ROOTS.SERVER}s`,
-    option: `${ROOTS.SERVER}/options`
+    option: `${ROOTS.SERVER}/options`,
+    external: `${ROOTS.SERVER}/external-access`,
+    stop: `${ROOTS.SERVER}/stop`,
+    start: `${ROOTS.SERVER}/start`,
+    reboot: `${ROOTS.SERVER}/reboot`,
   },
   config: {
-    publicKey: `${ROOTS.CONFIG}/public-key`
+    publicKey: `${ROOTS.CONFIG}/public-key`,
   },
   flavor: {
-    list: `${ROOTS.FLAVOR}s`
+    list: `${ROOTS.FLAVOR}s`,
   },
   domain: {
     users: `${ROOTS.DOMAIN}/users`,
@@ -56,6 +59,5 @@ export const endpoints = {
     quota: `${ROOTS.RESOURCE}/quota`,
     quotaAll: `${ROOTS.RESOURCE}/quota/list`,
     credit: `${ROOTS.RESOURCE}/credit`,
-  }
+  },
 };
-
