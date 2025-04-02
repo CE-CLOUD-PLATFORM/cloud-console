@@ -15,6 +15,10 @@ export interface ISubjectsReqParam {
 export interface ISubjectDelete {
 id:string
 }
+export interface ISubjectUpdate {
+  name: string;
+  description: string;
+}
 export interface ISubjectCreate {
   name: string;
   description: string;

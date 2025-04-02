@@ -41,6 +41,7 @@ import { useGetRoles } from '@/modules/roles/hook/use-get-role-list';
 import Papa from 'papaparse';
 import { toast } from 'react-hot-toast';
 import { useAddSubjectMember } from '@/modules/subject/hook/use-add-subject-member';
+import { Upload02 } from '@untitled-ui/icons-react';
 
 const groupFormId = 'subject-member-add-form';
 
@@ -90,13 +91,14 @@ const ModalAddSubjectMember = (props: FormProps) => {
     }
   };
 
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>('');
   const [defaultRoleId, setDefaultRoleId] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (rolesData?.roles?.length) {
-      setDefaultRoleId(rolesData.roles[0].id);
+      const readerRole = rolesData.roles.find((role) => role.name === 'reader');
+      setDefaultRoleId(readerRole ? readerRole.id : rolesData.roles[0].id);
     }
   }, [rolesData]);
 
@@ -184,6 +186,7 @@ const ModalAddSubjectMember = (props: FormProps) => {
           justifyContent="space-between"
           className="flex-1 overflow-hidden"
           onSubmit={handleSubmit(onSubmit)}
+          gap={1}
         >
           <Stack spacing={1} display="flex" direction="row">
             <Autocomplete
@@ -195,10 +198,10 @@ const ModalAddSubjectMember = (props: FormProps) => {
                 }) || []
               }
               getOptionLabel={(option) => option.name}
-              value={null} 
-              inputValue={searchValue || ''} 
+              value={null}
+              inputValue={searchValue || ''}
               onInputChange={(event, newInputValue) => {
-                setSearchValue(newInputValue); 
+                setSearchValue(newInputValue);
               }}
               onChange={handleSelect}
               renderInput={(params) => (
@@ -222,17 +225,6 @@ const ModalAddSubjectMember = (props: FormProps) => {
                 </MenuItem>
               ))}
             </Select>
-            <Button
-              onClick={handleImportClick}
-              startIcon={
-                <SvgIcon>
-                  <AlignBottom01 />
-                </SvgIcon>
-              }
-              variant="contained"
-            >
-              Import
-            </Button>
             <input
               ref={fileInputRef}
               type="file"
@@ -240,6 +232,37 @@ const ModalAddSubjectMember = (props: FormProps) => {
               onChange={handleFileChange}
               style={{ display: 'none' }}
             />
+          </Stack>
+          <Stack
+            spacing={1}
+            display="flex"
+            justifyContent={'end'}
+            direction="row"
+            alignItems={'end'}
+          >
+            <Typography variant='caption'>Download CSV Template</Typography>
+            <Button
+              onClick={handleImportClick}
+              startIcon={
+                <SvgIcon>
+                  <AlignBottom01 />
+                </SvgIcon>
+              }
+              variant="outlined"
+            >
+              Download
+            </Button>
+            <Button
+              onClick={handleImportClick}
+              startIcon={
+                <SvgIcon>
+                  <Upload02 />
+                </SvgIcon>
+              }
+              variant="contained"
+            >
+              Upload
+            </Button>
           </Stack>
           <Box
             className="mt-2 flex-1 overflow-y-scroll"
