@@ -20,6 +20,7 @@ import React from 'react';
 import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
 import BtnVPNDownload from '@/shared/components/button/vpn-download';
 import type { Instance } from '@/modules/instance/types/instance';
+import ModalInstanceDelete from '@/shared/components/modals/instance/delete-instance-modal';
 
 export default function InstancesPage() {
   const { subject_id } = useParams();
@@ -51,6 +52,11 @@ export default function InstancesPage() {
       <ModalCreateInstance
         isOpen={modalCreateInstance.open}
         handleClose={modalCreateInstance.handleClose}
+      />
+      <ModalInstanceDelete
+        handleClose={deleteDialog.handleClose}
+        isOpen={deleteDialog.open}
+        data={deleteDialog.data}
       />
       <Box
         component="main"

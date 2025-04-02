@@ -81,6 +81,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
   flavors,
   images,
   isLoading,
+  onDelete,
 }) => {
   const { subject_id } = useParams();
   const router = useRouter();
@@ -146,9 +147,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
           <Table sx={{ minWidth: 700 }}>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox />
-                </TableCell>
+                <TableCell padding="checkbox">{/* <Checkbox /> */}</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Status</TableCell>
                 <TableCell>flavor</TableCell>
@@ -164,7 +163,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
                 return (
                   <TableRow hover key={instance.id}>
                     <TableCell padding="checkbox">
-                      <Checkbox />
+                      {/* <Checkbox /> */}
                     </TableCell>
                     <TableCell
                       sx={{
@@ -187,7 +186,11 @@ export const TableInstances: FC<TableInstanceProps> = ({
                             className="cursor-pointer"
                             variant="subtitle1"
                             onClick={() => {
-                              handleOnOpen(instance.id);
+                              let InstanceStatusActive: InstanceStatus =
+                                'ACTIVE';
+                              if (instance.status === InstanceStatusActive) {
+                                handleOnOpen(instance.id);
+                              }
                             }}
                           >
                             {instance.name}
@@ -243,7 +246,9 @@ export const TableInstances: FC<TableInstanceProps> = ({
                                   );
                                 },
                                 () => {
-                                  toast.error('Failed to copy Domain to clipboard');
+                                  toast.error(
+                                    'Failed to copy Domain to clipboard',
+                                  );
                                 },
                               );
                             }}
@@ -266,7 +271,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
                           <Edit02Icon />
                         </SvgIcon>
                       </IconButton> */}
-                      <IconButton onClick={() => handleOnOpen(instance.id)}>
+                      <IconButton onClick={() => onDelete(instance)}>
                         <SvgIcon>
                           <Trash02 />
                         </SvgIcon>
