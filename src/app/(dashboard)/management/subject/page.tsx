@@ -56,7 +56,7 @@ export default function Page() {
     (itemId: string): void => {
       detailsDialog.handleClose();
       deleteSubject.mutate({ id: itemId });
-      itemsStore.handleDelete(itemId);
+      // itemsStore.handleDelete(itemId);
     },
     [detailsDialog, itemsStore],
   );

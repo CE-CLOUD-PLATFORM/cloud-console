@@ -20,19 +20,16 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 
 export default function GroupPage() {
-  const {  group_id } = useParams();
+  const { group_id } = useParams();
   const modalAddSubjectMember = useDialog();
   // const detailsDialog = useDialog();
   const { data } = useGetSubjectMembers({
     subject_id: group_id as string,
   });
-  // const data = useSubjectStore();
-  // const handleDelete = useCallback(
-  //   (itemId: string): void => {
-  //     detailsDialog.handleClose();
-  //   },
-  //   [detailsDialog],
-  // );
+  const deleteDialog = useDialog<Member>();
+  const handleDelete = (item: Member) => {
+    deleteDialog.handleOpen(item);
+  };
 
   return (
     <>
@@ -82,9 +79,10 @@ export default function GroupPage() {
                   lg: 4,
                 }}
               >
-                <TableMembers members={data?.members || []} onDelete={function (item: Member): void {
-                  throw new Error('Function not implemented.');
-                } } />
+                <TableMembers
+                  members={data?.members || []}
+                  onDelete={handleDelete}
+                />
               </Stack>
             </Grid>
           </Grid>
