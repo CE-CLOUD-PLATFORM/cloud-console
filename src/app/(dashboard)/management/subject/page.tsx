@@ -27,7 +27,7 @@ import ModalSubjectCreate from '@/shared/components/modals/subject/create-subjec
 import type { View } from '@/shared/types/view';
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 import ModalSubjectDelete from '@/shared/components/modals/subject/delete-subject-modal';
-import { Subject } from '@/modules/subject/types/subject';
+import type { Subject } from '@/modules/subject/types/subject';
 
 export default function Page() {
   const itemsSearch = useItemsSearch();

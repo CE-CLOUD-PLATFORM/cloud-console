@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { useDeleteSubject } from '@/modules/subject/hook/use-delete-subject';
-import { ISubjectDelete, Subject } from '@/modules/subject/types/subject';
+import type { Subject } from '@/modules/subject/types/subject';
 import type { FormProps } from '@/shared/interfaces/modal';
 import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
