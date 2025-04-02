@@ -33,7 +33,6 @@ import { useParams } from 'next/navigation';
 import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
 import type { IMemberSubjectAdd, Member } from '@/modules/user/types/member';
 import type { User } from '@/modules/user/types/user';
-import AlignBottom01 from '@untitled-ui/icons-react/build/esm/AlignBottom01';
 import XClose from '@untitled-ui/icons-react/build/esm/X';
 import { Scrollbar } from '../../scrollbar';
 import { useGetRoles } from '@/modules/roles/hook/use-get-role-list';
