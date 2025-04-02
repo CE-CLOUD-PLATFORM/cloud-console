@@ -10,6 +10,7 @@ export interface InstanceCreate {
     public_key: string[];
     username: string;
     password: string;
+    external_access: boolean
 }
 export interface InstanceDelete {
     subject_id: string;
