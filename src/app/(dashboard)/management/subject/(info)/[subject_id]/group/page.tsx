@@ -3,7 +3,7 @@ import {
   useGroupsSearch,
   useGroupsStore,
 } from '@/modules/group/store/use-groups-store';
-import { Group } from '@/modules/group/types/group';
+import type { Group } from '@/modules/group/types/group';
 import { ItemList } from '@/shared/components/item-list/group-list/item-list';
 import { ItemSearch } from '@/shared/components/item-list/group-list/item-search';
 import CircleLoading from '@/shared/components/Loading/CircleLoading';

@@ -2,9 +2,7 @@
 
 import type { FormProps } from '@/shared/interfaces/modal';
 import { Box, Button, Divider, Stack, Typography } from '@mui/material';
-import { UseMutationResult } from '@tanstack/react-query';
 
-import { Group } from '@/modules/group/types/group';
 import ModalCover from '../index';
 import '../index.css';
 interface ModalDeleteFormProps extends FormProps {

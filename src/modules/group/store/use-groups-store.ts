@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable unused-imports/no-unused-vars */
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useMounted } from "@/shared/hooks/use-mounted";
 import type { ChangeEvent, MouseEvent } from 'react';
 import type { SortDir } from "@/shared/types/sort";
 import { useUserStore } from "@/modules/auth/store/auth";

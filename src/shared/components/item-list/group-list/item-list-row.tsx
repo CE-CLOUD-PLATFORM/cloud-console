@@ -20,7 +20,6 @@ import { usePopover } from '@/shared/hooks/use-popover';
 import { ItemIcon } from './item-icon';
 import { ItemMenu } from './item-menu';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import type { Group } from '@/modules/group/types/group';
 
 interface ItemListRowProps {

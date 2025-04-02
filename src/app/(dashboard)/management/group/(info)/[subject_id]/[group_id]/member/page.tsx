@@ -3,7 +3,6 @@
 'use client';
 import { useGetSubjectMembers } from '@/modules/group/hook/use-get-members';
 import type { Member } from '@/modules/user/types/member';
-import ModalGroupDelete from '@/shared/components/modals/group/delete-group-modal';
 import ModalAddGroupMember from '@/shared/components/modals/member/add-group-member-modal';
 import ModalGroupMemberDelete from '@/shared/components/modals/member/delete-group-member';
 import { TableMembers } from '@/shared/components/table/member-table';

@@ -7,7 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import ModalCover from '../index';
 import '../index.css';
-import { Group } from '@/modules/group/types/group';
+import type { Group } from '@/modules/group/types/group';
 import { useDeleteGroup } from '@/modules/group/hook/use-delete-group';
 interface ModalDeleteFormProps extends FormProps {
   data?: Group;
