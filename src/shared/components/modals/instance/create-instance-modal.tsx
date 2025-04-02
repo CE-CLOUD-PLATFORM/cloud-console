@@ -9,8 +9,10 @@ import {
   Autocomplete,
   Box,
   Button,
+  Checkbox,
   Chip,
   FormControl,
+  FormControlLabel,
   InputLabel,
   Link,
   MenuItem,
@@ -188,15 +190,22 @@ const ModalCreateInstance = (props: FormProps) => {
                         className="w-full"
                         id="tags-filled"
                         options={
-                          (keysData?.keys
-                            ?.filter(
-                              (option) => !field.value?.includes(option.id),
-                            )
-                            .map((option) => option) as PublicKey[]) || []
+                          (keysData?.keys?.filter(
+                            (option) =>
+                              !field.value
+                                ?.map(
+                                  (key) =>
+                                    keysData?.keys.find((k) => k.key === key)
+                                      ?.name || key,
+                                )
+                                .includes(option.name),
+                          ) as PublicKey[]) || []
                         }
                         getOptionLabel={(option) => (option as PublicKey).name}
                         isOptionEqualToValue={(option, value) =>
-                          option.key === value.key
+                          typeof value === 'string'
+                            ? option.key === value
+                            : option.key === value.key
                         }
                         freeSolo
                         value={(field.value as string[])?.map(
@@ -210,12 +219,13 @@ const ModalCreateInstance = (props: FormProps) => {
                         )}
                         onChange={(event, newValue) => {
                           field.onChange(
-                            newValue.map((key) => (key as PublicKey).key),
+                            newValue.map((item) =>
+                              typeof item === 'string' ? item : item.key,
+                            ),
                           );
                         }}
                         renderTags={(value, getTagProps) =>
                           value.map((option, index) => (
-                            // eslint-disable-next-line react/jsx-key
                             <Chip
                               variant="filled"
                               label={option.name}
@@ -263,17 +273,17 @@ const ModalCreateInstance = (props: FormProps) => {
                 {...register('password', { required: true })}
               />
               {errors.password && <span>This field is required</span>}
-              {/* <Typography variant="h6">Network Accessibility</Typography>
-            <Controller
-              name="external_access"
-              control={control}
-              render={({ field }) => (
-                <FormControlLabel
-                  control={<Checkbox {...field} />}
-                  label="External Access (Allow Public DNS/Access)"
-                />
-              )}
-            /> */}
+              {/* <Typography variant="h6">Network Accessibility</Typography> */}
+              {/* <Controller
+                name="external_access"
+                control={control}
+                render={({ field }) => (
+                  <FormControlLabel
+                    control={<Checkbox {...field} />}
+                    label="External Access (Allow Public DNS Access)"
+                  />
+                )}
+              /> */}
             </Stack>
 
             <Box
