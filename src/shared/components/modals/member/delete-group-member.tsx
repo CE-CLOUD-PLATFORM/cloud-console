@@ -12,13 +12,13 @@ interface MemberFormProps extends FormProps {
 }
 const formLabel = 'Member';
 const formId = `${formLabel}-delete-form`;
-const ModalSubjectMemberDelete = (props: MemberFormProps) => {
-  const { subject_id } = useParams();
+const ModalGroupMemberDelete = (props: MemberFormProps) => {
+  const { group_id } = useParams();
   const { isOpen, handleClose, data } = props;
   const queryClient = useQueryClient();
   const deleteFn = useDeleteSubjectMember({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['subject_members'] });
+      queryClient.invalidateQueries({ queryKey: ['group_members',] });
       toast.success('Deleted member successfully.');
     },
     onMutate: () => {
@@ -35,7 +35,7 @@ const ModalSubjectMemberDelete = (props: MemberFormProps) => {
     try {
       if (data?.id) {
         deleteFn.mutate({
-          subject_id: subject_id as string,
+          subject_id: group_id as string,
           member: data,
         });
       }
@@ -56,4 +56,4 @@ const ModalSubjectMemberDelete = (props: MemberFormProps) => {
   );
 };
 
-export default ModalSubjectMemberDelete;
+export default ModalGroupMemberDelete;
