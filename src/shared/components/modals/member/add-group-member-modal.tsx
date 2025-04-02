@@ -93,9 +93,10 @@ const ModalAddSubjectMember = (props: FormProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    if (rolesData?.roles?.length) {
-      setDefaultRoleId(rolesData.roles[0].id);
-    }
+    const readerRole = rolesData?.roles.find((role) => role.name === 'reader');
+    setDefaultRoleId(
+      readerRole ? readerRole.id : (rolesData?.roles[0].id as string),
+    );
   }, [rolesData]);
 
   const handleSelect = (event: React.SyntheticEvent, newValue: User | null) => {
