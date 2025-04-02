@@ -40,6 +40,8 @@ import { useGetRoles } from '@/modules/roles/hook/use-get-role-list';
 import Papa from 'papaparse';
 import { toast } from 'react-hot-toast';
 import { useAddSubjectMember } from '@/modules/subject/hook/use-add-subject-member';
+import { CsvDownloadBtn } from '../../button/csv-download';
+import { Upload02 } from '@untitled-ui/icons-react';
 
 const groupFormId = 'group-member-add-form';
 
@@ -86,7 +88,7 @@ const ModalAddSubjectMember = (props: FormProps) => {
     }
   };
 
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>('');
   const [defaultRoleId, setDefaultRoleId] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -101,7 +103,7 @@ const ModalAddSubjectMember = (props: FormProps) => {
       const { members } = getValues();
       setValue('members', [...members, { ...newValue, role: defaultRoleId }]);
     }
-    setSearchValue("");
+    setSearchValue('');
   };
 
   const handleDelete = (id: string) => {
@@ -192,10 +194,10 @@ const ModalAddSubjectMember = (props: FormProps) => {
                 }) || []
               }
               getOptionLabel={(option) => option.name}
-              value={null} 
-              inputValue={searchValue || ''} 
+              value={null}
+              inputValue={searchValue || ''}
               onInputChange={(event, newInputValue) => {
-                setSearchValue(newInputValue); 
+                setSearchValue(newInputValue);
               }}
               onChange={handleSelect}
               renderInput={(params) => (
@@ -219,16 +221,26 @@ const ModalAddSubjectMember = (props: FormProps) => {
                 </MenuItem>
               ))}
             </Select>
+          </Stack>
+          <Stack
+            spacing={1}
+            display="flex"
+            justifyContent={'end'}
+            direction="row"
+            alignItems={'end'}
+          >
+            <Typography variant="caption">Download CSV Template</Typography>
+            <CsvDownloadBtn />
             <Button
               onClick={handleImportClick}
               startIcon={
                 <SvgIcon>
-                  <AlignBottom01 />
+                  <Upload02 />
                 </SvgIcon>
               }
               variant="contained"
             >
-              Import
+              Upload
             </Button>
             <input
               ref={fileInputRef}

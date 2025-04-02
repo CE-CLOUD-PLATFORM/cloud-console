@@ -18,7 +18,6 @@ import {
 } from '@mui/material';
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 import { useParams } from 'next/navigation';
-import React from 'react';
 
 export default function GroupPage() {
   const { group_id } = useParams();

@@ -42,6 +42,7 @@ import Papa from 'papaparse';
 import { toast } from 'react-hot-toast';
 import { useAddSubjectMember } from '@/modules/subject/hook/use-add-subject-member';
 import { Upload02 } from '@untitled-ui/icons-react';
+import { CsvDownloadBtn } from '../../button/csv-download';
 
 const groupFormId = 'subject-member-add-form';
 
@@ -212,7 +213,6 @@ const ModalAddSubjectMember = (props: FormProps) => {
                 />
               )}
             />
-
             <Select
               size="small"
               value={defaultRoleId}
@@ -225,13 +225,6 @@ const ModalAddSubjectMember = (props: FormProps) => {
                 </MenuItem>
               ))}
             </Select>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".csv"
-              onChange={handleFileChange}
-              style={{ display: 'none' }}
-            />
           </Stack>
           <Stack
             spacing={1}
@@ -240,18 +233,8 @@ const ModalAddSubjectMember = (props: FormProps) => {
             direction="row"
             alignItems={'end'}
           >
-            <Typography variant='caption'>Download CSV Template</Typography>
-            <Button
-              onClick={handleImportClick}
-              startIcon={
-                <SvgIcon>
-                  <AlignBottom01 />
-                </SvgIcon>
-              }
-              variant="outlined"
-            >
-              Download
-            </Button>
+            <Typography variant="caption">Download CSV Template</Typography>
+            <CsvDownloadBtn />
             <Button
               onClick={handleImportClick}
               startIcon={
@@ -263,6 +246,13 @@ const ModalAddSubjectMember = (props: FormProps) => {
             >
               Upload
             </Button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".csv"
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
           </Stack>
           <Box
             className="mt-2 flex-1 overflow-y-scroll"
