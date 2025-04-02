@@ -84,7 +84,7 @@ const ModalCreateInstance = (props: FormProps) => {
   return (
     <ModalCover handleOnClose={handleClose} isOpen={isOpen}>
       <Box className="modal-box" gap={5}>
-        <Box className="hidden-scrollbar flex-1 space-y-2 overflow-y-auto">
+        <Box className="hidden-scrollbar flex-1 space-y-2 overflow-y-auto px-1">
           <Typography variant="h5">New Instance</Typography>
           <Box
             component="form"

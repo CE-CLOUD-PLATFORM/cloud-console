@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IResponse } from '@/shared/interfaces/api';
-export type InstanceStatus = "ACTIVE" | "BUILD" | "SHUTOFF" | "REBUILD" | any
+export type InstanceStatus = "ACTIVE" | "BUILD" | "SHUTOFF" | "REBUILD" | string
 export interface InstanceCreate {
     name: string;
     subject_id: string;
@@ -13,7 +13,7 @@ export interface InstanceCreate {
 }
 export interface InstanceDelete {
     subject_id: string;
-    id: string
+    instance_id: string
 }
 export interface InstancesQueryParams {
     subject_id: string;
@@ -46,7 +46,7 @@ export interface Instance {
     updated: string
     created: string
     hostid: string
-    status: string
+    status: InstanceStatus
     progress: number
     accessIPv4: string
     accessIPv6: string
