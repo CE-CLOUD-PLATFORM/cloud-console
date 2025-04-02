@@ -1,13 +1,7 @@
 /* eslint-disable no-unused-vars */
 import type { ChangeEvent, FC, MouseEvent } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Box,
-  Stack,
-  Table,
-  TableBody,
-  TablePagination,
-} from '@mui/material';
+import { Box, Stack, Table, TableBody, TablePagination } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
 import { ItemListCard } from './item-list-card';
 import { ItemListRow } from './item-list-row';
@@ -18,8 +12,8 @@ type View = 'grid' | 'list';
 interface ItemListProps {
   count?: number;
   items?: Subject[];
-  onDelete?: (itemId: string) => void;
-  onOpen?: (itemId: string) => void;
+  onDelete?: (item: Subject) => void;
+  onOpen?: (item: Subject) => void;
   onPageChange?: (
     event: MouseEvent<HTMLButtonElement> | null,
     newPage: number,
@@ -36,7 +30,6 @@ export const ItemList: FC<ItemListProps> = (props) => {
     count = 0,
     items = [],
     onDelete,
-    onOpen,
     onPageChange = () => {},
     onRowsPerPageChange,
     page = 0,
@@ -64,7 +57,6 @@ export const ItemList: FC<ItemListProps> = (props) => {
             key={item.id}
             item={item}
             onDelete={onDelete}
-            onOpen={onOpen}
           />
         ))}
       </Box>
@@ -87,7 +79,6 @@ export const ItemList: FC<ItemListProps> = (props) => {
                     key={item.id}
                     item={item}
                     onDelete={onDelete}
-                    onOpen={onOpen}
                   />
                 ))}
               </TableBody>

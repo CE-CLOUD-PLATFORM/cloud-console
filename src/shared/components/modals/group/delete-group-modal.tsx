@@ -1,59 +1,53 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { useDeleteSubjectMember } from '@/modules/subject/hook/use-delete-subject-member';
-import type { IMemberSubjectDel, Member } from '@/modules/user/types/member';
+
 import type { FormProps } from '@/shared/interfaces/modal';
 import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
-import type { SubmitHandler } from 'react-hook-form';
-import { useForm } from 'react-hook-form';
+
 import toast from 'react-hot-toast';
 import ModalCover from '../index';
 import '../index.css';
-interface MemberFormProps extends FormProps {
-  data?: Member;
+import { Group } from '@/modules/group/types/group';
+import { useDeleteGroup } from '@/modules/group/hook/use-delete-group';
+interface ModalDeleteFormProps extends FormProps {
+  data?: Group;
 }
-const form_id = 'subject-member-delete-form';
-const ModalConfirmDeleteMember = (props: MemberFormProps) => {
-  const { subject_id } = useParams();
+const formLabel = 'Group';
+const form_id = `${formLabel}-delete-form`;
+const ModalGroupDelete = (props: ModalDeleteFormProps) => {
   const { isOpen, handleClose, data } = props;
   const queryClient = useQueryClient();
-  const deleteSubjectMember = useDeleteSubjectMember({
+  const deleteFn = useDeleteGroup({
     onSuccess: () => {
-      reset();
-      queryClient.invalidateQueries({ queryKey: ['subject_members'] });
-      toast.success('Deleted member successfully.');
+      toast.success(`${formLabel} deleted successfully`);
+      queryClient.invalidateQueries({ queryKey: ['groups'] });
+    },
+    onError: () => {
+      toast.error(`Fail to delete ${formLabel}.`);
     },
     onMutate: () => {
       handleClose();
-      toast.loading('Deleting member...');
-    },
-    onError: () => {
-      toast.error('Fail to delete member, try again.');
+      toast.loading('Deleting...');
     },
   });
-  // eslint-disable-next-line prefer-const
-  const { handleSubmit, reset } = useForm<IMemberSubjectDel>({
-    values: {
-      subject_id: subject_id as string,
-      member: data as Member,
-    },
-  });
-  const onSubmit: SubmitHandler<IMemberSubjectDel> = async (data) => {
+
+  const onSubmit = async () => {
     try {
-      if (data.member) {
-        deleteSubjectMember.mutate(data);
+      if (data?.id) {
+        deleteFn.mutate(data);
       }
     } catch (error) {
       console.error(error);
     }
   };
-
+  const handleCloseBtn = () => {
+    handleClose();
+  };
   return (
     <ModalCover handleOnClose={handleClose} isOpen={isOpen}>
       <Box className="modal-box !min-h-[auto]" gap={3}>
         <Box className="hidden-scrollbar flex-1 space-y-2 overflow-y-auto">
-          <Typography variant="h5">Confirm Delete Member</Typography>
+          <Typography variant="h5">Confirm Delete {formLabel}</Typography>
           <Box
             component="form"
             id={form_id}
@@ -61,7 +55,6 @@ const ModalConfirmDeleteMember = (props: MemberFormProps) => {
             flexDirection="column"
             justifyContent="space-between"
             className="flex-1 p-1"
-            onSubmit={handleSubmit(onSubmit)}
           >
             <Stack
               display={'flex'}
@@ -71,7 +64,7 @@ const ModalConfirmDeleteMember = (props: MemberFormProps) => {
               gap={1}
             >
               <Typography fontWeight={600} variant="body1">
-                User:
+                {formLabel}:
               </Typography>
               <Typography fontWeight={400}>{data?.name}</Typography>
             </Stack>
@@ -89,20 +82,16 @@ const ModalConfirmDeleteMember = (props: MemberFormProps) => {
               }}
             >
               <Box sx={{ flexGrow: 1 }} />
-              <Button
-                color="inherit"
-                onClick={() => {
-                  reset();
-                  handleClose();
-                }}
-              >
+              <Button variant="outlined" onClick={handleCloseBtn}>
                 Cancel
               </Button>
               <Button
                 sx={{ ml: 1 }}
-                type="submit"
+                // type="submit"
+                // form={form_id}
                 variant="contained"
-                form={form_id}
+                color="error"
+                onClick={onSubmit}
               >
                 Confirm
               </Button>
@@ -114,4 +103,4 @@ const ModalConfirmDeleteMember = (props: MemberFormProps) => {
   );
 };
 
-export default ModalConfirmDeleteMember;
+export default ModalGroupDelete;

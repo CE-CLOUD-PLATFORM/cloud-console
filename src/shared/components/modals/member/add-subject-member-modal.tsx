@@ -73,30 +73,24 @@ const ModalAddSubjectMember = (props: FormProps) => {
     subject_id: subject_id as string,
   });
 
-  const {
-    handleSubmit,
-    reset,
-    watch,
-    setValue,
-    getValues,
-    formState: { errors },
-  } = useForm<IMemberSubjectAdd>({
-    defaultValues: {
-      members: [],
-      subject_id: subject_id as string,
-    },
-  });
+  const { handleSubmit, reset, watch, setValue, getValues } =
+    useForm<IMemberSubjectAdd>({
+      defaultValues: {
+        members: [],
+        subject_id: subject_id as string,
+      },
+    });
 
   const onSubmit = async (data: IMemberSubjectAdd) => {
     try {
       // Do something here
-      addMember.mutate(data)
+      addMember.mutate(data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const [searchValue, setSearchValue] = useState<User | null>(null);
+  const [searchValue, setSearchValue] = useState<string>("");
   const [defaultRoleId, setDefaultRoleId] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -111,7 +105,7 @@ const ModalAddSubjectMember = (props: FormProps) => {
       const { members } = getValues();
       setValue('members', [...members, { ...newValue, role: defaultRoleId }]);
     }
-    setSearchValue(null);
+    setSearchValue('');
   };
 
   const handleDelete = (id: string) => {
@@ -139,7 +133,6 @@ const ModalAddSubjectMember = (props: FormProps) => {
           toast.error('CSV must contain "student_id" field.');
           return;
         }
-        console.log(1, parsedData);
 
         const { members } = getValues();
         const existingIds = members.map((m) => m.id);
@@ -202,12 +195,21 @@ const ModalAddSubjectMember = (props: FormProps) => {
                 }) || []
               }
               getOptionLabel={(option) => option.name}
-              value={searchValue}
+              value={null} 
+              inputValue={searchValue || ''} 
+              onInputChange={(event, newInputValue) => {
+                setSearchValue(newInputValue); 
+              }}
               onChange={handleSelect}
               renderInput={(params) => (
-                <TextField {...params} label="Search User" />
+                <TextField
+                  {...params}
+                  value={searchValue || ''}
+                  label="Search User"
+                />
               )}
             />
+
             <Select
               size="small"
               value={defaultRoleId}

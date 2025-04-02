@@ -3,7 +3,9 @@
 'use client';
 import { useGetSubjectMembers } from '@/modules/group/hook/use-get-members';
 import type { Member } from '@/modules/user/types/member';
+import ModalGroupDelete from '@/shared/components/modals/group/delete-group-modal';
 import ModalAddGroupMember from '@/shared/components/modals/member/add-group-member-modal';
+import ModalGroupMemberDelete from '@/shared/components/modals/member/delete-group-member';
 import { TableMembers } from '@/shared/components/table/member-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
 import {
@@ -20,25 +22,27 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 
 export default function GroupPage() {
-  const {  group_id } = useParams();
+  const { group_id } = useParams();
   const modalAddSubjectMember = useDialog();
   // const detailsDialog = useDialog();
   const { data } = useGetSubjectMembers({
     subject_id: group_id as string,
   });
-  // const data = useSubjectStore();
-  // const handleDelete = useCallback(
-  //   (itemId: string): void => {
-  //     detailsDialog.handleClose();
-  //   },
-  //   [detailsDialog],
-  // );
+  const deleteDialog = useDialog<Member>();
+  const handleDelete = (item: Member) => {
+    deleteDialog.handleOpen(item);
+  };
 
   return (
     <>
       <ModalAddGroupMember
         isOpen={modalAddSubjectMember.open}
         handleClose={modalAddSubjectMember.handleClose}
+      />
+      <ModalGroupMemberDelete
+        handleClose={deleteDialog.handleClose}
+        isOpen={deleteDialog.open}
+        data={deleteDialog.data}
       />
       <Box
         component="main"
@@ -82,9 +86,10 @@ export default function GroupPage() {
                   lg: 4,
                 }}
               >
-                <TableMembers members={data?.members || []} onDelete={function (item: Member): void {
-                  throw new Error('Function not implemented.');
-                } } />
+                <TableMembers
+                  members={data?.members || []}
+                  onDelete={handleDelete}
+                />
               </Stack>
             </Grid>
           </Grid>

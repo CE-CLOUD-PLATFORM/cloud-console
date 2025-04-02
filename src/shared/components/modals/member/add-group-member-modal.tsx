@@ -45,7 +45,7 @@ const groupFormId = 'group-member-add-form';
 
 const ModalAddSubjectMember = (props: FormProps) => {
   const { isOpen, handleClose } = props;
-  const { subject_id,group_id } = useParams();
+  const { subject_id, group_id } = useParams();
   const { user } = useUserStore();
   const addMember = useAddSubjectMember({
     onMutate: () => {
@@ -69,30 +69,24 @@ const ModalAddSubjectMember = (props: FormProps) => {
   });
   const { data: rolesData } = useGetRoles();
 
-  const {
-    handleSubmit,
-    reset,
-    watch,
-    setValue,
-    getValues,
-    formState: { errors },
-  } = useForm<IMemberSubjectAdd>({
-    defaultValues: {
-      members: [],
-      subject_id: group_id as string,
-    },
-  });
+  const { handleSubmit, reset, watch, setValue, getValues } =
+    useForm<IMemberSubjectAdd>({
+      defaultValues: {
+        members: [],
+        subject_id: group_id as string,
+      },
+    });
 
   const onSubmit = async (data: IMemberSubjectAdd) => {
     try {
       // Do something here
-      addMember.mutate(data)
+      addMember.mutate(data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const [searchValue, setSearchValue] = useState<User | null>(null);
+  const [searchValue, setSearchValue] = useState<string>("");
   const [defaultRoleId, setDefaultRoleId] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -107,7 +101,7 @@ const ModalAddSubjectMember = (props: FormProps) => {
       const { members } = getValues();
       setValue('members', [...members, { ...newValue, role: defaultRoleId }]);
     }
-    setSearchValue(null);
+    setSearchValue("");
   };
 
   const handleDelete = (id: string) => {
@@ -140,7 +134,9 @@ const ModalAddSubjectMember = (props: FormProps) => {
         const existingIds = members.map((m) => m.id);
         const matchedUsers = parsedData
           .map((row) => {
-            return allUser?.members.find((user) => user.name === row.student_id);
+            return allUser?.members.find(
+              (user) => user.name === row.student_id,
+            );
           })
           .filter(
             (user): user is Member => !!user && !existingIds.includes(user.id),
@@ -196,12 +192,21 @@ const ModalAddSubjectMember = (props: FormProps) => {
                 }) || []
               }
               getOptionLabel={(option) => option.name}
-              value={searchValue}
+              value={null} 
+              inputValue={searchValue || ''} 
+              onInputChange={(event, newInputValue) => {
+                setSearchValue(newInputValue); 
+              }}
               onChange={handleSelect}
               renderInput={(params) => (
-                <TextField {...params} label="Search User" />
+                <TextField
+                  {...params}
+                  value={searchValue || ''}
+                  label="Search User"
+                />
               )}
             />
+
             <Select
               size="small"
               value={defaultRoleId}

@@ -27,7 +27,7 @@ export default function SidebarInstance() {
       <Divider />
       <List>
         {menus.map((menu) => (
-          <Link href={menu.link} key={menu.name}>
+          <Link href={menu.link}  replace={true} key={menu.name}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>{menu.icon}</ListItemIcon>

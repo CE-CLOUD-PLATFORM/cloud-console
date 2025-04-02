@@ -2,12 +2,12 @@
 import type { MutationOptions } from '@tanstack/react-query';
 import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
-import { deleteSubject } from '../service';
-import type { ISubjectDelete } from '../types/subject';
+import { deleteGroup } from '../service';
+import { IGroupDelete } from '../types/group';
 
-export const useDeleteSubject = (options?: MutationOptions<any, AxiosError, ISubjectDelete, unknown>) =>
+export const useDeleteGroup = (options?: MutationOptions<any, AxiosError, IGroupDelete, unknown>) =>
   useMutation({
-    mutationFn: deleteSubject,
+    mutationFn: deleteGroup,
     ...options
   });
 

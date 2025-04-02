@@ -25,20 +25,17 @@ import type { Group } from '@/modules/group/types/group';
 
 interface ItemListRowProps {
   item: Group;
-  onDelete?: (itemId: string) => void;
-  onOpen?: (itemId: string) => void;
+  onDelete?: (item: Group) => void;
 }
 
 export const ItemListRow: FC<ItemListRowProps> = (props) => {
-  const { item, onDelete,  onOpen } = props;
+  const { item, onDelete } = props;
   const popover = usePopover<HTMLButtonElement>();
-  const pathname = usePathname();
 
   const handleDelete = useCallback((): void => {
     popover.handleClose();
-    onDelete?.(item.id);
+    onDelete?.(item);
   }, [item, popover, onDelete]);
-
 
   return (
     <>
@@ -85,22 +82,26 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
         <TableCell>
           {/* <Link href={`/management/group/${item.project_id}/${item.id}/overview`}>
            */}
-           <Link href={`/management/group/${item.project_id}/${item.id}/instance`}>
+          <Link
+            href={`/management/group/${item.project_id}/${item.id}/instance`}
+          >
             <Stack alignItems="center" direction="row" spacing={2}>
-              <Box onClick={() => onOpen?.(item.id)} sx={{ cursor: 'pointer' }}>
+              <Box sx={{ cursor: 'pointer' }}>
                 <ItemIcon />
               </Box>
               <div>
                 <Typography
                   noWrap
-                  onClick={() => onOpen?.(item.id)}
                   sx={{ cursor: 'pointer' }}
                   variant="subtitle2"
                 >
                   {item.name}
                 </Typography>
-                <Typography color="text.secondary" noWrap variant="body2">
-                </Typography>
+                <Typography
+                  color="text.secondary"
+                  noWrap
+                  variant="body2"
+                ></Typography>
               </div>
             </Stack>
           </Link>

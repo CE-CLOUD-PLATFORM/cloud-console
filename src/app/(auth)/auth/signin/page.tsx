@@ -23,7 +23,7 @@ import type { IAuthLogin } from '@/modules/auth/types/auth';
 import Image from 'next/image';
 export default function LoginPage() {
   const router = useRouter();
-  const { mutateAsync: authtentication, isIdle } = useAuth();
+  const { mutateAsync: authtentication, isPending } = useAuth();
   // const { data: domainsData,isFetched } = useGetDomainList();
   const {
     register,
@@ -141,7 +141,7 @@ export default function LoginPage() {
               </Box>
               <div className="w-full">
                 <Button
-                  disabled={!isIdle}
+                  disabled={isPending}
                   className="w-full rounded-md bg-blue-600 p-3 text-sm text-white"
                   type="submit"
                   variant="contained"
