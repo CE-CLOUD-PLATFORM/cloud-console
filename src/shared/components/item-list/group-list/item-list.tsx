@@ -10,8 +10,7 @@ import type { Group } from '@/modules/group/types/group';
 interface ItemListProps {
   count?: number;
   items?: Group[];
-  onDelete?: (itemId: string) => void;
-  onOpen?: (itemId: string) => void;
+  onDelete?: (item: Group) => void;
   onPageChange?: (
     event: MouseEvent<HTMLButtonElement> | null,
     newPage: number,
@@ -26,7 +25,6 @@ export const ItemList: FC<ItemListProps> = (props) => {
     count = 0,
     items = [],
     onDelete,
-    onOpen,
     onPageChange = () => {},
     onRowsPerPageChange,
     page = 0,
@@ -54,7 +52,6 @@ export const ItemList: FC<ItemListProps> = (props) => {
                   key={item.id}
                   item={item}
                   onDelete={onDelete}
-                  onOpen={onOpen}
                 />
               ))}
             </TableBody>
@@ -84,7 +81,6 @@ ItemList.propTypes = {
   items: PropTypes.array,
   count: PropTypes.number,
   onDelete: PropTypes.func,
-  onOpen: PropTypes.func,
   onPageChange: PropTypes.func,
   onRowsPerPageChange: PropTypes.func,
   page: PropTypes.number,

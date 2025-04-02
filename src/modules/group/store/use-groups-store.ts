@@ -87,9 +87,7 @@ export const useGroupsStore = (subject_id: string, searchState: ItemsSearchState
   const { data, isLoading, isFetched } = useGetGroups({
     user_id: user?.info.id as string,
     subject_id: subject_id as string,
-    domain_name: user?.info.domain.name as string,
   });
-  const isMounted = useMounted();
   const [state, setState] = useState<ItemsStoreState>({
     items: [],
     itemsCount: 0,

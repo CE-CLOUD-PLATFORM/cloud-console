@@ -4,7 +4,6 @@ import type { IResponse } from '@/shared/interfaces/api';
 export interface IGroupsReqParams {
     user_id: string
     subject_id: string
-    domain_name: string
 }
 
 export interface IGroupCreate {
@@ -13,10 +12,12 @@ export interface IGroupCreate {
     domain_id: string
     user_id: string
     description?: string
-    req_resource?:SubjectResource
-    set_resource:boolean
+    req_resource?: SubjectResource
+    set_resource: boolean
 }
-
+export interface IGroupDelete {
+    id: string
+}
 export interface IGroupInputs {
     name: string
     description?: string
@@ -39,7 +40,7 @@ export interface Group {
     enabled: boolean
     id: string
     member_count: number
-  }
+}
 
 export interface IGroupsRes extends IResponse {
     groups: Group[]

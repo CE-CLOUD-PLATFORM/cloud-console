@@ -3,7 +3,7 @@
 import { axiosInstance } from '@/shared/utils';
 
 import { endpoints } from '@/shared/configs';
-import type { IGroupCreate, IGroupsReqParams, IGroupsRes } from '../types/group';
+import type { IGroupCreate, IGroupDelete, IGroupsReqParams, IGroupsRes } from '../types/group';
 import type { IResponse } from '@/shared/interfaces/api';
 
 type Params = {
@@ -11,12 +11,11 @@ type Params = {
 };
 
 export const getGroups = async ({ queryKey }: Params): Promise<IGroupsRes> => {
-  const [_, user_id, subject_id, domain_name] = queryKey;
+  const [_, user_id, subject_id] = queryKey;
 
   const params: IGroupsReqParams = {
     user_id,
     subject_id,
-    domain_name,
   };
   const response = await axiosInstance.get<IGroupsRes>(
     `${endpoints.group.getAll}`,
@@ -30,6 +29,15 @@ export const getGroups = async ({ queryKey }: Params): Promise<IGroupsRes> => {
 export const postGroup = async (data: IGroupCreate): Promise<IResponse> => {
   const response = await axiosInstance.post(
     `${endpoints.group.post}`, data
+  );
+  return response.data;
+};
+export const deleteGroup = async (data: IGroupDelete): Promise<IResponse> => {
+  const response = await axiosInstance.delete<any, any, IGroupDelete>(
+    `${endpoints.group.post}`, {
+    params: data
+
+  }
   );
   return response.data;
 };

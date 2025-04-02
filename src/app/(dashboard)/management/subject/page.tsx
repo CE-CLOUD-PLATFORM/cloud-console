@@ -16,49 +16,34 @@ import {
   Typography,
 } from '@mui/material';
 
-import { useDeleteSubject } from '@/modules/subject/hook/use-delete-subject';
 import {
   useItemsSearch,
   useItemsStore,
 } from '@/modules/subject/store/use-subjects-store';
 import { ItemList } from '@/shared/components/item-list/subject-list/item-list';
 import { ItemSearch } from '@/shared/components/item-list/subject-list/item-search';
+import CircleLoading from '@/shared/components/Loading/CircleLoading';
 import ModalSubjectCreate from '@/shared/components/modals/subject/create-subject-modal';
 import type { View } from '@/shared/types/view';
-import { useQueryClient } from '@tanstack/react-query';
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
-import toast from 'react-hot-toast';
-import CircleLoading from '@/shared/components/Loading/CircleLoading';
+import ModalSubjectDelete from '@/shared/components/modals/subject/delete-subject-modal';
+import { Subject } from '@/modules/subject/types/subject';
 
 export default function Page() {
   const itemsSearch = useItemsSearch();
-  const queryClient = useQueryClient();
   const itemsStore = useItemsStore(itemsSearch.state);
   const [view, setView] = useState<View>('grid');
   const modalCreateSubject = useDialog();
-  const detailsDialog = useDialog<string>();
-  // const currentItem = useCurrentItem(itemsStore.items, detailsDialog.data);
-  const deleteSubject = useDeleteSubject({
-    onSuccess: () => {
-      toast.success('Project deleted successfully');
-      queryClient.invalidateQueries({ queryKey: ['subjects'] });
-    },
-    onError: (err) => {
-      toast.error('Fail to delete Subject.');
-    },
-    onMutate: () => {
-      toast.loading('Deleting...');
-    },
-  });
+  const deleteDialog = useDialog<Subject>();
+  // const currentItem = useCurrentItem(itemsStore.items, deleteDialog.data);
+
   usePageView();
 
   const handleDelete = useCallback(
-    (itemId: string): void => {
-      detailsDialog.handleClose();
-      deleteSubject.mutate({ id: itemId });
-      // itemsStore.handleDelete(itemId);
+    (item: Subject): void => {
+      deleteDialog.handleOpen(item);
     },
-    [detailsDialog, itemsStore],
+    [deleteDialog, itemsStore],
   );
 
   return (
@@ -66,6 +51,11 @@ export default function Page() {
       <ModalSubjectCreate
         isOpen={modalCreateSubject.open}
         handleClose={modalCreateSubject.handleClose}
+      />
+      <ModalSubjectDelete
+        isOpen={deleteDialog.open}
+        data={deleteDialog.data}
+        handleClose={deleteDialog.handleClose}
       />
       <Box
         component="main"
@@ -130,7 +120,7 @@ export default function Page() {
                     count={itemsStore.itemsCount}
                     items={itemsStore.items}
                     onDelete={handleDelete}
-                    onOpen={detailsDialog.handleOpen}
+                    onOpen={deleteDialog.handleOpen}
                     onPageChange={itemsSearch.handlePageChange}
                     onRowsPerPageChange={itemsSearch.handleRowsPerPageChange}
                     page={itemsSearch.state.page}

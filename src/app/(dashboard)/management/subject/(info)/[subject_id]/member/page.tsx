@@ -4,7 +4,7 @@
 'use client';
 import { useGetSubjectMembers } from '@/modules/subject/hook/use-get-members';
 import ModalAddSubjectMember from '@/shared/components/modals/member/add-subject-member-modal';
-import ModalConfirmDeleteMember from '@/shared/components/modals/member/delete-member';
+import ModalConfirmDeleteMember from '@/shared/components/modals/member/delete-subject-member';
 import { TableMembers } from '@/shared/components/table/member-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
 import type { Member } from '@/shared/types/job';

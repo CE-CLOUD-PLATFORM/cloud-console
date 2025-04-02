@@ -24,23 +24,17 @@ import { usePathname } from 'next/navigation';
 
 interface ItemListCardProps {
   item: Subject;
-  onDelete?: (itemId: string) => void;
-  onFavorite?: (itemId: string, value: boolean) => void;
-  onOpen?: (itemId: string) => void;
+  onDelete?: (item: Subject) => void;
 }
 
 export const ItemListCard: FC<ItemListCardProps> = (props) => {
-  const { item, onDelete, onFavorite, onOpen } = props;
+  const { item, onDelete } = props;
   const popover = usePopover<HTMLButtonElement>();
   const pathName = usePathname();
   const handleDelete = useCallback((): void => {
     popover.handleClose();
-    onDelete?.(item.id);
+    onDelete?.(item);
   }, [item, popover, onDelete]);
-
-  const size = '1';
-
-  const createdAt = '123';
 
   return (
     <>

@@ -25,21 +25,18 @@ import { usePathname } from 'next/navigation';
 
 interface ItemListRowProps {
   item: Subject;
-  onDelete?: (itemId: string) => void;
-  onFavorite?: (itemId: string, value: boolean) => void;
-  onOpen?: (itemId: string) => void;
+  onDelete?: (item: Subject) => void;
 }
 
 export const ItemListRow: FC<ItemListRowProps> = (props) => {
-  const { item, onDelete, onFavorite, onOpen } = props;
+  const { item, onDelete } = props;
   const popover = usePopover<HTMLButtonElement>();
   const pathname = usePathname();
 
   const handleDelete = useCallback((): void => {
     popover.handleClose();
-    onDelete?.(item.id);
+    onDelete?.(item);
   }, [item, popover, onDelete]);
-
 
   return (
     <>
@@ -84,19 +81,17 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
         }}
       >
         <TableCell>
-          <Link 
-          // href={`${pathname}/${item.id}/overview`}
-          href={`${pathname}/${item.id}/instance`}
-
+          <Link
+            // href={`${pathname}/${item.id}/overview`}
+            href={`${pathname}/${item.id}/instance`}
           >
             <Stack alignItems="center" direction="row" spacing={2}>
-              <Box onClick={() => onOpen?.(item.id)} sx={{ cursor: 'pointer' }}>
+              <Box  sx={{ cursor: 'pointer' }}>
                 <ItemIcon />
               </Box>
               <div>
                 <Typography
                   noWrap
-                  onClick={() => onOpen?.(item.id)}
                   sx={{ cursor: 'pointer' }}
                   variant="subtitle2"
                 >
