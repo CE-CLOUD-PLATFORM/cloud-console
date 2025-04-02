@@ -84,185 +84,186 @@ const ModalCreateInstance = (props: FormProps) => {
   return (
     <ModalCover handleOnClose={handleClose} isOpen={isOpen}>
       <Box className="modal-box" gap={5}>
-        <Typography variant="h5">New Instance</Typography>
-        <Box
-          component="form"
-          id={groupFormId}
-          display="flex"
-          flexDirection="column"
-          justifyContent="space-between"
-          className="flex-1"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <Stack spacing={1}>
-            <Typography variant="h6">Information</Typography>
-            <TextField
-              id="username"
-              variant="filled"
-              label="Name"
-              {...register('name', { required: true })}
-            />
-            {errors.name && <span>This field is required</span>}
-            <Typography variant="h6">Specification</Typography>
-            <FormControl fullWidth>
-              <InputLabel variant="filled" id="flavors-label">
-                Flavors
-              </InputLabel>
-              <Controller
-                name="flavor_id"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <Select
-                    labelId="flavors-label"
-                    id="flavors"
-                    label="Flavors"
-                    variant="filled"
-                    {...field}
-                  >
-                    {instanceOptions?.flavors.map((flavor) => (
-                      <MenuItem key={flavor.id} value={flavor.id}>
-                        {flavor.name} ({flavor.vcpus} vCPUs, {flavor.ram}
-                        MB RAM, {flavor.disk}GB Disk)
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
+        <Box className="hidden-scrollbar flex-1 space-y-2 overflow-y-auto">
+          <Typography variant="h5">New Instance</Typography>
+          <Box
+            component="form"
+            id={groupFormId}
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-between"
+            className="flex-1"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <Stack spacing={1}>
+              <Typography variant="h6">Information</Typography>
+              <TextField
+                id="username"
+                variant="filled"
+                label="Name"
+                {...register('name', { required: true })}
               />
-              {errors.flavor_id && <span>This field is required</span>}
-            </FormControl>
-            <FormControl fullWidth>
-              <InputLabel variant="filled" id="images-label">
-                Images
-              </InputLabel>
-              <Controller
-                name="image_id"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <Select
-                    labelId="images-label"
-                    id="images"
-                    label="Images"
-                    variant="filled"
-                    {...field}
-                    sx={{
-                      '& .MuiSelect-select': {
-                        display: 'flex',
-                        gap: '10px',
-                      },
-                    }}
-                  >
-                    {instanceOptions?.images.map((image) => (
-                      <MenuItem
-                        key={image.id}
-                        className="flex gap-x-2"
-                        value={image.id}
-                      >
-                        <Image
-                          width={24}
-                          height={24}
-                          src={image.Properties?.logo_url || '/assets/os.png'}
-                          alt=""
-                        />
-                        {image.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
-              />
-              {errors.flavor_id && <span>This field is required</span>}
-            </FormControl>
-            <Typography variant="h6">Authentication & Access</Typography>
-            <div className="flex w-full items-center gap-x-2">
-              <div className="w-full">
+              {errors.name && <span>This field is required</span>}
+              <Typography variant="h6">Specification</Typography>
+              <FormControl fullWidth>
+                <InputLabel variant="filled" id="flavors-label">
+                  Flavors
+                </InputLabel>
                 <Controller
-                  name="public_key"
+                  name="flavor_id"
                   control={control}
-                  defaultValue={[]}
-                  rules={{ required: 'This field is required' }}
+                  defaultValue=""
                   render={({ field }) => (
-                    <Autocomplete
-                      multiple
-                      className="w-full"
-                      id="tags-filled"
-                      options={
-                        (keysData?.keys
-                          ?.filter(
-                            (option) => !field.value?.includes(option.id),
-                          )
-                          .map((option) => option) as PublicKey[]) || []
-                      }
-                      getOptionLabel={(option) => (option as PublicKey).name}
-                      isOptionEqualToValue={(option, value) =>
-                        option.key === value.key
-                      }
-                      freeSolo
-                      value={(field.value as string[])?.map(
-                        (key) =>
-                          keysData?.keys.find(
-                            (option) => option.key === key,
-                          ) || {
-                            key,
-                            name: key,
-                          },
-                      )}
-                      onChange={(event, newValue) => {
-                        field.onChange(
-                          newValue.map((key) => (key as PublicKey).key),
-                        );
-                      }}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          // eslint-disable-next-line react/jsx-key
-                          <Chip
-                            variant="filled"
-                            label={option.name}
-                            {...getTagProps({ index })}
-                            key={index}
-                          />
-                        ))
-                      }
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="filled"
-                          label="Public Key"
-                        />
-                      )}
-                    />
+                    <Select
+                      labelId="flavors-label"
+                      id="flavors"
+                      label="Flavors"
+                      variant="filled"
+                      {...field}
+                    >
+                      {instanceOptions?.flavors.map((flavor) => (
+                        <MenuItem key={flavor.id} value={flavor.id}>
+                          {flavor.name} ({flavor.vcpus} vCPUs, {flavor.ram}
+                          MB RAM, {flavor.disk}GB Disk)
+                        </MenuItem>
+                      ))}
+                    </Select>
                   )}
                 />
-                {errors.public_key && (
-                  <span className="text-red-500">
-                    {errors.public_key.message}
-                  </span>
-                )}
-              </div>
+                {errors.flavor_id && <span>This field is required</span>}
+              </FormControl>
+              <FormControl fullWidth>
+                <InputLabel variant="filled" id="images-label">
+                  Images
+                </InputLabel>
+                <Controller
+                  name="image_id"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <Select
+                      labelId="images-label"
+                      id="images"
+                      label="Images"
+                      variant="filled"
+                      {...field}
+                      sx={{
+                        '& .MuiSelect-select': {
+                          display: 'flex',
+                          gap: '10px',
+                        },
+                      }}
+                    >
+                      {instanceOptions?.images.map((image) => (
+                        <MenuItem
+                          key={image.id}
+                          className="flex gap-x-2"
+                          value={image.id}
+                        >
+                          <Image
+                            width={24}
+                            height={24}
+                            src={image.Properties?.logo_url || '/assets/os.png'}
+                            alt=""
+                          />
+                          {image.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                />
+                {errors.flavor_id && <span>This field is required</span>}
+              </FormControl>
+              <Typography variant="h6">Authentication & Access</Typography>
+              <div className="flex w-full items-center gap-x-2">
+                <div className="w-full">
+                  <Controller
+                    name="public_key"
+                    control={control}
+                    defaultValue={[]}
+                    rules={{ required: 'This field is required' }}
+                    render={({ field }) => (
+                      <Autocomplete
+                        multiple
+                        className="w-full"
+                        id="tags-filled"
+                        options={
+                          (keysData?.keys
+                            ?.filter(
+                              (option) => !field.value?.includes(option.id),
+                            )
+                            .map((option) => option) as PublicKey[]) || []
+                        }
+                        getOptionLabel={(option) => (option as PublicKey).name}
+                        isOptionEqualToValue={(option, value) =>
+                          option.key === value.key
+                        }
+                        freeSolo
+                        value={(field.value as string[])?.map(
+                          (key) =>
+                            keysData?.keys.find(
+                              (option) => option.key === key,
+                            ) || {
+                              key,
+                              name: key,
+                            },
+                        )}
+                        onChange={(event, newValue) => {
+                          field.onChange(
+                            newValue.map((key) => (key as PublicKey).key),
+                          );
+                        }}
+                        renderTags={(value, getTagProps) =>
+                          value.map((option, index) => (
+                            // eslint-disable-next-line react/jsx-key
+                            <Chip
+                              variant="filled"
+                              label={option.name}
+                              {...getTagProps({ index })}
+                              key={index}
+                            />
+                          ))
+                        }
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            variant="filled"
+                            label="Public Key"
+                          />
+                        )}
+                      />
+                    )}
+                  />
+                  {errors.public_key && (
+                    <span className="text-red-500">
+                      {errors.public_key.message}
+                    </span>
+                  )}
+                </div>
 
-              <Link
-                className="text-nowrap rounded-md bg-gray-200 p-2"
-                href={'/setting/access/keys'}
-              >
-                Manage Key
-              </Link>
-            </div>
-            <TextField
-              id="username"
-              variant="filled"
-              label="Username"
-              {...register('username', { required: true })}
-            />
-            {errors.username && <span>This field is required</span>}
-            <TextField
-              id="password"
-              variant="filled"
-              type="password"
-              label="Password"
-              {...register('password', { required: true })}
-            />
-            {errors.password && <span>This field is required</span>}
-            {/* <Typography variant="h6">Network Accessibility</Typography>
+                <Link
+                  className="text-nowrap rounded-md bg-gray-200 p-2"
+                  href={'/setting/access/keys'}
+                >
+                  Manage Key
+                </Link>
+              </div>
+              <TextField
+                id="username"
+                variant="filled"
+                label="Username"
+                {...register('username', { required: true })}
+              />
+              {errors.username && <span>This field is required</span>}
+              <TextField
+                id="password"
+                variant="filled"
+                type="password"
+                label="Password"
+                {...register('password', { required: true })}
+              />
+              {errors.password && <span>This field is required</span>}
+              {/* <Typography variant="h6">Network Accessibility</Typography>
             <Controller
               name="external_access"
               control={control}
@@ -273,27 +274,28 @@ const ModalCreateInstance = (props: FormProps) => {
                 />
               )}
             /> */}
-          </Stack>
+            </Stack>
 
-          <Box
-            sx={{
-              alignItems: 'center',
-              display: 'flex',
-              marginTop: 2,
-            }}
-          >
-            <Box sx={{ flexGrow: 1 }} />
-            <Button color="inherit" onClick={() => handleClose()}>
-              Cancel
-            </Button>
-            <Button
-              sx={{ ml: 1 }}
-              type="submit"
-              variant="contained"
-              form={groupFormId}
+            <Box
+              sx={{
+                alignItems: 'center',
+                display: 'flex',
+                marginTop: 2,
+              }}
             >
-              Confirm
-            </Button>
+              <Box sx={{ flexGrow: 1 }} />
+              <Button color="inherit" onClick={() => handleClose()}>
+                Cancel
+              </Button>
+              <Button
+                sx={{ ml: 1 }}
+                type="submit"
+                variant="contained"
+                form={groupFormId}
+              >
+                Confirm
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Box>
