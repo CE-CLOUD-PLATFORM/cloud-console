@@ -1,7 +1,7 @@
-import type { FC } from 'react';
-import PropTypes from 'prop-types';
-import Trash02Icon from '@untitled-ui/icons-react/build/esm/Trash02';
 import { Menu, MenuItem, menuItemClasses, SvgIcon } from '@mui/material';
+import Trash02Icon from '@untitled-ui/icons-react/build/esm/Trash02';
+import PropTypes from 'prop-types';
+import type { FC } from 'react';
 
 interface ItemMenuProps {
   anchorEl?: HTMLElement | null;
@@ -37,9 +37,9 @@ export const ItemMenu: FC<ItemMenuProps> = (props) => {
     >
       {/* <MenuItem onClick={onClose}>
         <SvgIcon fontSize="small">
-          <Link01Icon />
+          <Edit02 />
         </SvgIcon>
-        Copy Link
+        Edit
       </MenuItem> */}
       <MenuItem
         onClick={onDelete}
