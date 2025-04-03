@@ -34,13 +34,10 @@ export default function InstancesPage() {
   const {
     data: instancesData,
     isLoading,
-    isFetching,
-    isPending,
-    isRefetching,
+
   } = useGetInstances({
     subject_id: subject_id as string,
   });
-  console.log({ isLoading, isFetching, isPending, isRefetching });
 
   const { data: instanceOption } = useGetInstanceOption({
     subject_id: subject_id as string,

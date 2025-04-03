@@ -124,7 +124,6 @@ export const TableInstances: FC<TableInstanceProps> = ({
   const handleOnOpen = (id: string) => {
     router.push(`/management/instance/${subject_id}/${id}/overview`);
   };
-  const popover = usePopover<HTMLButtonElement>();
 
   const exposeExternalAccess = useExternalAccess({
     onSuccess: () => {
@@ -149,6 +148,128 @@ export const TableInstances: FC<TableInstanceProps> = ({
     } catch (err) {
       console.log(err);
     }
+  };
+  const InstanceRow = ({
+    instance,
+    onDelete,
+    onInternal,
+    onExpose,
+  }: {
+    instance: Instance;
+    onDelete: (item: Instance) => void;
+    onInternal: (item: Instance) => void;
+    onExpose: (item: Instance) => void;
+  }) => {
+    const popover = usePopover<HTMLButtonElement>();
+
+    return (
+      <TableRow hover key={instance.id}>
+        <TableCell padding="checkbox">{/* <Checkbox /> */}</TableCell>
+        <TableCell
+          sx={{
+            '&': {
+              paddingLeft: '0px',
+            },
+          }}
+        >
+          <Stack alignItems="center" direction="row" spacing={2}>
+            <Avatar
+              src={getImageLogo(instance.metadata.image_id)}
+              sx={{
+                height: 42,
+                width: 42,
+              }}
+            />
+            <Stack display={'flex'} direction={'column'}>
+              <Link
+                color="inherit"
+                className="cursor-pointer"
+                variant="subtitle1"
+                onClick={() => {
+                  const InstanceStatusActive: InstanceStatus = 'ACTIVE';
+                  if (instance.status === InstanceStatusActive) {
+                    handleOnOpen(instance.id);
+                  }
+                }}
+              >
+                {instance.name}
+              </Link>
+              <Typography variant="body2">
+                {getImageName(instance.metadata.image_id)}
+              </Typography>
+            </Stack>
+          </Stack>
+        </TableCell>
+        <TableCell>
+          <SeverityPill color={labelColors[instance.status]}>
+            {instance.status}
+          </SeverityPill>
+        </TableCell>
+        <TableCell>{getFlavorName(instance.flavor.id)}</TableCell>
+        <TableCell>
+          {instance.accessIPv4}
+          <IconButton
+            onClick={() => {
+              copyToClipboard(
+                instance.accessIPv4,
+                () => {
+                  toast.success('IP Copied to clipboard successfully!');
+                },
+                () => {
+                  toast.error('Failed to copy IP to clipboard');
+                },
+              );
+            }}
+          >
+            <SvgIcon fontSize="small">
+              <Copy03 />
+            </SvgIcon>
+          </IconButton>
+        </TableCell>
+        <TableCell align="center">
+          {instance.metadata.domain_name && instance.metadata.domain_name !== ''
+            ? instance.metadata.domain_name
+            : '-'}
+          {instance.metadata.domain_name &&
+            instance.metadata.domain_name !== '' && (
+              <IconButton
+                onClick={() => {
+                  copyToClipboard(
+                    instance.metadata.domain_name,
+                    () => {
+                      toast.success('Domain Copied to clipboard successfully!');
+                    },
+                    () => {
+                      toast.error('Failed to copy Domain to clipboard');
+                    },
+                  );
+                }}
+              >
+                <SvgIcon fontSize="small">
+                  <Copy03 />
+                </SvgIcon>
+              </IconButton>
+            )}
+        </TableCell>
+        <TableCell align="right">
+          <IconButton onClick={popover.handleOpen} ref={popover.anchorRef}>
+            <SvgIcon fontSize="small">
+              <DotsVerticalIcon />
+            </SvgIcon>
+          </IconButton>
+          <ItemMenu
+            key={instance.id}
+            anchorEl={popover.anchorRef.current}
+            onClose={popover.handleClose}
+            onDelete={() => onDelete(instance)}
+            open={popover.open}
+            data={instance}
+            onExpose={() => onExpose(instance)}
+            onMakeInternal={() => onInternal(instance)}
+          />
+        </TableCell>
+      </TableRow>
+    );
   };
   return (
     <Box
@@ -205,12 +326,11 @@ export const TableInstances: FC<TableInstanceProps> = ({
                 <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            {/* <TableBody>
               {data?.map((instance) => {
                 return (
                   <TableRow hover key={instance.id}>
                     <TableCell padding="checkbox">
-                      {/* <Checkbox /> */}
                     </TableCell>
                     <TableCell
                       sx={{
@@ -306,12 +426,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
                           </IconButton>
                         )}
                     </TableCell>
-                    {/* <TableCell>
-                      {getDateddMMYYYYHHmmss(instance.created)}
-                    </TableCell>
-                    <TableCell>
-                      {getDateddMMYYYYHHmmss(instance.updated)}
-                    </TableCell> */}
+
                     <TableCell align="right">
                       <IconButton
                         onClick={popover.handleOpen}
@@ -322,6 +437,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
                         </SvgIcon>
                       </IconButton>
                       <ItemMenu
+                        key={instance.id}
                         anchorEl={popover.anchorRef.current}
                         onClose={popover.handleClose}
                         onDelete={() => onDelete(instance)}
@@ -334,6 +450,17 @@ export const TableInstances: FC<TableInstanceProps> = ({
                   </TableRow>
                 );
               })}
+            </TableBody> */}
+            <TableBody>
+              {data?.map((instance) => (
+                <InstanceRow
+                  key={instance.id}
+                  instance={instance}
+                  onDelete={onDelete}
+                  onInternal={onInternal}
+                  onExpose={handleExpose}
+                />
+              ))}
             </TableBody>
           </Table>
           {data.length === 0 && !isLoading && (

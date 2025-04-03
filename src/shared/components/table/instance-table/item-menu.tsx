@@ -79,7 +79,12 @@ export const ItemMenu: FC<ItemMenuProps> = (props) => {
         </SvgIcon>
         Stop
       </MenuItem>
-      <MenuItem disabled={!!data.metadata.domain_name} onClick={handleOnExpose}>
+      <MenuItem
+        disabled={
+          !!data.metadata.domain_name && data.metadata.domain_name.length > 0
+        }
+        onClick={handleOnExpose}
+      >
         <SvgIcon fontSize="small">
           <Globe02 />
         </SvgIcon>
