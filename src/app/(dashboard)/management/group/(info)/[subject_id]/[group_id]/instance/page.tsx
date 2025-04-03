@@ -25,7 +25,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useExternalAccess } from '@/modules/instance/hook/use-external-access';
 import toast from 'react-hot-toast';
 import { useStartInstance } from '@/modules/instance/hook/use-start-instance';
-import ModalInstanceReboot from '@/shared/components/modals/instance/reboot-instance-model copy';
+import ModalInstanceReboot from '@/shared/components/modals/instance/reboot-instance-model';
 import ModalInstanceStop from '@/shared/components/modals/instance/stop-instance-model';
 
 export default function InstancesPage() {

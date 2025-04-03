@@ -71,7 +71,7 @@ const ModalInstanceReboot = (props: ModalFormProps) => {
               justifyContent="space-between"
               className="flex-1 gap-2 p-1"
             >
-              <Typography variant="h5">Confirm Stop</Typography>
+              <Typography variant="h5">Confirm Reboot</Typography>
               <Stack
                 display={'flex'}
                 flexDirection={'row'}
