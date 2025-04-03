@@ -1,3 +1,4 @@
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -6,15 +7,18 @@ import { endpoints } from '@/shared/configs';
 import type {
   InstanceCreate,
   InstanceDelete,
+  InstanceExternalAccessParams,
+  InstanceMakeInternalParams,
   InstanceOptionQueryParam,
   InstanceOptionRes,
   InstanceQueryParams,
+  InstanceRebootParams,
   InstanceRes,
   InstancesQueryParams,
   InstancesRes,
+  InstanceStartParams,
+  InstanceStopParams,
   InstanceVNCRes,
-  ExternalAccess,
-  MakeInternal,
 } from '../types/instance';
 
 type Params = {
@@ -101,22 +105,46 @@ export const getInstanceVNC = async ({
   return response.data;
 };
 
-export const externalAccess = async (data: ExternalAccess) => {
+export const postExternalAccess = async (data: InstanceExternalAccessParams) => {
   return (
-    await axiosInstance.post<any, any, ExternalAccess>(
+    await axiosInstance.post<any, any, InstanceExternalAccessParams>(
       `${endpoints.instance.external}`,
       data,
     )
   ).data;
 };
 
-export const makeInternal = async (params: MakeInternal) => {
+export const deleteMakeInternal = async (params: InstanceMakeInternalParams) => {
   return (
-    await axiosInstance.delete<any, any, MakeInternal>(
+    await axiosInstance.delete<any, any, InstanceMakeInternalParams>(
       `${endpoints.instance.external}`,
       {
         params,
       },
+    )
+  ).data;
+};
+
+export const postInstanceStart = async (data: InstanceStartParams) => {
+  return (
+    await axiosInstance.post<any, any, InstanceStartParams>(
+      `${endpoints.instance.start}`,
+      data,
+    )
+  ).data;
+};
+export const postInstanceStop = async (data: InstanceStopParams) => {
+  return (
+    await axiosInstance.post<any, any, InstanceStopParams>(
+      `${endpoints.instance.stop}`,
+      data,
+    )
+  ).data;
+}; export const postInstanceReboot = async (data: InstanceRebootParams) => {
+  return (
+    await axiosInstance.post<any, any, InstanceRebootParams>(
+      `${endpoints.instance.reboot}`,
+      data,
     )
   ).data;
 };

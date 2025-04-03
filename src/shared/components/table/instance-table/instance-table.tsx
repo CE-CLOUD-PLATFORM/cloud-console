@@ -328,8 +328,8 @@ export const TableInstances: FC<TableInstanceProps> = ({
                         onDelete={() => onDelete(instance)}
                         open={popover.open}
                         data={instance}
-                        expose={() => handleExpose(instance)}
-                        internal={() => onInternal(instance)}
+                        onExpose={() => handleExpose(instance)}
+                        onMakeInternal={() => onInternal(instance)}
                       />
                     </TableCell>
                   </TableRow>

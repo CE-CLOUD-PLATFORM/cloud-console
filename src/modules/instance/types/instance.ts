@@ -166,12 +166,25 @@ export interface ImageProperties {
   stores: string;
 }
 
-export interface ExternalAccess {
+export interface InstanceMakeInternalParams {
+  subject_id: string;
+  instance_id: string;
+}
+export interface InstanceExternalAccessParams {
   instance_id: string;
   subject_id: string;
 }
 
-export interface MakeInternal {
+export interface InstanceStartParams {
+  subject_id: string;
+  instance_id: string;
+}
+export interface InstanceStopParams {
+  instance_id: string;
+  subject_id: string;
+}
+
+export interface InstanceRebootParams {
   subject_id: string;
   instance_id: string;
 }
