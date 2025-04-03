@@ -130,6 +130,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
     router.push(`/management/instance/${subject_id}/${id}/overview`);
   };
 
+  // eslint-disable-next-line react/no-unstable-nested-components
   const InstanceRow = ({
     instance,
     onDelete,
