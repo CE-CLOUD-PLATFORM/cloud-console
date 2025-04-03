@@ -27,7 +27,6 @@ import {
 } from '@mui/material';
 import { Scrollbar } from '@/shared/components/scrollbar';
 import type {
-  ExternalAccess,
   Flavor,
   Image,
   Instance,
@@ -142,7 +141,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
 
   const handleExpose = (data: Instance) => {
     try {
-      const external_access: ExternalAccess = {
+      const external_access = {
         instance_id: data.id,
         subject_id: data.tenant_id,
       };
