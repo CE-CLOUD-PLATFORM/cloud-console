@@ -6,10 +6,10 @@ import AlertTriangleIcon from '@untitled-ui/icons-react/build/esm/AlertTriangle'
 import ModalCover from '../index';
 import '../index.css';
 import { useQueryClient } from '@tanstack/react-query';
-import { useStopInstance } from '@/modules/instance/hook/use-stop-instance';
 import toast from 'react-hot-toast';
 import { useParams } from 'next/navigation';
 import type { Instance } from '@/modules/instance/types/instance';
+import { useRebootInstance } from '@/modules/instance/hook/use-reboot-instance';
 interface ModalFormProps extends FormProps {
   data?: Instance;
 }
@@ -22,7 +22,7 @@ const ModalInstanceReboot = (props: ModalFormProps) => {
     handleClose();
   };
   const queryClient = useQueryClient();
-  const mutateFn = useStopInstance({
+  const mutateFn = useRebootInstance({
     onSuccess: () => {
       toast.success(`Instance reboot successfully. Awaiting further results.`);
       queryClient.invalidateQueries({
