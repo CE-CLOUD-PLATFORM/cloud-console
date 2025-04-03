@@ -21,6 +21,12 @@ import BtnVPNDownload from '@/shared/components/button/vpn-download';
 import type { Instance } from '@/modules/instance/types/instance';
 import ModalInstanceDelete from '@/shared/components/modals/instance/delete-instance-modal';
 import ModalMakeInternal from '@/shared/components/modals/instance/make-internal-modal';
+import { useQueryClient } from '@tanstack/react-query';
+import { useExternalAccess } from '@/modules/instance/hook/use-external-access';
+import toast from 'react-hot-toast';
+import { useStartInstance } from '@/modules/instance/hook/use-start-instance';
+import ModalInstanceReboot from '@/shared/components/modals/instance/reboot-instance-model copy';
+import ModalInstanceStop from '@/shared/components/modals/instance/stop-instance-model';
 
 export default function InstancesPage() {
   const { group_id } = useParams();
@@ -28,6 +34,33 @@ export default function InstancesPage() {
   const modalCreateInstance = useDialog();
   const deleteDialog = useDialog<Instance>();
   const internalDialog = useDialog<Instance>();
+  const rebootDialog = useDialog<Instance>();
+  const stopDialog = useDialog<Instance>();
+  const queryClient = useQueryClient();
+  const exposeExternalAccess = useExternalAccess({
+    onSuccess: () => {
+      toast.success('Expose Successfully');
+      queryClient.invalidateQueries({ queryKey: ['instances'] });
+    },
+    onError: () => {
+      toast.error('Fail to Expose Instance.');
+    },
+    onMutate: () => {
+      toast.loading('Exposing Instance...');
+    },
+  });
+  const startinstance = useStartInstance({
+    onSuccess: () => {
+      toast.success('Start instance Successfully');
+      queryClient.invalidateQueries({ queryKey: ['instances'] });
+    },
+    onError: () => {
+      toast.error('Fail to Start Instance.');
+    },
+    onMutate: () => {
+      toast.loading('Starting Instance...');
+    },
+  });
   const { data: instancesData, isLoading } = useGetInstances({
     subject_id: group_id as string,
   });
@@ -42,7 +75,30 @@ export default function InstancesPage() {
   const handleInternal = (data: Instance) => {
     internalDialog.handleOpen(data);
   };
+  const handleStartInstance = (data: Instance) => {
+    startinstance.mutate({
+      instance_id: data.id,
+      subject_id: group_id as string,
+    });
+  };
+  const handleStopInstance = (data: Instance) => {
+    stopDialog.handleOpen(data);
+  };
+  const handleRebootInstance = (data: Instance) => {
+    rebootDialog.handleOpen(data);
+  };
 
+  const handleExpose = (data: Instance) => {
+    try {
+      const external_access = {
+        instance_id: data.id,
+        subject_id: data.tenant_id,
+      };
+      exposeExternalAccess.mutate(external_access);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <ModalCreateInstance
@@ -58,6 +114,16 @@ export default function InstancesPage() {
         handleClose={internalDialog.handleClose}
         isOpen={internalDialog.open}
         data={internalDialog.data}
+      />
+      <ModalInstanceReboot
+        handleClose={rebootDialog.handleClose}
+        isOpen={rebootDialog.open}
+        data={rebootDialog.data}
+      />
+      <ModalInstanceStop
+        handleClose={stopDialog.handleClose}
+        isOpen={stopDialog.open}
+        data={stopDialog.data}
       />
       <Box
         component="main"
@@ -103,12 +169,16 @@ export default function InstancesPage() {
                 }}
               >
                 <TableInstances
+                  onExpose={handleExpose}
                   onDelete={handleOnDelete}
                   data={instancesData?.instances || []}
                   flavors={instanceOption?.flavors || []}
                   images={instanceOption?.images || []}
                   isLoading={isLoading}
                   onInternal={handleInternal}
+                  onReboot={handleRebootInstance}
+                  onStart={handleStartInstance}
+                  onStop={handleStopInstance}
                 />
               </Stack>
             </Grid>

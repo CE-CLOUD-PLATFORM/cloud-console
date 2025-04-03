@@ -1,10 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 /* eslint-disable unused-imports/no-unused-vars */
-import type { FC } from 'react';
-import '../style.css';
-import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
-import Copy03 from '@untitled-ui/icons-react/build/esm/Copy03';
+import type {
+  Flavor,
+  Image,
+  Instance,
+  InstanceStatus,
+} from '@/modules/instance/types/instance';
+import { Scrollbar } from '@/shared/components/scrollbar';
+import type { SeverityPillColor } from '@/shared/components/severity-pill';
+import { SeverityPill } from '@/shared/components/severity-pill';
+import { usePopover } from '@/shared/hooks/use-popover';
+import { copyToClipboard } from '@/shared/utils/clipboard';
 import {
   Avatar,
   Box,
@@ -25,24 +32,15 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Scrollbar } from '@/shared/components/scrollbar';
-import type {
-  Flavor,
-  Image,
-  Instance,
-  InstanceStatus,
-} from '@/modules/instance/types/instance';
-import type { SeverityPillColor } from '@/shared/components/severity-pill';
-import { SeverityPill } from '@/shared/components/severity-pill';
-import CircleLoading from '../../Loading/CircleLoading';
-import { copyToClipboard } from '@/shared/utils/clipboard';
-import toast from 'react-hot-toast';
-import { useParams, useRouter } from 'next/navigation';
+import Copy03 from '@untitled-ui/icons-react/build/esm/Copy03';
 import DotsVerticalIcon from '@untitled-ui/icons-react/build/esm/DotsVertical';
-import { usePopover } from '@/shared/hooks/use-popover';
+import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+import { useParams, useRouter } from 'next/navigation';
+import type { FC } from 'react';
+import toast from 'react-hot-toast';
+import CircleLoading from '../../Loading/CircleLoading';
+import '../style.css';
 import { ItemMenu } from './item-menu';
-import { useExternalAccess } from '@/modules/instance/hook/use-external-access';
-import { useQueryClient } from '@tanstack/react-query';
 interface Option {
   label: string;
   value: string;
@@ -95,6 +93,10 @@ interface TableInstanceProps {
   isLoading: boolean;
   onDelete: (item: Instance) => void;
   onInternal: (item: Instance) => void;
+  onExpose: (item: Instance) => void;
+  onStart: (item: Instance) => void;
+  onStop: (item: Instance) => void;
+  onReboot: (item: Instance) => void;
 }
 export const TableInstances: FC<TableInstanceProps> = ({
   data,
@@ -103,11 +105,14 @@ export const TableInstances: FC<TableInstanceProps> = ({
   isLoading,
   onDelete,
   onInternal,
+  onExpose,
+  onReboot,
+  onStart,
+  onStop,
 }) => {
   const { subject_id } = useParams();
   const router = useRouter();
 
-  const queryClient = useQueryClient();
   const getFlavorName = (id: string) => {
     const flavorName = flavors.find((flavor) => flavor.id === id)?.name || '';
     return flavorName;
@@ -125,40 +130,22 @@ export const TableInstances: FC<TableInstanceProps> = ({
     router.push(`/management/instance/${subject_id}/${id}/overview`);
   };
 
-  const exposeExternalAccess = useExternalAccess({
-    onSuccess: () => {
-      toast.success('Expose Successfully');
-      queryClient.invalidateQueries({ queryKey: ['instances'] });
-    },
-    onError: () => {
-      toast.error('Fail to Expose Instance.');
-    },
-    onMutate: () => {
-      toast.loading('Exposing Instance...');
-    },
-  });
-
-  const handleExpose = (data: Instance) => {
-    try {
-      const external_access = {
-        instance_id: data.id,
-        subject_id: data.tenant_id,
-      };
-      exposeExternalAccess.mutate(external_access);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const InstanceRow = ({
     instance,
     onDelete,
     onInternal,
     onExpose,
+    onReboot,
+    onStart,
+    onStop,
   }: {
     instance: Instance;
     onDelete: (item: Instance) => void;
     onInternal: (item: Instance) => void;
     onExpose: (item: Instance) => void;
+    onStart: (item: Instance) => void;
+    onStop: (item: Instance) => void;
+    onReboot: (item: Instance) => void;
   }) => {
     const popover = usePopover<HTMLButtonElement>();
 
@@ -266,6 +253,9 @@ export const TableInstances: FC<TableInstanceProps> = ({
             data={instance}
             onExpose={() => onExpose(instance)}
             onMakeInternal={() => onInternal(instance)}
+            onReboot={() => onReboot(instance)}
+            onStart={() => onStart(instance)}
+            onStop={() => onStop(instance)}
           />
         </TableCell>
       </TableRow>
@@ -326,131 +316,6 @@ export const TableInstances: FC<TableInstanceProps> = ({
                 <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
-            {/* <TableBody>
-              {data?.map((instance) => {
-                return (
-                  <TableRow hover key={instance.id}>
-                    <TableCell padding="checkbox">
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        '&': {
-                          paddingLeft: '0px',
-                        },
-                      }}
-                    >
-                      <Stack alignItems="center" direction="row" spacing={2}>
-                        <Avatar
-                          src={getImageLogo(instance.metadata.image_id)}
-                          sx={{
-                            height: 42,
-                            width: 42,
-                          }}
-                        />
-                        <Stack display={'flex'} direction={'column'}>
-                          <Link
-                            color="inherit"
-                            className="cursor-pointer"
-                            variant="subtitle1"
-                            onClick={() => {
-                              const InstanceStatusActive: InstanceStatus =
-                                'ACTIVE';
-                              if (instance.status === InstanceStatusActive) {
-                                handleOnOpen(instance.id);
-                              }
-                            }}
-                          >
-                            {instance.name}
-                          </Link>
-                          <Typography variant="body2">
-                            {getImageName(instance.metadata.image_id)}
-                          </Typography>
-                        </Stack>
-                      </Stack>
-                    </TableCell>
-                    <TableCell>
-                      <SeverityPill color={labelColors[instance.status]}>
-                        {instance.status}
-                      </SeverityPill>
-                    </TableCell>
-                    <TableCell>{getFlavorName(instance.flavor.id)}</TableCell>
-                    <TableCell>
-                      {instance.accessIPv4}
-                      <IconButton
-                        onClick={() => {
-                          copyToClipboard(
-                            instance.accessIPv4,
-                            () => {
-                              toast.success(
-                                'IP Copied to clipboard successfully!',
-                              );
-                            },
-                            () => {
-                              toast.error('Failed to copy IP to clipboard');
-                            },
-                          );
-                        }}
-                      >
-                        <SvgIcon fontSize="small">
-                          <Copy03 />
-                        </SvgIcon>
-                      </IconButton>
-                    </TableCell>
-                    <TableCell align="center">
-                      {instance.metadata.domain_name &&
-                      instance.metadata.domain_name !== ''
-                        ? instance.metadata.domain_name
-                        : '-'}
-                      {instance.metadata.domain_name &&
-                        instance.metadata.domain_name !== '' && (
-                          <IconButton
-                            onClick={() => {
-                              copyToClipboard(
-                                instance.metadata.domain_name,
-                                () => {
-                                  toast.success(
-                                    'Domain Copied to clipboard successfully!',
-                                  );
-                                },
-                                () => {
-                                  toast.error(
-                                    'Failed to copy Domain to clipboard',
-                                  );
-                                },
-                              );
-                            }}
-                          >
-                            <SvgIcon fontSize="small">
-                              <Copy03 />
-                            </SvgIcon>
-                          </IconButton>
-                        )}
-                    </TableCell>
-
-                    <TableCell align="right">
-                      <IconButton
-                        onClick={popover.handleOpen}
-                        ref={popover.anchorRef}
-                      >
-                        <SvgIcon fontSize="small">
-                          <DotsVerticalIcon />
-                        </SvgIcon>
-                      </IconButton>
-                      <ItemMenu
-                        key={instance.id}
-                        anchorEl={popover.anchorRef.current}
-                        onClose={popover.handleClose}
-                        onDelete={() => onDelete(instance)}
-                        open={popover.open}
-                        data={instance}
-                        onExpose={() => handleExpose(instance)}
-                        onMakeInternal={() => onInternal(instance)}
-                      />
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody> */}
             <TableBody>
               {data?.map((instance) => (
                 <InstanceRow
@@ -458,7 +323,10 @@ export const TableInstances: FC<TableInstanceProps> = ({
                   instance={instance}
                   onDelete={onDelete}
                   onInternal={onInternal}
-                  onExpose={handleExpose}
+                  onExpose={onExpose}
+                  onReboot={onReboot}
+                  onStart={onStart}
+                  onStop={onStop}
                 />
               ))}
             </TableBody>

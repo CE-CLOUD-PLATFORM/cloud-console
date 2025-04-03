@@ -104,11 +104,12 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
               <Typography
                 sx={{
                   cursor: 'pointer',
-                  fontWeight: 'normal',
+                  fontWeight: '500',
                   fontSize: '16px',
                   color: 'black',
                   minHeight: '48px',
                 }}
+                
               >
                 {item.name}
               </Typography>

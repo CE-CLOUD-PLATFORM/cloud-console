@@ -5,28 +5,56 @@ import { Avatar, Box, Button, Stack, SvgIcon, Typography } from '@mui/material';
 import AlertTriangleIcon from '@untitled-ui/icons-react/build/esm/AlertTriangle';
 import ModalCover from '../index';
 import '../index.css';
-interface ModalDeleteFormProps extends FormProps {
-  formLabel: string;
-  formId: string;
-  data?: string;
-  onSubmit: () => Promise<void>;
+import { useQueryClient } from '@tanstack/react-query';
+import { useStopInstance } from '@/modules/instance/hook/use-stop-instance';
+import toast from 'react-hot-toast';
+import { useParams } from 'next/navigation';
+import { Instance } from '@/modules/instance/types/instance';
+interface ModalFormProps extends FormProps {
+  data?: Instance;
 }
-const ModalDelete = (props: ModalDeleteFormProps) => {
-  const { isOpen, handleClose, data, formId, formLabel, onSubmit } = props;
+
+const ModalInstanceStop = (props: ModalFormProps) => {
+  const { isOpen, handleClose, data } = props;
+  const { group_id, subject_id } = useParams();
 
   const handleCloseBtn = () => {
     handleClose();
+  };
+  const queryClient = useQueryClient();
+  const mutateFn = useStopInstance({
+    onSuccess: () => {
+      toast.success(`Instance stopped successfully. Awaiting further results.`);
+      queryClient.invalidateQueries({
+        queryKey: ['instances'],
+      });
+    },
+    onError: () => {
+      toast.error(`Fail to stop instance.`);
+    },
+    onMutate: () => {
+      handleClose();
+      toast.loading('Instance stoping...');
+    },
+  });
+
+  const onSubmit = async () => {
+    try {
+      if (data?.id) {
+        mutateFn.mutate({
+          subject_id: (group_id || subject_id) as string,
+          instance_id: data.id,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <ModalCover handleOnClose={handleClose} isOpen={isOpen}>
       <Box className="modal-box !min-h-[auto]" gap={3}>
         <Box className="hidden-scrollbar flex-1 space-y-2 overflow-y-auto">
-          <Stack
-            display={'flex'}
-            flexDirection={'row'}
-            alignItems={''}
-            gap={1}
-          >
+          <Stack display={'flex'} flexDirection={'row'} alignItems={''} gap={1}>
             <Avatar
               sx={{
                 backgroundColor: 'error.lightest',
@@ -38,15 +66,12 @@ const ModalDelete = (props: ModalDeleteFormProps) => {
               </SvgIcon>
             </Avatar>{' '}
             <Box
-              component="form"
-              id={formId}
               display="flex"
               flexDirection="column"
               justifyContent="space-between"
-              className="flex-1 p-1 gap-2"
-
+              className="flex-1 gap-2 p-1"
             >
-              <Typography variant="h5">Confirm Delete {formLabel}</Typography>
+              <Typography variant="h5">Confirm Stop</Typography>
               <Stack
                 display={'flex'}
                 flexDirection={'row'}
@@ -55,9 +80,9 @@ const ModalDelete = (props: ModalDeleteFormProps) => {
                 gap={1}
               >
                 <Typography fontWeight={600} variant="body1">
-                  {formLabel}:
+                  Instance:
                 </Typography>
-                <Typography fontWeight={400}>{data}</Typography>
+                <Typography fontWeight={400}>{data?.name}</Typography>
               </Stack>
 
               <Box
@@ -90,4 +115,4 @@ const ModalDelete = (props: ModalDeleteFormProps) => {
   );
 };
 
-export default ModalDelete;
+export default ModalInstanceStop;
