@@ -125,26 +125,27 @@ export const deleteMakeInternal = async (params: InstanceMakeInternalParams) => 
   ).data;
 };
 
-export const postInstanceStart = async (data: InstanceStartParams) => {
+export const postInstanceStart = async (params: InstanceStartParams) => {
   return (
-    await axiosInstance.post<any, any, InstanceStartParams>(
-      `${endpoints.instance.start}`,
-      data,
+    await axiosInstance.post(
+      `${endpoints.instance.start}`, null,
+      { params },
     )
   ).data;
 };
-export const postInstanceStop = async (data: InstanceStopParams) => {
+export const postInstanceStop = async (params: InstanceStopParams) => {
   return (
-    await axiosInstance.post<any, any, InstanceStopParams>(
-      `${endpoints.instance.stop}`,
-      data,
+    await axiosInstance.post(
+      `${endpoints.instance.stop}`, null,
+      { params },
     )
   ).data;
-}; export const postInstanceReboot = async (data: InstanceRebootParams) => {
+};
+export const postInstanceReboot = async (params: InstanceRebootParams) => {
   return (
-    await axiosInstance.post<any, any, InstanceRebootParams>(
-      `${endpoints.instance.reboot}`,
-      data,
+    await axiosInstance.post(
+      `${endpoints.instance.reboot}`, null,
+      { params },
     )
   ).data;
 };

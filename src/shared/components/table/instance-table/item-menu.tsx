@@ -21,6 +21,9 @@ interface ItemMenuProps {
   open?: boolean;
   data: Instance;
   onExpose?: () => void;
+  onStart?: () => void;
+  onStop?: () => void;
+  onReboot?: () => void;
   onMakeInternal?: () => void;
 }
 
@@ -33,10 +36,14 @@ export const ItemMenu: FC<ItemMenuProps> = (props) => {
     data,
     onExpose,
     onMakeInternal,
+    onStart,
+    onStop,
+    onReboot,
   } = props;
   const InstancePause: InstanceStatus = 'PAUSED';
   const InstanceActive: InstanceStatus = 'ACTIVE';
   const InstanceReboot: InstanceStatus = 'REBOOT';
+  const InstanceSHUTOFF: InstanceStatus = 'SHUTOFF';
   const handleOnExpose = () => {
     onClose?.();
     onExpose?.();
@@ -44,6 +51,18 @@ export const ItemMenu: FC<ItemMenuProps> = (props) => {
   const handleOnMakeInternal = () => {
     onClose?.();
     onMakeInternal?.();
+  };
+  const handleOnStart = () => {
+    onClose?.();
+    onStart?.();
+  };
+  const handleOnStop = () => {
+    onClose?.();
+    onStop?.();
+  };
+  const handleOnReboot = () => {
+    onClose?.();
+    onReboot?.();
   };
   return (
     <Menu
@@ -67,13 +86,19 @@ export const ItemMenu: FC<ItemMenuProps> = (props) => {
         vertical: 'top',
       }}
     >
-      <MenuItem disabled={!(data.status === InstancePause)} onClick={onClose}>
+      <MenuItem
+        disabled={!(data.status === InstancePause || data.status === InstanceSHUTOFF)}
+        onClick={handleOnStart}
+      >
         <SvgIcon fontSize="small">
           <Play />
         </SvgIcon>
         Start
       </MenuItem>
-      <MenuItem disabled={!(data.status === InstanceActive)} onClick={onClose}>
+      <MenuItem
+        disabled={!(data.status === InstanceActive)}
+        onClick={handleOnStop}
+      >
         <SvgIcon fontSize="small">
           <Power01 />
         </SvgIcon>
@@ -101,9 +126,9 @@ export const ItemMenu: FC<ItemMenuProps> = (props) => {
       </MenuItem>
       <MenuItem
         disabled={
-          data.status === InstanceReboot || data.status === InstancePause
+          data.status === InstanceReboot || data.status === InstancePause || data.status === InstanceSHUTOFF
         }
-        onClick={onClose}
+        onClick={handleOnReboot}
       >
         <SvgIcon fontSize="small">
           <RefreshCcw05 />
