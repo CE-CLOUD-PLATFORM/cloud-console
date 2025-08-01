@@ -21,6 +21,7 @@ import { ItemMenu } from './item-menu';
 import type { Subject } from '@/modules/subject/types/subject';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { formatSubjectName } from '@/shared/utils';
 
 interface ItemListCardProps {
   item: Subject;
@@ -111,7 +112,7 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
                 }}
                 
               >
-                {item.name}
+                {formatSubjectName(item.name)}
               </Typography>
             </Box>
           </Link>

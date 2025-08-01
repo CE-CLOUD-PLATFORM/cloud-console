@@ -353,6 +353,21 @@ export const createComponents = (): Components => {
       defaultProps: {
         variant: 'filled'
       }
-    }
+    },
+     MuiAlert: {
+      styleOverrides: {
+        standardInfo: {
+          backgroundColor: '#e3f2fd98',
+          color: '#01579b',
+          '& .MuiAlert-icon': {
+            color: '#0288d1'
+          }
+        },
+        outlinedInfo: {
+          borderColor: '#2196f3',
+          color: '#1976d2'
+        }
+      }
+    },
   };
 };

@@ -2,19 +2,18 @@
 import type { MutationOptions } from '@tanstack/react-query';
 import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
-import { postUserPublicKey } from '../service';
-import type { PublicKeyReq, PublicKeyRes } from '../types/public-key';
+import { deleteUserPublicKey } from '../service';
 
 /**
- * Hook for creating SSH public key
+ * Hook for deleting SSH public key
  * @param options - Optional mutation options for customizing behavior
- * @returns UseMutation hook for creating SSH key
+ * @returns UseMutation hook for deleting SSH key
  */
-export const useCreateSshKey = (
-    options?: MutationOptions<PublicKeyRes, AxiosError, PublicKeyReq, unknown>
+export const useDeletePublicKey = (
+    options?: MutationOptions<any, AxiosError, string>
 ) => {
     return useMutation({
-        mutationFn: postUserPublicKey,
+        mutationFn: deleteUserPublicKey,
         ...options,
     });
 };

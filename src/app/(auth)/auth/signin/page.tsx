@@ -1,50 +1,105 @@
 'use client';
-import type { SubmitHandler } from 'react-hook-form';
-import { Controller, useForm } from 'react-hook-form';
+import { useAuth } from '@/modules/auth/hook';
+import type { IAuthLogin } from '@/modules/auth/types/auth';
+import type { User } from '@/modules/auth/types/user';
+import { userLoginResolver } from '@/modules/auth/validations/user-login';
+import ModalForgotPassword from '@/shared/components/modals/auth/forgot-password-modal';
+import { useDialog } from '@/shared/hooks/use-dialog';
+import { useRememberMe } from '@/shared/hooks/use-remember-me';
+import {
+  generateToastId,
+  setSession,
+  toastPatterns,
+  toastPromise,
+} from '@/shared/utils';
+import {
+  getLastDomain,
+  isStorageAvailable,
+  saveLastDomain,
+} from '@/shared/utils/auth-storage';
 import {
   Box,
   Button,
+  Checkbox,
   FormControl,
+  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
   Stack,
   TextField,
 } from '@mui/material';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/modules/auth/hook';
-import type { User } from '@/modules/auth/types/user';
-import { setSession } from '@/shared/utils';
-import toast from 'react-hot-toast';
-import { userLoginResolver } from '@/modules/auth/validations/user-login';
-import ModalForgotPassword from '@/shared/components/modals/auth/forgot-password-modal';
-import { useDialog } from '@/shared/hooks/use-dialog';
-import type { IAuthLogin } from '@/modules/auth/types/auth';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import type { SubmitHandler } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 export default function LoginPage() {
   const router = useRouter();
   const { mutateAsync: authtentication, isPending } = useAuth();
+  const {
+    rememberMe,
+    setRememberMe,
+    savedCredentials,
+    saveCredentials,
+    clearCredentials,
+  } = useRememberMe();
+
   // const { data: domainsData,isFetched } = useGetDomainList();
   const {
     register,
     handleSubmit,
     control,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<IAuthLogin>({
     resolver: userLoginResolver,
+    defaultValues: {
+      domain: 'default', // Will be overridden by useEffect
+    },
   });
+
   const forgotPassModal = useDialog();
+
+  // Initialize form with saved preferences
+  useEffect(() => {
+    if (isStorageAvailable()) {
+      const lastDomain = getLastDomain();
+      setValue('domain', lastDomain);
+
+      // Load saved credentials if remember me was enabled
+      if (savedCredentials) {
+        setValue('username', savedCredentials.username);
+        setValue('domain', savedCredentials.domain);
+      }
+    }
+  }, [setValue, savedCredentials]);
+
+  // Watch form values to handle label shrinking
+  const watchUsername = watch('username');
+  const watchPassword = watch('password');
+  const selectedDomain = watch('domain');
+
+  useEffect(() => {
+    if (selectedDomain && isStorageAvailable()) {
+      saveLastDomain(selectedDomain);
+    }
+  }, [selectedDomain]);
   const onSubmit: SubmitHandler<IAuthLogin> = async (
     loginRequest: IAuthLogin,
   ) => {
-    // const forgotPassModal = useDialog<boolean>()
     try {
+      // Generate unique toast ID for login
+      const toastId = generateToastId('read', 'login', loginRequest.username);
+
       const loginPromise = authtentication(loginRequest);
-      await toast.promise(loginPromise, {
-        loading: 'Loading',
-        success: 'Login Successfully',
-        error: 'Login Failed',
-      });
+
+      await toastPromise(loginPromise, toastPatterns.login, { id: toastId });
+
+      // Save credentials if login successful and remember me is checked
+      saveCredentials(loginRequest, rememberMe);
+
       const { user, token } = await loginPromise;
       const userData: User = { info: user, token: token };
       setSession(userData);
@@ -72,11 +127,13 @@ export default function LoginPage() {
             <h1 className="text-center text-lg text-black md:text-3xl">
               CE CLOUD PLATFORM
             </h1>
+
             <Stack
               component="form"
+              id="login-form"
               noValidate
               className="w-full space-y-4 p-5"
-              autoComplete="off"
+              autoComplete="on"
               onSubmit={handleSubmit(onSubmit)}
             >
               <Box width={'100%'}>
@@ -88,11 +145,17 @@ export default function LoginPage() {
                   id="username"
                   variant="filled"
                   label="Username"
+                  placeholder="64xxxxxx"
+                  helperText="Use only username, do not include @kmitl.ac.th"
                   className="w-full"
+                  autoComplete="username"
+                  InputLabelProps={{
+                    shrink: !!watchUsername || undefined,
+                  }}
                   {...register('username', { required: true })}
                 />
               </Box>
-              <Box width={'100%'}>
+              <Box width={'100%'} className="!mt-0">
                 <InputLabel className="!text-[16px] !text-[black]">
                   Password
                 </InputLabel>
@@ -103,6 +166,10 @@ export default function LoginPage() {
                   label="Password"
                   type="password"
                   className="w-full"
+                  autoComplete="current-password"
+                  InputLabelProps={{
+                    shrink: !!watchPassword || undefined,
+                  }}
                   {...register('password', { required: true })}
                 />
               </Box>
@@ -117,8 +184,6 @@ export default function LoginPage() {
                   <Controller
                     name="domain"
                     control={control}
-                    // defaultValue="CE"
-                    defaultValue="default"
                     render={({ field }) => (
                       <Select
                         error={errors.domain ? true : false}
@@ -127,7 +192,7 @@ export default function LoginPage() {
                         label="Domain"
                         variant="filled"
                         {...field}
-                        value={field.value}
+                        value={field.value || 'default'}
                       >
                         <MenuItem value={'default'}>Default</MenuItem>
                         <MenuItem value={'CE'}>CE</MenuItem>
@@ -138,6 +203,31 @@ export default function LoginPage() {
                     )}
                   />
                 </FormControl>
+              </Box>
+
+              {/* Remember Me Checkbox */}
+              <Box width={'100%'} className="!mt-0">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={rememberMe}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setRememberMe(checked);
+                        // Clear saved credentials if unchecked
+                        if (!checked) {
+                          clearCredentials();
+                          setValue('username', '');
+                          setValue('domain', getLastDomain());
+                        }
+                      }}
+                      name="rememberMe"
+                      color="primary"
+                    />
+                  }
+                  label="Remember me"
+                  className="text-slate-700"
+                />
               </Box>
               <div className="w-full">
                 <Button

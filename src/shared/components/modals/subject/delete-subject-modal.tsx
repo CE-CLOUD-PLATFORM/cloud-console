@@ -4,9 +4,13 @@
 import { useDeleteSubject } from '@/modules/subject/hook/use-delete-subject';
 import type { Subject } from '@/modules/subject/types/subject';
 import type { FormProps } from '@/shared/interfaces/modal';
+import {
+  formatSubjectName,
+  generateToastId,
+  toastPatterns,
+  toastPromise,
+} from '@/shared/utils';
 import { useQueryClient } from '@tanstack/react-query';
-
-import toast from 'react-hot-toast';
 import ModalDelete from '../base/modal-delete';
 import '../index.css';
 interface ModalDeleteFormProps extends FormProps {
@@ -17,27 +21,36 @@ const form_id = `${formLabel}-delete-form`;
 const ModalSubjectDelete = (props: ModalDeleteFormProps) => {
   const { isOpen, handleClose, data } = props;
   const queryClient = useQueryClient();
+
   const deleteFn = useDeleteSubject({
     onSuccess: () => {
-      toast.success(`${formLabel} deleted successfully`);
       queryClient.invalidateQueries({ queryKey: ['subjects'] });
     },
-    onError: () => {
-      toast.error(`Fail to delete ${formLabel}.`);
-    },
-    onMutate: () => {
-      handleClose();
-      toast.loading('Deleting...');
+    onError: (error) => {
+      console.error('Delete subject error:', error);
     },
   });
 
   const onSubmit = async () => {
     try {
-      if (data?.id) {
-        deleteFn.mutate(data);
+      if (!data?.id) {
+        return;
       }
+
+      // Close modal first
+      handleClose();
+
+      // Generate unique toast ID
+      const toastId = generateToastId('delete', 'subject', data.id);
+
+      // Use toast promise pattern
+      const deletePromise = deleteFn.mutateAsync(data);
+
+      await toastPromise(deletePromise, toastPatterns.delete(formLabel), {
+        id: toastId,
+      });
     } catch (error) {
-      console.error(error);
+      console.error('Submit error:', error);
     }
   };
 
@@ -104,7 +117,7 @@ const ModalSubjectDelete = (props: ModalDeleteFormProps) => {
       isOpen={isOpen}
       handleClose={handleClose}
       onSubmit={onSubmit}
-      data={data?.name}
+      data={data?.name ? formatSubjectName(data.name) : ''}
       key={data?.id}
     />
   );

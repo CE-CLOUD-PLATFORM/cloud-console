@@ -9,6 +9,7 @@ import { AccountButton } from '../account-button';
 import { RouterLink } from '@/shared/components/router-link';
 import { paths } from '@/paths';
 import Image from 'next/image';
+import BreadcrumbsComponent from '@/shared/components/breadcrumbs/navbar';
 const TOP_NAV_HEIGHT: number = 64;
 // const SIDE_NAV_WIDTH: number = 280;
 
@@ -56,7 +57,7 @@ export const TopNav: FC<TopNavProps> = (props) => {
             <>
               <Box
                 component={RouterLink}
-                href={paths.index}
+                href={paths.subject.index}
                 sx={{
                   display: 'flex',
                   height: 40,
@@ -81,6 +82,7 @@ export const TopNav: FC<TopNavProps> = (props) => {
                   <Menu01Icon />
                 </SvgIcon>
               </IconButton>
+              <BreadcrumbsComponent />
             </>
           )}
         </Stack>

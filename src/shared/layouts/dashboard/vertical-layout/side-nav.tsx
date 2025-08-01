@@ -1,16 +1,16 @@
-import type { FC } from 'react';
-import { useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { Box, Divider, Drawer, Stack, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { paths } from '@/paths';
 import { RouterLink } from '@/shared/components/router-link';
 import { Scrollbar } from '@/shared/components/scrollbar';
 import { usePathname } from '@/shared/hooks/use-pathname';
-import { paths } from '@/paths';
 import type { NavColor } from '@/shared/types/settings';
+import { Box, Divider, Drawer, Stack, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import Image from 'next/image';
+import PropTypes from 'prop-types';
+import type { FC } from 'react';
+import { useMemo } from 'react';
 import type { Section } from '../config';
 import { SideNavSection } from './side-nav-section';
-import Image from 'next/image';
 
 const useCssVars = (color: NavColor): Record<string, string> => {
   const theme = useTheme();
@@ -183,7 +183,7 @@ export const SideNav: FC<SideNavProps> = (props) => {
           <Stack alignItems="center" direction="row" spacing={2} sx={{ p: 3 }}>
             <Box
               component={RouterLink}
-              href={paths.index}
+              href={paths.subject.index}
               sx={{
                 borderColor: 'var(--nav-logo-border)',
                 borderRadius: 1,

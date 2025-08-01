@@ -22,6 +22,7 @@ import { ItemMenu } from './item-menu';
 import type { Subject } from '@/modules/subject/types/subject';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { formatSubjectName } from '@/shared/utils';
 
 interface ItemListRowProps {
   item: Subject;
@@ -95,7 +96,7 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
                   sx={{ cursor: 'pointer' }}
                   variant="subtitle2"
                 >
-                  {item.name}
+                  {formatSubjectName(item.name)}
                 </Typography>
                 <Typography color="text.secondary" noWrap variant="body2">
                   {item.description}

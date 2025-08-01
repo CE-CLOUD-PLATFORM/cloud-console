@@ -2,9 +2,17 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable unused-imports/no-unused-vars */
-import React from 'react';
+import { useEffect } from 'react';
 import ModalCover from '../index';
 
+import { useUserStore } from '@/modules/auth/store/auth';
+import { useGetUserPublicKeys } from '@/modules/config/hook/use-get-user-public-key';
+import type { PublicKey } from '@/modules/config/types/public-key';
+import { useCreateInstance } from '@/modules/instance/hook/use-create-instance';
+import { useGetInstanceOption } from '@/modules/instance/hook/use-get-options';
+import type { InstanceCreate } from '@/modules/instance/types/instance';
+import type { FormProps } from '@/shared/interfaces/modal';
+import { generateToastId, toastPatterns, toastPromise } from '@/shared/utils';
 import {
   Autocomplete,
   Box,
@@ -12,26 +20,17 @@ import {
   Chip,
   FormControl,
   InputLabel,
-  Link,
   MenuItem,
   Select,
   Stack,
   TextField,
   Typography,
 } from '@mui/material';
-import '../index.css';
-import { Controller, useForm } from 'react-hook-form';
-import { useUserStore } from '@/modules/auth/store/auth';
-import type { FormProps } from '@/shared/interfaces/modal';
-import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
-import type { InstanceCreate } from '@/modules/instance/types/instance';
-import { useGetInstanceOption } from '@/modules/instance/hook/use-get-options';
-import { useGetUserPublicKeys } from '@/modules/config/hook/use-get-user-public-key';
-import type { PublicKey } from '@/modules/config/types/public-key';
-import { useCreateInstance } from '@/modules/instance/hook/use-create-instance';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import { Controller, useForm } from 'react-hook-form';
+import '../index.css';
 
 const groupFormId = 'instance-create-form';
 const ModalCreateInstance = (props: FormProps) => {
@@ -43,21 +42,34 @@ const ModalCreateInstance = (props: FormProps) => {
     subject_id: (group_id ? group_id : subject_id) as string,
   });
 
-  const { data: keysData } = useGetUserPublicKeys({
+  const { data: keysData, refetch: refetchKeys } = useGetUserPublicKeys({
     user_id: user?.info.id as string,
   });
+
+  // Refetch keys when modal opens to ensure fresh data
+  useEffect(() => {
+    if (isOpen) {
+      refetchKeys();
+    }
+  }, [isOpen, refetchKeys]);
+
+  // Refetch keys when window gains focus (user returns from key management)
+  useEffect(() => {
+    const handleFocus = () => {
+      if (isOpen) {
+        refetchKeys();
+      }
+    };
+
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, [isOpen, refetchKeys]);
   const createInstance = useCreateInstance({
     onSuccess: () => {
-      toast.success('Instance created successfully');
       queryClient.invalidateQueries({ queryKey: ['instances'] });
-      reset();
     },
-    onError: () => {
-      toast.error('Fail to create Instance.');
-    },
-    onMutate: () => {
-      handleClose();
-      toast.loading('Creating Instance...');
+    onError: (error) => {
+      console.error('Create instance error:', error);
     },
   });
   const {
@@ -77,8 +89,24 @@ const ModalCreateInstance = (props: FormProps) => {
 
   const onSubmit = async (data: InstanceCreate) => {
     try {
-      createInstance.mutate(data);
-    } catch (error) {}
+      // Close modal first
+      handleClose();
+
+      // Generate unique toast ID
+      const toastId = generateToastId('create', 'instance', data.name);
+
+      // Use toast promise pattern
+      const createPromise = createInstance.mutateAsync(data);
+
+      await toastPromise(createPromise, toastPatterns.create('Instance'), {
+        id: toastId,
+      });
+
+      // Reset form after successful creation
+      reset();
+    } catch (error) {
+      console.error('Submit error:', error);
+    }
   };
 
   return (
@@ -249,12 +277,20 @@ const ModalCreateInstance = (props: FormProps) => {
                   )}
                 </div>
 
-                <Link
+                <Button
                   className="text-nowrap rounded-md bg-gray-200 p-2"
-                  href={'/setting/access/keys'}
+                  href="/setting/access/keys"
+                  component="a"
+                  target="_blank"
+                  variant="outlined"
+                  size="small"
+                  onClick={() => {
+                    // Refetch keys when user returns from key management
+                    setTimeout(() => refetchKeys(), 1000);
+                  }}
                 >
                   Manage Key
-                </Link>
+                </Button>
               </div>
               <TextField
                 id="username"

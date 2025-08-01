@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
-import type { ChangeEvent, FC, MouseEvent } from 'react';
-import PropTypes from 'prop-types';
-import { Box, Stack, Table, TableBody, TablePagination } from '@mui/material';
+import type { Subject } from '@/modules/subject/types/subject';
 import { Scrollbar } from '@/shared/components/scrollbar';
+import { Box, Stack, Table, TableBody, TablePagination } from '@mui/material';
+import PropTypes from 'prop-types';
+import type { ChangeEvent, FC, MouseEvent } from 'react';
 import { ItemListCard } from './item-list-card';
 import { ItemListRow } from './item-list-row';
-import type { Subject } from '@/modules/subject/types/subject';
 
 type View = 'grid' | 'list';
 
@@ -37,9 +37,11 @@ export const ItemList: FC<ItemListProps> = (props) => {
     view = 'grid',
   } = props;
 
-  const startIndex = page * rowsPerPage;
-  const endIndex = startIndex + rowsPerPage;
-  const displayedItems = items.slice(startIndex, endIndex);
+  // Remove the slice logic - let the store handle pagination
+  // const startIndex = page * rowsPerPage;
+  // const endIndex = startIndex + rowsPerPage;
+  // const displayedItems = items.slice(startIndex, endIndex);
+  const displayedItems = items;
 
   let content: JSX.Element;
 
@@ -53,11 +55,7 @@ export const ItemList: FC<ItemListProps> = (props) => {
         }}
       >
         {displayedItems.map((item) => (
-          <ItemListCard
-            key={item.id}
-            item={item}
-            onDelete={onDelete}
-          />
+          <ItemListCard key={item.id} item={item} onDelete={onDelete} />
         ))}
       </Box>
     );
@@ -75,11 +73,7 @@ export const ItemList: FC<ItemListProps> = (props) => {
             >
               <TableBody>
                 {displayedItems.map((item) => (
-                  <ItemListRow
-                    key={item.id}
-                    item={item}
-                    onDelete={onDelete}
-                  />
+                  <ItemListRow key={item.id} item={item} onDelete={onDelete} />
                 ))}
               </TableBody>
             </Table>

@@ -1,34 +1,35 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { useUserStore } from '@/modules/auth/store/auth';
+import { useCreateSshKey } from '@/modules/config/hook/use-create-public-key';
 import type { PublicKeyReq } from '@/modules/config/types/public-key';
 import type { FormProps } from '@/shared/interfaces/modal';
+import { generateToastId, toastPatterns, toastPromise } from '@/shared/utils';
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
-import type { SubmitHandler} from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
+import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
 import ModalCover from '../index';
 import '../index.css';
-import { useCreateSshKey } from '@/modules/config/hook/use-create-public-key';
-import { useQueryClient } from '@tanstack/react-query';
 
 const form_id = 'public-key-create-form';
 const ModalSSHKeyCreate = (props: FormProps) => {
   const { isOpen, handleClose } = props;
   const queryClient = useQueryClient();
-  const recoveryPass = useCreateSshKey({
+
+  const createSshKey = useCreateSshKey({
     onSuccess: () => {
-      reset();
-      queryClient.invalidateQueries({ queryKey: ['user-public-key'] });
-      toast.success('Created SSH key successfully.');
+      // Invalidate all user-public-key queries to ensure consistency across the app
+      queryClient.invalidateQueries({
+        predicate: (query) => {
+          return query.queryKey[0] === 'user-public-key';
+        },
+      });
     },
-    onMutate: () => {
-      handleClose();
-      toast.loading('Creating SSH key.');
-    },
-    onError: () => {
-      toast.error('Fail to create SSH key, try again later.');
+    onError: (error) => {
+      console.error('Create SSH key error:', error);
     },
   });
+
   // eslint-disable-next-line prefer-const
   let { user } = useUserStore();
   const {
@@ -39,11 +40,26 @@ const ModalSSHKeyCreate = (props: FormProps) => {
   } = useForm<PublicKeyReq>({
     values: { user_id: user?.info.id as string, key: '', name: '' },
   });
+
   const onSubmit: SubmitHandler<PublicKeyReq> = async (data) => {
     try {
-      recoveryPass.mutate(data);
+      // Close modal first
+      handleClose();
+
+      // Generate unique toast ID
+      const toastId = generateToastId('create', 'ssh-key', data.name);
+
+      // Use toast promise pattern
+      const createPromise = createSshKey.mutateAsync(data);
+
+      await toastPromise(createPromise, toastPatterns.create('SSH Key'), {
+        id: toastId,
+      });
+
+      // Reset form after successful creation
+      reset();
     } catch (error) {
-      console.error(error);
+      console.error('Submit error:', error);
     }
   };
 
