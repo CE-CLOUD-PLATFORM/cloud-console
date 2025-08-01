@@ -81,7 +81,7 @@ interface ItemsStoreState {
   itemsCount: number;
 }
 
-export const useItemsStore = (searchState: ItemsSearchState) => {
+export const useItemsStore = (searchState?: ItemsSearchState) => {
   const { user } = useUserStore();
   const { data, isLoading, isFetched } = useGetSubjects({ user_id: user?.info.id as string });
   const [state, setState] = useState<ItemsStoreState>({
@@ -106,10 +106,10 @@ export const useItemsStore = (searchState: ItemsSearchState) => {
 
       if (nameA < nameB) {
 
-        return searchState.sortDir === 'asc' ? -1 : 1;
+        return searchState?.sortDir === 'asc' ? -1 : 1;
       }
       if (nameA > nameB) {
-        return searchState.sortDir === 'asc' ? 1 : -1;
+        return searchState?.sortDir === 'asc' ? 1 : -1;
       }
       return 0;
     });
@@ -128,13 +128,13 @@ export const useItemsStore = (searchState: ItemsSearchState) => {
         });
       }
     },
-    [data, searchState.sortDir],
+    [data, searchState?.sortDir],
   );
 
   useEffect(
     () => {
 
-      if (searchState.filters.query && searchState.filters.query !== "") {
+      if (searchState?.filters.query && searchState.filters.query !== "") {
         let keyword = searchState.filters.query as string
         const sortedItem = sortItem(data?.subjects || [])
         const searchItem = sortedItem.filter(item => item.name.toLowerCase().includes(keyword.toLowerCase())) || []
@@ -151,7 +151,7 @@ export const useItemsStore = (searchState: ItemsSearchState) => {
       }
 
     },
-    [searchState.filters],
+    [searchState?.filters],
 
   );
 
@@ -168,7 +168,8 @@ export const useItemsStore = (searchState: ItemsSearchState) => {
     handleDelete,
     ...state,
     itemLoading: isLoading,
-    itemFetched:isFetched
+    itemFetched: isFetched,
+    subjectIdNames: data?.subjects.map((item) => ({ id: item.id, name: item.name })) || [],
   };
 };
 

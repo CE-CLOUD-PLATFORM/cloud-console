@@ -8,6 +8,7 @@ import { useCreateQuota } from '@/modules/resource/hook/use-create-quota';
 import type { IQuotaCreate } from '@/modules/resource/types/quota';
 import type { FormProps } from '@/shared/interfaces/modal';
 import {
+  Alert,
   Box,
   Button,
   Divider,
@@ -119,6 +120,9 @@ const ModalQuotaRequestForm = (props: FormProps) => {
   return (
     <Box className="hidden-scrollbar flex-1 space-y-3 overflow-y-auto">
       <Typography variant="h5">Request Quota</Typography>
+      <Alert severity="info" className="mt-2">
+        Submit quota requests to create subjects upon approval.
+      </Alert>
       <Box
         component="form"
         id={form_id}

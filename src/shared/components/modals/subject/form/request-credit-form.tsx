@@ -5,6 +5,7 @@
 /* eslint-disable prefer-const */
 import React, { useState } from 'react';
 import {
+  Alert,
   Box,
   Button,
   Divider,
@@ -118,6 +119,10 @@ const ModalCreditRequestForm = (props: FormProps) => {
   return (
     <Box className="hidden-scrollbar flex-1 space-y-3 overflow-y-auto">
       <Typography variant="h5">Request Credit</Typography>
+      <Alert severity="info" className=''>
+        Request credits for VM creation and usage without subject creation or
+        management.
+      </Alert>
       <Box
         component="form"
         id={form_id}
