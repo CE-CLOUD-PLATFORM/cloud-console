@@ -11,6 +11,8 @@ import CircleLoading from '@/shared/components/Loading/CircleLoading';
 import ModalQuotaCreate from '@/shared/components/modals/subject/create-quota-modal';
 import { TableQuota } from '@/shared/components/table/quota-table';
 import { useDialog } from '@/shared/hooks/use-dialog';
+import type { SortDir } from '@/shared/types/sort';
+import { applyPagination } from '@/shared/utils/apply-pagination';
 import {
   Box,
   Button,
@@ -21,8 +23,13 @@ import {
   Typography,
 } from '@mui/material';
 import { Plus } from '@untitled-ui/icons-react';
-import { useMemo} from 'react';
-import type { SortDir } from "@/shared/types/sort";
+import {
+  useCallback,
+  useMemo,
+  useState,
+  type ChangeEvent,
+  type MouseEvent,
+} from 'react';
 
 interface Filters {
   query?: string;
@@ -36,66 +43,66 @@ interface ItemsSearchState {
   sortDir?: SortDir;
 }
 
-// export const useItemsSearch = () => {
-//   const [state, setState] = useState<ItemsSearchState>({
-//     filters: {
-//       query: undefined,
-//     },
-//     page: 0,
-//     rowsPerPage: 9,
-//     sortBy: 'name',
-//     sortDir: 'asc',
-//   });
+export const useItemsSearch = () => {
+  const [state, setState] = useState<ItemsSearchState>({
+    filters: {
+      query: undefined,
+    },
+    page: 0,
+    rowsPerPage: 5,
+    sortBy: 'created_at',
+    sortDir: 'desc',
+  });
 
-//   const handleFiltersChange = useCallback((filters: Filters): void => {
-//     setState((prevState) => ({
-//       ...prevState,
-//       filters,
-//     }));
-//   }, []);
+  const handleFiltersChange = useCallback((filters: Filters): void => {
+    setState((prevState) => ({
+      ...prevState,
+      filters,
+      page: 0, // Reset to first page when filters change
+    }));
+  }, []);
 
-//   const handleSortChange = useCallback((sortDir: SortDir): void => {
-//     setState((prevState) => ({
-//       ...prevState,
-//       sortDir,
-//     }));
-//   }, []);
+  const handleSortChange = useCallback((sortDir: SortDir): void => {
+    setState((prevState) => ({
+      ...prevState,
+      sortDir,
+    }));
+  }, []);
 
-//   const handlePageChange = useCallback(
-//     (event: MouseEvent<HTMLButtonElement> | null, page: number): void => {
-//       setState((prevState) => ({
-//         ...prevState,
-//         page,
-//       }));
-//     },
-//     [],
-//   );
+  const handlePageChange = useCallback(
+    (event: MouseEvent<HTMLButtonElement> | null, page: number): void => {
+      setState((prevState) => ({
+        ...prevState,
+        page,
+      }));
+    },
+    [],
+  );
 
-//   const handleRowsPerPageChange = useCallback(
-//     (event: ChangeEvent<HTMLInputElement>): void => {
-//       setState((prevState) => ({
-//         ...prevState,
-//         rowsPerPage: parseInt(event.target.value, 10),
-//       }));
-//     },
-//     [],
-//   );
+  const handleRowsPerPageChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      setState((prevState) => ({
+        ...prevState,
+        rowsPerPage: parseInt(event.target.value, 10),
+        page: 0, // Reset to first page when rows per page changes
+      }));
+    },
+    [],
+  );
 
-//   return {
-//     handleFiltersChange,
-//     handleSortChange,
-//     handlePageChange,
-//     handleRowsPerPageChange,
-//     state,
-//   };
-// };
+  return {
+    handleFiltersChange,
+    handleSortChange,
+    handlePageChange,
+    handleRowsPerPageChange,
+    state,
+  };
+};
 
 // interface ItemsStoreState {
 //   items: Quota[];
 //   itemsCount: number;
 // }
-
-
 
 const useCurrentItem = (items: Quota[], itemId?: string): Quota | undefined => {
   return useMemo((): Quota | undefined => {
@@ -114,13 +121,39 @@ export interface handleQuotaDialogType {
 export default function QuotaManagementPage() {
   // const { subject_id } = useParams();
   const { user } = useUserStore();
+  const itemsSearch = useItemsSearch();
   const { data: quotaData, isFetched: quotaFetched } = useGetQuotas({
     user_id: user?.info.id as string,
-    domain_id:user?.info.domain.id as string,
+    domain_id: user?.info.domain.id as string,
   });
   const { data: userData, isFetched: userFetched } = useGetDomainUsers({
     domain_id: user?.info.domain.id as string,
   });
+
+  // Apply pagination and sorting to quota data
+  const processedQuotas = useMemo(() => {
+    if (!quotaData?.quotas || !userData?.users) return [];
+
+    const quotasWithUserNames = quotaData.quotas.map((quota) => ({
+      ...quota,
+      request_user_id:
+        userData.users.find((user) => user.id === quota.request_user_id)
+          ?.name || '-',
+    }));
+
+    // Apply pagination
+    return applyPagination(
+      quotasWithUserNames,
+      itemsSearch.state.page,
+      itemsSearch.state.rowsPerPage,
+    );
+  }, [
+    quotaData,
+    userData,
+    itemsSearch.state.page,
+    itemsSearch.state.rowsPerPage,
+  ]);
+
   const detailsDialog = useDialog<handleQuotaDialogType>();
   const currentItem = useCurrentItem(
     quotaData?.quotas as Quota[],
@@ -187,15 +220,12 @@ export default function QuotaManagementPage() {
                 {quotaFetched && userFetched && (
                   <TableQuota
                     onOpen={detailsDialog.handleOpen}
-                    quotas={
-                      quotaData?.quotas.map((quota) => {
-                        quota.request_user_id =
-                          userData?.users.find(
-                            (user) => user.id === quota.request_user_id,
-                          )?.name || "-";
-                        return quota;
-                      }) as Quota[]
-                    }
+                    quotas={processedQuotas}
+                    onPageChange={itemsSearch.handlePageChange}
+                    onRowsPerPageChange={itemsSearch.handleRowsPerPageChange}
+                    page={itemsSearch.state.page}
+                    rowsPerPage={itemsSearch.state.rowsPerPage}
+                    totalCount={quotaData?.quotas.length || 0}
                   />
                 )}
               </Stack>

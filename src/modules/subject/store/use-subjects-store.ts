@@ -131,7 +131,7 @@ export const useItemsStore = (searchState?: ItemsSearchState) => {
 
         setState({
           items: paginatedItems,
-          itemsCount: data.subjects.length,
+          itemsCount:sortItem.length,
         });
       }
     },

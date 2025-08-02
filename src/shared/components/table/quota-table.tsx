@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
-import type { ChangeEvent,MouseEvent} from 'react';
-import { useState, type FC } from 'react';
-import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
-import './style.css';
-import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
-import ChevronUp from '@untitled-ui/icons-react/build/esm/ChevronUp';
-import ChevronDown from '@untitled-ui/icons-react/build/esm/ChevronDown';
+import type { handleQuotaDialogType } from '@/app/(dashboard)/management/resource/quota/page';
+import { useUserStore } from '@/modules/auth/store/auth';
+import type { Quota, QuotaStatus } from '@/modules/resource/types/quota';
+import { Scrollbar } from '@/shared/components/scrollbar';
+import type { SeverityPillColor } from '@/shared/components/severity-pill';
+import { SeverityPill } from '@/shared/components/severity-pill';
 import {
   Box,
   Card,
@@ -26,12 +25,13 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Scrollbar } from '@/shared/components/scrollbar';
-import type { handleQuotaDialogType } from '@/app/(dashboard)/management/resource/quota/page';
-import type { Quota, QuotaStatus } from '@/modules/resource/types/quota';
-import type { SeverityPillColor } from '@/shared/components/severity-pill';
-import { SeverityPill } from '@/shared/components/severity-pill';
-import { useUserStore } from '@/modules/auth/store/auth';
+import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
+import ChevronDown from '@untitled-ui/icons-react/build/esm/ChevronDown';
+import ChevronUp from '@untitled-ui/icons-react/build/esm/ChevronUp';
+import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+import type { ChangeEvent, MouseEvent } from 'react';
+import { useState, type FC } from 'react';
+import './style.css';
 const statusOptions: { label: string; value: QuotaStatus | '' }[] = [
   { label: 'All Statuses', value: '' },
   { label: 'Pending', value: 'pending' },
@@ -57,8 +57,17 @@ interface TableQuotaProps {
   onRowsPerPageChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   page?: number;
   rowsPerPage?: number;
+  totalCount?: number;
 }
-export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
+export const TableQuota: FC<TableQuotaProps> = ({
+  quotas,
+  onOpen,
+  onPageChange,
+  onRowsPerPageChange,
+  page = 0,
+  rowsPerPage = 5,
+  totalCount,
+}) => {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string>('');
   const handleToggle = (id: string) => {
@@ -221,7 +230,7 @@ export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
                     </IconButton> */}
                     {admin && (
                       <IconButton
-                        disabled={!(quota.status === "pending")}
+                        disabled={!(quota.status === 'pending')}
                         onClick={() => {
                           onOpen?.({
                             item: quota,
@@ -242,11 +251,11 @@ export const TableQuota: FC<TableQuotaProps> = ({ quotas, onOpen }) => {
         </Scrollbar>
         <TablePagination
           component="div"
-          count={quotas?.length || 0}
-          onPageChange={() => {}}
-          onRowsPerPageChange={() => {}}
-          page={0}
-          rowsPerPage={5}
+          count={totalCount || quotas?.length || 0}
+          onPageChange={onPageChange || (() => {})}
+          onRowsPerPageChange={onRowsPerPageChange || (() => {})}
+          page={page}
+          rowsPerPage={rowsPerPage}
           rowsPerPageOptions={[5, 10, 25]}
         />
       </Card>
