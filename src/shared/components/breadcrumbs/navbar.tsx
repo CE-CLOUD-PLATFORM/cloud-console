@@ -18,6 +18,7 @@ const BreadcrumbsComponent = () => {
   const disableBreadcrumbs = ['management'];
 
   const getPathPatterns = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     obj: Record<string, any>,
     result: string[] = [],
   ): string[] => {

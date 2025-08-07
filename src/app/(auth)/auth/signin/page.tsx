@@ -212,7 +212,7 @@ export default function LoginPage() {
                     <Checkbox
                       checked={rememberMe}
                       onChange={(e) => {
-                        const checked = e.target.checked;
+                        const { checked } = e.target;
                         setRememberMe(checked);
                         // Clear saved credentials if unchecked
                         if (!checked) {

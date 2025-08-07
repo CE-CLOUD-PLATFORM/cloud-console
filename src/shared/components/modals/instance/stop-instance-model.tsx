@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 
+import { useStopInstance } from '@/modules/instance/hook/use-stop-instance';
+import type { Instance } from '@/modules/instance/types/instance';
 import type { FormProps } from '@/shared/interfaces/modal';
 import { Avatar, Box, Button, Stack, SvgIcon, Typography } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 import AlertTriangleIcon from '@untitled-ui/icons-react/build/esm/AlertTriangle';
+import { useParams } from 'next/navigation';
+import toast from 'react-hot-toast';
 import ModalCover from '../index';
 import '../index.css';
-import { useQueryClient } from '@tanstack/react-query';
-import { useStopInstance } from '@/modules/instance/hook/use-stop-instance';
-import toast from 'react-hot-toast';
-import { useParams } from 'next/navigation';
-import { Instance } from '@/modules/instance/types/instance';
 interface ModalFormProps extends FormProps {
   data?: Instance;
 }

@@ -30,6 +30,7 @@ const Page = () => {
         queryKey: ['user-public-key', user?.info.id as string],
       });
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {
       console.error('Delete SSH key error:', error);
     },

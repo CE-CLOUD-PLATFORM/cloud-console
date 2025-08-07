@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-import type { handleQuotaDialogType } from '@/app/(dashboard)/management/resource/quota/page';
 import { useUserStore } from '@/modules/auth/store/auth';
 import type { Quota, QuotaStatus } from '@/modules/resource/types/quota';
 import { Scrollbar } from '@/shared/components/scrollbar';
@@ -47,6 +46,12 @@ const labelColors: Record<QuotaStatus, SeverityPillColor> = {
   requesting: 'info',
   revision_required: 'warning',
 };
+
+interface handleQuotaDialogType {
+  item: Quota;
+  edit: boolean;
+}
+
 interface TableQuotaProps {
   quotas: Quota[];
   onOpen: (data: handleQuotaDialogType) => void;

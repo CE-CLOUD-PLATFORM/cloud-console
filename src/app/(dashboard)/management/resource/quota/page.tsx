@@ -43,7 +43,7 @@ interface ItemsSearchState {
   sortDir?: SortDir;
 }
 
-export const useItemsSearch = () => {
+const useItemsSearch = () => {
   const [state, setState] = useState<ItemsSearchState>({
     filters: {
       query: undefined,
@@ -113,7 +113,8 @@ const useCurrentItem = (items: Quota[], itemId?: string): Quota | undefined => {
     return items.find((item) => item.id === itemId);
   }, [items, itemId]);
 };
-export interface handleQuotaDialogType {
+
+interface handleQuotaDialogType {
   item: Quota;
   edit: boolean;
 }
