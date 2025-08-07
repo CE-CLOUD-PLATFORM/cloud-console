@@ -14,7 +14,7 @@ export const useCurrentGroupStore = create<GroupState>()(
     devtools((set) => ({
         group: null,
         actions: {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            // eslint-disable-next-line no-unused-vars
             setCurrentGroup: (data: Group) => {
                 set({
                     group: data,

@@ -7,8 +7,8 @@ import toast from 'react-hot-toast';
 interface ToastPromiseOptions {
     loading: string;
     success: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    error: string | ((_error: any) => string);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-unused-vars
+    error: string | ((error: any) => string);
 }
 
 interface ToastConfig {
@@ -60,7 +60,7 @@ export const toastPatterns = {
     delete: (entityType: string) => ({
         loading: `Deleting ${entityType}...`,
         success: `${entityType} deleted successfully`,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-unused-vars
         error: (error: any) => {
             console.error(`Delete ${entityType} error:`, error);
             return `Failed to delete ${entityType}`;
@@ -70,7 +70,7 @@ export const toastPatterns = {
     create: (entityType: string) => ({
         loading: `Creating ${entityType}...`,
         success: `${entityType} created successfully`,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-unused-vars
         error: (error: any) => {
             console.error(`Create ${entityType} error:`, error);
             return `Failed to create ${entityType}`;
@@ -80,7 +80,7 @@ export const toastPatterns = {
     update: (entityType: string) => ({
         loading: `Updating ${entityType}...`,
         success: `${entityType} updated successfully`,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-unused-vars
         error: (error: any) => {
             console.error(`Update ${entityType} error:`, error);
             return `Failed to update ${entityType}`;
@@ -96,7 +96,7 @@ export const toastPatterns = {
     action: (actionName: string, entityType?: string) => ({
         loading: `${actionName}${entityType ? ` ${entityType}` : ''}...`,
         success: `${actionName} successful`,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-unused-vars
         error: (error: any) => {
             console.error(`${actionName} error:`, error);
             return `${actionName} failed`;

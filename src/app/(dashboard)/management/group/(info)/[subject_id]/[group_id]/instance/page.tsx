@@ -23,11 +23,12 @@ import ModalInstanceDelete from '@/shared/components/modals/instance/delete-inst
 import ModalMakeInternal from '@/shared/components/modals/instance/make-internal-modal';
 import { useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import ModalInstanceReboot from '@/shared/components/modals/instance/reboot-instance-model copy';
+
 import ModalInstanceStop from '@/shared/components/modals/instance/stop-instance-model';
 import { applyPagination } from '@/shared/utils/apply-pagination';
 import { useParams } from 'next/navigation';
 import React, { useCallback, useMemo, useState } from 'react';
+import ModalInstanceReboot from '@/shared/components/modals/instance/reboot-instance-model';
 
 // Pagination hook
 const useInstancePagination = () => {

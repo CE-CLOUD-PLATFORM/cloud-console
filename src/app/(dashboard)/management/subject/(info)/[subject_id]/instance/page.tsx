@@ -22,13 +22,46 @@ import BtnVPNDownload from '@/shared/components/button/vpn-download';
 import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
 import ModalInstanceDelete from '@/shared/components/modals/instance/delete-instance-modal';
 import ModalMakeInternal from '@/shared/components/modals/instance/make-internal-modal';
-import ModalInstanceReboot from '@/shared/components/modals/instance/reboot-instance-model copy';
+import ModalInstanceReboot from '@/shared/components/modals/instance/reboot-instance-model';
 import ModalInstanceStop from '@/shared/components/modals/instance/stop-instance-model';
 import { applyPagination } from '@/shared/utils/apply-pagination';
 import { useQueryClient } from '@tanstack/react-query';
-import { useMemo, useState, useCallback, type ChangeEvent, type MouseEvent } from 'react';
-import toast from 'react-hot-toast';
 import { useParams } from 'next/navigation';
+import {
+  useCallback,
+  useMemo,
+  useState,
+  type ChangeEvent,
+  type MouseEvent,
+} from 'react';
+import toast from 'react-hot-toast';
+
+function useInstancePagination() {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handlePageChange = useCallback(
+    (event: MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
+      setPage(newPage);
+    },
+    [],
+  );
+
+  const handleRowsPerPageChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0); // Reset to first page when rows per page changes
+    },
+    [],
+  );
+
+  return {
+    page,
+    rowsPerPage,
+    handlePageChange,
+    handleRowsPerPageChange,
+  };
+}
 
 export default function InstancesPage() {
   const { subject_id } = useParams();
@@ -212,31 +245,3 @@ export default function InstancesPage() {
     </>
   );
 }
-
-function useInstancePagination() {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const handlePageChange = useCallback(
-    (event: MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
-      setPage(newPage);
-    },
-    [],
-  );
-
-  const handleRowsPerPageChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>): void => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      setPage(0); // Reset to first page when rows per page changes
-    },
-    [],
-  );
-
-  return {
-    page,
-    rowsPerPage,
-    handlePageChange,
-    handleRowsPerPageChange,
-  };
-}
-
