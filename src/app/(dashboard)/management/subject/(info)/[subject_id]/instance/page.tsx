@@ -26,37 +26,9 @@ import ModalInstanceReboot from '@/shared/components/modals/instance/reboot-inst
 import ModalInstanceStop from '@/shared/components/modals/instance/stop-instance-model';
 import { applyPagination } from '@/shared/utils/apply-pagination';
 import { useQueryClient } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
-import React, { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState, useCallback, type ChangeEvent, type MouseEvent } from 'react';
 import toast from 'react-hot-toast';
-
-// Pagination hook
-const useInstancePagination = () => {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const handlePageChange = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-      setPage(newPage);
-    },
-    [],
-  );
-
-  const handleRowsPerPageChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      setPage(0);
-    },
-    [],
-  );
-
-  return {
-    page,
-    rowsPerPage,
-    handlePageChange,
-    handleRowsPerPageChange,
-  };
-};
+import { useParams } from 'next/navigation';
 
 export default function InstancesPage() {
   const { subject_id } = useParams();
@@ -240,3 +212,31 @@ export default function InstancesPage() {
     </>
   );
 }
+
+function useInstancePagination() {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handlePageChange = useCallback(
+    (event: MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
+      setPage(newPage);
+    },
+    [],
+  );
+
+  const handleRowsPerPageChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0); // Reset to first page when rows per page changes
+    },
+    [],
+  );
+
+  return {
+    page,
+    rowsPerPage,
+    handlePageChange,
+    handleRowsPerPageChange,
+  };
+}
+

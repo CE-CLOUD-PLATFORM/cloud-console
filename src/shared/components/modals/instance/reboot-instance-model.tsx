@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 
-import { useStopInstance } from '@/modules/instance/hook/use-stop-instance';
+
 import type { Instance } from '@/modules/instance/types/instance';
 import type { FormProps } from '@/shared/interfaces/modal';
 import { Avatar, Box, Button, Stack, SvgIcon, Typography } from '@mui/material';
@@ -10,6 +10,7 @@ import { useParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 import ModalCover from '../index';
 import '../index.css';
+import { useRebootInstance } from '@/modules/instance/hook/use-reboot-instance';
 interface ModalFormProps extends FormProps {
   data?: Instance;
 }
@@ -22,7 +23,7 @@ const ModalInstanceReboot = (props: ModalFormProps) => {
     handleClose();
   };
   const queryClient = useQueryClient();
-  const mutateFn = useStopInstance({
+  const mutateFn = useRebootInstance({
     onSuccess: () => {
       toast.success(`Instance reboot successfully. Awaiting further results.`);
       queryClient.invalidateQueries({
@@ -71,7 +72,7 @@ const ModalInstanceReboot = (props: ModalFormProps) => {
               justifyContent="space-between"
               className="flex-1 gap-2 p-1"
             >
-              <Typography variant="h5">Confirm Stop</Typography>
+              <Typography variant="h5">Confirm Reboot</Typography>
               <Stack
                 display={'flex'}
                 flexDirection={'row'}
