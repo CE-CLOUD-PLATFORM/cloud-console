@@ -53,8 +53,24 @@ import './style.css';
 interface TableMembersProps {
   members: Member[];
   onDelete: (item: Member) => void;
+  onPageChange?: (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => void;
+  onRowsPerPageChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  page?: number;
+  rowsPerPage?: number;
+  totalCount?: number;
 }
-export const TableMembers: FC<TableMembersProps> = ({ members, onDelete }) => {
+export const TableMembers: FC<TableMembersProps> = ({
+  members,
+  onDelete,
+  onPageChange,
+  onRowsPerPageChange,
+  page = 0,
+  rowsPerPage = 5,
+  totalCount,
+}) => {
   const { data: roleData, isFetched } = useGetRoles();
   const roleKeyName = Object.fromEntries(
     roleData?.roles.map((item) => [item.id, item.name]) || [],
@@ -160,11 +176,11 @@ export const TableMembers: FC<TableMembersProps> = ({ members, onDelete }) => {
         </Scrollbar>
         <TablePagination
           component="div"
-          count={members?.length || 0}
-          onPageChange={() => {}}
-          onRowsPerPageChange={() => {}}
-          page={0}
-          rowsPerPage={5}
+          count={totalCount || members?.length || 0}
+          onPageChange={onPageChange || (() => {})}
+          onRowsPerPageChange={onRowsPerPageChange || (() => {})}
+          page={page}
+          rowsPerPage={rowsPerPage}
           rowsPerPageOptions={[5, 10, 25]}
         />
       </Card>

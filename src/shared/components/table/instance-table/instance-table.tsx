@@ -97,6 +97,14 @@ interface TableInstanceProps {
   onStart: (item: Instance) => void;
   onStop: (item: Instance) => void;
   onReboot: (item: Instance) => void;
+  onPageChange?: (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => void;
+  onRowsPerPageChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  page?: number;
+  rowsPerPage?: number;
+  totalCount?: number;
 }
 export const TableInstances: FC<TableInstanceProps> = ({
   data,
@@ -109,6 +117,11 @@ export const TableInstances: FC<TableInstanceProps> = ({
   onReboot,
   onStart,
   onStop,
+  onPageChange,
+  onRowsPerPageChange,
+  page = 0,
+  rowsPerPage = 5,
+  totalCount,
 }) => {
   const { subject_id } = useParams();
   const router = useRouter();
@@ -344,11 +357,11 @@ export const TableInstances: FC<TableInstanceProps> = ({
 
         <TablePagination
           component="div"
-          count={data?.length || 0}
-          onPageChange={() => {}}
-          onRowsPerPageChange={() => {}}
-          page={0}
-          rowsPerPage={5}
+          count={totalCount || data?.length || 0}
+          onPageChange={onPageChange || (() => {})}
+          onRowsPerPageChange={onRowsPerPageChange || (() => {})}
+          page={page}
+          rowsPerPage={rowsPerPage}
           rowsPerPageOptions={[5, 10, 25]}
         />
       </Card>

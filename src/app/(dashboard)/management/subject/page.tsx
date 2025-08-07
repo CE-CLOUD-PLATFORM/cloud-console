@@ -7,6 +7,7 @@ import { useCallback, useState } from 'react';
 import { useDialog } from '@/shared/hooks/use-dialog';
 import { usePageView } from '@/shared/hooks/use-page-view';
 import {
+  Alert,
   Box,
   Button,
   Container,
@@ -67,13 +68,15 @@ export default function Page() {
         <Container>
           <Grid
             container
-            spacing={{
-              xs: 3,
-              lg: 4,
-            }}
+            spacing={2}
           >
-            <Grid size={12}>
-              <Stack direction="row" justifyContent="space-between" spacing={4}>
+            <Grid size={12} >
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                spacing={4}
+                alignItems={'end'}
+              >
                 <div>
                   <Typography variant="h4">Subjects</Typography>
                 </div>
@@ -87,10 +90,13 @@ export default function Page() {
                     }
                     variant="contained"
                   >
-                    New
+                    Resource
                   </Button>
                 </Stack>
               </Stack>
+              <Alert severity="info" className="mt-2">
+                Request resources to access and use subjects.
+              </Alert>
             </Grid>
             <Grid size={12}>
               <Stack

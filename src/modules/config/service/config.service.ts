@@ -36,3 +36,10 @@ export const postUserPublicKey = async (data: PublicKeyReq): Promise<PublicKeyRe
   >(`${endpoints.config.publicKey}`, data);
   return response.data;
 };
+export const deleteUserPublicKey = async (id: string) => {
+
+  const response = await axiosInstance.delete(`${endpoints.config.publicKey}`,{
+    params: { id }
+  });
+  return response.data;
+};

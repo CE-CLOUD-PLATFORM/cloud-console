@@ -1,16 +1,16 @@
-import type { FC } from 'react';
-import { useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { Box, Divider, Drawer, Stack, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { paths } from '@/paths';
 import { RouterLink } from '@/shared/components/router-link';
 import { Scrollbar } from '@/shared/components/scrollbar';
 import { usePathname } from '@/shared/hooks/use-pathname';
-import { paths } from '@/paths';
 import type { NavColor } from '@/shared/types/settings';
+import { Box, Divider, Drawer, Stack, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import Image from 'next/image';
+import PropTypes from 'prop-types';
+import type { FC } from 'react';
+import { useMemo } from 'react';
 import type { Section } from '../config';
 import { MobileNavSection } from './mobile-nav-section';
-import Image from 'next/image';
 
 const MOBILE_NAV_WIDTH: number = 280;
 
@@ -144,7 +144,7 @@ export const MobileNav: FC<MobileNavProps> = (props) => {
           <Stack alignItems="center" direction="row" spacing={2} sx={{ p: 3 }}>
             <Box
               component={RouterLink}
-              href={paths.index}
+              href={paths.subject.index}
               sx={{
                 borderColor: 'var(--nav-logo-border)',
                 borderRadius: 1,
@@ -156,24 +156,32 @@ export const MobileNav: FC<MobileNavProps> = (props) => {
                 width: 40,
               }}
             >
-              <Image width={40} height={40} src="/assets/ce-logo.png" alt='logo'/>
+              <Image
+                width={40}
+                height={40}
+                src="/assets/ce-logo.png"
+                alt="logo"
+              />
             </Box>
             <Typography color="" variant="h6">
               CE CLOUD
             </Typography>
           </Stack>
-          <Divider variant='middle'  sx={{
-            "&":{
-              borderBottomWidth:"2px"
-            }
-          }}/>
+          <Divider
+            variant="middle"
+            sx={{
+              '&': {
+                borderBottomWidth: '2px',
+              },
+            }}
+          />
           <Stack
             component="nav"
             spacing={2}
             sx={{
               flexGrow: 1,
               px: 2,
-              py:3
+              py: 3,
             }}
           >
             {sections.map((section, index) => (

@@ -8,8 +8,8 @@ import { Box, Divider, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 import ModalCover from '../index';
 import '../index.css';
-import ModalQuotaRequestForm from './form/request-quota-form';
 import ModalSubjectCreateForm from './form/create-subject-form';
+import ModalQuotaRequestForm from './form/request-quota-form';
 
 interface FlavorSpec {
   max_instance: number;
@@ -33,7 +33,7 @@ const ModalSubjectCreate = (props: FormProps) => {
           >
             {admin && <Tab label="Subject" />}
             <Tab label="Quota" />
-            {/* <Tab label="Credit" /> */}
+            <Tab label="Credit" />
           </Tabs>
           <Divider></Divider>
         </Box>
@@ -44,7 +44,7 @@ const ModalSubjectCreate = (props: FormProps) => {
         {((admin && formTab === 1) || (!admin && formTab === 0)) && (
           <ModalQuotaRequestForm isOpen={isOpen} handleClose={handleClose} />
         )}
-        {/* {formTab === 2 && (
+        {/* {((admin && formTab === 2) || (!admin && formTab === 1)) && (
           <ModalCreditRequestForm isOpen={isOpen} handleClose={handleClose} />
         )} */}
 

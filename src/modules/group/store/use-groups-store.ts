@@ -3,12 +3,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable unused-imports/no-unused-vars */
-import { useCallback, useEffect, useMemo, useState } from "react";
-import type { ChangeEvent, MouseEvent } from 'react';
-import type { SortDir } from "@/shared/types/sort";
 import { useUserStore } from "@/modules/auth/store/auth";
-import type { Group } from "../types/group";
+import type { SortDir } from "@/shared/types/sort";
+import type { ChangeEvent, MouseEvent } from 'react';
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useGetGroups } from "../hook/use-get-groups";
+import type { Group } from "../types/group";
 
 interface Filters {
   query?: string;
@@ -37,6 +37,7 @@ export const useGroupsSearch = () => {
     setState((prevState) => ({
       ...prevState,
       filters,
+      page: 0, // Reset to first page when filters change
     }));
   }, []);
 
@@ -62,6 +63,7 @@ export const useGroupsSearch = () => {
       setState((prevState) => ({
         ...prevState,
         rowsPerPage: parseInt(event.target.value, 10),
+        page: 0, // Reset to first page when rows per page changes
       }));
     },
     [],
@@ -108,7 +110,6 @@ export const useGroupsStore = (subject_id: string, searchState: ItemsSearchState
       const nameB = b.name.toLowerCase();
 
       if (nameA < nameB) {
-
         return searchState.sortDir === 'asc' ? -1 : 1;
       }
       if (nameA > nameB) {
@@ -116,47 +117,55 @@ export const useGroupsStore = (subject_id: string, searchState: ItemsSearchState
       }
       return 0;
     });
-    return sortedItems
+    return sortedItems;
   }
+
+  const getPaginatedItems = (allItems: Group[]) => {
+    const startIndex = searchState.page * searchState.rowsPerPage;
+    const endIndex = startIndex + searchState.rowsPerPage;
+    return allItems.slice(startIndex, endIndex);
+  }
+
   useEffect(
     () => {
-
       if (data?.groups) {
-
-        let sortedItems = sortItem(data.groups)
+        let sortedItems = sortItem(data.groups);
+        let paginatedItems = getPaginatedItems(sortedItems);
 
         setState({
-          items: sortedItems,
+          items: paginatedItems,
           itemsCount: data.groups.length,
         });
       }
     },
-    [data, searchState.sortDir],
-
+    [data, searchState.sortDir, searchState.page, searchState.rowsPerPage],
   );
 
   useEffect(
     () => {
-
       if (searchState.filters.query && searchState.filters.query !== "") {
-        let keyword = searchState.filters.query as string
-        const sortedItem = sortItem(data?.groups || [])
-        const searchItem = sortedItem.filter(item => item.name.toLowerCase().includes(keyword.toLowerCase())) || []
+        let keyword = searchState.filters.query as string;
+        const sortedItem = sortItem(data?.groups || []);
+        const searchItem = sortedItem.filter(item =>
+          item.name.toLowerCase().includes(keyword.toLowerCase())
+        ) || [];
+        const paginatedSearchItems = getPaginatedItems(searchItem);
+
         setState({
-          items: searchItem,
+          items: paginatedSearchItems,
           itemsCount: searchItem.length
-        })
+        });
       } else {
-        const sortedItem = sortItem(data?.groups || [])
+        const sortedItem = sortItem(data?.groups || []);
+        const paginatedItems = getPaginatedItems(sortedItem);
+
         setState({
-          items: sortedItem,
+          items: paginatedItems,
           itemsCount: sortedItem.length
-        })
+        });
       }
-
     },
-    [searchState.filters],
-
+    [searchState.filters, searchState.page, searchState.rowsPerPage],
   );
 
   const handleDelete = useCallback((itemId: string): void => {

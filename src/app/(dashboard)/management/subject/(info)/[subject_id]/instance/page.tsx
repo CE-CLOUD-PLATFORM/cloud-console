@@ -15,23 +15,58 @@ import {
 } from '@mui/material';
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
 
-import { useParams } from 'next/navigation';
-import React from 'react';
-import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
-import BtnVPNDownload from '@/shared/components/button/vpn-download';
+import { useExternalAccess } from '@/modules/instance/hook/use-external-access';
+import { useStartInstance } from '@/modules/instance/hook/use-start-instance';
 import type { Instance } from '@/modules/instance/types/instance';
+import BtnVPNDownload from '@/shared/components/button/vpn-download';
+import ModalCreateInstance from '@/shared/components/modals/instance/create-instance-modal';
 import ModalInstanceDelete from '@/shared/components/modals/instance/delete-instance-modal';
 import ModalMakeInternal from '@/shared/components/modals/instance/make-internal-modal';
-import { useExternalAccess } from '@/modules/instance/hook/use-external-access';
-import toast from 'react-hot-toast';
-import { useQueryClient } from '@tanstack/react-query';
-import ModalInstanceStop from '@/shared/components/modals/instance/stop-instance-model';
 import ModalInstanceReboot from '@/shared/components/modals/instance/reboot-instance-model';
-import { useStartInstance } from '@/modules/instance/hook/use-start-instance';
+import ModalInstanceStop from '@/shared/components/modals/instance/stop-instance-model';
+import { applyPagination } from '@/shared/utils/apply-pagination';
+import { useQueryClient } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
+import {
+  useCallback,
+  useMemo,
+  useState,
+  type ChangeEvent,
+  type MouseEvent,
+} from 'react';
+import toast from 'react-hot-toast';
+
+function useInstancePagination() {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handlePageChange = useCallback(
+    (event: MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
+      setPage(newPage);
+    },
+    [],
+  );
+
+  const handleRowsPerPageChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0); // Reset to first page when rows per page changes
+    },
+    [],
+  );
+
+  return {
+    page,
+    rowsPerPage,
+    handlePageChange,
+    handleRowsPerPageChange,
+  };
+}
 
 export default function InstancesPage() {
   const { subject_id } = useParams();
   // const { user } = useUserStore();
+  const pagination = useInstancePagination();
   const modalCreateInstance = useDialog();
   const deleteDialog = useDialog<Instance>();
   const internalDialog = useDialog<Instance>();
@@ -102,6 +137,16 @@ export default function InstancesPage() {
       console.log(err);
     }
   };
+
+  // Apply pagination to instances data
+  const paginatedInstances = useMemo(() => {
+    if (!instancesData?.instances) return [];
+    return applyPagination(
+      instancesData.instances,
+      pagination.page,
+      pagination.rowsPerPage,
+    );
+  }, [instancesData?.instances, pagination.page, pagination.rowsPerPage]);
   return (
     <>
       <ModalCreateInstance
@@ -177,7 +222,7 @@ export default function InstancesPage() {
               >
                 <TableInstances
                   onDelete={handleOnDelete}
-                  data={instancesData?.instances || []}
+                  data={paginatedInstances}
                   flavors={instanceOption?.flavors || []}
                   images={instanceOption?.images || []}
                   isLoading={isLoading}
@@ -186,6 +231,11 @@ export default function InstancesPage() {
                   onReboot={handleRebootInstance}
                   onStart={handleStartInstance}
                   onStop={handleStopInstance}
+                  onPageChange={pagination.handlePageChange}
+                  onRowsPerPageChange={pagination.handleRowsPerPageChange}
+                  page={pagination.page}
+                  rowsPerPage={pagination.rowsPerPage}
+                  totalCount={instancesData?.instances?.length || 0}
                 />
               </Stack>
             </Grid>

@@ -1,11 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { useState, type FC } from 'react';
-import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
-import './style.css';
-import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
-import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
-import ChevronUp from '@untitled-ui/icons-react/build/esm/ChevronUp';
-import ChevronDown from '@untitled-ui/icons-react/build/esm/ChevronDown';
+import type { handleCreditDialogType } from '@/app/(dashboard)/management/resource/credit/page';
+import type { Credit } from '@/modules/subject/types/credit';
+import { Scrollbar } from '@/shared/components/scrollbar';
 import {
   Box,
   Card,
@@ -26,9 +22,13 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Scrollbar } from '@/shared/components/scrollbar';
-import type { Credit } from '@/modules/subject/types/credit';
-import type { handleCreditDialogType } from '@/app/(dashboard)/management/resource/credit/page';
+import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
+import ChevronDown from '@untitled-ui/icons-react/build/esm/ChevronDown';
+import ChevronUp from '@untitled-ui/icons-react/build/esm/ChevronUp';
+import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
+import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+import { useState, type FC } from 'react';
+import './style.css';
 
 interface Option {
   label: string;
@@ -56,8 +56,24 @@ const sortOptions: Option[] = [
 interface TablecreditProps {
   credits: Credit[];
   onOpen: (data: handleCreditDialogType) => void;
+  onPageChange?: (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => void;
+  onRowsPerPageChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  page?: number;
+  rowsPerPage?: number;
+  totalCount?: number;
 }
-export const TableCredit: FC<TablecreditProps> = ({ credits, onOpen }) => {
+export const TableCredit: FC<TablecreditProps> = ({
+  credits,
+  onOpen,
+  onPageChange,
+  onRowsPerPageChange,
+  page = 0,
+  rowsPerPage = 5,
+  totalCount,
+}) => {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
   const handleToggle = (id: string) => {
@@ -123,111 +139,113 @@ export const TableCredit: FC<TablecreditProps> = ({ credits, onOpen }) => {
             </TableHead>
             <TableBody>
               {credits?.map((credit) => (
-                  <TableRow hover key={credit.id}>
-                    <TableCell>
+                <TableRow hover key={credit.id}>
+                  <TableCell>
+                    <Typography
+                      className="text-nowrap pl-2"
+                      variant="overline"
+                      style={{
+                        fontSize: 16,
+                      }}
+                    >
+                      144
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Stack display={'flex'} gap={1} direction={'row'}>
                       <Typography
-                        className="text-nowrap pl-2"
-                        variant="overline"
-                        style={{
-                          fontSize: 16,
-                        }}
+                        className="text-nowrap pl-2 !text-[15px]"
+                        variant="caption"
                       >
-                        144
+                        Calculate for:
                       </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Stack display={'flex'} gap={1} direction={'row'}>
-                        <Typography
-                          className="text-nowrap pl-2 !text-[15px]"
-                          variant="caption"
-                        >
-                          Calculate for:
-                        </Typography>
-                        <Chip label={`Flavor: ${credit.resource.flavor_id}`} />
-                        <Chip label={`Instance: ${credit.resource.instance}`} />
-                        <Chip label={`Time Usage: ${credit.resource.time_in_hour}`} />
-                      </Stack>
-                      <Typography
-                        variant="body2"
-                        noWrap
-                        sx={{
-                          maxWidth: '300px',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                          display: expandedRow === credit.id ? 'none' : 'block',
-                        }}
-                      >
+                      <Chip label={`Flavor: ${credit.resource.flavor_id}`} />
+                      <Chip label={`Instance: ${credit.resource.instance}`} />
+                      <Chip
+                        label={`Time Usage: ${credit.resource.time_in_hour}`}
+                      />
+                    </Stack>
+                    <Typography
+                      variant="body2"
+                      noWrap
+                      sx={{
+                        maxWidth: '300px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        display: expandedRow === credit.id ? 'none' : 'block',
+                      }}
+                    >
+                      {credit.resource.instance}
+                    </Typography>
+                    <Collapse in={expandedRow === credit.id}>
+                      <Typography variant="body2">
                         {credit.resource.instance}
                       </Typography>
-                      <Collapse in={expandedRow === credit.id}>
-                        <Typography variant="body2">
-                          {credit.resource.instance}
-                        </Typography>
-                      </Collapse>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleToggle(credit.id)}
-                      >
-                        {expandedRow === credit.id ? (
-                          <ChevronUp />
-                        ) : (
-                          <ChevronDown />
-                        )}
-                      </IconButton>
-                    </TableCell>
-                    <TableCell className="text-nowrap">
-                      {credit.request_user_id}
-                    </TableCell>
-                    <TableCell className="text-nowrap">
-                      {new Intl.DateTimeFormat('en-GB', {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: false,
-                      }).format(new Date(credit.created_at))}
-                    </TableCell>
+                    </Collapse>
+                    <IconButton
+                      size="small"
+                      onClick={() => handleToggle(credit.id)}
+                    >
+                      {expandedRow === credit.id ? (
+                        <ChevronUp />
+                      ) : (
+                        <ChevronDown />
+                      )}
+                    </IconButton>
+                  </TableCell>
+                  <TableCell className="text-nowrap">
+                    {credit.request_user_id}
+                  </TableCell>
+                  <TableCell className="text-nowrap">
+                    {new Intl.DateTimeFormat('en-GB', {
+                      day: '2-digit',
+                      month: 'short',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: false,
+                    }).format(new Date(credit.created_at))}
+                  </TableCell>
 
-                    <TableCell className="flex-nowrap text-nowrap">
-                      <IconButton
-                        onClick={() => {
-                          onOpen?.({
-                            item: credit,
-                            edit: true,
-                          });
-                        }}
-                      >
-                        <SvgIcon>
-                          <Edit02Icon />
-                        </SvgIcon>
-                      </IconButton>
-                      <IconButton
-                        onClick={() => {
-                          onOpen?.({
-                            item: credit,
-                            edit: false,
-                          });
-                        }}
-                      >
-                        <SvgIcon>
-                          <ArrowRightIcon />
-                        </SvgIcon>
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
+                  <TableCell className="flex-nowrap text-nowrap">
+                    <IconButton
+                      onClick={() => {
+                        onOpen?.({
+                          item: credit,
+                          edit: true,
+                        });
+                      }}
+                    >
+                      <SvgIcon>
+                        <Edit02Icon />
+                      </SvgIcon>
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        onOpen?.({
+                          item: credit,
+                          edit: false,
+                        });
+                      }}
+                    >
+                      <SvgIcon>
+                        <ArrowRightIcon />
+                      </SvgIcon>
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
               ))}
             </TableBody>
           </Table>
         </Scrollbar>
         <TablePagination
           component="div"
-          count={credits?.length || 0}
-          onPageChange={() => {}}
-          onRowsPerPageChange={() => {}}
-          page={0}
-          rowsPerPage={5}
+          count={totalCount || credits?.length || 0}
+          onPageChange={onPageChange || (() => {})}
+          onRowsPerPageChange={onRowsPerPageChange || (() => {})}
+          page={page}
+          rowsPerPage={rowsPerPage}
           rowsPerPageOptions={[5, 10, 25]}
         />
       </Card>
