@@ -123,7 +123,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
   rowsPerPage = 5,
   totalCount,
 }) => {
-  const { subject_id } = useParams();
+  const { group_id } = useParams();
   const router = useRouter();
 
   const getFlavorName = (id: string) => {
@@ -140,7 +140,7 @@ export const TableInstances: FC<TableInstanceProps> = ({
     return images.find((image) => image.id === id)?.name || '';
   };
   const handleOnOpen = (id: string) => {
-    router.push(`/management/instance/${subject_id}/${id}/overview`);
+    router.push(`/management/instance/${group_id}/${id}/overview`);
   };
 
   // eslint-disable-next-line react/no-unstable-nested-components

@@ -147,6 +147,7 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
 };
 
 ItemListCard.propTypes = {
+  // @ts-ignore
   item: PropTypes.object.isRequired,
   onDelete: PropTypes.func,
   // @ts-ignore

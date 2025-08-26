@@ -117,6 +117,7 @@ export const ItemListRow: FC<ItemListRowProps> = (props) => {
 };
 
 ItemListRow.propTypes = {
+  // @ts-ignore
   item: PropTypes.object.isRequired,
   onDelete: PropTypes.func,
   // @ts-ignore
