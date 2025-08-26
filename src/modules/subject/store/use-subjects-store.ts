@@ -179,7 +179,7 @@ export const useItemsStore = (searchState?: ItemsSearchState) => {
     ...state,
     itemLoading: isLoading,
     itemFetched: isFetched,
-    subjectIdNames: data?.subjects.map((item) => ({ id: item.id, name: item.name })) || [],
+    subjectIdNames: data?.subjects?.map((item) => ({ id: item.id, name: item.name })) || [],
   };
 };
 

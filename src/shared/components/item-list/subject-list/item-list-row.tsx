@@ -139,6 +139,7 @@ ItemListRow.propTypes = {
   // @ts-ignore
   item: PropTypes.object.isRequired,
   onDelete: PropTypes.func,
+    // @ts-ignore
   onFavorite: PropTypes.func,
   onOpen: PropTypes.func,
 };

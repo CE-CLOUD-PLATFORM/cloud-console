@@ -110,7 +110,6 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
                   color: 'black',
                   minHeight: '48px',
                 }}
-                
               >
                 {formatSubjectName(item.name)}
               </Typography>
@@ -148,9 +147,9 @@ export const ItemListCard: FC<ItemListCardProps> = (props) => {
 };
 
 ItemListCard.propTypes = {
-  // @ts-ignore
   item: PropTypes.object.isRequired,
   onDelete: PropTypes.func,
+  // @ts-ignore
   onFavorite: PropTypes.func,
   onOpen: PropTypes.func,
 };

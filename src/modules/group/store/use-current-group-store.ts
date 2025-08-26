@@ -6,6 +6,7 @@ import type { Group } from "@/modules/group/types/group";
 type GroupState = {
     group: Group | null,
     actions: {
+        // eslint-disable-next-line no-unused-vars
         setCurrentGroup: (data: Group) => void;
     };
 };
