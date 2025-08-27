@@ -45,9 +45,8 @@ const ModalRecoveryPasswordModal = (props: FormProps) => {
   const onSubmit = async (data: IRecoveryPassword) => {
     try {
       recoveryPass.mutate(data);
-    } catch (error) {
-      console.error(error);
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
+    } catch (error) {}
   };
 
   return (
@@ -125,7 +124,12 @@ const ModalRecoveryPasswordModal = (props: FormProps) => {
               <Typography fontSize={20} variant="overline">
                 Recovery email sent successfully.
               </Typography>
-              <Image width={120} height={120} src="/assets/checked.png" alt="logo" />
+              <Image
+                width={120}
+                height={120}
+                src="/assets/checked.png"
+                alt="logo"
+              />
               <Typography fontSize={16} variant="subtitle1">
                 Please check your email.
               </Typography>

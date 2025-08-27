@@ -31,6 +31,7 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { Controller, useForm } from 'react-hook-form';
 import '../index.css';
+import toast from 'react-hot-toast';
 
 const groupFormId = 'instance-create-form';
 const ModalCreateInstance = (props: FormProps) => {
@@ -69,7 +70,7 @@ const ModalCreateInstance = (props: FormProps) => {
       queryClient.invalidateQueries({ queryKey: ['instances'] });
     },
     onError: (error) => {
-      console.error('Create instance error:', error);
+      toast.error('Create instance error');
     },
   });
   const {
@@ -104,9 +105,7 @@ const ModalCreateInstance = (props: FormProps) => {
 
       // Reset form after successful creation
       reset();
-    } catch (error) {
-      console.error('Submit error:', error);
-    }
+    } catch (error) {}
   };
 
   return (

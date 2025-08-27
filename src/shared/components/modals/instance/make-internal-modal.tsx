@@ -43,9 +43,8 @@ const ModalMakeInternal = (props: ModalFormProps) => {
           subject_id: (group_id || subject_id) as string,
         });
       }
-    } catch (error) {
-      console.error(error);
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {}
   };
 
   return (

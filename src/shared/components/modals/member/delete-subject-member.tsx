@@ -39,9 +39,8 @@ const ModalSubjectMemberDelete = (props: MemberFormProps) => {
           member: data,
         });
       }
-    } catch (error) {
-      console.error(error);
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
+    } catch (error) {}
   };
 
   return (

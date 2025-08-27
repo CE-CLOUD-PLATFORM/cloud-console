@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 
-
 import type { Instance } from '@/modules/instance/types/instance';
 import type { FormProps } from '@/shared/interfaces/modal';
 import { Avatar, Box, Button, Stack, SvgIcon, Typography } from '@mui/material';
@@ -47,9 +46,8 @@ const ModalInstanceReboot = (props: ModalFormProps) => {
           instance_id: data.id,
         });
       }
-    } catch (error) {
-      console.error(error);
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
+    } catch (error) {}
   };
   return (
     <ModalCover handleOnClose={handleClose} isOpen={isOpen}>

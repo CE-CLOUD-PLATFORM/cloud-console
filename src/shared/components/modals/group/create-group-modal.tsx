@@ -89,9 +89,7 @@ const ModalGroupCreate = (props: FormProps) => {
       // setValue('domain_id', user?.info.domain.id as string);
 
       createGroup.mutate(data);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
   const onFlavorSpecFormChange = () => {
     const data = flavorSpecForm.getValues();

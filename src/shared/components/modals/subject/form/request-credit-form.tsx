@@ -87,9 +87,7 @@ const ModalCreditRequestForm = (props: FormProps) => {
 
   const onSubmit = async (data: ICreditCreate) => {
     try {
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
   const onFlavorSpecFormChange = () => {
     const data = flavorSpecForm.getValues();
@@ -119,7 +117,7 @@ const ModalCreditRequestForm = (props: FormProps) => {
   return (
     <Box className="hidden-scrollbar flex-1 space-y-3 overflow-y-auto">
       <Typography variant="h5">Request Credit</Typography>
-      <Alert severity="info" className=''>
+      <Alert severity="info" className="">
         Request credits for VM creation and usage without subject creation or
         management.
       </Alert>

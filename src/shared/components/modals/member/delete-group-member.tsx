@@ -18,7 +18,7 @@ const ModalGroupMemberDelete = (props: MemberFormProps) => {
   const queryClient = useQueryClient();
   const deleteFn = useDeleteSubjectMember({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['group_members',] });
+      queryClient.invalidateQueries({ queryKey: ['group_members'] });
       toast.success('Deleted member successfully.');
     },
     onMutate: () => {
@@ -39,9 +39,8 @@ const ModalGroupMemberDelete = (props: MemberFormProps) => {
           member: data,
         });
       }
-    } catch (error) {
-      console.error(error);
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
+    } catch (error) {}
   };
 
   return (

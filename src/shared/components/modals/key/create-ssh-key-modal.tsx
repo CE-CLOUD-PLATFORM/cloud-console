@@ -10,6 +10,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 import ModalCover from '../index';
 import '../index.css';
+import toast from 'react-hot-toast';
 
 const form_id = 'public-key-create-form';
 const ModalSSHKeyCreate = (props: FormProps) => {
@@ -25,8 +26,8 @@ const ModalSSHKeyCreate = (props: FormProps) => {
         },
       });
     },
-    onError: (error) => {
-      console.error('Create SSH key error:', error);
+    onError: () => {
+      toast.error('Create SSH key error');
     },
   });
 
@@ -58,9 +59,8 @@ const ModalSSHKeyCreate = (props: FormProps) => {
 
       // Reset form after successful creation
       reset();
-    } catch (error) {
-      console.error('Submit error:', error);
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
+    } catch (error) {}
   };
 
   return (

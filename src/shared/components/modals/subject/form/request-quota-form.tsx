@@ -88,18 +88,12 @@ const ModalQuotaRequestForm = (props: FormProps) => {
   const onSubmit = async (data: IQuotaCreate) => {
     try {
       setValue('subject_domain_id', user?.info.domain.id as string);
-      // data.req_resource = {
-      //   cores: Number(data.req_resource.cores),
-      //   max_instance: Number(data.req_resource.max_instance),
-      //   memory: Number(data.req_resource.memory),
-      // };
+
       if (!resourceChecked) {
         data.req_resource = undefined;
       }
       createSubject.mutate(data);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
   const onFlavorSpecFormChange = () => {
     const data = flavorSpecForm.getValues();

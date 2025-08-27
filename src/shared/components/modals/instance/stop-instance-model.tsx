@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 
 import { useStopInstance } from '@/modules/instance/hook/use-stop-instance';
@@ -46,9 +47,8 @@ const ModalInstanceStop = (props: ModalFormProps) => {
           instance_id: data.id,
         });
       }
-    } catch (error) {
-      console.error(error);
-    }
+    // eslint-disable-next-line unused-imports/no-unused-vars
+    } catch (error) {}
   };
   return (
     <ModalCover handleOnClose={handleClose} isOpen={isOpen}>

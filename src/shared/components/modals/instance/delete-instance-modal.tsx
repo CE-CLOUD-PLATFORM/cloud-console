@@ -9,6 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import ModalDelete from '../base/modal-delete';
 import '../index.css';
+import toast from 'react-hot-toast';
 interface ModalFormProps extends FormProps {
   data?: Instance;
 }
@@ -25,7 +26,7 @@ const ModalInstanceDelete = (props: ModalFormProps) => {
       });
     },
     onError: (error) => {
-      console.error('Delete instance error:', error);
+      toast.error('Delete instance error');
     },
   });
   // eslint-disable-next-line prefer-const
@@ -53,9 +54,8 @@ const ModalInstanceDelete = (props: ModalFormProps) => {
           id: toastId,
         });
       }
-    } catch (error) {
-      console.error('Submit error:', error);
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {}
   };
 
   return (

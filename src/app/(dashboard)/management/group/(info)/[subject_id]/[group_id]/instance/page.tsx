@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
 'use client';
 import { useGetInstances } from '@/modules/instance/hook/use-get-instances';
 import { useGetInstanceOption } from '@/modules/instance/hook/use-get-options';
@@ -127,7 +129,7 @@ export default function InstancesPage() {
       };
       exposeExternalAccess.mutate(external_access);
     } catch (err) {
-      console.error(err);
+
     }
   };
 

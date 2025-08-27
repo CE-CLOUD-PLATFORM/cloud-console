@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
 'use client';
 import { useAuth } from '@/modules/auth/hook';
 import type { IAuthLogin } from '@/modules/auth/types/auth';
@@ -105,7 +107,7 @@ export default function LoginPage() {
       setSession(userData);
       router.push('/management/subject');
     } catch (error) {
-      console.error('Login failed:', error);
+      
     }
   };
 

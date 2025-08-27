@@ -30,21 +30,18 @@ export const recoveryPassword = async (data: IRecoveryPassword) => {
 export const validateToken = async ({ queryKey }: QueryParams) => {
   const [_, token] = queryKey;
   interface ResData {
-    admin: boolean
+    admin: boolean;
   }
   const params: IAuthValidateToken = {
     token,
   };
   try {
-    const response = await axiosInstance.get<ResData>(
-      endpoints.auth.validate,
-      {
-        params,
-      },
-    );
+    const response = await axiosInstance.get<ResData>(endpoints.auth.validate, {
+      params,
+    });
     return { code: response.status, admin: response.data.admin };
+  // eslint-disable-next-line unused-imports/no-unused-vars
   } catch (error) {
-    console.error(error);
     return { code: 401, admin: false };
   }
 };

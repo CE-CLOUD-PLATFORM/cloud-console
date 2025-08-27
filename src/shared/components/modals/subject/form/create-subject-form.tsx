@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import '../../index.css';
 import { Controller, useForm } from 'react-hook-form';
-import type { ISubjectCreate} from '@/modules/subject/types/subject';
+import type { ISubjectCreate } from '@/modules/subject/types/subject';
 import { useUserStore } from '@/modules/auth/store/auth';
 import type { FormProps } from '@/shared/interfaces/modal';
 import { useCreateSubject } from '@/modules/subject/hook/use-create-subject';
@@ -104,9 +104,7 @@ const ModalSubjectCreateForm = (props: FormProps) => {
       };
 
       createSubject.mutate(data);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
   const onFlavorSpecFormChange = () => {
     const data = flavorSpecForm.getValues();

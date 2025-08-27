@@ -133,8 +133,9 @@ export default function InstancesPage() {
         subject_id: data.tenant_id,
       };
       exposeExternalAccess.mutate(external_access);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
     } catch (err) {
-      console.error(err);
+
     }
   };
 

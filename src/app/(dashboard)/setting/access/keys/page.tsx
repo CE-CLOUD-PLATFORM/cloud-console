@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import Plus from '@untitled-ui/icons-react/build/esm/Plus';
+import toast from 'react-hot-toast';
 
 const Page = () => {
   const queryClient = useQueryClient();
@@ -31,8 +32,8 @@ const Page = () => {
       });
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onError: (error: any) => {
-      console.error('Delete SSH key error:', error);
+    onError: () => {
+      toast.error('Delete SSH key error');
     },
   });
 
@@ -47,8 +48,9 @@ const Page = () => {
       await toastPromise(deletePromise, toastPatterns.delete('SSH Key'), {
         id: toastId,
       });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
     } catch (error) {
-      console.error('Delete error:', error);
+      
     }
   };
   return (

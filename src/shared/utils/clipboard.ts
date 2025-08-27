@@ -7,9 +7,9 @@ export const copyToClipboard = async (
     try {
       await navigator.clipboard.writeText(text);
       onSuccess();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
     } catch (err) {
       onFail();
-      console.error('Failed to copy text to clipboard: ', err);
     }
   } else {
     const textArea = document.createElement('textarea');
@@ -22,9 +22,9 @@ export const copyToClipboard = async (
     try {
       document.execCommand('copy');
       onSuccess();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
     } catch (err) {
       onFail();
-      console.error('Fallback: Could not copy text to clipboard: ', err);
     }
 
     document.body.removeChild(textArea);

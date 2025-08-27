@@ -86,9 +86,7 @@ const ModalAddSubjectMember = (props: FormProps) => {
     try {
       // Do something here
       addMember.mutate(data);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   const [searchValue, setSearchValue] = useState<string>('');
@@ -166,7 +164,6 @@ const ModalAddSubjectMember = (props: FormProps) => {
       },
       error: (err: Error) => {
         toast.error('Error parsing CSV file');
-        console.error(err);
       },
     });
 

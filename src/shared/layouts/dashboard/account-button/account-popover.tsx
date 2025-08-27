@@ -36,8 +36,8 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
     try {
       onClose?.();
       logoutUser();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
     } catch (err) {
-      console.error(err);
       toast.error('Something went wrong!');
     }
   }, [user, router, onClose]);
