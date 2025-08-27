@@ -21,7 +21,6 @@ interface DataProps {
   data: Subject;
 }
 export const SubjectDetails: FC<DataProps> = ({ data }) => {
-  console.log(data);
 
   return (
     <Box

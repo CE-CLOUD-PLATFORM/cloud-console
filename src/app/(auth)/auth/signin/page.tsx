@@ -105,7 +105,7 @@ export default function LoginPage() {
       setSession(userData);
       router.push('/management/subject');
     } catch (error) {
-      console.log(error);
+      console.error('Login failed:', error);
     }
   };
 

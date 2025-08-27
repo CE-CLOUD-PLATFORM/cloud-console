@@ -31,7 +31,7 @@ const BtnVPNDownload = () => {
     
           toast.success('Download completed!');
         } catch (error) {
-          console.log(error);
+          console.error(error);
           toast.error('Download failed. Please try again.');
         } finally {
           // setLoading(false);

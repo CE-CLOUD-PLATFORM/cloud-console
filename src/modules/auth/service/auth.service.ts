@@ -44,7 +44,7 @@ export const validateToken = async ({ queryKey }: QueryParams) => {
     );
     return { code: response.status, admin: response.data.admin };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return { code: 401, admin: false };
   }
 };

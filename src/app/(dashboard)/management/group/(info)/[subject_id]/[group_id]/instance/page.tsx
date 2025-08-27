@@ -127,7 +127,7 @@ export default function InstancesPage() {
       };
       exposeExternalAccess.mutate(external_access);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

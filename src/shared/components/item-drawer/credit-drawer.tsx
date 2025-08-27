@@ -38,7 +38,6 @@ interface CreditDrawerProps {
 export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
   const { item, onClose, onDelete, open = false } = props;
   const [expandedRow, setExpandedRow] = useState<boolean>(false);
-  console.log(3, open);
 
   const handleToggle = () => {
     setExpandedRow((prev) => !prev);
