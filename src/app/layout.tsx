@@ -21,7 +21,9 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
     >
-      <head></head>
+      <head>
+        <link rel="icon" href="/assets/ce-logo.png" sizes="any" />
+      </head>
       <body className="flex h-full flex-col bg-slate-100">
         <AppRouterCacheProvider>
           <ReactQueryProvider>
@@ -32,10 +34,8 @@ export default function RootLayout({
                 toastOptions={{
                   className: 'mt-5',
                   duration: 1800,
-                  
                 }}
-                key={"toast"}
-                
+                key={'toast'}
               />
               {children}
             </ThemeProvider>
